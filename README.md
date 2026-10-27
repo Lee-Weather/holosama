@@ -1,5 +1,7 @@
 # Holosoma
 
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 Holosoma (Greek: "whole-body") is a comprehensive humanoid robotics framework for training and deploying reinforcement learning policies on humanoid robots, as well as motion retargeting. Supports locomotion (velocity tracking) and whole-body tracking tasks across multiple simulators (IsaacSim, MJWarp, MuJoCo) with algorithms like PPO and FastSAC.
 
 ## Features
@@ -25,7 +27,7 @@ src/
 
 - **[Training Guide](src/holosoma/README.md)** - Train locomotion and whole-body tracking policies in IsaacSim/MJWarp
 - **[Inference & Deployment Guide](src/holosoma_inference/README.md)** - Deploy policies to real robots or evaluate in MuJoCo simulation
-- **[Retargeting Guide](src/holosoma_retargeting/holosoma_retargeting/README.md)** - Convert human motion capture data to robot motions
+- **[Retargeting Guide](src/holosoma_retargeting/README.md)** - Convert human motion capture data to robot motions
 
 ## Quick Start
 

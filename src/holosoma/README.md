@@ -1,25 +1,31 @@
-# Holosoma Training Framework
+<a id="holosoma-training-framework"></a>
 
-Core training framework for humanoid robot reinforcement learning with support for locomotion (velocity tracking) and whole-body tracking tasks.
+# Holosoma 训练框架
 
-| **Category** | **Supported Options** |
+面向人形机器人强化学习的核心训练框架，支持运动控制（速度跟踪）和全身动作跟踪任务。
+
+| **类别** | **支持选项** |
 |-------------|----------------------|
-| **Simulators** | IsaacSim, MJWarp (training) \| Mujoco (evaluation) |
-| **Algorithms** | PPO, FastSAC |
-| **Robots** | Unitree G1, Booster T1 |
+| **仿真器** | IsaacSim、MJWarp（训练）\| MuJoCo（评估） |
+| **算法** | PPO、FastSAC |
+| **机器人** | Unitree G1、Booster T1 |
 
-## Training
+<a id="training"></a>
 
-All training/eval scripts support `--help` for discovering available flags, e.g. `python src/holosoma/holosoma/train_agent.py --help`.
+## 训练
 
-> **Note:** Video recording is enabled by default with `logger:wandb`. On headless servers, you may need to disable video or configure rendering. See [Video Recording](#video-recording) below.
+所有训练和评估脚本均支持通过 `--help` 查看可用参数，例如 `python src/holosoma/holosoma/train_agent.py --help`。
 
-### Locomotion (Velocity Tracking)
+> **提示：** 使用 `logger:wandb` 时，默认启用视频录制。在无显示界面的服务器上，可能需要关闭视频录制或配置渲染环境。详见下文的[视频录制](#video-recording)。
 
-Train robots to track velocity commands.
+<a id="locomotion-velocity-tracking"></a>
+
+### 运动控制（速度跟踪）
+
+训练机器人跟踪速度指令。
 
 ```bash
-# G1 with FastSAC on IsaacSim
+# 在 IsaacSim 中使用 FastSAC 训练 G1
 source scripts/source_isaacsim_setup.sh
 python src/holosoma/holosoma/train_agent.py \
     exp:g1-29dof-fast-sac \
@@ -27,7 +33,7 @@ python src/holosoma/holosoma/train_agent.py \
     logger:wandb \
     --training.seed 1
 
-# T1 with PPO on IsaacSim
+# 在 IsaacSim 中使用 PPO 训练 T1
 source scripts/source_isaacsim_setup.sh
 python src/holosoma/holosoma/train_agent.py \
     exp:t1-29dof \
@@ -36,77 +42,82 @@ python src/holosoma/holosoma/train_agent.py \
     --training.seed 1
 ```
 
-Once checkpoints are saved, you can evaluate policies using [In-Training Evaluation](#in-training-evaluation) (same simulator as training) or cross-simulator evaluation in MuJoCo (see [holosoma_inference](../holosoma_inference/README.md)).
+保存检查点后，可以使用[训练配置下的评估](#in-training-evaluation)（与训练使用相同的仿真器），也可以在 MuJoCo 中进行跨仿真器评估（参阅 [holosoma_inference 文档](../holosoma_inference/README.md)）。
 
-### MJWarp Training for Locomotion (Velocity Tracking)
+<a id="mjwarp-training-for-locomotion-velocity-tracking"></a>
 
-Train using the MJWarp simulator (GPU-accelerated MuJoCo). **Note: MJWarp support is in beta.**
+### 使用 MJWarp 训练运动控制（速度跟踪）
+
+使用 MJWarp 仿真器（GPU 加速的 MuJoCo）进行训练。**注意：MJWarp 支持目前处于测试阶段。**
 
 ```bash
-# G1 with FastSAC
+# 使用 FastSAC 训练 G1
 source scripts/source_mujoco_setup.sh
 python src/holosoma/holosoma/train_agent.py \
     exp:g1-29dof-fast-sac \
     simulator:mjwarp \
     logger:wandb
 
-# G1 with PPO
+# 使用 PPO 训练 G1
 source scripts/source_mujoco_setup.sh
 python src/holosoma/holosoma/train_agent.py \
     exp:g1-29dof \
     simulator:mjwarp \
     logger:wandb
 
-# T1 with FastSAC
+# 使用 FastSAC 训练 T1
 source scripts/source_mujoco_setup.sh
 python src/holosoma/holosoma/train_agent.py \
     exp:t1-29dof-fast-sac \
     simulator:mjwarp \
     logger:wandb
 
-# T1 with PPO
+# 使用 PPO 训练 T1
 source scripts/source_mujoco_setup.sh
 python src/holosoma/holosoma/train_agent.py \
     exp:t1-29dof \
     simulator:mjwarp \
     logger:wandb \
-    --terrain.terrain-term.scale-factor=0.5  # required to avoid training instabilities
+    --terrain.terrain-term.scale-factor=0.5  # 必须设置此参数，以避免训练不稳定
 
 ```
 
-> **Note:**
-> - MJWarp uses `nconmax=96` (maximum contacts per environment) by default. This can be adjusted via `--simulator.config.mujoco-warp.nconmax-per-env=96` if needed.
-> - These examples use `--training.num-envs=4096`, but you may need to adjust this value based on your hardware.
-> - When training T1 with PPO on mixed terrain, use `--terrain.terrain-term.scale-factor=0.5` to avoid training instabilities.
+> **提示：**
+>
+> - MJWarp 默认使用 `nconmax=96`（每个环境的最大接触数量）。如有需要，可通过 `--simulator.config.mujoco-warp.nconmax-per-env=96` 调整。
+> - 这些示例使用 `--training.num-envs=4096`，实际使用时可能需要根据硬件配置调整此值。
+> - 在混合地形上使用 PPO 训练 T1 时，请设置 `--terrain.terrain-term.scale-factor=0.5`，以避免训练不稳定。
 
 
-### Whole-Body Tracking
+<a id="whole-body-tracking"></a>
 
-Train robots to track full-body motion sequences.
+### 全身动作跟踪
 
-**Note**: Currently only supported for Unitree G1 / IsaacSim.
+训练机器人跟踪全身动作序列。
+
+**注意：** 目前仅支持 Unitree G1 与 IsaacSim 的组合。
 
 ```bash
-# G1 with FastSAC
+# 使用 FastSAC 训练 G1
 source scripts/source_isaacsim_setup.sh
 python src/holosoma/holosoma/train_agent.py \
     exp:g1-29dof-wbt-fast-sac \
     logger:wandb
 
-# G1 with PPO
+# 使用 PPO 训练 G1
 source scripts/source_isaacsim_setup.sh
 python src/holosoma/holosoma/train_agent.py \
     exp:g1-29dof-wbt \
     logger:wandb
 
-# Custom motion file
+# 使用自定义动作文件
 source scripts/source_isaacsim_setup.sh
 python src/holosoma/holosoma/train_agent.py \
     exp:g1-29dof-wbt \
     logger:wandb \
     --command.setup_terms.motion_command.params.motion_config.motion_file="holosoma/data/motions/g1_29dof/whole_body_tracking/<your file>.npz"
 
-# Visualize the motion file in isaacsim before training
+# 训练前在 IsaacSim 中可视化回放动作文件
 source scripts/source_isaacsim_setup.sh
 python src/holosoma/holosoma/replay.py \
     exp:g1-29dof-wbt \
@@ -114,52 +125,61 @@ python src/holosoma/holosoma/replay.py \
     --training.num_envs=1
 ```
 
-Once checkpoints are saved, you can evaluate policies using [In-Training Evaluation](#in-training-evaluation) (same simulator as training) or cross-simulator evaluation in MuJoCo (see [holosoma_inference](../holosoma_inference/README.md)).
+保存检查点后，可以使用[训练配置下的评估](#in-training-evaluation)（与训练使用相同的仿真器），也可以在 MuJoCo 中进行跨仿真器评估（参阅 [holosoma_inference 文档](../holosoma_inference/README.md)）。
 
 ---
 
-## Evaluation
+<a id="evaluation"></a>
 
-### In-Training Evaluation
+## 评估
 
-For evaluating policies with the exact same configuration used during training (same simulator, environment settings, etc.):
+<a id="in-training-evaluation"></a>
+
+### 训练配置下的评估
+
+使用与训练时完全相同的配置（包括仿真器、环境设置等）评估策略：
 
 ```bash
-# Evaluate checkpoint from Wandb
+# 评估 Wandb 上的检查点
 python src/holosoma/holosoma/eval_agent.py \
     --checkpoint=wandb://<ENTITY>/<PROJECT>/<RUN_ID>/<CHECKPOINT_NAME>
-# e.g., --checkpoint=wandb://username/fastsac-t1-locomotion/abcdefgh/model_0010000.pt
+# 例如：--checkpoint=wandb://username/fastsac-t1-locomotion/abcdefgh/model_0010000.pt
 
-# Evaluate local checkpoint
+# 评估本地检查点
 python src/holosoma/holosoma/eval_agent.py \
     --checkpoint=<CHECKPOINT_PATH>
-# e.g., --checkpoint=/home/username/checkpoints/fastsac-t1-locomotion/model_0010000.pt
+# 例如：--checkpoint=/home/username/checkpoints/fastsac-t1-locomotion/model_0010000.pt
 ```
 
-This evaluation mode:
-- Automatically loads the training configuration from the checkpoint
-- Runs evaluation in the same simulator and environment as training
-- Can export policies to ONNX format (via `--training.export_onnx=True`)
-- For locomotion evaluation, supports interactive velocity commands via keyboard (when simulator window is active):
-  - `w`/`a`/`s`/`d`: linear velocity commands
-  - `q`/`e`: angular velocity commands
-  - `z`: zero velocity command
+此评估模式支持：
 
-### Cross-Simulator Evaluation (MuJoCo)
+- 自动从检查点加载训练配置。
+- 在与训练相同的仿真器和环境中运行评估。
+- 将策略导出为 ONNX 格式（通过 `--training.export_onnx=True`）。
+- 在运动控制评估中，通过键盘交互式输入速度指令（需使仿真器窗口处于活动状态）：`w`/`a`/`s`/`d` 输入线速度指令，`q`/`e` 输入角速度指令，`z` 将速度指令归零。
 
-For testing trained policies in MuJoCo simulation or deploying to real robots, see the [holosoma_inference documentation](../holosoma_inference/README.md). This covers:
-- Sim-to-sim evaluation (IsaacSim/MJWarp → MuJoCo)
-- Real robot deployment (both locomotion and WBT)
+<a id="cross-simulator-evaluation-mujoco"></a>
 
-**Note**: ONNX policies are typically exported alongside `.pt` checkpoints during training, but can also be generated using the in-training evaluation script above.
+### 跨仿真器评估（MuJoCo）
 
-## Advanced Configuration
+如需在 MuJoCo 仿真中测试训练好的策略，或将策略部署到真实机器人，请参阅 [holosoma_inference 文档](../holosoma_inference/README.md)，其中包括：
 
-The training system uses a hierarchical configuration system. The `exp` config serves as the main entry point with default configurations tuned for each algorithm and robot. You can customize training by overriding parameters on the command line.
+- 跨仿真器评估（IsaacSim/MJWarp → MuJoCo）。
+- 真实机器人部署（运动控制和全身动作跟踪 WBT）。
 
-> **Tip**: When composing Tyro configs, pass the `exp:<name>` preset before any other config fragments (e.g., `logger:wandb`). Tyro expects the base experiment to be declared first, and reversing the order can lead to confusing resolution errors.
+**提示：** 训练过程中通常会在保存 `.pt` 检查点的同时导出 ONNX 策略，也可以使用上述训练配置评估脚本生成 ONNX 策略。
 
-### Logging with Weights & Biases
+<a id="advanced-configuration"></a>
+
+## 高级配置
+
+训练系统采用分层配置。`exp` 配置是主要入口，提供针对各类算法和机器人调优后的默认配置。可以通过命令行覆盖参数，自定义训练过程。
+
+> **提示：** 组合 Tyro 配置时，请将 `exp:<name>` 预设放在其他配置片段（例如 `logger:wandb`）之前。Tyro 要求先声明基础实验，顺序颠倒可能导致难以理解的配置解析错误。
+
+<a id="logging-with-weights--biases"></a>
+
+### 使用 Weights & Biases 记录日志
 
 ```bash
 source scripts/source_isaacsim_setup.sh
@@ -173,33 +193,38 @@ python src/holosoma/holosoma/train_agent.py \
     --logger.name ppo-without-symmetry-seed1
 ```
 
-### Video Recording
+<a id="video-recording"></a>
 
-Video recording is **enabled by default** when using `logger:wandb`. Videos are recorded periodically and uploaded to Weights & Biases.
+### 视频录制
 
-**Configuration:**
+使用 `logger:wandb` 时，**默认启用视频录制**。系统会定期录制视频，并上传到 Weights & Biases。
+
+**配置方式：**
+
 ```bash
-# Disable video recording
+# 关闭视频录制
 --logger.video.enabled False
 
-# Adjust recording interval (episodes)
+# 调整录制间隔（以回合为单位）
 --logger.video.interval 10
 
-# Change resolution
+# 修改分辨率
 --logger.video.width 640 --logger.video.height 360
 ```
 
-**Troubleshooting Headless Environments:**
+**无显示界面环境的问题排查：**
 
-If training fails on headless servers with display/rendering errors (e.g., `GLXBadFBConfig`, `eglInitialize failed`, `GLFW initialization failed`):
+如果在无显示界面的服务器上训练时，出现显示或渲染错误（例如 `GLXBadFBConfig`、`eglInitialize failed`、`GLFW initialization failed`），可采用以下处理方式：
 
-- **IsaacSim:** Disable video with `--logger.video.enabled False`, or force EGL with `DISPLAY= python ...`, or use virtual display with `xvfb-run -a python ...`
-- **MJWarp/MuJoCo:** Set environment variable before training: `export MUJOCO_GL=egl`. See [MuJoCo docs](https://mujoco.readthedocs.io/en/stable/programming/index.html#using-opengl)
+- **IsaacSim：** 使用 `--logger.video.enabled False` 关闭视频录制，或通过 `DISPLAY= python ...` 强制使用 EGL，也可以通过 `xvfb-run -a python ...` 使用虚拟显示器。
+- **MJWarp/MuJoCo：** 训练前设置环境变量 `export MUJOCO_GL=egl`。参阅 [MuJoCo 文档](https://mujoco.readthedocs.io/en/stable/programming/index.html#using-opengl)。
 
-### Terrain
+<a id="terrain"></a>
+
+### 地形
 
 ```bash
-# Use plane terrain instead of mixed terrain
+# 使用平面地形替代混合地形
 source scripts/source_isaacsim_setup.sh
 python src/holosoma/holosoma/train_agent.py \
     exp:g1-29dof-fast-sac \
@@ -207,17 +232,21 @@ python src/holosoma/holosoma/train_agent.py \
     terrain:terrain-locomotion-plane
 ```
 
-### Multi-GPU Training
+<a id="multi-gpu-training"></a>
+
+### 多 GPU 训练
 
 ```bash
 source scripts/source_isaacsim_setup.sh
 torchrun --nproc_per_node=4 src/holosoma/holosoma/train_agent.py \
     exp:t1-29dof-fast-sac \
     simulator:isaacsim \
-    --training.num-envs 16384  # global/total number of environments
+    --training.num-envs 16384  # 所有 GPU 合计的环境总数
 ```
 
-### Custom Reward Weights
+<a id="custom-reward-weights"></a>
+
+### 自定义奖励权重
 
 ```bash
 source scripts/source_isaacsim_setup.sh
@@ -228,10 +257,12 @@ python src/holosoma/holosoma/train_agent.py \
     --reward.terms.feet-phase.params.swing-height=0.12
 ```
 
-### Observation Noise
+<a id="observation-noise"></a>
+
+### 观测噪声
 
 ```bash
-# Disable observation noise
+# 关闭观测噪声
 source scripts/source_isaacsim_setup.sh
 python src/holosoma/holosoma/train_agent.py \
     exp:g1-29dof-fast-sac \
@@ -239,9 +270,11 @@ python src/holosoma/holosoma/train_agent.py \
     --observation.groups.actor-obs.enable-noise=False
 ```
 
-### Observation History Length
+<a id="observation-history-length"></a>
 
-Some policies benefit from stacking multiple timesteps of observations. You can increase the history length used during training with:
+### 观测历史长度
+
+部分策略可以通过堆叠多个时间步的观测获得更好的效果。可以通过以下方式增加训练时使用的观测历史长度：
 
 ```bash
 source scripts/source_isaacsim_setup.sh
@@ -251,19 +284,21 @@ python src/holosoma/holosoma/train_agent.py \
     --observation.groups.actor_obs.history-length 4
 ```
 
-Make sure to pass the same history length when running inference so the exported ONNX policy receives inputs with the correct shape.
+运行推理时，请传入与训练相同的历史长度，确保导出的 ONNX 策略接收到形状正确的输入。
 
-### Curriculum Learning
+<a id="curriculum-learning"></a>
+
+### 课程学习
 
 ```bash
-# Disable curriculum
+# 关闭课程学习
 source scripts/source_isaacsim_setup.sh
 python src/holosoma/holosoma/train_agent.py \
     exp:g1-29dof-fast-sac \
     simulator:isaacsim \
     --curriculum.setup-terms.penalty-curriculum.params.enabled=False
 
-# Custom curriculum threshold (for shorter episodes)
+# 自定义课程学习阈值（适用于较短的回合）
 source scripts/source_isaacsim_setup.sh
 python src/holosoma/holosoma/train_agent.py \
     exp:g1-29dof-fast-sac \
@@ -272,7 +307,9 @@ python src/holosoma/holosoma/train_agent.py \
     --curriculum.setup-terms.penalty-curriculum.params.level-up-threshold=350
 ```
 
-### Domain Randomization
+<a id="domain-randomization"></a>
+
+### 域随机化
 
 ```bash
 source scripts/source_isaacsim_setup.sh

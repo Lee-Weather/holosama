@@ -1,40 +1,52 @@
-# Sim-to-Sim Whole Body Tracking Workflow
+<a id="sim-to-sim-whole-body-tracking-workflow"></a>
 
-> **See also:** [Inference & Deployment Guide](../../README.md) for all deployment options
+# 跨仿真器全身动作跟踪工作流程
 
-This guide provides a complete workflow for running whole body tracking (WBT) policies in MuJoCo simulation.
+> **另请参阅：** [推理与部署指南](../../README.md)，了解所有部署选项。
 
-## Overview
+本指南介绍在 MuJoCo 仿真中运行全身动作跟踪（WBT）策略的完整流程。
 
-The sim-to-sim workflow allows you to replay IsaacSim-trained WBT checkpoints inside MuJoCo for evaluation and testing.
+<a id="overview"></a>
 
-## Prerequisites
+## 概述
 
-- MuJoCo environment set up (`scripts/source_mujoco_setup.sh`)
-- Holosoma inference environment set up (`scripts/source_inference_setup.sh`)
-- ONNX model checkpoint
-- Keyboard for control
+跨仿真器工作流程可在 MuJoCo 中运行 IsaacSim 训练的 WBT 检查点，以便评估和测试。
 
-**Note:** Always use `--task.interface lo` (loopback) when inference and MuJoCo run on the same machine.
+<a id="prerequisites"></a>
+
+## 前提条件
+
+- 已配置 MuJoCo 环境（`scripts/source_mujoco_setup.sh`）
+- 已配置 Holosoma 推理环境（`scripts/source_inference_setup.sh`）
+- ONNX 模型检查点
+- 用于控制的键盘
+
+**注意：** 推理程序和 MuJoCo 在同一台机器运行时，始终使用 `--task.interface lo`（回环接口）。
 
 ---
 
-## Unitree G1 (29-DOF)
+<a id="unitree-g1-29-dof"></a>
 
-### 1. Start MuJoCo Environment
+## Unitree G1（29 自由度）
 
-In one terminal, launch the MuJoCo environment:
+<a id="1-start-mujoco-environment"></a>
+
+### 1. 启动 MuJoCo 环境
+
+在一个终端中启动 MuJoCo 环境：
 
 ```bash
 source scripts/source_mujoco_setup.sh
 python src/holosoma/holosoma/run_sim.py robot:g1-29dof
 ```
 
-The robot will spawn in the simulator, hanging from a gantry.
+机器人将在仿真器中生成，并吊挂在保护架上。
 
-### 2. Launch the Policy
+<a id="2-launch-the-policy"></a>
 
-In another terminal, run the policy inference:
+### 2. 启动策略程序
+
+在另一个终端中运行策略推理：
 
 ```bash
 source scripts/source_inference_setup.sh
@@ -46,69 +58,91 @@ python3 src/holosoma_inference/holosoma_inference/run_policy.py inference:g1-29d
     --task.interface lo
 ```
 
-### 3. Initialize Stiff Control Mode
+<a id="3-initialize-stiff-control-mode"></a>
 
-In policy terminal, press `Enter` when prompted. The robot enters stiff control mode and holds its initial pose.
+### 3. 初始化刚性控制模式
 
-### 4. Deploy the Robot
+在策略终端出现提示时按 `Enter`。机器人进入刚性控制模式并保持初始姿态。
 
-- In MuJoCo window, press `8` to lower the gantry until robot touches ground
-- In MuJoCo window, press `9` to remove gantry
-- Wait a few seconds for the stiff controller to stabilize the robot
+<a id="4-deploy-the-robot"></a>
 
-### 5. Start the Policy
+### 4. 让机器人接触地面
 
-In policy terminal, press `]` to activate the policy.
+- 在 MuJoCo 窗口中按 `8` 降低吊架，直到机器人接触地面。
+- 在 MuJoCo 窗口中按 `9` 移除吊架。
+- 等待数秒，让刚性控制器稳定机器人。
 
-### 6. Start Motion Clip
+<a id="5-start-the-policy"></a>
 
-In policy terminal, press `m` to start the motion clip. The robot will begin tracking the whole body motion.
+### 5. 启用策略
 
----
+在策略终端中按 `]` 启用策略。
 
-## MuJoCo Controls Reference
+<a id="6-start-motion-clip"></a>
 
-**Enter these commands in the MuJoCo window** (not the policy terminal):
+### 6. 开始动作片段
 
-### Gantry Controls
-
-- `7`: Lift the gantry
-- `8`: Lower the gantry
-- `9`: Disable/remove the gantry
-
-### General Controls
-
-- `Backspace`: Reset simulation
+在策略终端中按 `m` 开始动作片段，机器人将开始跟踪全身动作。
 
 ---
 
-## Policy Controls Reference
+<a id="mujoco-controls-reference"></a>
 
-**Enter these commands in the policy terminal** (where you ran `run_policy.py`):
+## MuJoCo 控制参考
 
-### General Controls
+**在 MuJoCo 窗口中输入这些命令**（而不是策略终端）：
 
-| Action | Keyboard | Joystick |
+<a id="gantry-controls"></a>
+
+### 吊架控制
+
+- `7`：升高吊架。
+- `8`：降低吊架。
+- `9`：禁用或移除吊架。
+
+<a id="general-controls"></a>
+
+### 通用控制
+
+- `Backspace`：重置仿真。
+
+---
+
+<a id="policy-controls-reference"></a>
+
+## 策略控制参考
+
+**在策略终端中输入这些命令**（即运行 `run_policy.py` 的终端）：
+
+<a id="general-controls-1"></a>
+
+### 通用控制
+
+| 操作 | 键盘 | 手柄 |
 |--------|----------|----------|
-| Start the policy | `]` | A button |
-| Stop the policy | `o` | B button |
-| Set robot to default pose | `i` | Y button |
+| 启用策略 | `]` | A 键 |
+| 停止策略 | `o` | B 键 |
+| 将机器人设为默认姿态 | `i` | Y 键 |
 
-### Whole Body Tracking Controls
+<a id="whole-body-tracking-controls"></a>
 
-| Action | Keyboard | Joystick |
+### 全身动作跟踪控制
+
+| 操作 | 键盘 | 手柄 |
 |--------|----------|----------|
-| Start motion clip | `m` | Select+A |
+| 开始动作片段 | `m` | Select+A |
 
-**Default pose**: Standing with raised arms
+**默认姿态：** 站立并抬起双臂。
 
 ---
 
-## Tips and Troubleshooting
+<a id="tips-and-troubleshooting"></a>
 
-- **Reset anytime**: Press `Backspace` in the MuJoCo window to reset the simulation
-- **Interface**: Always use `lo` (loopback) for sim-to-sim on the same machine
-- **Stiff mode**: The `Enter` prompt initializes stiff control mode - this is required for WBT policies to maintain balance before the policy starts
-- **Stabilization**: Wait a few seconds after removing the gantry (step 3) before starting the policy to let the stiff controller stabilize
-- **RL rate**: Use `--task.rl-rate 50` for WBT policies (50 Hz control rate)
-- **Sim time**: Use `--task.use-sim-time` to synchronize with MuJoCo's simulation time
+## 提示与故障排查
+
+- **随时重置：** 在 MuJoCo 窗口中按 `Backspace` 重置仿真。
+- **接口：** 在同一台机器进行跨仿真器测试时始终使用 `lo`（回环接口）。
+- **刚性模式：** 在提示时按 `Enter` 初始化刚性控制模式；WBT 策略启动前需要该模式保持平衡。
+- **稳定姿态：** 移除吊架（步骤 3）后，等待数秒让刚性控制器稳定机器人，再启用策略。
+- **强化学习控制频率：** WBT 策略使用 `--task.rl-rate 50`（50 Hz 控制频率）。
+- **仿真时间：** 使用 `--task.use-sim-time` 与 MuJoCo 的仿真时间同步。

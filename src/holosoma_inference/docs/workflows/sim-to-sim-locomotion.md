@@ -1,39 +1,51 @@
-# Sim-to-Sim Locomotion Workflow
+<a id="sim-to-sim-locomotion-workflow"></a>
 
-> **See also:** [Inference & Deployment Guide](../../README.md) for all deployment options
+# 跨仿真器运动控制工作流程
 
-This guide provides a complete workflow for running locomotion policies in MuJoCo simulation.
+> **另请参阅：** [推理与部署指南](../../README.md)，了解所有部署选项。
 
-## Overview
+本指南介绍在 MuJoCo 仿真中运行运动控制策略的完整流程。
 
-The sim-to-sim workflow allows you to replay IsaacSim-trained locomotion checkpoints inside MuJoCo for evaluation and testing.
+<a id="overview"></a>
 
-## Prerequisites
+## 概述
 
-- MuJoCo environment set up (`scripts/source_mujoco_setup.sh`)
-- Holosoma inference environment set up (`scripts/source_inference_setup.sh`)
-- ONNX model checkpoint
-- Keyboard or joystick for control
+跨仿真器工作流程可在 MuJoCo 中运行 IsaacSim 训练的运动控制检查点，以便评估和测试。
 
-**Note:** Always use `--task.interface lo` (loopback) when inference and MuJoCo run on the same machine.
+<a id="prerequisites"></a>
+
+## 前提条件
+
+- 已配置 MuJoCo 环境（`scripts/source_mujoco_setup.sh`）
+- 已配置 Holosoma 推理环境（`scripts/source_inference_setup.sh`）
+- ONNX 模型检查点
+- 用于控制的键盘或手柄
+
+**注意：** 推理程序和 MuJoCo 在同一台机器运行时，始终使用 `--task.interface lo`（回环接口）。
 
 ---
 
-## Robot Workflows
+<a id="robot-workflows"></a>
 
-### Unitree G1 (29-DOF)
+## 机器人工作流程
 
-#### 1. Start MuJoCo Environment
+<a id="unitree-g1-29-dof"></a>
 
-In one terminal, launch the MuJoCo environment:
+### Unitree G1（29 自由度）
 
-**For keyboard control:**
+<a id="1-start-mujoco-environment"></a>
+
+#### 1. 启动 MuJoCo 环境
+
+在一个终端中启动 MuJoCo 环境：
+
+**使用键盘控制：**
 ```bash
 source scripts/source_mujoco_setup.sh
 python src/holosoma/holosoma/run_sim.py robot:g1-29dof
 ```
 
-**For joystick control:**
+**使用手柄控制：**
 ```bash
 source scripts/source_mujoco_setup.sh
 python src/holosoma/holosoma/run_sim.py robot:g1-29dof \
@@ -41,13 +53,15 @@ python src/holosoma/holosoma/run_sim.py robot:g1-29dof \
     --simulator.config.bridge.use-joystick=True
 ```
 
-The robot will spawn in the simulator, hanging from a gantry.
+机器人将在仿真器中生成，并吊挂在保护架上。
 
-#### 2. Launch the Policy
+<a id="2-launch-the-policy"></a>
 
-In another terminal, run the policy inference:
+#### 2. 启动策略程序
 
-**For keyboard control:**
+在另一个终端中运行策略推理：
+
+**使用键盘控制：**
 ```bash
 source scripts/source_inference_setup.sh
 python3 src/holosoma_inference/holosoma_inference/run_policy.py inference:g1-29dof-loco \
@@ -56,7 +70,7 @@ python3 src/holosoma_inference/holosoma_inference/run_policy.py inference:g1-29d
     --task.interface lo
 ```
 
-**For joystick control:**
+**使用手柄控制：**
 ```bash
 source scripts/source_inference_setup.sh
 python3 src/holosoma_inference/holosoma_inference/run_policy.py inference:g1-29dof-loco \
@@ -65,40 +79,52 @@ python3 src/holosoma_inference/holosoma_inference/run_policy.py inference:g1-29d
     --task.interface lo
 ```
 
-#### 3. Deploy the Robot
+<a id="3-deploy-the-robot"></a>
 
-- In MuJoCo window, press `8` to lower the gantry until robot touches ground
-- In MuJoCo window, press `9` to remove gantry
+#### 3. 让机器人接触地面
 
-#### 4. Start the Policy
+- 在 MuJoCo 窗口中按 `8` 降低吊架，直到机器人接触地面。
+- 在 MuJoCo 窗口中按 `9` 移除吊架。
 
-In policy terminal, press `]` (or `A` button on joystick) to activate the policy.
+<a id="4-start-the-policy"></a>
 
-#### 5. Enter Walking Mode
+#### 4. 启用策略
 
-In policy terminal, press `=` (or `Start` button on joystick) to enter walking mode.
+在策略终端中按 `]`（或按手柄上的 `A` 键）启用策略。
 
-#### 6. Control the Robot
+<a id="5-enter-walking-mode"></a>
 
-- Use keyboard (`w` `a` `s` `d` for linear, `q` `e` for angular) or joystick to control velocity
-- Left joystick: Move forward/backward/left/right
-- Right joystick: Turn left/right
+#### 5. 进入行走模式
+
+在策略终端中按 `=`（或按手柄上的 `Start` 键）进入行走模式。
+
+<a id="6-control-the-robot"></a>
+
+#### 6. 控制机器人
+
+- 使用键盘（`w` `a` `s` `d` 控制线速度，`q` `e` 控制角速度）或手柄控制速度。
+- 左摇杆：前进、后退、左移和右移。
+- 右摇杆：左转和右转。
 
 ---
 
-### Booster T1 (29-DOF)
+<a id="booster-t1-29-dof"></a>
 
-#### 1. Start MuJoCo Environment
+### Booster T1（29 自由度）
 
-In one terminal, launch the MuJoCo environment:
+<a id="1-start-mujoco-environment-1"></a>
 
-**For keyboard control:**
+#### 1. 启动 MuJoCo 环境
+
+在一个终端中启动 MuJoCo 环境：
+
+**使用键盘控制：**
 ```bash
 source scripts/source_mujoco_setup.sh
 python src/holosoma/holosoma/run_sim.py robot:t1-29dof-waist-wrist
 ```
 
-**For joystick control:**
+**使用手柄控制：**
 ```bash
 source scripts/source_mujoco_setup.sh
 python src/holosoma/holosoma/run_sim.py robot:t1-29dof-waist-wrist \
@@ -106,13 +132,15 @@ python src/holosoma/holosoma/run_sim.py robot:t1-29dof-waist-wrist \
     --simulator.config.bridge.use-joystick=True
 ```
 
-The robot will spawn in the simulator, hanging from a gantry.
+机器人将在仿真器中生成，并吊挂在保护架上。
 
-#### 2. Launch the Policy
+<a id="2-launch-the-policy-1"></a>
 
-In another terminal, run the policy inference:
+#### 2. 启动策略程序
 
-**For keyboard control:**
+在另一个终端中运行策略推理：
+
+**使用键盘控制：**
 ```bash
 source scripts/source_inference_setup.sh
 python3 src/holosoma_inference/holosoma_inference/run_policy.py inference:t1-29dof-loco \
@@ -121,7 +149,7 @@ python3 src/holosoma_inference/holosoma_inference/run_policy.py inference:t1-29d
     --task.interface lo
 ```
 
-**For joystick control:**
+**使用手柄控制：**
 ```bash
 source scripts/source_inference_setup.sh
 python3 src/holosoma_inference/holosoma_inference/run_policy.py inference:t1-29dof-loco \
@@ -130,68 +158,90 @@ python3 src/holosoma_inference/holosoma_inference/run_policy.py inference:t1-29d
     --task.interface lo
 ```
 
-#### 3. Deploy the Robot
+<a id="3-deploy-the-robot-1"></a>
 
-- In MuJoCo window, press `8` to lower the gantry until robot touches ground
-- In MuJoCo window, press `9` to remove gantry
+#### 3. 让机器人接触地面
 
-#### 4. Start the Policy
+- 在 MuJoCo 窗口中按 `8` 降低吊架，直到机器人接触地面。
+- 在 MuJoCo 窗口中按 `9` 移除吊架。
 
-In policy terminal, press `]` to activate the policy.
+<a id="4-start-the-policy-1"></a>
 
-#### 5. Enter Walking Mode
+#### 4. 启用策略
 
-In policy terminal, press `=` to enter walking mode.
+在策略终端中按 `]` 启用策略。
 
-#### 6. Control the Robot
+<a id="5-enter-walking-mode-1"></a>
 
-Use keyboard to control velocity:
-- `w` `a` `s` `d` for linear movement (forward/backward/left/right)
-- `q` `e` for angular movement (turn left/right)
+#### 5. 进入行走模式
 
----
+在策略终端中按 `=` 进入行走模式。
 
-## MuJoCo Controls Reference
+<a id="6-control-the-robot-1"></a>
 
-**Enter these commands in the MuJoCo window** (not the policy terminal):
+#### 6. 控制机器人
 
-### Gantry Controls
-
-- `7`: Lift the gantry
-- `8`: Lower the gantry
-- `9`: Disable/remove the gantry
-
-### General Controls
-
-- `Backspace`: Reset simulation
+使用键盘控制速度：
+- `w` `a` `s` `d` 控制线性运动（前进、后退、左移、右移）。
+- `q` `e` 控制角运动（左转、右转）。
 
 ---
 
-## Policy Controls Reference
+<a id="mujoco-controls-reference"></a>
 
-**Enter these commands in the policy terminal** (where you ran `run_policy.py`):
+## MuJoCo 控制参考
 
-### General Controls
+**在 MuJoCo 窗口中输入这些命令**（而不是策略终端）：
 
-| Action | Keyboard | Joystick |
+<a id="gantry-controls"></a>
+
+### 吊架控制
+
+- `7`：升高吊架。
+- `8`：降低吊架。
+- `9`：禁用或移除吊架。
+
+<a id="general-controls"></a>
+
+### 通用控制
+
+- `Backspace`：重置仿真。
+
+---
+
+<a id="policy-controls-reference"></a>
+
+## 策略控制参考
+
+**在策略终端中输入这些命令**（即运行 `run_policy.py` 的终端）：
+
+<a id="general-controls-1"></a>
+
+### 通用控制
+
+| 操作 | 键盘 | 手柄 |
 |--------|----------|----------|
-| Start the policy | `]` | A button |
-| Stop the policy | `o` | B button |
-| Set robot to default pose | `i` | Y button |
+| 启用策略 | `]` | A 键 |
+| 停止策略 | `o` | B 键 |
+| 将机器人设为默认姿态 | `i` | Y 键 |
 
-### Locomotion Controls
+<a id="locomotion-controls"></a>
 
-| Action | Keyboard | Joystick |
+### 运动控制
+
+| 操作 | 键盘 | 手柄 |
 |--------|----------|----------|
-| Switch walking/standing | `=` | Start button |
-| Adjust linear velocity | `w` `a` `s` `d` | Left stick |
-| Adjust angular velocity | `q` `e` | Right stick |
+| 切换行走/站立模式 | `=` | Start 键 |
+| 调整线速度 | `w` `a` `s` `d` | 左摇杆 |
+| 调整角速度 | `q` `e` | 右摇杆 |
 
 ---
 
-## Tips and Troubleshooting
+<a id="tips-and-troubleshooting"></a>
 
-- **Reset anytime**: Press `Backspace` in the MuJoCo window to reset the simulation
-- **Interface**: Always use `lo` (loopback) for sim-to-sim on the same machine
-- **Standing mode**: The robot starts in standing mode - press `=` or `Start` to switch to walking mode
-- **Default pose**: Press `i` or `Y` button to return the robot to standing pose
+## 提示与故障排查
+
+- **随时重置：** 在 MuJoCo 窗口中按 `Backspace` 重置仿真。
+- **接口：** 在同一台机器进行跨仿真器测试时始终使用 `lo`（回环接口）。
+- **站立模式：** 机器人初始处于站立模式，按 `=` 或 `Start` 切换到行走模式。
+- **默认姿态：** 按 `i` 或 `Y` 键使机器人恢复站立姿态。

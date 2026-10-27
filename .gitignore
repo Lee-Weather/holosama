@@ -47,3 +47,9 @@ wandb-metadata.json
 
 # BAZEL build artifacts
 BUILD.bazel
+
+# Local credentials
+**/api_key.json
+.env
+.env.*
+!.env.example

@@ -1,57 +1,77 @@
-# Real Robot Locomotion Workflow
+<a id="real-robot-locomotion-workflow"></a>
 
-> **See also:** [Inference & Deployment Guide](../../README.md) for all deployment options
+# 真实机器人运动控制工作流程
 
-This guide provides a complete workflow for running locomotion policies on physical robot hardware.
+> **另请参阅：** [推理与部署指南](../../README.md)，了解所有部署选项。
 
-## Overview
+本指南介绍在真实机器人硬件上运行运动控制策略的完整流程。
 
-Deploy and run locomotion policies on physical Unitree G1 or Booster T1 robots with velocity tracking control.
+<a id="overview"></a>
 
-## Prerequisites
+## 概述
 
-- Physical robot hardware (Unitree G1 or Booster T1)
-- Ethernet cable
-- Controller (Default remote controller for robot or a custom joystick)
-- Laptop with holosoma inference environment set up
+将运动控制策略部署到真实的 Unitree G1 或 Booster T1 机器人，执行速度跟踪控制。
+
+<a id="prerequisites"></a>
+
+## 前提条件
+
+- 真实机器人硬件（Unitree G1 或 Booster T1）
+- 以太网线
+- 控制器（机器人原配遥控器或自定义手柄）
+- 已配置 Holosoma 推理环境的笔记本电脑
 
 ---
 
-## Unitree G1 (29-DOF)
+<a id="unitree-g1-29-dof"></a>
 
-### Hardware Setup
+## Unitree G1（29 自由度）
 
-#### 1. Prepare the Robot
+<a id="hardware-setup"></a>
 
-- Hang the robot on the gantry
-- Turn on the robot and the controller
-- Connect the robot to your laptop with an Ethernet cable
-- Put the robot in damping mode
-- Press `L2+R2` on the controller to enter development mode
+### 硬件配置
 
-For detailed hardware setup instructions, see the [Unitree Quick Start page](https://support.unitree.com/home/en/G1_developer/quick_start).
+<a id="1-prepare-the-robot"></a>
 
-#### 2. Configure Network
+#### 1. 准备机器人
 
-Configure your laptop's network interface:
-- IP Address: `192.168.123.224`
-- Netmask: `255.255.255.0`
+- 将机器人吊挂在保护架上。
+- 启动机器人和遥控器。
+- 使用网线连接机器人和笔记本电脑。
+- 将机器人切换到阻尼模式。
+- 按遥控器上的 `L2+R2` 进入开发模式。
 
-#### 3. Find Your Network Interface
+详细的硬件配置说明请参阅 [Unitree 快速开始页面](https://support.unitree.com/home/en/G1_developer/quick_start)。
 
-Identify which network interface is connected to the robot:
+<a id="2-configure-network"></a>
+
+#### 2. 配置网络
+
+配置笔记本电脑的网络接口：
+- IP 地址：`192.168.123.224`
+- 子网掩码：`255.255.255.0`
+
+<a id="3-find-your-network-interface"></a>
+
+#### 3. 查找网络接口
+
+查找与机器人连接的网络接口：
 
 ```bash
 ifconfig
 ```
 
-Look for the interface with IP `192.168.123.224`. Common names:
-- `eth0` - Common Ethernet interface name
-- `enp0s31f6` - Modern Linux Ethernet naming
+查找 IP 地址为 `192.168.123.224` 的接口。常见名称包括：
+- `eth0`：常见的以太网接口名称。
+- `enp0s31f6`：现代 Linux 以太网命名方式。
 
-### Running the Policy
+<a id="running-the-policy"></a>
 
-#### 1. Launch the Policy
+### 运行策略
+
+<a id="1-launch-the-policy"></a>
+
+#### 1. 启动策略程序
 
 ```bash
 source scripts/source_inference_setup.sh
@@ -61,67 +81,87 @@ python3 src/holosoma_inference/holosoma_inference/run_policy.py inference:g1-29d
     --task.interface eth0
 ```
 
-**Notes**:
-- Replace `eth0` with your network interface name (e.g., `enp0s31f6`). Find it using `ifconfig`.
-- For mixed input setups (e.g., ROS2 velocity + keyboard commands), see the [Input Sources](../../README.md#input-sources) section.
+**注意：**
+- 将 `eth0` 替换为实际网络接口名称（例如 `enp0s31f6`），可使用 `ifconfig` 查看。
+- 如需混合输入（例如 ROS2 速度指令和键盘命令），参阅[输入来源](../../README.md#input-sources)。
 
-#### 2. Start the Policy
+<a id="2-start-the-policy"></a>
 
-Press `A` button on joystick to activate the policy.
+#### 2. 启用策略
 
-#### 3. Enter Walking Mode
+按手柄上的 `A` 键启用策略。
 
-Press `Start` button on joystick to enter walking mode.
+<a id="3-enter-walking-mode"></a>
 
-#### 4. Control the Robot
+#### 3. 进入行走模式
 
-- Use left joystick to move forward/backward/left/right
-- Use right joystick to turn left/right
+按手柄上的 `Start` 键进入行走模式。
+
+<a id="4-control-the-robot"></a>
+
+#### 4. 控制机器人
+
+- 使用左摇杆控制前进、后退、左移和右移。
+- 使用右摇杆控制左转和右转。
 
 ---
 
-## Booster T1 (29-DOF)
+<a id="booster-t1-29-dof"></a>
 
-### Hardware Setup
+## Booster T1（29 自由度）
 
-#### 1. Prepare the Robot
+<a id="hardware-setup-1"></a>
 
-- Hang the robot on the gantry
-- Turn on the robot and bring the default remote controller
-- Connect the robot to your laptop with an Ethernet cable
-- (Optional) Connect your custom joystick to the laptop if you want joystick control
-- Put the robot in PREP mode (`RT + Y` with the default remote controller)
+### 硬件配置
 
-**Important - T1 Control Options**:
-- **Keyboard control** (default): You can control the robot using keyboard commands in the policy terminal
-- **Joystick control** (optional): If you prefer joystick control, you will need **two joysticks**:
-  1. **Default Booster T1 remote controller**: Only for putting the robot in damping or PREP mode
-  2. **Custom joystick connected to laptop**: For all policy control (starting policy, walking mode, velocity control)
+<a id="1-prepare-the-robot-1"></a>
 
-For detailed hardware setup instructions, see the [Booster T1 Documentation](https://booster.feishu.cn/wiki/XAS3wv4lwiSiXXkDbMrceE6UnHc).
+#### 1. 准备机器人
 
-#### 2. Configure Network
+- 将机器人吊挂在保护架上。
+- 启动机器人并准备原配遥控器。
+- 使用网线连接机器人和笔记本电脑。
+- （可选）如果使用手柄控制，将自定义手柄连接到笔记本电脑。
+- 将机器人切换到 PREP 模式（使用原配遥控器按 `RT + Y`）。
 
-Configure your laptop's network interface:
-- IP Address: `192.168.10.10`
-- Netmask: `255.255.255.0`
-- Gateway: `192.168.10.1`
+**重要：T1 的控制方式：**
+- **键盘控制**（默认）：在策略终端中使用键盘命令控制机器人。
+- **手柄控制**（可选）：如果使用手柄控制，需要**两个控制器**：
+  1. **Booster T1 原配遥控器**：仅用于将机器人切换到阻尼或 PREP 模式。
+  2. **连接到笔记本电脑的自定义手柄**：用于全部策略控制（启动策略、切换行走模式、控制速度）。
 
-#### 3. Find Your Network Interface
+详细的硬件配置说明请参阅 [Booster T1 文档](https://booster.feishu.cn/wiki/XAS3wv4lwiSiXXkDbMrceE6UnHc)。
 
-Identify which network interface is connected to the robot:
+<a id="2-configure-network-1"></a>
+
+#### 2. 配置网络
+
+配置笔记本电脑的网络接口：
+- IP 地址：`192.168.10.10`
+- 子网掩码：`255.255.255.0`
+- 网关：`192.168.10.1`
+
+<a id="3-find-your-network-interface-1"></a>
+
+#### 3. 查找网络接口
+
+查找与机器人连接的网络接口：
 
 ```bash
 ifconfig
 ```
 
-Look for the interface with IP `192.168.10.10`. Common names:
-- `eth0` - Common Ethernet interface name
-- `enp0s31f6` - Modern Linux Ethernet naming
+查找 IP 地址为 `192.168.10.10` 的接口。常见名称包括：
+- `eth0`：常见的以太网接口名称。
+- `enp0s31f6`：现代 Linux 以太网命名方式。
 
-### Running the Policy
+<a id="running-the-policy-1"></a>
 
-#### 1. Launch the Policy
+### 运行策略
+
+<a id="1-launch-the-policy-1"></a>
+
+#### 1. 启动策略程序
 
 ```bash
 source scripts/source_inference_setup.sh
@@ -131,92 +171,112 @@ python3 src/holosoma_inference/holosoma_inference/run_policy.py inference:t1-29d
     --task.interface eth0
 ```
 
-**Notes**:
-- Replace `eth0` with your network interface name (e.g., `enp0s31f6`). Find it using `ifconfig`.
-- **Joystick control**: If using joystick, use the custom joystick connected to the laptop (not the default Booster T1 remote controller) for all policy controls.
-- **Keyboard control**: Remove `--task.use-joystick` flag to control the robot with keyboard commands instead.
-- **Mixed input**: Use `--task.velocity-input` and `--task.state-input` individually for mixed setups (e.g., ROS2 velocity + keyboard commands). See the [Input Sources](../../README.md#input-sources) section for details.
+**注意：**
+- 将 `eth0` 替换为实际网络接口名称（例如 `enp0s31f6`），可使用 `ifconfig` 查看。
+- **手柄控制：** 使用连接到笔记本电脑的自定义手柄执行所有策略控制，而非 Booster T1 原配遥控器。
+- **键盘控制：** 去掉 `--task.use-joystick` 参数，即可改用键盘命令控制机器人。
+- **混合输入：** 分别使用 `--task.velocity-input` 和 `--task.state-input` 配置混合输入（例如 ROS2 速度指令和键盘命令）。详见[输入来源](../../README.md#input-sources)。
 
-#### 2. Start the Policy
+<a id="2-start-the-policy-1"></a>
 
-Press `A` button on joystick to activate the policy.
+#### 2. 启用策略
 
-#### 3. Enter Walking Mode
+按手柄上的 `A` 键启用策略。
 
-Press `Start` button on joystick to enter walking mode.
+<a id="3-enter-walking-mode-1"></a>
 
-#### 4. Control the Robot
+#### 3. 进入行走模式
 
-- Use left joystick to move forward/backward/left/right
-- Use right joystick to turn left/right
+按手柄上的 `Start` 键进入行走模式。
 
----
+<a id="4-control-the-robot-1"></a>
 
-## Policy Controls Reference
+#### 4. 控制机器人
 
-**Enter these commands in the policy terminal** (where you ran `run_policy.py`):
-
-### General Controls
-
-| Action | Keyboard | Joystick |
-|--------|----------|----------|
-| Start the policy | `]` | A button |
-| Stop the policy | `o` | B button |
-| Set robot to default pose | `i` | Y button |
-| Kill controller program | - | L1 (LB) + R1 (RB) |
-
-### Locomotion Controls
-
-| Action | Keyboard | Joystick |
-|--------|----------|----------|
-| Switch walking/standing | `=` | Start button |
-| Adjust linear velocity | `w` `a` `s` `d` | Left stick |
-| Adjust angular velocity | `q` `e` | Right stick |
+- 使用左摇杆控制前进、后退、左移和右移。
+- 使用右摇杆控制左转和右转。
 
 ---
 
-## Deployment Options
+<a id="policy-controls-reference"></a>
 
-### Option 1: Run Offboard (Laptop)
+## 策略控制参考
 
-This is the default setup described above. The policy runs on your laptop and communicates with the robot over Ethernet.
+**在策略终端中输入这些命令**（即运行 `run_policy.py` 的终端）：
 
-**Advantages:**
-- Easier to debug and monitor
-- No need to modify robot software
-- Quick iteration
+<a id="general-controls"></a>
 
-**Requirements:**
-- Stable Ethernet connection
-- Laptop with sufficient compute
+### 通用控制
 
-### Option 2: Run Onboard (Jetson)
+| 操作 | 键盘 | 手柄 |
+|--------|----------|----------|
+| 启用策略 | `]` | A 键 |
+| 停止策略 | `o` | B 键 |
+| 将机器人设为默认姿态 | `i` | Y 键 |
+| 结束控制程序 | - | L1（LB）+ R1（RB） |
 
-Run the policy directly on the robot's onboard Jetson computer for lower latency.
+<a id="locomotion-controls"></a>
 
-#### Setup Steps
+### 运动控制
 
-1. Complete hardware setup (see above)
+| 操作 | 键盘 | 手柄 |
+|--------|----------|----------|
+| 切换行走/站立模式 | `=` | Start 键 |
+| 调整线速度 | `w` `a` `s` `d` | 左摇杆 |
+| 调整角速度 | `q` `e` | 右摇杆 |
 
-2. SSH to the onboard Jetson:
+---
+
+<a id="deployment-options"></a>
+
+## 部署选项
+
+<a id="option-1-run-offboard-laptop"></a>
+
+### 选项 1：在外部电脑运行（笔记本电脑）
+
+这是上文介绍的默认部署方式：策略在笔记本电脑上运行，并通过以太网与机器人通信。
+
+**优点：**
+- 便于调试和监控。
+- 无需修改机器人软件。
+- 便于快速迭代。
+
+**要求：**
+- 稳定的以太网连接。
+- 具有足够算力的笔记本电脑。
+
+<a id="option-2-run-onboard-jetson"></a>
+
+### 选项 2：在机载电脑运行（Jetson）
+
+在机器人机载 Jetson 电脑上直接运行策略，以降低延迟。
+
+<a id="setup-steps"></a>
+
+#### 配置步骤
+
+1. 完成硬件配置（见上文）。
+
+2. 通过 SSH 连接机载 Jetson：
    ```bash
    ssh unitree@192.168.123.164
-   # Default password: '123'
+   # 默认密码：'123'
    ```
 
-3. Set Jetson to maximum performance:
+3. 将 Jetson 设置为最高性能模式：
    ```bash
    sudo jetson_clocks
    ```
 
-4. Set up the environment on Jetson:
+4. 在 Jetson 上配置环境：
    ```bash
    cd ~/holosoma
    bash scripts/setup_inference.sh
    source scripts/source_inference_setup.sh
    ```
 
-5. Run the policy using `eth0` interface:
+5. 使用 `eth0` 接口运行策略：
    ```bash
    python3 src/holosoma_inference/holosoma_inference/run_policy.py inference:<task-config> \
        --task.model-path <path-to-onnx> \
@@ -224,64 +284,78 @@ Run the policy directly on the robot's onboard Jetson computer for lower latency
        --task.interface eth0
    ```
 
-**Advantages:**
-- Lower latency
-- No external laptop required after setup
-- More portable
+**优点：**
+- 延迟更低。
+- 配置完成后无需外接笔记本电脑。
+- 便于移动使用。
 
-### Option 3: Run Inside Docker
+<a id="option-3-run-inside-docker"></a>
 
-Run the policy inside a Docker container (works both onboard and offboard).
+### 选项 3：在 Docker 中运行
 
-#### Setup Steps
+在 Docker 容器中运行策略，机载和外部电脑部署均可使用。
 
-1. Complete hardware setup (see above)
+<a id="setup-steps-1"></a>
 
-2. Build the Docker image:
+#### 配置步骤
+
+1. 完成硬件配置（见上文）。
+
+2. 构建 Docker 镜像：
    ```bash
    ECR_REGISTRY="account-id.dkr.ecr.region.amazonaws.com" \
      bash holosoma/src/holosoma_inference/docker/build.sh
    ```
 
-3. Create and enter the Docker container:
+3. 创建并进入 Docker 容器：
    ```bash
    bash holosoma/src/holosoma_inference/docker/run.sh
    ```
 
-4. Run the policy inside the container:
-   - Use `eth0` on Jetson
-   - Use your interface name on laptop (check with `ifconfig`)
+4. 在容器中运行策略：
+   - 在 Jetson 上使用 `eth0`。
+   - 在笔记本电脑上使用实际接口名称（通过 `ifconfig` 查看）。
 
-**Advantages:**
-- Consistent environment
-- Easier dependency management
-- Reproducible setup
+**优点：**
+- 环境一致。
+- 便于管理依赖。
+- 配置可复现。
 
 ---
 
-## Tips and Troubleshooting
+<a id="tips-and-troubleshooting"></a>
 
-### Network Issues
+## 提示与故障排查
 
-- **Cannot connect to robot**: Verify your IP configuration matches your robot (G1: `192.168.123.224`, T1: `192.168.10.10`) with correct netmask
-- **Wrong interface**: Use `ifconfig` to verify which interface is connected to the robot
-- **Connection drops**: Ensure Ethernet cable is properly connected and not damaged
+<a id="network-issues"></a>
 
-### Robot Behavior
+### 网络问题
 
-- **Standing mode**: The robot starts in standing mode - press `Start` to switch to walking mode
-- **Emergency stop**: Press `L1 + R1` (LB + RB) on joystick to kill the controller
-- **Default pose**: Press `Y` button to return the robot to standing pose
-- **Damping mode**: If robot becomes stiff or unresponsive, put it back in damping mode via the controller
+- **无法连接机器人：** 确认 IP 地址与机器人匹配（G1：`192.168.123.224`；T1：`192.168.10.10`），且子网掩码正确。
+- **接口错误：** 使用 `ifconfig` 确认与机器人连接的接口。
+- **连接中断：** 确认网线连接正常且未损坏。
 
-### Control Issues
+<a id="robot-behavior"></a>
 
-- **No joystick response**: Ensure `--task.use-joystick` flag is set
-- **Keyboard control**: Remove `--task.use-joystick` flag to use keyboard instead
-- **Low responsiveness**: Check network latency if running offboard
+### 机器人行为
 
-### Safety
+- **站立模式：** 机器人初始处于站立模式，按 `Start` 切换到行走模式。
+- **紧急停止：** 按手柄上的 `L1 + R1`（LB + RB）结束控制程序。
+- **默认姿态：** 按 `Y` 键使机器人恢复站立姿态。
+- **阻尼模式：** 如果机器人变得僵硬或无响应，通过遥控器将其切回阻尼模式。
 
-- **Always** keep the robot on the gantry for initial testing
-- Have the emergency stop ready (`L1 + R1`)
-- Clear the area around the robot before walking
+<a id="control-issues"></a>
+
+### 控制问题
+
+- **手柄无响应：** 确认已设置 `--task.use-joystick` 参数。
+- **键盘控制：** 去掉 `--task.use-joystick` 参数，即可改用键盘。
+- **响应迟缓：** 在外部电脑运行时检查网络延迟。
+
+<a id="safety"></a>
+
+### 安全
+
+- 初始测试时**始终**将机器人保持在保护吊架上。
+- 准备好紧急停止操作（`L1 + R1`）。
+- 行走前清理机器人周围区域。

@@ -1,23 +1,20 @@
-# Native inference library
+<a id="native-inference-library"></a>
+# 原生推理库
 
-The C++ library owns model execution, observation history, action scaling and
-policy state. Python binds that same implementation. Constructing a library
-policy opens no robot, socket, keyboard listener or SDK interface.
+C++ 库负责模型执行、观测历史、动作缩放和策略状态。Python 绑定的是同一套实现。构造库中的策略时，不会连接机器人、打开套接字、启动键盘监听器或打开 SDK 接口。
 
+<a id="python"></a>
 ## Python
 
-The shared front door is `Policy(preset_path, checkpoint_path)`. Its `step(RobotState)` returns a `JointCommand` for locomotion, embedded-motion WBT or host-reference WBT. `set_reference(ReferenceWindow)` supplies the latter's reference. The preset/config factories below compose this same class.
+统一入口是 `Policy(preset_path, checkpoint_path)`。对于运动控制、内嵌动作的全身跟踪（WBT）或由调用方提供参考的 WBT，其 `step(RobotState)` 都会返回一个 `JointCommand`。`set_reference(ReferenceWindow)` 为后一种方式提供参考数据。下面的预设和配置工厂均基于同一个类进行组合。
 
-Build the extension with a C++17 compiler and CMake:
+使用 C++17 编译器和 CMake 构建扩展：
 
 ```sh
 uv pip install ./src/holosoma_inference
 ```
 
-Dependencies are resolved by CMake from installed packages or pinned downloads.
-Set `ONNXRUNTIME_ROOT` for an existing SDK, including a CUDA-enabled SDK. The
-default source build uses CPU inference. Robot SDKs are optional extras for the
-explicit command-line runner, not dependencies of the device-free API.
+CMake 从已安装的软件包或固定版本的下载资源中解析依赖。如需使用已有 SDK（包括支持 CUDA 的 SDK），请设置 `ONNXRUNTIME_ROOT`。默认的源码构建使用 CPU 推理。机器人 SDK 是显式启动的命令行运行程序的可选依赖，无设备 API 不依赖它们。
 
 ```python
 from dataclasses import replace
@@ -36,37 +33,18 @@ width *= obs_config.history_length_dict.get("actor_obs", 1)
 targets = policy.step(np.zeros((1, width), dtype=np.float32))
 ```
 
-`get_config` returns an independent copy and includes registered extension
-presets. SDK-specific fields on robot-config subclasses remain available to the
-Python transport owner; the native engine receives the common robot contract.
-`InferenceConfig` and `LocomotionPolicy(config)` are also exported for
-composition without a named preset. Model paths may be local or supported W&B
-URLs, resolved before native construction. Packed observations must have shape
-`(N,)` or `(1, N)` and contain finite values. The returned `(1, num_joints)` array
-contains absolute joint-position targets, including defaults and calibration
-offsets, not raw neural-network actions.
+`get_config` 返回独立副本，并包含已注册的扩展预设。机器人配置子类中的 SDK 专用字段仍可供 Python 通信层使用；原生引擎接收通用机器人约定。还导出了 `InferenceConfig` 和 `LocomotionPolicy(config)`，以便不使用命名预设进行组合。模型路径可以是本地路径或受支持的 W&B URL，路径会在构造原生对象之前解析。打包后的观测必须具有 `(N,)` 或 `(1, N)` 形状，且数值必须有限。返回的 `(1, num_joints)` 数组包含绝对关节位置目标，其中已包含默认值和标定偏移，而不是神经网络的原始动作。
 
-For native observation construction, `policy.step_state(state)` accepts the
-existing joint-ordered flat state:
+使用原生观测构造时，`policy.step_state(state)` 接受以下按关节顺序排列的扁平状态：
 `[base_pos(3), quaternion_wxyz(4), joint_pos(N), base_lin_vel(3),
-base_ang_vel(3), joint_vel(N)]`, optionally followed by corrected gravity (3).
-It returns a command with `q`, `dq`, `tau`, `kp` and `kd`. Start with
-`autostart=False` for explicit `policy.command("START")` / `"STOP"` / `"INIT"`
-control. `velocity(x, y, yaw)` supplies a locomotion request.
-`step_state` advances the gait phase once per call; an external loop that already
-advances it passes `advance_phase=False`. `infer_offsets(state)` warms the native
-model and history without changing engagement or publishing a command.
+base_ang_vel(3), joint_vel(N)]`，其后可以附加修正后的重力向量（3 个值）。返回的命令包含 `q`、`dq`、`tau`、`kp` 和 `kd`。若要通过 `policy.command("START")` / `"STOP"` / `"INIT"` 显式控制，应以 `autostart=False` 启动。`velocity(x, y, yaw)` 用于提供运动请求。`step_state` 每调用一次会推进一次步态相位；如果外部循环已负责推进相位，应传入 `advance_phase=False`。`infer_offsets(state)` 用于预热原生模型和历史，不会改变启用状态或发布命令。
 
-## Live-reference whole-body tracking
+<a id="live-reference-whole-body-tracking"></a>
+## 实时参考全身跟踪
 
-Embedded-motion policies read their reference outputs from the model. A
-live-reference policy instead receives reference frames from its caller and
-derives its observation layout from ONNX `experiment_config` metadata. These
-contracts remain explicit; neither guesses the other's layout from its width.
+内嵌动作策略从模型中读取参考输出。实时参考策略则从调用方接收参考帧，并根据 ONNX `experiment_config` 元数据确定观测布局。两种约定均是显式定义的，不会仅根据宽度猜测另一种布局。
 
-SONIC-aligned layout names refer to NVIDIA's public
-[GEAR-SONIC model family](https://github.com/NVlabs/GR00T-WholeBodyControl).
-The parser retains the corresponding exporter metadata keys for compatibility.
+与 SONIC 对齐的布局名称指的是 NVIDIA 公开的 [GEAR-SONIC 模型系列](https://github.com/NVlabs/GR00T-WholeBodyControl)。为保持兼容，解析器保留了相应的导出器元数据键。
 
 ```python
 from holosoma_inference import Policy, RobotState, ReferenceWindow
@@ -84,21 +62,18 @@ policy.set_elapsed_seconds(0.0)
 command = policy.step(state)
 ```
 
-The snippet illustrates the types, not a robot motion sequence. Live frames use
-the checkpoint's metadata joint order, wxyz orientation, body-local angular velocity and SI
-units. `reset_heading()` reanchors heading and motion phase while preserving
-history; `reset()` starts a new episode and clears history/action feedback.
+上述代码仅展示数据类型，并非机器人动作序列。实时帧使用检查点元数据中的关节顺序、wxyz 四元数方向、机体局部坐标系角速度和国际单位制。`reset_heading()` 重新锚定航向和动作相位，同时保留历史；`reset()` 开始新的 episode，并清除历史与动作反馈。
 
-History initialization is a runtime setting, `task.wbt_history_initialization` (`--task.wbt-history-initialization` for `run_policy` and the C++ runner, `history_initialization=` for `Policy.from_live_model` and `LiveWbtPolicy`, `WbtPolicy::SetHistoryInitialization` in C++). `repeat_first_valid_obs`, the default, seeds each observation term's history with that term's first valid, fully built frame, then rolls forward oldest-to-newest. `zero_pad` fills missing frames with zeros. A full `reset()` reseeds from the next observation, while heading-only reset and reference-buffer replacement preserve history. Changing the setting resets the policy, so one episode never mixes the two. Exports may still declare `wbt_history_initialization` as `repeat_first` or `zero` in ONNX metadata. The declaration is validated and reported in the load log, but the runtime setting decides, and the log says when it overrides the checkpoint. Any other spelling fails, in the metadata and in the setting alike. The setting applies only to metadata-driven (live) WBT checkpoints; embedded-motion WBT and locomotion presets accept it and ignore it, because their history is always zero-padded.
+历史初始化是运行时设置 `task.wbt_history_initialization`（`run_policy` 和 C++ 运行程序使用 `--task.wbt-history-initialization`，`Policy.from_live_model` 和 `LiveWbtPolicy` 使用 `history_initialization=`，C++ 使用 `WbtPolicy::SetHistoryInitialization`）。默认值 `repeat_first_valid_obs` 使用每个观测项首次有效且完整构建的帧初始化该项历史，之后按从旧到新的顺序滚动更新。`zero_pad` 用零填充缺失帧。完整调用 `reset()` 后，会根据下一次观测重新初始化；仅重置航向或替换参考缓冲区则保留历史。更改该设置会重置策略，因此同一个 episode 中不会混用两种方式。导出的 ONNX 元数据仍可能将 `wbt_history_initialization` 声明为 `repeat_first` 或 `zero`。该声明会被校验并记录在加载日志中，但最终由运行时设置决定；覆盖检查点设置时，日志会作出说明。元数据和运行时设置中的其他拼写都会导致失败。该设置仅适用于元数据驱动的实时 WBT 检查点；内嵌动作 WBT 和运动控制预设接受但忽略它，因为它们的历史始终使用零填充。
 
-Raw actions are clipped symmetrically to at most 20 (`kWbtActionCeiling`) before action scaling and action-history feedback. This is a bound on raw policy output, not a joint-angle limit: scaled targets remain subject to the ordinary joint and driver limits. A declared `experiment_config.robot.control.action_clip_value` tighter than 20 further restricts the bound. A missing value, a value above 20, or `clip_actions=false` leaves the bound at 20; a missing flag behaves like `true`. Declared values are validated even when the flag is false. Nonboolean flags and invalid declared clip values fail initialization. The load log reports the effective clip and whether it came from the ceiling or the checkpoint. This applies to every metadata-driven live WBT model. Observation clipping (`clip_observations`) and the separate embedded-motion and locomotion policies keep their existing contracts.
+原始动作在动作缩放和动作历史反馈之前，会被对称裁剪到最大幅值 20（`kWbtActionCeiling`）。这是对策略原始输出的限制，而非关节角度限制：缩放后的目标仍受常规关节和驱动器限制。若声明的 `experiment_config.robot.control.action_clip_value` 小于 20，则会进一步收紧范围。未提供该值、该值大于 20 或设置 `clip_actions=false` 时，限制仍为 20；未提供标志时按 `true` 处理。即使标志为 false，也会校验已声明的值。非布尔类型的标志和无效的裁剪值会导致初始化失败。加载日志会报告实际裁剪范围，以及它来自上限还是检查点。该规则适用于所有元数据驱动的实时 WBT 模型。观测裁剪（`clip_observations`）以及独立的内嵌动作和运动控制策略仍遵循各自原有的约定。
 
-The convenience live preset defaults to canonical G1 joint names. For another 29-joint humanoid, set `config.robot.dof_names` to its checkpoint's ordered `dof_names` before constructing `Policy`. The library requires exact agreement, including order, and derives default positions and anchor FK from those names. State, reference, command, and gain arrays all follow this same order; transports must reorder named wire messages at their boundary.
-With no explicit elapsed clock, the live API advances one model timestep per call. Update `set_elapsed_seconds(seconds)` before each tick to preserve motion phase across dropped ticks; pass `None` to return to tick counting. `set_control_interval(seconds)` sets the elapsed-clock conversion. Python retains only the currently supplied reference and returns independent command snapshots. `set_reference(None)` clears it. The former `LiveWbtPolicy` entry point remains available for compatibility.
+便捷实时预设默认使用标准 G1 关节名称。对于其他 29 关节人形机器人，在构造 `Policy` 之前，应将 `config.robot.dof_names` 设置为其检查点中按顺序排列的 `dof_names`。库要求名称和顺序完全一致，并据此计算默认位置和锚点正向运动学（FK）。状态、参考、命令和增益数组均遵循相同顺序；通信层必须在接口边界对带名称的消息重新排序。
+未显式提供经过时间时钟时，实时 API 每次调用推进一个模型时间步。每个控制周期前更新 `set_elapsed_seconds(seconds)`，可在周期丢失时保持动作相位；传入 `None` 可恢复按调用次数计时。`set_control_interval(seconds)` 设置经过时间时钟的换算方式。Python 只保留当前提供的参考，并返回独立的命令快照。`set_reference(None)` 会清除该参考。为兼容旧代码，仍保留原来的 `LiveWbtPolicy` 入口。
 
-The reference is offset-major, with one quaternion per frame. Window dimensions must match the checkpoint; malformed or non-finite input is rejected before inference. The first future sample is also the current reference unless `ReferenceWindow.current` explicitly supplies a `PolicyReferenceFrame`. The default 0p2s preset uses five offsets, but metadata-complete checkpoints may declare other layouts.
+参考数据以时间偏移为主序排列，每帧有一个四元数。窗口维度必须与检查点匹配；格式错误或包含非有限值的输入会在推理前被拒绝。除非 `ReferenceWindow.current` 显式提供 `PolicyReferenceFrame`，否则第一个未来采样点也用作当前参考。默认的 0p2s 预设使用五个偏移量，但元数据完整的检查点可以声明其他布局。
 
-`set_reference` changes the borrowed buffer, not the episode. Replacing a window during continuous streaming preserves heading anchors, history and motion time. When switching to an independent clip with a different starting heading, call `reset()` before the first step with that clip. This clears history/action feedback and recaptures both the robot and reference heading at the new episode's first state; it keeps the supplied reference attached. Pointer identity alone cannot identify a clip boundary because streaming callers may replace buffers every tick.
+`set_reference` 更改的是借用的缓冲区，不会开始新的 episode。在连续流式传输过程中替换窗口时，航向锚点、历史和动作时间均会保留。切换到起始航向不同的独立动作片段时，应在该片段的第一次 step 之前调用 `reset()`。这会清除历史和动作反馈，并在新 episode 的第一个状态重新记录机器人航向和参考航向，同时保留已设置的参考。仅靠指针是否相同无法识别片段边界，因为流式调用方可能在每个控制周期都替换缓冲区。
 
 ```python
 policy.set_reference(next_clip_window)
@@ -106,8 +81,9 @@ policy.reset()
 command = policy.step(state)
 ```
 
-The equivalent C++ sequence is `policy.set_reference(&next_clip_window); policy.reset(); policy.step(state);`. Merely setting a new pointer intentionally continues using the old heading anchors.
+等价的 C++ 调用顺序为 `policy.set_reference(&next_clip_window); policy.reset(); policy.step(state);`。仅设置新指针会按设计继续使用旧的航向锚点。
 
+<a id="c"></a>
 ## C++
 
 ```sh
@@ -117,7 +93,7 @@ cmake --build build/native -j
 cmake --install build/native --prefix "$HOME/.local"
 ```
 
-Consumers use `find_package(holosomaInference CONFIG REQUIRED)` and link `holosoma::inference`. No robot SDK or YAML header is needed by consumers:
+使用方通过 `find_package(holosomaInference CONFIG REQUIRED)` 查找包，并链接 `holosoma::inference`。使用方无需机器人 SDK 或 YAML 头文件：
 
 ```cpp
 #include <holosoma_cpp/api.hpp>
@@ -127,38 +103,23 @@ holosoma::RobotState state;  // fill joint positions, velocities and base orient
 const holosoma::JointCommand& command = policy.step(state);
 ```
 
-Relative model paths inside a preset resolve against its directory. An explicit checkpoint argument resolves against the caller's working directory. For metadata-complete live models, construct `Policy(live_policy_config(path, use_gpu, threads))`; supply a borrowed `ReferenceWindow` before stepping and keep it alive until replaced. `num_dofs()`, `dof_names()`, `config()` and the `policy()` escape hatch follow the same API for all three policy families. `OfflineInterface` is also exported for shadow-mode integrations.
+预设中的相对模型路径以预设所在目录为基准解析；显式传入的检查点参数以调用方工作目录为基准解析。对于元数据完整的实时模型，使用 `Policy(live_policy_config(path, use_gpu, threads))` 构造策略；在执行 step 之前提供一个借用的 `ReferenceWindow`，并在其被替换之前保持对象有效。三类策略使用相同的 `num_dofs()`、`dof_names()`、`config()` 和用于直接访问底层策略的 `policy()` API。还导出了 `OfflineInterface`，用于影子模式集成。
 
-`GeneralWBTPolicy` adapts the metadata-driven core rather than maintaining another observation implementation. It shares the policy slot's ONNX session, including CUDA/thread options. `InferenceEngine` is a compatibility alias. Configuration factories, packed observations and explicit engagement remain available as composition extensions. Each instance has one owner; serialize calls, including reference mutation. The high-level Python preset facade provides a lock; direct `Policy` bindings release the GIL during inference and require caller serialization.
+`GeneralWBTPolicy` 适配元数据驱动的核心，不另外维护一套观测实现。它共享策略槽中的 ONNX 会话，包括 CUDA 和线程选项。`InferenceEngine` 是兼容性别名。配置工厂、打包观测和显式启用控制仍可作为组合扩展使用。每个实例只有一个所有者；调用必须串行化，包括对参考数据的修改。高层 Python 预设接口提供锁；直接使用 `Policy` 绑定时，推理期间会释放 GIL，需要由调用方保证串行访问。
 
-## Command-line compatibility
+<a id="command-line-compatibility"></a>
+## 命令行兼容性
 
-The Python `python -m holosoma_inference.run_policy` entry point retains Tyro
-arguments, presets, secondary policies, W&B resolution, SDK plugins and input
-providers. Built-in policies use the native engine. The Python transport layer
-supports explicit `interface`, `velocity_input`, `command_provider` and
-`shared_hardware` injection instead of constructing hardware and then patching
-it out. SDK command overrides remain in joint order; the SDK owns motor
-permutation. A configured simulation clock continues to use the Python clock
-subscriber, while the C++ engine owns timestep conversion.
+Python 入口 `python -m holosoma_inference.run_policy` 保留了 Tyro 参数、预设、次级策略、W&B 路径解析、SDK 插件和输入提供器。内置策略使用原生引擎。Python 通信层支持显式注入 `interface`、`velocity_input`、`command_provider` 和 `shared_hardware`，无需先构造硬件再将其替换掉。SDK 命令覆盖仍遵循关节顺序；电机排列转换由 SDK 负责。配置了仿真时钟时，仍使用 Python 时钟订阅器，而时间步换算由 C++ 引擎负责。
 
-Robot-specific adapters can override `transform_command(command, state)` to
-adjust final joint-order targets or gains, for example a smooth startup hold,
-without reimplementing inference. Invalid shapes, non-finite values and negative
-gains are rejected before transmission. Embedded-motion policies expose
-`initial_motion` for such initialization, and adapters receive a model-switch
-hook after the native model changes.
+机器人专用适配器可以覆盖 `transform_command(command, state)`，调整最终按关节顺序排列的目标或增益，例如实现平滑的启动保持，而无需重新实现推理。形状无效、数值非有限或增益为负的命令会在传输前被拒绝。内嵌动作策略提供 `initial_motion`，用于此类初始化；原生模型切换后，适配器会收到模型切换钩子。
 
-For editable development, reinstall after changing C++ source. Container
-dependency stages compile that source before the final Python-source overlay,
-so a Python-only edit can reuse the native build and a C++ edit invalidates it.
+进行可编辑开发时，修改 C++ 源码后需要重新安装。容器的依赖构建阶段会在最后覆盖 Python 源码之前编译 C++ 源码，因此仅修改 Python 可以复用原生构建，而修改 C++ 会使该构建缓存失效。
 
-The former Python policy implementations are retained only under
-`holosoma_cpp/tests/python_reference` as independent replay oracles. They are
-excluded from the installed package. Custom policies should compose the native
-library and keep transport-specific logic outside the inference engine.
+旧版 Python 策略实现仅保留在 `holosoma_cpp/tests/python_reference` 中，作为独立的回放验证基准，不包含在安装包中。自定义策略应组合使用原生库，并将通信相关逻辑放在推理引擎之外。
 
-## Verification
+<a id="verification"></a>
+## 验证
 
 ```sh
 uv pip install './src/holosoma_inference[dev]'
@@ -170,7 +131,4 @@ ctest --test-dir build/native-tests --output-on-failure
 python -m pytest --import-mode=importlib src/holosoma_inference/tests -q
 ```
 
-Tests cover both model contracts, observation history, heading/FK, lookahead,
-clocks, reload failure, native Python loading and SDK-boundary joint ordering.
-Synthetic models and recorded golden vectors do not establish physical robot
-stability; evaluate the selected checkpoint on the intended robot separately.
+测试覆盖两种模型约定、观测历史、航向与正向运动学、前瞻、时钟、重新加载失败、原生 Python 加载以及 SDK 边界的关节顺序。合成模型和记录的基准向量不能证明实体机器人运行稳定；应在目标机器人上单独评估所选检查点。
