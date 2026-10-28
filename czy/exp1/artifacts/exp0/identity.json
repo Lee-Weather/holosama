@@ -1,0 +1,11 @@
+{
+  "queried_at": "2026-10-28T10:16:56.947882+00:00",
+  "query": [
+    "auth",
+    "whoami"
+  ],
+  "data": {
+    "email": "limxmts0elyormeym6@uberip.com",
+    "userId": 4390
+  }
+}

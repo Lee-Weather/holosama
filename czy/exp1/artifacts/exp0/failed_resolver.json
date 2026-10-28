@@ -1,0 +1,24 @@
+{
+  "queried_at": "2026-10-28T10:14:00.927340+00:00",
+  "query": [
+    "task",
+    "info",
+    "--task-id",
+    "TASK_20261028_113"
+  ],
+  "data": {
+    "taskId": "TASK_20261028_113",
+    "taskName": "holosoma-g1-ppo-smoke-indexfix-20261028",
+    "projectId": "PRO_20261028_008",
+    "userId": "4390",
+    "taskStatus": "6",
+    "startTime": "2026-10-28 17:20:14",
+    "endTime": "2026-10-28 17:30:57",
+    "runtime": "643",
+    "goodsId": "ESKU000001",
+    "goodsBackId": "SKUSL000002",
+    "gpuNum": 1,
+    "imageId": "BJX00000178",
+    "imageVersion": "V000420"
+  }
+}

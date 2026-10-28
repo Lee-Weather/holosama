@@ -23,11 +23,13 @@
 | 最后一轮日志 | mean reward=-3.96，mean episode length=41.18；仅流程验证，不能判断收敛 |
 | checkpoint | `model_00001.pt`，5,300,224 bytes，iter=1；平台上传并下载后确认 actor 权重均有限 |
 | ONNX | 云端生成 958,244 bytes，CPU 输入全零，输出 shape=(1,29) 且有限；模型列表未返回 ONNX 下载项 |
-| TensorBoard / 平台曲线 | 1 个事件文件；`data keys` 返回训练指标，`Train/mean_reward` 返回 step=0 的一个点 |
+| TensorBoard / 平台曲线 | 1 个事件文件；首次奖励查询只有 step 0，归档补查 reward/episode length/FPS 均有 steps `[0,1]` |
 
 本地 checkpoint SHA-256：`8d60055838bec656e9bf5bf7e691b6642d28b7b36f45df0c4d5f4f83d4baa1c2`。
 
-平台短任务曲线未返回第二轮点，因此最终奖励以上述云日志为准，不声称所有 TensorBoard 点均已接入。下载模型、脱敏日志及 `smoke_result.json` 保存在仓库的 `logs/flux-validation/TASK_20261028_224/`（Git 忽略）。不要把此账号设为技能的通用默认账号；后续按用户当次指定确认身份。
+平台刚完成时的 `accelerate` 奖励查询只有 step 0；本次 exp0 归档补查时，`precise` 已得到两轮 reward、episode length 和 FPS。最终 reward=-3.955620765686035、episode length=41.181819915771484；表内数值保留日志显示精度。时间和采样模式同时改变，不能据此判断缺点原因，也不证明其他指标完整。
+
+完整实验、三次尝试、验收和经验统一见 [exp0 实验笔记](../../../exp1/exp1.md)。最终 checkpoint 已归档至 [czy/data/exp0/model_00001.pt](../../../data/exp0/model_00001.pt)，实际配置、脱敏日志、API 曲线和校验 JSON 位于 [exp0 附件目录](../../../exp1/artifacts/exp0/)。`logs/flux-validation/TASK_20261028_224/` 仅为 Git 忽略的工作副本。不要把此账号设为技能的通用默认账号；后续按用户当次指定确认身份。
 
 ## 每次使用时重新核查
 
@@ -136,6 +138,8 @@ gm-run holosama/src/holosoma/holosoma/train_agent.py exp:g1-29dof simulator:isaa
 - `personalDataPath` 仅在确认资源支持相应存储后设置；不要照搬其他任务的挂载。
 - 先 `flux --yes task create --file ./create-holosoma.json --dry-run`；退出码 `10` 只说明预览通过。
 - 正式创建和启动必须在运行授权范围内；创建成功后立即清理临时 payload，状态 `0` 表示仍需 `task run`。
+
+本次 `codeUrl` 的值为字符串 `[{"codeUrl":"https://github.com/Lee-Weather/holosama.git","versionType":"1","versionName":"main"}]`，不是嵌套 JSON 数组；`mainCodeUri=holosama/scripts/train_flux_smoke.py`，`hparamsPath` 为空。安装故障修复后可复制同账号任务重试；运行前核对新任务为状态 0、所属用户及镜像资源正确，且远端分支包含修复 commit。不要用不完整 `task edit` 请求覆盖任务（该接口为全量更新）。
 
 小规模验证成功需看到 GPU 仿真正常启动、完成指定迭代、生成可加载的 `.pt`、完成 `.onnx` 导出并正常结束。出错时按依赖/导入、资产/扩展、显存、训练异常和 SDK 上传分别定位；同一未解决故障不要连续创建新任务重试。
 

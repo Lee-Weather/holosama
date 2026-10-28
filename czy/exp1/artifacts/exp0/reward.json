@@ -1,0 +1,28 @@
+{
+  "queried_at": "2026-10-28T10:14:16.236080+00:00",
+  "query": [
+    "task",
+    "data",
+    "get",
+    "--task-id",
+    "TASK_20261028_224",
+    "--data-key",
+    "Train/mean_reward",
+    "--sampling-mode",
+    "precise",
+    "--max-data-points",
+    "20"
+  ],
+  "data": {
+    "Train/mean_reward": {
+      "steps": [
+        0,
+        1
+      ],
+      "values": [
+        -0.7923723459243774,
+        -3.955620765686035
+      ]
+    }
+  }
+}

@@ -26,6 +26,8 @@ play 任务即使产物成功也可能是 `6`，因此终态必须结合日志�
 3. `flux task logs --raw --no-request-log` 获取最新迭代、速度和 ETA；
 4. `flux task model list` 获取 checkpoint 与回放产物。
 
+短任务刚结束时，曲线接口可能只返回部分点。exp0 首次 `accelerate` 奖励查询只有 step 0，归档时 `precise` 查询得到 steps `[0,1]`；两次的查询时间与模式均不同，不据此认定具体原因。记录时间、模式与实际 steps，核对日志后复查；不要补造缺失点，或把日志四舍五入值写成 API 原始值。Holosoma 的学习率日志也可能把 `1e-5` 显示成 `0.0000`，可从实际 checkpoint 的 optimizer/config 核对。
+
 报告至少包含：
 
 - 当前状态；
@@ -95,7 +97,7 @@ isaac_diag.csv
 
 ## 实验记录
 
-本地实验记录由 `czy/skills/lab-notebook/SKILL.md` 管理。需要更新 `czy/exp1/实验记录/exp1.md` 时，完整读取并遵循该技能，不在本文件复制笔记结构。
+本地实验记录由 [lab-notebook](../../lab-notebook/SKILL.md) 管理，统一写入 [czy/exp1/exp1.md](../../../exp1/exp1.md)，不在本文件复制七节结构。当前基线为用户指定的 `exp0`，后续新目标默认使用 `exp_1`。失败重试逐次保留 task ID、commit、状态、耗时、原因和修复；同一次流程验证的尝试可归入该实验 §7。
 
 记录至少包括：
 
@@ -104,7 +106,10 @@ isaac_diag.csv
 - 镜像和算力；
 - 迭代数、运行时长、最终奖励和 episode 长度；
 - 最终 checkpoint；
-- 本地视频与 CSV 路径；
+- 实际配置、原始日志和平台曲线（注明来源及缺失项）；
+- 本地模型及其大小/iter/SHA-256；实际存在的视频、ONNX 与 CSV 路径；
 - 成功、失败或部分成功的客观结论。
 
 远端 `task note` 使用 HTML 片段；本地 Markdown 实验记录按 lab-notebook 规范更新。失败实验也保留记录，不删除历史。
+
+Holosoma 最终产物放 `czy/data/{编号}/`，长期证据放 `czy/exp1/artifacts/{编号}/`，从笔记链接。下载到 `logs/` 的工作副本不能作为唯一长期记录；完成记录任务时校验后复制到实验目录。未录视频、未做 CSV 诊断或仅云端通过 ONNX 校验时明确注明，不创建占位文件。原始任务 JSON/签名 URL 不归档，保存投影后的安全字段。

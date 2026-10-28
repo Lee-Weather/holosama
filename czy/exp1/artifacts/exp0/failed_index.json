@@ -1,0 +1,24 @@
+{
+  "queried_at": "2026-10-28T10:16:59.156154+00:00",
+  "query": [
+    "task",
+    "info",
+    "--task-id",
+    "TASK_20261028_067"
+  ],
+  "data": {
+    "taskId": "TASK_20261028_067",
+    "taskName": "holosoma-g1-ppo-smoke-20261028",
+    "projectId": "PRO_20261028_008",
+    "userId": "4390",
+    "taskStatus": "6",
+    "startTime": "2026-10-28 14:56:10",
+    "endTime": "2026-10-28 14:56:34",
+    "runtime": "24",
+    "goodsId": "ESKU000001",
+    "goodsBackId": "SKUSL000002",
+    "gpuNum": 1,
+    "imageId": "BJX00000178",
+    "imageVersion": "V000420"
+  }
+}

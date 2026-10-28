@@ -1,0 +1,1485 @@
+{
+  "env_class": "holosoma.envs.locomotion.locomotion_manager.LeggedRobotLocomotionManager",
+  "training": {
+    "headless": true,
+    "torch_deterministic": false,
+    "multigpu": false,
+    "num_envs": 128,
+    "seed": 1,
+    "checkpoint": null,
+    "teacher_checkpoint": null,
+    "project": "flux-smoke-20261028_095658",
+    "name": "g1_ppo_smoke",
+    "max_eval_steps": null,
+    "export_onnx": true
+  },
+  "algo": {
+    "_target_": "holosoma.agents.ppo.ppo.PPO",
+    "_recursive_": false,
+    "config": {
+      "module_dict": {
+        "actor": {
+          "type": "MLP",
+          "input_dim": [
+            "actor_obs"
+          ],
+          "output_dim": [
+            29
+          ],
+          "layer_config": {
+            "hidden_dims": [
+              512,
+              256,
+              128
+            ],
+            "activation": "ELU",
+            "dropout_prob": 0.0,
+            "use_layer_norm": false,
+            "encoder_activation": "ELU",
+            "encoder_output_dim": null,
+            "encoder_hidden_dims": null,
+            "encoder_input_name": "",
+            "input_channels": 1,
+            "input_height": 1,
+            "input_width": 1,
+            "hidden_channels": null,
+            "kernel_size": 3,
+            "stride": 1,
+            "padding": "same",
+            "module_input_name": []
+          },
+          "min_noise_std": null,
+          "min_mean_noise_std": null
+        },
+        "critic": {
+          "type": "MLP",
+          "input_dim": [
+            "critic_obs"
+          ],
+          "output_dim": [
+            1
+          ],
+          "layer_config": {
+            "hidden_dims": [
+              512,
+              256,
+              128
+            ],
+            "activation": "ELU",
+            "dropout_prob": 0.0,
+            "use_layer_norm": false,
+            "encoder_activation": "ELU",
+            "encoder_output_dim": null,
+            "encoder_hidden_dims": null,
+            "encoder_input_name": "",
+            "input_channels": 1,
+            "input_height": 1,
+            "input_width": 1,
+            "hidden_channels": null,
+            "kernel_size": 3,
+            "stride": 1,
+            "padding": "same",
+            "module_input_name": []
+          },
+          "min_noise_std": null,
+          "min_mean_noise_std": null
+        }
+      },
+      "num_learning_epochs": 8,
+      "num_mini_batches": 4,
+      "clip_param": 0.2,
+      "gamma": 0.99,
+      "lam": 0.95,
+      "value_loss_coef": 1.0,
+      "entropy_coef": 0.01,
+      "actor_learning_rate": 1e-05,
+      "actor_optimizer": {
+        "_target_": "torch.optim.AdamW",
+        "weight_decay": 0.001
+      },
+      "critic_learning_rate": 1e-05,
+      "critic_optimizer": {
+        "_target_": "torch.optim.AdamW",
+        "weight_decay": 0.001
+      },
+      "max_grad_norm": 1.0,
+      "schedule": "adaptive",
+      "desired_kl": 0.01,
+      "use_symmetry": true,
+      "symmetry_actor_coef": 1.0,
+      "symmetry_critic_coef": 0.0,
+      "num_steps_per_env": 24,
+      "save_interval": 1,
+      "load_optimizer": true,
+      "init_noise_std": 0.8,
+      "num_learning_iterations": 2,
+      "init_at_random_ep_len": true,
+      "empirical_normalization": false,
+      "eval_callbacks": null,
+      "max_actor_learning_rate": null,
+      "min_actor_learning_rate": null,
+      "max_critic_learning_rate": null,
+      "min_critic_learning_rate": null
+    }
+  },
+  "simulator": {
+    "_target_": "holosoma.simulator.isaacsim.isaacsim.IsaacSim",
+    "_recursive_": false,
+    "config": {
+      "name": "isaacsim",
+      "sim": {
+        "fps": 200,
+        "control_decimation": 4,
+        "substeps": 1,
+        "physx": {
+          "solver_type": 1,
+          "num_position_iterations": 8,
+          "num_velocity_iterations": 4,
+          "num_threads": 4,
+          "enable_dof_force_sensors": false,
+          "bounce_threshold_velocity": 0.5
+        },
+        "render_mode": "human",
+        "render_interval": 4,
+        "max_episode_length_s": 20.0,
+        "kinematic_playback": false
+      },
+      "debug_viz": true,
+      "viewer": {
+        "enable_tracking": false,
+        "camera": null
+      },
+      "reset_manager": {
+        "events": []
+      },
+      "robot_mjcf_filter": {
+        "enable": false,
+        "remove_lights": true,
+        "remove_ground": true,
+        "ground_names": [
+          "floor",
+          "ground",
+          "plane"
+        ]
+      },
+      "isaacsim": {
+        "rendering_mode": null,
+        "kit_args": ""
+      },
+      "mujoco_backend": "classic",
+      "mujoco_warp": {
+        "nconmax_per_env": 96,
+        "njmax_per_env": null
+      },
+      "bridge": {
+        "enabled": false,
+        "use_joystick": false,
+        "joystick_device": 0,
+        "joystick_type": "xbox",
+        "domain_id": 0,
+        "interface": null,
+        "transport_decimation": 1,
+        "use_ros": false,
+        "publish_odom": true,
+        "dds_config": null
+      },
+      "virtual_gantry": {
+        "enabled": false,
+        "attachment_body_names": [
+          "Trunk",
+          "torso_link",
+          "torso",
+          "base_link",
+          "pelvis",
+          "base"
+        ],
+        "stiffness": 200.0,
+        "damping": 100.0,
+        "height": 3.0,
+        "point": null,
+        "length": 0.0,
+        "apply_force": 0.0,
+        "apply_force_sign": -1
+      }
+    }
+  },
+  "terrain": {
+    "terrain_term": {
+      "func": "holosoma.managers.terrain.terms.locomotion:TerrainLocomotion",
+      "static_friction": 1.0,
+      "dynamic_friction": 1.0,
+      "restitution": 0.0,
+      "mesh_type": "plane",
+      "hide_visual": false,
+      "horizontal_scale": 1.0,
+      "vertical_scale": 0.005,
+      "border_size": 40,
+      "terrain_move_down_ratio": 0.0,
+      "terrain_move_up_ratio": 0.0,
+      "terrain_length": 8.0,
+      "terrain_width": 8.0,
+      "num_rows": 10,
+      "num_cols": 20,
+      "spawn": {
+        "randomize_tiles": true,
+        "xy_offset_range": 1.0,
+        "query_terrain_height": false,
+        "use_grid_sampling": false,
+        "grid_size": 3,
+        "grid_spacing": 0.2
+      },
+      "terrain_config": {},
+      "max_slope": 0.3,
+      "platform_size": 2.0,
+      "step_width_range": [
+        0.3,
+        0.4
+      ],
+      "amplitude_range": [
+        0.01,
+        0.05
+      ],
+      "slope_treshold": 0.75,
+      "obj_file_path": "",
+      "scale_factor": 1.0,
+      "name": "floor"
+    }
+  },
+  "scene": {
+    "replicate_physics": true,
+    "asset_root": null,
+    "scene_files": {},
+    "rigid_objects": {},
+    "env_spacing": 20.0,
+    "lights": {
+      "default_light": {
+        "enabled": true,
+        "intensity": 1000.0,
+        "color": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "exposure": 0.0,
+        "color_temperature_k": null,
+        "orientation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "sensor": {},
+  "plugin": {},
+  "observation": {
+    "groups": {
+      "actor_obs": {
+        "terms": {
+          "base_ang_vel": {
+            "func": "holosoma.managers.observation.terms.locomotion:base_ang_vel",
+            "params": {},
+            "scale": 0.25,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "projected_gravity": {
+            "func": "holosoma.managers.observation.terms.locomotion:projected_gravity",
+            "params": {},
+            "scale": 1.0,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "command_lin_vel": {
+            "func": "holosoma.managers.observation.terms.locomotion:command_lin_vel",
+            "params": {},
+            "scale": 1.0,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "command_ang_vel": {
+            "func": "holosoma.managers.observation.terms.locomotion:command_ang_vel",
+            "params": {},
+            "scale": 1.0,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "dof_pos": {
+            "func": "holosoma.managers.observation.terms.locomotion:dof_pos",
+            "params": {},
+            "scale": 1.0,
+            "noise": 0.01,
+            "clip": null,
+            "global_clip": true
+          },
+          "dof_vel": {
+            "func": "holosoma.managers.observation.terms.locomotion:dof_vel",
+            "params": {},
+            "scale": 0.05,
+            "noise": 0.1,
+            "clip": null,
+            "global_clip": true
+          },
+          "actions": {
+            "func": "holosoma.managers.observation.terms.locomotion:actions",
+            "params": {},
+            "scale": 1.0,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "sin_phase": {
+            "func": "holosoma.managers.observation.terms.locomotion:sin_phase",
+            "params": {},
+            "scale": 1.0,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "cos_phase": {
+            "func": "holosoma.managers.observation.terms.locomotion:cos_phase",
+            "params": {},
+            "scale": 1.0,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          }
+        },
+        "concatenate": true,
+        "enable_noise": true,
+        "history_length": 1
+      },
+      "critic_obs": {
+        "terms": {
+          "base_lin_vel": {
+            "func": "holosoma.managers.observation.terms.locomotion:base_lin_vel",
+            "params": {},
+            "scale": 2.0,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "base_ang_vel": {
+            "func": "holosoma.managers.observation.terms.locomotion:base_ang_vel",
+            "params": {},
+            "scale": 0.25,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "projected_gravity": {
+            "func": "holosoma.managers.observation.terms.locomotion:projected_gravity",
+            "params": {},
+            "scale": 1.0,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "command_lin_vel": {
+            "func": "holosoma.managers.observation.terms.locomotion:command_lin_vel",
+            "params": {},
+            "scale": 1.0,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "command_ang_vel": {
+            "func": "holosoma.managers.observation.terms.locomotion:command_ang_vel",
+            "params": {},
+            "scale": 1.0,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "dof_pos": {
+            "func": "holosoma.managers.observation.terms.locomotion:dof_pos",
+            "params": {},
+            "scale": 1.0,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "dof_vel": {
+            "func": "holosoma.managers.observation.terms.locomotion:dof_vel",
+            "params": {},
+            "scale": 0.05,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "actions": {
+            "func": "holosoma.managers.observation.terms.locomotion:actions",
+            "params": {},
+            "scale": 1.0,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "sin_phase": {
+            "func": "holosoma.managers.observation.terms.locomotion:sin_phase",
+            "params": {},
+            "scale": 1.0,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          },
+          "cos_phase": {
+            "func": "holosoma.managers.observation.terms.locomotion:cos_phase",
+            "params": {},
+            "scale": 1.0,
+            "noise": 0.0,
+            "clip": null,
+            "global_clip": true
+          }
+        },
+        "concatenate": true,
+        "enable_noise": false,
+        "history_length": 1
+      }
+    },
+    "clip_observations": 100.0
+  },
+  "action": {
+    "terms": {
+      "joint_control": {
+        "func": "holosoma.managers.action.terms.joint_control:JointPositionActionTerm",
+        "params": {},
+        "scale": 1.0,
+        "clip": null
+      }
+    }
+  },
+  "reward": {
+    "terms": {
+      "tracking_lin_vel": {
+        "func": "holosoma.managers.reward.terms.locomotion:tracking_lin_vel",
+        "params": {
+          "tracking_sigma": 0.25
+        },
+        "weight": 2.0,
+        "tags": []
+      },
+      "tracking_ang_vel": {
+        "func": "holosoma.managers.reward.terms.locomotion:tracking_ang_vel",
+        "params": {
+          "tracking_sigma": 0.25
+        },
+        "weight": 1.5,
+        "tags": []
+      },
+      "penalty_ang_vel_xy": {
+        "func": "holosoma.managers.reward.terms.locomotion:penalty_ang_vel_xy",
+        "params": {},
+        "weight": -1.0,
+        "tags": [
+          "penalty_curriculum"
+        ]
+      },
+      "penalty_orientation": {
+        "func": "holosoma.managers.reward.terms.locomotion:penalty_orientation",
+        "params": {},
+        "weight": -10.0,
+        "tags": [
+          "penalty_curriculum"
+        ]
+      },
+      "penalty_action_rate": {
+        "func": "holosoma.managers.reward.terms.locomotion:penalty_action_rate",
+        "params": {},
+        "weight": -2.0,
+        "tags": [
+          "penalty_curriculum"
+        ]
+      },
+      "feet_phase": {
+        "func": "holosoma.managers.reward.terms.locomotion:feet_phase",
+        "params": {
+          "swing_height": 0.09,
+          "tracking_sigma": 0.008
+        },
+        "weight": 5.0,
+        "tags": []
+      },
+      "pose": {
+        "func": "holosoma.managers.reward.terms.locomotion:pose",
+        "params": {
+          "pose_weights": [
+            0.01,
+            1.0,
+            5.0,
+            0.01,
+            5.0,
+            5.0,
+            0.01,
+            1.0,
+            5.0,
+            0.01,
+            5.0,
+            5.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0
+          ]
+        },
+        "weight": -0.5,
+        "tags": [
+          "penalty_curriculum"
+        ]
+      },
+      "penalty_close_feet_xy": {
+        "func": "holosoma.managers.reward.terms.locomotion:penalty_close_feet_xy",
+        "params": {
+          "close_feet_threshold": 0.15
+        },
+        "weight": -10.0,
+        "tags": [
+          "penalty_curriculum"
+        ]
+      },
+      "penalty_feet_ori": {
+        "func": "holosoma.managers.reward.terms.locomotion:penalty_feet_ori",
+        "params": {},
+        "weight": -5.0,
+        "tags": [
+          "penalty_curriculum"
+        ]
+      },
+      "alive": {
+        "func": "holosoma.managers.reward.terms.locomotion:alive",
+        "params": {},
+        "weight": 1.0,
+        "tags": []
+      }
+    },
+    "only_positive_rewards": false
+  },
+  "termination": {
+    "terms": {
+      "contact": {
+        "func": "holosoma.managers.termination.terms.locomotion:contact_forces_exceeded",
+        "params": {
+          "force_threshold": 1.0,
+          "contact_indices_attr": "termination_contact_indices"
+        },
+        "is_timeout": false
+      },
+      "timeout": {
+        "func": "holosoma.managers.termination.terms.common:timeout_exceeded",
+        "params": {},
+        "is_timeout": true
+      }
+    }
+  },
+  "randomization": {
+    "setup_terms": {
+      "push_randomizer_state": {
+        "func": "holosoma.managers.randomization.terms.locomotion:PushRandomizerState",
+        "params": {
+          "push_interval_s": [
+            5,
+            10
+          ],
+          "max_push_vel": [
+            1.0,
+            1.0
+          ],
+          "enabled": true
+        }
+      },
+      "setup_action_delay_buffers": {
+        "func": "holosoma.managers.randomization.terms.locomotion:setup_action_delay_buffers",
+        "params": {
+          "ctrl_delay_step_range": [
+            0,
+            1
+          ],
+          "enabled": true
+        }
+      },
+      "setup_torque_rfi": {
+        "func": "holosoma.managers.randomization.terms.locomotion:setup_torque_rfi",
+        "params": {
+          "enabled": false,
+          "rfi_lim": 0.1
+        }
+      },
+      "setup_dof_pos_bias": {
+        "func": "holosoma.managers.randomization.terms.locomotion:setup_dof_pos_bias",
+        "params": {
+          "dof_pos_bias_range": [
+            -0.01,
+            0.01
+          ],
+          "enabled": false
+        }
+      },
+      "actuator_randomizer_state": {
+        "func": "holosoma.managers.randomization.terms.locomotion:ActuatorRandomizerState",
+        "params": {
+          "kp_range": [
+            0.9,
+            1.1
+          ],
+          "kd_range": [
+            0.9,
+            1.1
+          ],
+          "rfi_lim_range": [
+            0.5,
+            1.5
+          ],
+          "enable_pd_gain": true,
+          "enable_rfi_lim": false
+        }
+      },
+      "mass_randomizer": {
+        "func": "holosoma.managers.randomization.terms.locomotion:randomize_mass_startup",
+        "params": {
+          "enable_link_mass": true,
+          "link_mass_range": [
+            0.9,
+            1.2
+          ],
+          "enable_base_mass": true,
+          "added_mass_range": [
+            -1.0,
+            3.0
+          ]
+        }
+      },
+      "randomize_friction_startup": {
+        "func": "holosoma.managers.randomization.terms.locomotion:randomize_friction_startup",
+        "params": {
+          "friction_range": [
+            0.5,
+            1.25
+          ],
+          "enabled": true
+        }
+      },
+      "randomize_base_com_startup": {
+        "func": "holosoma.managers.randomization.terms.locomotion:randomize_base_com_startup",
+        "params": {
+          "base_com_range": {
+            "x": [
+              -0.05,
+              0.05
+            ],
+            "y": [
+              -0.05,
+              0.05
+            ],
+            "z": [
+              -0.05,
+              0.05
+            ]
+          },
+          "enabled": true
+        }
+      }
+    },
+    "reset_terms": {
+      "push_randomizer_state": {
+        "func": "holosoma.managers.randomization.terms.locomotion:PushRandomizerState",
+        "params": {}
+      },
+      "actuator_randomizer_state": {
+        "func": "holosoma.managers.randomization.terms.locomotion:ActuatorRandomizerState",
+        "params": {}
+      },
+      "randomize_push_schedule": {
+        "func": "holosoma.managers.randomization.terms.locomotion:randomize_push_schedule",
+        "params": {}
+      },
+      "randomize_action_delay": {
+        "func": "holosoma.managers.randomization.terms.locomotion:randomize_action_delay",
+        "params": {}
+      },
+      "randomize_dof_state": {
+        "func": "holosoma.managers.randomization.terms.locomotion:randomize_dof_state",
+        "params": {
+          "joint_pos_scale_range": [
+            0.5,
+            1.5
+          ],
+          "joint_pos_bias_range": [
+            0.0,
+            0.0
+          ],
+          "joint_vel_range": [
+            0.0,
+            0.0
+          ],
+          "randomize_dof_pos_bias": false
+        }
+      },
+      "configure_torque_rfi": {
+        "func": "holosoma.managers.randomization.terms.locomotion:configure_torque_rfi",
+        "params": {}
+      }
+    },
+    "step_terms": {
+      "push_randomizer_state": {
+        "func": "holosoma.managers.randomization.terms.locomotion:PushRandomizerState",
+        "params": {}
+      },
+      "apply_pushes": {
+        "func": "holosoma.managers.randomization.terms.locomotion:apply_pushes",
+        "params": {}
+      }
+    },
+    "ignore_unsupported": false
+  },
+  "command": {
+    "params": {
+      "locomotion_command_resampling_time": 10.0
+    },
+    "setup_terms": {
+      "locomotion_gait": {
+        "func": "holosoma.managers.command.terms.locomotion:LocomotionGait",
+        "params": {
+          "gait_period": 1.0,
+          "gait_period_randomization_width": 0.2
+        }
+      },
+      "locomotion_command": {
+        "func": "holosoma.managers.command.terms.locomotion:LocomotionCommand",
+        "params": {
+          "command_ranges": {
+            "lin_vel_x": [
+              -1.0,
+              1.0
+            ],
+            "lin_vel_y": [
+              -1.0,
+              1.0
+            ],
+            "ang_vel_yaw": [
+              -1.0,
+              1.0
+            ],
+            "heading": [
+              -3.14,
+              3.14
+            ]
+          },
+          "stand_prob": 0.2
+        }
+      }
+    },
+    "reset_terms": {
+      "locomotion_gait": {
+        "func": "holosoma.managers.command.terms.locomotion:LocomotionGait",
+        "params": {}
+      },
+      "locomotion_command": {
+        "func": "holosoma.managers.command.terms.locomotion:LocomotionCommand",
+        "params": {}
+      }
+    },
+    "step_terms": {
+      "locomotion_gait": {
+        "func": "holosoma.managers.command.terms.locomotion:LocomotionGait",
+        "params": {}
+      },
+      "locomotion_command": {
+        "func": "holosoma.managers.command.terms.locomotion:LocomotionCommand",
+        "params": {}
+      }
+    }
+  },
+  "curriculum": {
+    "params": {
+      "num_compute_average_epl": 1000
+    },
+    "setup_terms": {
+      "average_episode_tracker": {
+        "func": "holosoma.managers.curriculum.terms.locomotion:AverageEpisodeLengthTracker",
+        "params": {}
+      },
+      "penalty_curriculum": {
+        "func": "holosoma.managers.curriculum.terms.locomotion:PenaltyCurriculum",
+        "params": {
+          "enabled": true,
+          "tag": "penalty_curriculum",
+          "initial_scale": 0.1,
+          "min_scale": 0.0,
+          "max_scale": 1.0,
+          "level_down_threshold": 150.0,
+          "level_up_threshold": 750.0,
+          "degree": 0.00025
+        }
+      }
+    },
+    "reset_terms": {},
+    "step_terms": {}
+  },
+  "robot": {
+    "num_bodies": 32,
+    "dof_obs_size": 29,
+    "algo_obs_dim_dict": {},
+    "actions_dim": 29,
+    "policy_obs_dim": -1,
+    "critic_obs_dim": -1,
+    "contact_pairs_multiplier": 16,
+    "key_bodies": [
+      "left_foot_contact_point",
+      "right_foot_contact_point"
+    ],
+    "num_feet": 2,
+    "foot_body_name": "ankle_roll_link",
+    "foot_height_name": "foot_contact_point",
+    "knee_name": "knee_link",
+    "torso_name": "torso_link",
+    "dof_names": [
+      "left_hip_pitch_joint",
+      "left_hip_roll_joint",
+      "left_hip_yaw_joint",
+      "left_knee_joint",
+      "left_ankle_pitch_joint",
+      "left_ankle_roll_joint",
+      "right_hip_pitch_joint",
+      "right_hip_roll_joint",
+      "right_hip_yaw_joint",
+      "right_knee_joint",
+      "right_ankle_pitch_joint",
+      "right_ankle_roll_joint",
+      "waist_yaw_joint",
+      "waist_roll_joint",
+      "waist_pitch_joint",
+      "left_shoulder_pitch_joint",
+      "left_shoulder_roll_joint",
+      "left_shoulder_yaw_joint",
+      "left_elbow_joint",
+      "left_wrist_roll_joint",
+      "left_wrist_pitch_joint",
+      "left_wrist_yaw_joint",
+      "right_shoulder_pitch_joint",
+      "right_shoulder_roll_joint",
+      "right_shoulder_yaw_joint",
+      "right_elbow_joint",
+      "right_wrist_roll_joint",
+      "right_wrist_pitch_joint",
+      "right_wrist_yaw_joint"
+    ],
+    "upper_dof_names": [
+      "waist_yaw_joint",
+      "waist_roll_joint",
+      "waist_pitch_joint",
+      "left_shoulder_pitch_joint",
+      "left_shoulder_roll_joint",
+      "left_shoulder_yaw_joint",
+      "left_elbow_joint",
+      "left_wrist_roll_joint",
+      "left_wrist_pitch_joint",
+      "left_wrist_yaw_joint",
+      "right_shoulder_pitch_joint",
+      "right_shoulder_roll_joint",
+      "right_shoulder_yaw_joint",
+      "right_elbow_joint",
+      "right_wrist_roll_joint",
+      "right_wrist_pitch_joint",
+      "right_wrist_yaw_joint"
+    ],
+    "upper_left_arm_dof_names": [
+      "left_shoulder_pitch_joint",
+      "left_shoulder_roll_joint",
+      "left_shoulder_yaw_joint",
+      "left_elbow_joint",
+      "left_wrist_roll_joint",
+      "left_wrist_pitch_joint",
+      "left_wrist_yaw_joint"
+    ],
+    "upper_right_arm_dof_names": [
+      "right_shoulder_pitch_joint",
+      "right_shoulder_roll_joint",
+      "right_shoulder_yaw_joint",
+      "right_elbow_joint",
+      "right_wrist_roll_joint",
+      "right_wrist_pitch_joint",
+      "right_wrist_yaw_joint"
+    ],
+    "lower_dof_names": [
+      "left_hip_pitch_joint",
+      "left_hip_roll_joint",
+      "left_hip_yaw_joint",
+      "left_knee_joint",
+      "left_ankle_pitch_joint",
+      "left_ankle_roll_joint",
+      "right_hip_pitch_joint",
+      "right_hip_roll_joint",
+      "right_hip_yaw_joint",
+      "right_knee_joint",
+      "right_ankle_pitch_joint",
+      "right_ankle_roll_joint"
+    ],
+    "has_torso": true,
+    "has_upper_body_dof": true,
+    "left_ankle_dof_names": [
+      "left_ankle_pitch_joint",
+      "left_ankle_roll_joint"
+    ],
+    "right_ankle_dof_names": [
+      "right_ankle_pitch_joint",
+      "right_ankle_roll_joint"
+    ],
+    "knee_dof_names": [
+      "left_knee_joint",
+      "right_knee_joint"
+    ],
+    "hips_dof_names": [
+      "left_hip_pitch_joint",
+      "left_hip_roll_joint",
+      "left_hip_yaw_joint",
+      "right_hip_pitch_joint",
+      "right_hip_roll_joint",
+      "right_hip_yaw_joint"
+    ],
+    "dof_pos_lower_limit_list": [
+      -2.5307,
+      -0.5236,
+      -2.7576,
+      -0.087267,
+      -0.87267,
+      -0.2618,
+      -2.5307,
+      -2.9671,
+      -2.7576,
+      -0.087267,
+      -0.87267,
+      -0.2618,
+      -2.618,
+      -0.52,
+      -0.52,
+      -3.0892,
+      -1.5882,
+      -2.618,
+      -1.0472,
+      -1.972222054,
+      -1.61443,
+      -1.61443,
+      -3.0892,
+      -2.2515,
+      -2.618,
+      -1.0472,
+      -1.972222054,
+      -1.61443,
+      -1.61443
+    ],
+    "dof_pos_upper_limit_list": [
+      2.8798,
+      2.9671,
+      2.7576,
+      2.8798,
+      0.5236,
+      0.2618,
+      2.8798,
+      0.5236,
+      2.7576,
+      2.8798,
+      0.5236,
+      0.2618,
+      2.618,
+      0.52,
+      0.52,
+      2.6704,
+      2.2515,
+      2.618,
+      2.0944,
+      1.972222054,
+      1.61443,
+      1.61443,
+      2.6704,
+      1.5882,
+      2.618,
+      2.0944,
+      1.972222054,
+      1.61443,
+      1.61443
+    ],
+    "dof_vel_limit_list": [
+      32.0,
+      20.0,
+      32.0,
+      20.0,
+      37.0,
+      37.0,
+      32.0,
+      20.0,
+      32.0,
+      20.0,
+      37.0,
+      37.0,
+      32.0,
+      37.0,
+      37.0,
+      37.0,
+      37.0,
+      37.0,
+      37.0,
+      37.0,
+      22.0,
+      22.0,
+      37.0,
+      37.0,
+      37.0,
+      37.0,
+      37.0,
+      22.0,
+      22.0
+    ],
+    "dof_effort_limit_list": [
+      88.0,
+      139.0,
+      88.0,
+      139.0,
+      50.0,
+      50.0,
+      88.0,
+      139.0,
+      88.0,
+      139.0,
+      50.0,
+      50.0,
+      88.0,
+      50.0,
+      50.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      5.0,
+      5.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      5.0,
+      5.0
+    ],
+    "dof_armature_list": [
+      0.01017752,
+      0.025101925,
+      0.01017752,
+      0.025101925,
+      0.00721945,
+      0.00721945,
+      0.01017752,
+      0.025101925,
+      0.01017752,
+      0.025101925,
+      0.00721945,
+      0.00721945,
+      0.01017752,
+      0.00721945,
+      0.00721945,
+      0.003609725,
+      0.003609725,
+      0.003609725,
+      0.003609725,
+      0.003609725,
+      0.00425,
+      0.00425,
+      0.003609725,
+      0.003609725,
+      0.003609725,
+      0.003609725,
+      0.003609725,
+      0.00425,
+      0.00425
+    ],
+    "dof_joint_friction_list": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "body_names": [
+      "pelvis",
+      "left_hip_pitch_link",
+      "left_hip_roll_link",
+      "left_hip_yaw_link",
+      "left_knee_link",
+      "left_ankle_pitch_link",
+      "left_ankle_roll_link",
+      "left_foot_contact_point",
+      "right_hip_pitch_link",
+      "right_hip_roll_link",
+      "right_hip_yaw_link",
+      "right_knee_link",
+      "right_ankle_pitch_link",
+      "right_ankle_roll_link",
+      "right_foot_contact_point",
+      "waist_yaw_link",
+      "waist_roll_link",
+      "torso_link",
+      "left_shoulder_pitch_link",
+      "left_shoulder_roll_link",
+      "left_shoulder_yaw_link",
+      "left_elbow_link",
+      "left_wrist_roll_link",
+      "left_wrist_pitch_link",
+      "left_wrist_yaw_link",
+      "right_shoulder_pitch_link",
+      "right_shoulder_roll_link",
+      "right_shoulder_yaw_link",
+      "right_elbow_link",
+      "right_wrist_roll_link",
+      "right_wrist_pitch_link",
+      "right_wrist_yaw_link"
+    ],
+    "terminate_after_contacts_on": [
+      "pelvis",
+      "shoulder",
+      "hip"
+    ],
+    "penalize_contacts_on": [
+      "pelvis",
+      "shoulder",
+      "hip"
+    ],
+    "init_state": {
+      "pos": [
+        0.0,
+        0.0,
+        0.8
+      ],
+      "rot": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "lin_vel": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "ang_vel": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "default_joint_angles": {
+        "left_hip_pitch_joint": -0.312,
+        "left_hip_roll_joint": 0.0,
+        "left_hip_yaw_joint": 0.0,
+        "left_knee_joint": 0.669,
+        "left_ankle_pitch_joint": -0.363,
+        "left_ankle_roll_joint": 0.0,
+        "right_hip_pitch_joint": -0.312,
+        "right_hip_roll_joint": 0.0,
+        "right_hip_yaw_joint": 0.0,
+        "right_knee_joint": 0.669,
+        "right_ankle_pitch_joint": -0.363,
+        "right_ankle_roll_joint": 0.0,
+        "waist_yaw_joint": 0.0,
+        "waist_roll_joint": 0.0,
+        "waist_pitch_joint": 0.0,
+        "left_shoulder_pitch_joint": 0.2,
+        "left_shoulder_roll_joint": 0.2,
+        "left_shoulder_yaw_joint": 0.0,
+        "left_elbow_joint": 0.6,
+        "left_wrist_roll_joint": 0.0,
+        "left_wrist_pitch_joint": 0.0,
+        "left_wrist_yaw_joint": 0.0,
+        "right_shoulder_pitch_joint": 0.2,
+        "right_shoulder_roll_joint": -0.2,
+        "right_shoulder_yaw_joint": 0.0,
+        "right_elbow_joint": 0.6,
+        "right_wrist_roll_joint": 0.0,
+        "right_wrist_pitch_joint": 0.0,
+        "right_wrist_yaw_joint": 0.0
+      }
+    },
+    "randomize_link_body_names": [
+      "pelvis",
+      "left_hip_yaw_link",
+      "left_hip_roll_link",
+      "left_hip_pitch_link",
+      "left_knee_link",
+      "right_hip_yaw_link",
+      "right_hip_roll_link",
+      "right_hip_pitch_link",
+      "right_knee_link"
+    ],
+    "control": {
+      "control_type": "P",
+      "stiffness": {
+        "hip_yaw": 40.179238471,
+        "hip_roll": 99.098427777,
+        "hip_pitch": 40.179238471,
+        "knee": 99.098427777,
+        "ankle_pitch": 28.501246196,
+        "ankle_roll": 28.501246196,
+        "waist_yaw": 40.179238471,
+        "waist_roll": 28.501246196,
+        "waist_pitch": 28.501246196,
+        "shoulder_pitch": 14.250623098,
+        "shoulder_roll": 14.250623098,
+        "shoulder_yaw": 14.250623098,
+        "elbow": 14.250623098,
+        "wrist_roll": 14.250623098,
+        "wrist_pitch": 16.778327481,
+        "wrist_yaw": 16.778327481
+      },
+      "damping": {
+        "hip_yaw": 2.557889765,
+        "hip_roll": 6.308801854,
+        "hip_pitch": 2.557889765,
+        "knee": 6.308801854,
+        "ankle_pitch": 1.814445687,
+        "ankle_roll": 1.814445687,
+        "waist_yaw": 2.557889765,
+        "waist_roll": 1.814445687,
+        "waist_pitch": 1.814445687,
+        "shoulder_pitch": 0.907222843,
+        "shoulder_roll": 0.907222843,
+        "shoulder_yaw": 0.907222843,
+        "elbow": 0.907222843,
+        "wrist_roll": 0.907222843,
+        "wrist_pitch": 1.068141502,
+        "wrist_yaw": 1.068141502
+      },
+      "action_scale": 0.25,
+      "action_clip_value": 100.0,
+      "clip_actions": true,
+      "clip_torques": true,
+      "action_scales_by_effort_limit_over_p_gain": false
+    },
+    "asset": {
+      "asset_root": "@holosoma/data/robots",
+      "collapse_fixed_joints": true,
+      "replace_cylinder_with_capsule": true,
+      "flip_visual_attachments": false,
+      "armature": 0.001,
+      "thickness": 0.01,
+      "urdf_file": "g1/g1_29dof.urdf",
+      "usd_file": null,
+      "xml_file": "g1/g1_29dof.xml",
+      "robot_type": "g1_29dof",
+      "enable_self_collisions": false,
+      "default_dof_drive_mode": 3,
+      "fix_base_link": false,
+      "mesh_root": null,
+      "disable_gravity": null,
+      "link_physics": {
+        "mass": null,
+        "density": null,
+        "physx": {
+          "linear_damping": 0.0,
+          "angular_damping": 0.0,
+          "max_linear_velocity": 1000.0,
+          "max_angular_velocity": 1000.0
+        },
+        "isaacsim": null,
+        "mujoco": null
+      }
+    },
+    "bridge": {
+      "sdk_type": "unitree",
+      "motor_type": "serial",
+      "controlled_dof_names": [],
+      "excluded_dof_names": [],
+      "sdk_robot_type": null
+    },
+    "waist_dof_names": [
+      "waist_yaw_joint",
+      "waist_roll_joint",
+      "waist_pitch_joint"
+    ],
+    "waist_yaw_dof_name": "waist_yaw_joint",
+    "waist_roll_dof_name": "waist_roll_joint",
+    "waist_pitch_dof_name": "waist_pitch_joint",
+    "arm_dof_names": [
+      "left_shoulder_pitch_joint",
+      "left_shoulder_roll_joint",
+      "left_shoulder_yaw_joint",
+      "left_elbow_joint",
+      "left_wrist_roll_joint",
+      "left_wrist_pitch_joint",
+      "left_wrist_yaw_joint",
+      "right_shoulder_pitch_joint",
+      "right_shoulder_roll_joint",
+      "right_shoulder_yaw_joint",
+      "right_elbow_joint",
+      "right_wrist_roll_joint",
+      "right_wrist_pitch_joint",
+      "right_wrist_yaw_joint"
+    ],
+    "left_arm_dof_names": [
+      "left_shoulder_pitch_joint",
+      "left_shoulder_roll_joint",
+      "left_shoulder_yaw_joint",
+      "left_elbow_joint",
+      "left_wrist_roll_joint",
+      "left_wrist_pitch_joint",
+      "left_wrist_yaw_joint"
+    ],
+    "right_arm_dof_names": [
+      "right_shoulder_pitch_joint",
+      "right_shoulder_roll_joint",
+      "right_shoulder_yaw_joint",
+      "right_elbow_joint",
+      "right_wrist_roll_joint",
+      "right_wrist_pitch_joint",
+      "right_wrist_yaw_joint"
+    ],
+    "symmetry_joint_names": {
+      "left_hip_pitch_joint": "right_hip_pitch_joint",
+      "left_hip_roll_joint": "right_hip_roll_joint",
+      "left_hip_yaw_joint": "right_hip_yaw_joint",
+      "left_knee_joint": "right_knee_joint",
+      "left_ankle_pitch_joint": "right_ankle_pitch_joint",
+      "left_ankle_roll_joint": "right_ankle_roll_joint",
+      "right_hip_pitch_joint": "left_hip_pitch_joint",
+      "right_hip_roll_joint": "left_hip_roll_joint",
+      "right_hip_yaw_joint": "left_hip_yaw_joint",
+      "right_knee_joint": "left_knee_joint",
+      "right_ankle_pitch_joint": "left_ankle_pitch_joint",
+      "right_ankle_roll_joint": "left_ankle_roll_joint",
+      "left_shoulder_pitch_joint": "right_shoulder_pitch_joint",
+      "left_shoulder_roll_joint": "right_shoulder_roll_joint",
+      "left_shoulder_yaw_joint": "right_shoulder_yaw_joint",
+      "left_elbow_joint": "right_elbow_joint",
+      "left_wrist_roll_joint": "right_wrist_roll_joint",
+      "left_wrist_pitch_joint": "right_wrist_pitch_joint",
+      "left_wrist_yaw_joint": "right_wrist_yaw_joint",
+      "right_shoulder_pitch_joint": "left_shoulder_pitch_joint",
+      "right_shoulder_roll_joint": "left_shoulder_roll_joint",
+      "right_shoulder_yaw_joint": "left_shoulder_yaw_joint",
+      "right_elbow_joint": "left_elbow_joint",
+      "right_wrist_roll_joint": "left_wrist_roll_joint",
+      "right_wrist_pitch_joint": "left_wrist_pitch_joint",
+      "right_wrist_yaw_joint": "left_wrist_yaw_joint",
+      "waist_yaw_joint": "waist_yaw_joint",
+      "waist_roll_joint": "waist_roll_joint",
+      "waist_pitch_joint": "waist_pitch_joint"
+    },
+    "flip_sign_joint_names": [
+      "left_hip_roll_joint",
+      "left_hip_yaw_joint",
+      "right_hip_roll_joint",
+      "right_hip_yaw_joint",
+      "left_ankle_roll_joint",
+      "right_ankle_roll_joint",
+      "waist_roll_joint",
+      "waist_yaw_joint",
+      "left_shoulder_roll_joint",
+      "left_shoulder_yaw_joint",
+      "right_shoulder_roll_joint",
+      "right_shoulder_yaw_joint",
+      "left_wrist_roll_joint",
+      "left_wrist_yaw_joint",
+      "right_wrist_roll_joint",
+      "right_wrist_yaw_joint"
+    ],
+    "knee_joint_min_threshold": 0.2,
+    "lidar_height_offset": 0.5,
+    "soft_dof_pos_limit": 0.95,
+    "termination_close_to_dof_pos_limit": 0.98
+  },
+  "logger": {
+    "type": "disabled",
+    "video": {
+      "enabled": false,
+      "interval": 10,
+      "width": 640,
+      "height": 360,
+      "playback_rate": 1.0,
+      "output_format": "h264",
+      "save_dir": null,
+      "upload_to_wandb": true,
+      "show_command_overlay": true,
+      "record_env_id": 0,
+      "camera": {
+        "type": "cartesian",
+        "offset": [
+          2.0,
+          2.0,
+          1.0
+        ],
+        "target_offset": [
+          0.0,
+          0.0,
+          0.3
+        ],
+        "smoothing": 0.95,
+        "tracking_body_name": "auto"
+      },
+      "use_recording_thread": false,
+      "recording_thread_fps": 30.0,
+      "recording_queue_size": 100,
+      "vertical_fov": 45.0
+    },
+    "headless_recording": false,
+    "base_dir": "logs"
+  },
+  "nightly": {
+    "iterations": 5000,
+    "metrics": {
+      "Episode/rew_tracking_ang_vel": [
+        0.7,
+        "inf"
+      ],
+      "Episode/rew_tracking_lin_vel": [
+        0.55,
+        "inf"
+      ]
+    }
+  },
+  "eval_overrides": {
+    "headless": false,
+    "num_envs": 1,
+    "disable_logger": true,
+    "max_episode_length_s": 100000.0,
+    "randomize_tiles": false,
+    "xy_offset_range": 0.0
+  }
+}

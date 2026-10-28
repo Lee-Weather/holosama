@@ -1,0 +1,25 @@
+{
+  "experiment": "exp0",
+  "checkpoint": "czy/data/exp0/model_00001.pt",
+  "bytes": 5300224,
+  "sha256": "8d60055838bec656e9bf5bf7e691b6642d28b7b36f45df0c4d5f4f83d4baa1c2",
+  "iteration": 1,
+  "actor_tensors": 9,
+  "actor_weights_finite": true,
+  "actor_observation_dimensions": {
+    "actor_obs": 100,
+    "critic_obs": 103
+  },
+  "history_length": {
+    "actor_obs": 1,
+    "critic_obs": 1
+  },
+  "configured_actor_learning_rate": 1e-05,
+  "final_actor_learning_rate": 1e-05,
+  "final_critic_learning_rate": 1e-05,
+  "control_dt_seconds": 0.02,
+  "final_mean_episode_duration_seconds": 0.8236,
+  "onnx_local_available": false,
+  "video_available": false,
+  "csv_available": false
+}

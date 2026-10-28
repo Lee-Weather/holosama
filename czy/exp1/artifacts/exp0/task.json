@@ -1,0 +1,24 @@
+{
+  "queried_at": "2026-10-28T10:16:56.820892+00:00",
+  "query": [
+    "task",
+    "info",
+    "--task-id",
+    "TASK_20261028_224"
+  ],
+  "data": {
+    "taskId": "TASK_20261028_224",
+    "taskName": "holosoma-g1-ppo-smoke-resolver-20261028",
+    "projectId": "PRO_20261028_008",
+    "userId": "4390",
+    "taskStatus": "5",
+    "startTime": "2026-10-28 17:56:26",
+    "endTime": "2026-10-28 18:00:44",
+    "runtime": "258",
+    "goodsId": "ESKU000001",
+    "goodsBackId": "SKUSL000002",
+    "gpuNum": 1,
+    "imageId": "BJX00000178",
+    "imageVersion": "V000420"
+  }
+}

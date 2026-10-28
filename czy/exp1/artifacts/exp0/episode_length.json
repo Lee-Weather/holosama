@@ -1,0 +1,28 @@
+{
+  "queried_at": "2026-10-28T10:17:01.274549+00:00",
+  "query": [
+    "task",
+    "data",
+    "get",
+    "--task-id",
+    "TASK_20261028_224",
+    "--data-key",
+    "Train/mean_episode_length",
+    "--sampling-mode",
+    "precise",
+    "--max-data-points",
+    "20"
+  ],
+  "data": {
+    "Train/mean_episode_length": {
+      "steps": [
+        0,
+        1
+      ],
+      "values": [
+        12.25,
+        41.181819915771484
+      ]
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "queried_at": "2026-10-28T10:16:59.184473+00:00",
+  "query": [
+    "task",
+    "model",
+    "list",
+    "--task-id",
+    "TASK_20261028_224",
+    "--limit",
+    "50"
+  ],
+  "data": [
+    {
+      "taskId": "TASK_20261028_224",
+      "fileName": "model_00001.pt",
+      "checkpoint": "00001",
+      "loadRun": "20261028_095921-g1_ppo_smoke-locomotion",
+      "trainFramework": "Pytorch"
+    },
+    {
+      "taskId": "TASK_20261028_224",
+      "fileName": "model_00000.pt",
+      "checkpoint": "00000",
+      "loadRun": "20261028_095921-g1_ppo_smoke-locomotion",
+      "trainFramework": ""
+    }
+  ]
+}

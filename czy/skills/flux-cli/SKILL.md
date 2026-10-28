@@ -1,6 +1,6 @@
 ---
 name: flux-cli
-description: "Operate Flux RL/VLA projects and training tasks with flux-cli: authentication, images, compute, logs, checkpoints, and experiment records. Use for Holosoma IsaacLab/IsaacSim training compatibility and launch preparation, and F1/X1 Isaac Gym replay with video/CSV export."
+description: "Operate Flux RL/VLA projects and training tasks: authentication, images, compute, logs, checkpoints, and experiment records. Includes validated Holosoma G1 PPO smoke training on IsaacLab/IsaacSim and F1/X1 Isaac Gym replay."
 ---
 
 # flux-cli
@@ -25,6 +25,7 @@ description: "Operate Flux RL/VLA projects and training tasks with flux-cli: aut
 - PowerShell 中优先解析 `flux.cmd` 的绝对路径；如果裸 `flux` 被别名占用，不要调用该别名。
 - 官方命令已改名为 `flux`，但 RL 任务的 `taskCodeInfo.startScript` 仍必须以 `gm-run` 开头；不要改成 `flux-run`。
 - 代码推送（GitHub）：训练版本启动前确认 `origin` 已包含训练要用的 commit；平时可按开发需要随时推送。完整规则见 [references/git-mirror.md](references/git-mirror.md)。
+- 用户指定账号时，先核对 `auth whoami` 的邮箱/用户 ID；创建后再核对任务归属。多会话操作可用子进程环境的 `FLUX_API_KEY` 固定账号，不能默认选账号池第一项。
 
 ## 官方能力与项目扩展路由
 
@@ -35,7 +36,14 @@ description: "Operate Flux RL/VLA projects and training tasks with flux-cli: aut
 - 多账号额度管理与自动切换：涉及账号选择或余额不足时读取 [references/accounts.md](references/accounts.md)。
 - GitHub/GitLab 版本镜像：训练版本即将启动、需要同步代码或配置 Git 远程时读取 [references/git-mirror.md](references/git-mirror.md)。
 - 训练监控、ETA、产物下载与实验记录：需要监控或收尾时读取 [references/monitoring.md](references/monitoring.md)。
-- 保留 `czy/skills/gm-cli/` 作为迁移期回滚基线；新操作优先使用 `flux`，不要同时用两套 CLI 修改同一任务。
+- 实验编号、索引、七节记录和归档：使用 [lab-notebook](../lab-notebook/SKILL.md)。当前 Holosoma 已完成的流程基线是 [exp0](../../exp1/exp1.md)；后续新目标默认 `exp_1`。
+
+### 当前 Holosoma 项目的入口
+
+- 仓库 `Lee-Weather/holosama`，clone 目录 `holosama`，包名 `holosoma`。
+- 已实测入口：`gm-run holosama/scripts/train_flux_smoke.py`；默认 128 环境、2 次 PPO 迭代，安装依赖使用 `scripts/flux_smoke_constraints.txt`。扩大规模或训练收敛须单独配置正式入口，不能绕过 smoke 的规模边界。
+- `exp0` 已验证镜像 `BJX00000178` / `V000420`、资源 `ESKU000001`；复用前仍查当前目录和库存。
+- 本地笔记 `czy/exp1/exp1.md`，最终模型 `czy/data/{编号}/`，日志/配置/曲线/校验结果 `czy/exp1/artifacts/{编号}/`。ONNX、视频、CSV 按实际取得的文件记录，不默认生成 F1/X1 三件套。
 
 ### 仿真栈与可行性判断
 

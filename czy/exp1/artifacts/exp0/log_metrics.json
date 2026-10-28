@@ -1,0 +1,72 @@
+{
+  "experiment": "exp0",
+  "task_id": "TASK_20261028_224",
+  "source": "cloud.txt; metrics rounded as displayed in log",
+  "curve": [
+    {
+      "iteration": 0,
+      "mean_reward": -0.79,
+      "mean_episode_length": 12.25,
+      "fps": 3084
+    },
+    {
+      "iteration": 1,
+      "mean_reward": -3.96,
+      "mean_episode_length": 41.18,
+      "fps": 3570
+    }
+  ],
+  "final_reward_terms": {
+    "tracking_lin_vel": {
+      "configured_weight": 2.0,
+      "weighted_logged_value": 0.0136,
+      "penalty_curriculum": false
+    },
+    "tracking_ang_vel": {
+      "configured_weight": 1.5,
+      "weighted_logged_value": 0.015,
+      "penalty_curriculum": false
+    },
+    "penalty_ang_vel_xy": {
+      "configured_weight": -1.0,
+      "weighted_logged_value": -0.0298,
+      "penalty_curriculum": true
+    },
+    "penalty_orientation": {
+      "configured_weight": -10.0,
+      "weighted_logged_value": -0.0113,
+      "penalty_curriculum": true
+    },
+    "penalty_action_rate": {
+      "configured_weight": -2.0,
+      "weighted_logged_value": -0.3166,
+      "penalty_curriculum": true
+    },
+    "feet_phase": {
+      "configured_weight": 5.0,
+      "weighted_logged_value": 0.1346,
+      "penalty_curriculum": false
+    },
+    "pose": {
+      "configured_weight": -0.5,
+      "weighted_logged_value": -0.0306,
+      "penalty_curriculum": true
+    },
+    "penalty_close_feet_xy": {
+      "configured_weight": -10.0,
+      "weighted_logged_value": -0.0104,
+      "penalty_curriculum": true
+    },
+    "penalty_feet_ori": {
+      "configured_weight": -5.0,
+      "weighted_logged_value": -0.0138,
+      "penalty_curriculum": true
+    },
+    "alive": {
+      "configured_weight": 1.0,
+      "weighted_logged_value": 0.0444,
+      "penalty_curriculum": false
+    }
+  },
+  "final_penalty_scale": 0.0993
+}

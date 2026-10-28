@@ -51,7 +51,7 @@
 1. 点击 **新建** 按钮。
 2. 填写 Key 的名称（如 `local-dev`、`cursor-agent`），便于区分用途。
 3. 点击 **确认**。
-4. **立即复制并妥善保存生成的 Key**（格式为 `gm_sk_xxxxxxxxxxxxxxxx`），该 Key 仅在创建时完整显示一次。
+4. **立即复制并妥善保存生成的 Key**（格式为 `<YOUR_FLUX_API_KEY>`），该 Key 仅在创建时完整显示一次。
 
 > **安全提示**：API Key 具有账号级别的操作权限，请勿提交到代码仓库、分享给他人，或在公开场合展示。
 
@@ -96,7 +96,7 @@ flux config set base_url "https://internal.limxdynamics.com/dev-api"
 ### 3.2 保存 API Key
 
 ```bash
-flux auth login --api-key "gm_sk_xxxxxxxxxxxxxxxx"
+flux auth login --api-key "<YOUR_FLUX_API_KEY>"
 ```
 
 CLI 会优先将 Key 存入系统 Keychain（macOS Keychain / Windows Credential Manager / Linux Secret Service），若 Keychain 不可用则回退存储到本地配置文件 `~/.config/gradmotion/config.yaml`。
@@ -759,7 +759,7 @@ flux task list
 **解决**：
 
 ```bash
-flux auth login --api-key "gm_sk_xxxxxxxxxxxxxxxx"
+flux auth login --api-key "<YOUR_FLUX_API_KEY>"
 ```
 
 ---

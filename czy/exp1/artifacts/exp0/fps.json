@@ -1,0 +1,28 @@
+{
+  "queried_at": "2026-10-28T10:17:03.586248+00:00",
+  "query": [
+    "task",
+    "data",
+    "get",
+    "--task-id",
+    "TASK_20261028_224",
+    "--data-key",
+    "Perf/total_fps",
+    "--sampling-mode",
+    "precise",
+    "--max-data-points",
+    "20"
+  ],
+  "data": {
+    "Perf/total_fps": {
+      "steps": [
+        0,
+        1
+      ],
+      "values": [
+        3084,
+        3570
+      ]
+    }
+  }
+}
