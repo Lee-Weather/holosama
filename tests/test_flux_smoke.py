@@ -2,7 +2,10 @@
 
 import importlib.util
 import shutil
+import urllib.error
+from contextlib import nullcontext
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 import torch
@@ -16,6 +19,28 @@ SPEC.loader.exec_module(smoke)
 def test_smoke_refuses_large_training():
     with pytest.raises(ValueError, match="Smoke tests require"):
         smoke.training_command(4096, 25000, "test")
+
+
+def test_index_selection_falls_back_after_dns_failure(monkeypatch):
+    visited = []
+
+    def open_index(url, timeout):
+        visited.append(url)
+        if len(visited) == 1:
+            raise urllib.error.URLError("DNS unavailable")
+        return nullcontext(SimpleNamespace(status=200))
+
+    monkeypatch.setattr(smoke.urllib.request, "urlopen", open_index)
+    assert smoke.select_package_index() == "https://pypi.tuna.tsinghua.edu.cn/simple"
+
+
+def test_unreachable_indexes_abort_installation(monkeypatch):
+    def fail(url, timeout):
+        raise urllib.error.URLError("DNS unavailable")
+
+    monkeypatch.setattr(smoke.urllib.request, "urlopen", fail)
+    with pytest.raises(RuntimeError, match="No reachable package index"):
+        smoke.select_package_index()
 
 
 def test_missing_final_iteration_is_rejected(tmp_path):

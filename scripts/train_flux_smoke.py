@@ -14,6 +14,8 @@ import os
 import subprocess
 import sys
 import time
+import urllib.parse
+import urllib.request
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -98,6 +100,29 @@ def package_versions() -> dict[str, str]:
     }
 
 
+def _index_reachable(index: str) -> bool:
+    try:
+        # Called only with the fixed HTTPS package-index allowlist below.
+        with urllib.request.urlopen(index + "/uv-build/", timeout=8) as response:  # noqa: S310
+            return response.status == 200
+    except OSError as error:
+        print("FLUX_SMOKE_INDEX_UNAVAILABLE", urllib.parse.urlparse(index).hostname, type(error).__name__, flush=True)
+        return False
+
+
+def select_package_index() -> str:
+    """The Flux image's mirrors.ivolces.com default may not resolve in its worker."""
+    for index in (
+        "https://pypi.org/simple",
+        "https://pypi.tuna.tsinghua.edu.cn/simple",
+        "https://mirrors.aliyun.com/pypi/simple",
+    ):
+        if _index_reachable(index):
+            print("FLUX_SMOKE_PIP_INDEX", urllib.parse.urlparse(index).hostname, flush=True)
+            return index
+    raise RuntimeError("No reachable package index; aborting before dependency installation")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--num-envs", type=int, default=128)
@@ -118,6 +143,13 @@ def main() -> None:
     env["PYTHONPATH"] = str(REPO_ROOT / "src/holosoma") + os.pathsep + env.get("PYTHONPATH", "")
     print("FLUX_SMOKE_BOOTSTRAP", json.dumps({"python": sys.executable, "versions": package_versions()}), flush=True)
     if not args.skip_install:
+        index = select_package_index()
+        env["PIP_INDEX_URL"] = index
+        env["PIP_CONFIG_FILE"] = os.devnull
+        env["PIP_RETRIES"] = "1"
+        env["PIP_DEFAULT_TIMEOUT"] = "30"
+        env.pop("PIP_EXTRA_INDEX_URL", None)
+        env.pop("PIP_NO_INDEX", None)
         subprocess.run(
             [
                 sys.executable,
@@ -126,6 +158,8 @@ def main() -> None:
                 "install",
                 "--disable-pip-version-check",
                 "--no-input",
+                "--index-url",
+                index,
                 "--prefer-binary",
                 "--timeout",
                 "30",
