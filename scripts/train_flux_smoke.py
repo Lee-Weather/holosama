@@ -113,9 +113,9 @@ def _index_reachable(index: str) -> bool:
 def select_package_index() -> str:
     """The Flux image's mirrors.ivolces.com default may not resolve in its worker."""
     for index in (
-        "https://pypi.org/simple",
         "https://pypi.tuna.tsinghua.edu.cn/simple",
         "https://mirrors.aliyun.com/pypi/simple",
+        "https://pypi.org/simple",
     ):
         if _index_reachable(index):
             print("FLUX_SMOKE_PIP_INDEX", urllib.parse.urlparse(index).hostname, flush=True)
@@ -128,7 +128,7 @@ def main() -> None:
     parser.add_argument("--num-envs", type=int, default=128)
     parser.add_argument("--iterations", type=int, default=2)
     parser.add_argument("--skip-install", action="store_true")
-    parser.add_argument("--install-timeout", type=int, default=600)
+    parser.add_argument("--install-timeout", type=int, default=900)
     parser.add_argument("--training-timeout", type=int, default=600)
     args = parser.parse_args()
     run_name = "flux-smoke-" + time.strftime("%Y%m%d_%H%M%S", time.gmtime())
@@ -166,7 +166,7 @@ def main() -> None:
                 "--retries",
                 "1",
                 "-c",
-                "scripts/isaacsim_constraints.txt",
+                "scripts/flux_smoke_constraints.txt",
                 "-e",
                 "./src/holosoma",
             ],

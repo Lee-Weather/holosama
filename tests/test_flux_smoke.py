@@ -31,7 +31,7 @@ def test_index_selection_falls_back_after_dns_failure(monkeypatch):
         return nullcontext(SimpleNamespace(status=200))
 
     monkeypatch.setattr(smoke.urllib.request, "urlopen", open_index)
-    assert smoke.select_package_index() == "https://pypi.tuna.tsinghua.edu.cn/simple"
+    assert smoke.select_package_index() == "https://mirrors.aliyun.com/pypi/simple"
 
 
 def test_unreachable_indexes_abort_installation(monkeypatch):

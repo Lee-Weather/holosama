@@ -4,7 +4,7 @@
 
 用于核查或准备 Holosoma 的 IsaacSim 训练。F1/X1 Isaac Gym 和 VLA 使用各自流程。
 
-2026-10-27 对当前账号查询到版本匹配的官方镜像与算力，实际 ID 和环境描述统一记录在 [resources.md 的 Holosoma 查询记录](resources.md#holosoma-isaaclab-镜像查询记录)。使用该组合、当前 Git 仓库和真实训练入口的 `task create --dry-run` 返回退出码 `10`。未创建或启动训练任务；容器环境、依赖安装、GPU 仿真和产物上传尚待验证。
+2026-10-27 查询到版本匹配的官方镜像与算力，实际 ID 和环境描述统一记录在 [resources.md 的 Holosoma 查询记录](resources.md#holosoma-isaaclab-镜像查询记录)。`task create --dry-run` 返回退出码 `10`。2026-10-28 已在用户指定账号启动小规模验证，但前两次在依赖安装阶段退出，GPU 仿真和产物上传仍待验证。
 
 结论：平台具备与仓库版本匹配的镜像和算力候选，可以据此准备云端训练；不能表述成「已经训练成功」或「无需适配即可运行」。`--dry-run` 是 CLI 请求构造/参数预览，不会验证容器依赖、实时库存、远端 Git 权限或代码执行。
 
@@ -42,11 +42,18 @@ flux --yes task resource list --goods-back-category 3 --page 1 --limit 50
 优先复用镜像现有的 IsaacLab/Python 环境，按仓库约束补齐训练包。例如下列命令须在云端仓库根目录、且 Python 与 `gm-run` 一致时执行：
 
 ```bash
-python -m pip install -c scripts/isaacsim_constraints.txt -e ./src/holosoma
+python -m pip install -c scripts/flux_smoke_constraints.txt -e ./src/holosoma
 python -m pip check
 ```
 
-这不是已经在云端验证过的安装记录。发生依赖冲突时根据实际报错处理；不要用 `--no-deps` 隐藏缺失项，也不要无依据整体升级镜像中的 torch、IsaacSim 或平台 SDK。仅做训练不必同时安装 inference/retargeting；后者 NumPy 2.3.5 与训练包 NumPy <2 冲突，应分环境。
+这不是已经在云端验证通过的安装记录。Flux 专用约束包含原 IsaacSim 约束，并固定与 `packaging==23.0`、NumPy 1.x 兼容的 Jupyter/OpenCV 组合，复用镜像 TensorDict 0.9.0；修改后先在本地解析 Linux/Python 3.11 依赖。发生依赖冲突时根据实际报错处理；不要用 `--no-deps` 隐藏缺失项，也不要无依据整体升级镜像中的 torch、IsaacSim 或平台 SDK。仅做训练不必同时安装 inference/retargeting；后者 NumPy 2.3.5 与训练包 NumPy <2 冲突，应分环境。
+
+实际遇到的安装故障：
+
+- `TASK_20261028_067`：镜像默认源 `mirrors.ivolces.com` 在 worker 中无法解析，安装 build backend 失败。包装入口应探测可达源并显式传给 `python -m pip`。
+- `TASK_20261028_113`：PyPI 元数据下载有超时，且无上界的 Notebook/JupyterLab 与 IsaacSim 的 packaging 约束导致大量版本回溯，600 秒安装超时；没有 checkpoint。先修正依赖解析，再重试，不应仅反复增加计费任务。
+- `gm-run` 使用 `/workspace/isaaclab/_isaac_sim/kit/python/bin/python3`；镜像可能没有名为 `pip` 的独立可执行文件，但 `python -m pip` 可用。IsaacLab 发行包元数据版本为 `0.54.2`，不能直接据此判定镜像不符 2.3.2 发布版本。
+- 内网代理仅用于本机 Git/CLI；云端安装源由 worker 自己探测。入口优先探测国内镜像，再回退 PyPI，避免索引可达但其文件 CDN 持续超时。
 
 不要在已有匹配镜像中默认执行完整 `setup_isaacsim.sh`：它可能另建 Conda 环境、重复下载运行时，并使训练进程脱离 SDK 所在环境。`setup_isaacsim_delta.sh` 也有运行时路径和 Conda 布局前提，不能只凭镜像名称就直接套用。
 
@@ -65,7 +72,7 @@ holosama/src/holosoma/holosoma/train_agent.py
 训练前按 [git-mirror.md](git-mirror.md) 核对 `origin` 上的 commit；Git 操作可使用本会话用户指定的单次代理：
 
 ```powershell
-git -c http.proxy=http://10.12.202.6:39000 ls-remote origin refs/heads/main
+git -c http.proxy=http://10.12.202.95:1080 ls-remote origin refs/heads/main
 ```
 
 该代理地址是用户于 2026-10-28 指定的本地网络配置；不要把本机或内网代理写入云端任务当成可访问的代理。
@@ -81,7 +88,7 @@ Holosoma 使用 Tyro/dataclass 组合配置：
 
 获得训练运行授权后，先确认安装阶段和入口就绪，再执行小规模训练。
 
-当前仓库提供 `scripts/train_flux_smoke.py`：在 `gm-run` 的解释器中补齐训练包依赖，使用新 Python 子进程运行 G1 PPO，再加载 checkpoint、执行 ONNX CPU 推理并检查 TensorBoard 文件。默认 128 环境、2 次迭代，安装和训练分别限时 600 秒，最后预留 60 秒供平台扫描上传。平台启动命令为：
+当前仓库提供 `scripts/train_flux_smoke.py`：在 `gm-run` 的解释器中补齐训练包依赖，使用新 Python 子进程运行 G1 PPO，再加载 checkpoint、执行 ONNX CPU 推理并检查 TensorBoard 文件。默认 128 环境、2 次迭代，安装限时 900 秒、训练限时 600 秒，最后预留 60 秒供平台扫描上传。平台启动命令为：
 
 ```text
 gm-run holosama/scripts/train_flux_smoke.py

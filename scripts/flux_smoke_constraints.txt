@@ -1,0 +1,14 @@
+# Cloud bootstrap constraints for the IsaacLab 2.3.2 / IsaacSim 5.1 image.
+-c isaacsim_constraints.txt
+
+# Recent Jupyter releases require packaging>=23.2, but IsaacSim pins 23.0.
+# Resolve this compatible family directly instead of backtracking every release.
+notebook==7.3.3
+jupyterlab==4.3.8
+jupyter-server==2.15.0
+jupyterlab-server==2.27.3
+
+# Reuse the image's TensorDict; avoid newer Torch and NumPy 2 requirements.
+tensordict==0.9.0
+opencv-python==4.11.0.86
+tensorboard==2.20.0
