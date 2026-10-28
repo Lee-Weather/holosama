@@ -42,7 +42,7 @@ flux-cli `1.1.0` 已验证 RL 与 VLA 共用资源类别 `3`；类别 `6` 当前
 | 运行环境描述 | IsaacSim 5.1 / IsaacLab 2.3.2 / Python 3.11.13 / PyTorch 2.7.0 / Ubuntu 22.04.5 |
 | 当前账号可见算力 | `ESKU000001`，`goodsBackId=SKUSL000002`，1×4090D 24G，`gpuNum=1` |
 
-该组合与当时 Holosoma 的 `ISAACSIM_VERSION=5.1.0`、`ISAACLAB_REF=v2.3.2`、PyTorch 2.7.0 要求匹配。查询记录证明存在匹配候选，尚未证明云端训练已跑通，也不保证实时库存。创建前重新查询。
+该组合与当时 Holosoma 的 `ISAACSIM_VERSION=5.1.0`、`ISAACLAB_REF=v2.3.2`、PyTorch 2.7.0 要求匹配。2026-10-28 重新查询仍可用，并完成 `TASK_20261028_224` 的 128 环境、2 次 PPO 迭代；依赖修复、产物与验证范围见 [Holosoma 实测记录](holosoma-isaaclab.md#已完成的云端验证)。这不保证后续实时库存，创建前重新查询。
 
 ## F1/X1 历史已验证配置
 

@@ -2,11 +2,32 @@
 
 ## 适用范围与证据
 
-用于核查或准备 Holosoma 的 IsaacSim 训练。F1/X1 Isaac Gym 和 VLA 使用各自流程。
+用于核查、准备和运行 Holosoma 的 IsaacSim 训练。F1/X1 Isaac Gym 和 VLA 使用各自流程。
 
-2026-10-27 查询到版本匹配的官方镜像与算力，实际 ID 和环境描述统一记录在 [resources.md 的 Holosoma 查询记录](resources.md#holosoma-isaaclab-镜像查询记录)。`task create --dry-run` 返回退出码 `10`。2026-10-28 已在用户指定账号启动小规模验证，但前两次在依赖安装阶段退出，GPU 仿真和产物上传仍待验证。
+2026-10-27 查询到版本匹配的官方镜像与算力，实际 ID 和环境描述统一记录在 [resources.md 的 Holosoma 查询记录](resources.md#holosoma-isaaclab-镜像查询记录)。2026-10-28 经两次安装修复后，`TASK_20261028_224` 已完成 G1 PPO 小规模云端训练、checkpoint 上传及 ONNX CPU 推理校验。
 
-结论：平台具备与仓库版本匹配的镜像和算力候选，可以据此准备云端训练；不能表述成「已经训练成功」或「无需适配即可运行」。`--dry-run` 是 CLI 请求构造/参数预览，不会验证容器依赖、实时库存、远端 Git 权限或代码执行。
+结论：当前镜像加仓库包装入口已跑通小规模训练流程；尚未验证长时间收敛、视频、WBT 或其他环境规模。`--dry-run` 仅预览请求，不能替代运行证据。
+
+### 已完成的云端验证
+
+| 项目 | 实测结果 |
+|---|---|
+| 账号 / 用户 ID | `limxmts0elyormeym6@uberip.com` / `4390`（用户明确指定） |
+| 项目 / 任务 | `PRO_20261028_008` / `TASK_20261028_224` |
+| 训练代码 commit | `b438b4e23a7a3a1d52136a2b0b8a687b0ba9d154` |
+| 镜像 / 版本 | `BJX00000178` / `V000420` |
+| 算力 | `ESKU000001`；CUDA 报告 NVIDIA GeForce RTX 4090，显存 25,393,692,672 bytes |
+| 配置 | `exp:g1-29dof`、PPO、IsaacSim、平地、128 环境、2 迭代、seed=1、无视频/Wandb |
+| 结束状态 / 时长 | `5`（Completed），2026-10-28 17:56:26–18:00:44，258 秒（含安装和上传等待） |
+| 训练步数 / 速度 | 6,144；最后一轮约 3,570 steps/s，迭代本身约 0.86 秒 |
+| 最后一轮日志 | mean reward=-3.96，mean episode length=41.18；仅流程验证，不能判断收敛 |
+| checkpoint | `model_00001.pt`，5,300,224 bytes，iter=1；平台上传并下载后确认 actor 权重均有限 |
+| ONNX | 云端生成 958,244 bytes，CPU 输入全零，输出 shape=(1,29) 且有限；模型列表未返回 ONNX 下载项 |
+| TensorBoard / 平台曲线 | 1 个事件文件；`data keys` 返回训练指标，`Train/mean_reward` 返回 step=0 的一个点 |
+
+本地 checkpoint SHA-256：`8d60055838bec656e9bf5bf7e691b6642d28b7b36f45df0c4d5f4f83d4baa1c2`。
+
+平台短任务曲线未返回第二轮点，因此最终奖励以上述云日志为准，不声称所有 TensorBoard 点均已接入。下载模型、脱敏日志及 `smoke_result.json` 保存在仓库的 `logs/flux-validation/TASK_20261028_224/`（Git 忽略）。不要把此账号设为技能的通用默认账号；后续按用户当次指定确认身份。
 
 ## 每次使用时重新核查
 
@@ -46,7 +67,9 @@ python -m pip install -c scripts/flux_smoke_constraints.txt -e ./src/holosoma
 python -m pip check
 ```
 
-这不是已经在云端验证通过的安装记录。Flux 专用约束包含原 IsaacSim 约束，并固定与 `packaging==23.0`、NumPy 1.x 兼容的 Jupyter/OpenCV 组合，复用镜像 TensorDict 0.9.0；修改后先在本地解析 Linux/Python 3.11 依赖。发生依赖冲突时根据实际报错处理；不要用 `--no-deps` 隐藏缺失项，也不要无依据整体升级镜像中的 torch、IsaacSim 或平台 SDK。仅做训练不必同时安装 inference/retargeting；后者 NumPy 2.3.5 与训练包 NumPy <2 冲突，应分环境。
+这组约束已在上述任务完成安装和训练。Flux 专用约束包含原 IsaacSim 约束，并固定与 `packaging==23.0`、NumPy 1.x 兼容的 Jupyter/OpenCV 组合，复用镜像 TensorDict 0.9.0；修改后先在本地解析 Linux/Python 3.11 依赖。不要用 `--no-deps` 隐藏缺失项，也不要无依据整体升级镜像中的 torch、IsaacSim 或平台 SDK。仅做训练不必同时安装 inference/retargeting；后者 NumPy 2.3.5 与训练包 NumPy <2 冲突，应分环境。
+
+上述成功任务仍有 pip 全局依赖告警：`nvidia-srl-usd` 未检测到 `usd-core` 发行包、`nvidia-srl-base` 要求 docstring-parser 0.16 而 Tyro 安装 0.18，以及镜像 FastAPI 0.115.7 与 Starlette 0.49.1 的声明不符。本次仿真、训练、SDK 上传均实际通过，但不能宣称全环境 `pip check` 通过。按使用范围分别诊断，不要直接往 IsaacSim 环境安装另一套 USD 来消除元数据告警。
 
 实际遇到的安装故障：
 
@@ -94,7 +117,7 @@ Holosoma 使用 Tyro/dataclass 组合配置：
 gm-run holosama/scripts/train_flux_smoke.py
 ```
 
-这个包装入口的 CPU 产物校验测试已经通过；云端训练是否成功仍以任务日志和产物为准。
+这个包装入口的 5 项 CPU 测试及上述云端任务已通过；后续运行仍以当次日志和产物为准。
 
 下面是**依赖已经安装且 `gm-run` 使用正确解释器时**的候选启动命令；若需要 Python 包装入口，用已提交的实际路径替换脚本部分：
 
@@ -102,7 +125,7 @@ gm-run holosama/scripts/train_flux_smoke.py
 gm-run holosama/src/holosoma/holosoma/train_agent.py exp:g1-29dof simulator:isaacsim logger:disabled terrain:terrain-locomotion-plane --training.num-envs=128 --training.headless=True --algo.config.num-learning-iterations=2 --algo.config.save-interval=1 --logger.video.enabled=False
 ```
 
-这个入口和参数来自当前仓库，但尚未经 Flux 容器运行验证。`logger:disabled` 关闭 Wandb，TensorBoard 仍启用。首次验证关闭视频，避免渲染和 Wandb 认证干扰；24GB 显存下从小环境数起步，不能把默认 4096 环境视为已验证容量。
+这些入口参数已由包装脚本在上述 Flux 任务使用。`logger:disabled` 关闭 Wandb，TensorBoard 仍启用。首次验证关闭视频，避免渲染和 Wandb 认证干扰；24GB 显存下从小环境数起步，不能把默认 4096 环境视为已验证容量。
 
 构造任务时：
 
@@ -124,6 +147,6 @@ Holosoma 默认写入 `logs/<project>/<timestamp>-<name>-<task>/`，包含 Tenso
 
 - 运行中先查实际指标 keys，再用 `precise`；不能凭 CLI 请求成功断言平台曲线已接入。
 - `logger:disabled` 仍有 TensorBoard，但平台是否解析对应事件文件需实测。
-- `.pt` 下载从 `model list` 获取 `policUrlDown`。ONNX 是否进入模型目录尚未验证，不能承诺自动上传；不要把 ONNX 改成 `.pt` 扩展名来伪装上传。
+- `.pt` 下载从 `model list` 获取 `policUrlDown`。上述成功任务的 SDK 发现了 ONNX 文件，但模型列表仅有两个 `.pt`，没有 ONNX 下载项；部署前需另行验证 ONNX 的保存/下载通道。不要把 ONNX 改成 `.pt` 扩展名来伪装上传。
 - 视频按 Holosoma 的 `logger.video` 配置另行验证；不默认要求 `play_output.mp4`、`model_isaac_csv.pt` 或 `isaac_diag.csv`。
 - 默认交付 checkpoint、需要部署的 ONNX，以及用户要求的日志/视频。记录任务 ID、实际镜像与版本、commit、实验预设、环境数、迭代数和验证范围；不记录密钥或签名 URL。
