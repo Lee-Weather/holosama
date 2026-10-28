@@ -1,6 +1,6 @@
 ---
 name: flux-cli
-description: "Operate the official flux-cli successor to gm-cli for RL and VLA projects, tasks, authentication, logs, checkpoints, data, and safe automation. Also use for the F1/X1 project extensions: Isaac Gym replay video and CSV export, recommended GM resources and images, account rotation, GitHub/GitLab version mirroring, periodic training monitoring, artifact download, and experiment-record handoff."
+description: "Operate Flux RL/VLA projects and training tasks with flux-cli: authentication, images, compute, logs, checkpoints, and experiment records. Use for Holosoma IsaacLab/IsaacSim training compatibility and launch preparation, and F1/X1 Isaac Gym replay with video/CSV export."
 ---
 
 # flux-cli
@@ -12,6 +12,7 @@ description: "Operate the official flux-cli successor to gm-cli for RL and VLA p
 - 项目管理：`flux project ...`（list/create/edit/delete/info）
 - 任务管理（RL）：`flux task ...`（create/edit/copy/list/info/run/stop/delete/logs/resource/image/storage/data/hp/env/params/tag/note/batch）
 - VLA 训练：`flux vla ...`（task / project / dataset / base-model / image）——见文末「VLA 命令（Vision-Language-Action 训练）」章节
+- Holosoma 的 IsaacLab/IsaacSim 训练适配，以及 F1/X1 的 Isaac Gym 训练与回放；按仓库实际使用的仿真栈选择流程。
 
 ## 安全与约束
 - 不要在对话输出中回显用户的 `api-key` 或完整密钥内容。
@@ -28,12 +29,20 @@ description: "Operate the official flux-cli successor to gm-cli for RL and VLA p
 ## 官方能力与项目扩展路由
 
 - 安装、认证、RL/VLA 命令、退出码和完整示例：按需读取 [FluxCLISkill-Guide.md](FluxCLISkill-Guide.md)。
+- Holosoma、IsaacLab/IsaacSim 镜像可行性、依赖安装、训练入口与小规模验证：读取 [references/holosoma-isaaclab.md](references/holosoma-isaaclab.md)。
 - F1/X1 Isaac Gym 回放、视频与 CSV：执行前完整读取 [references/replay.md](references/replay.md)。
 - 镜像、算力和字段选择：创建或恢复任务前读取 [references/resources.md](references/resources.md)。
 - 多账号额度管理与自动切换：涉及账号选择或余额不足时读取 [references/accounts.md](references/accounts.md)。
 - GitHub/GitLab 版本镜像：训练版本即将启动、需要同步代码或配置 Git 远程时读取 [references/git-mirror.md](references/git-mirror.md)。
 - 训练监控、ETA、产物下载与实验记录：需要监控或收尾时读取 [references/monitoring.md](references/monitoring.md)。
 - 保留 `czy/skills/gm-cli/` 作为迁移期回滚基线；新操作优先使用 `flux`，不要同时用两套 CLI 修改同一任务。
+
+### 仿真栈与可行性判断
+
+- Flux 官方镜像包含 IsaacLab/IsaacSim，不要把平台能力限定为 Isaac Gym；先查镜像目录、版本 ID，再对照仓库的版本约束。
+- Holosoma 当前分支使用 IsaacSim 或 MJWarp 训练，不能套用 F1/X1 的 Isaac Gym 镜像、`--task` 参数、`play_gm.py` 或固定日志目录。
+- 区分「镜像/算力已查询」「CLI dry-run 通过」「云端训练实际跑通」。前两项不能替代依赖、GPU、仿真启动及 checkpoint 的运行验证。
+- 用户仅要求核查可行性或修改 skill 时，可做只读查询与 `--dry-run`；不因此创建或启动计费任务。
 
 ## 帮助与版本
 - 总览：`flux --help`
@@ -296,7 +305,9 @@ Agent 执行：
 ```
 
 ## 最小可运行 JSON 模版（训练任务）
-下面是一个“可创建并可运行”的最小模板（请替换示例值）：
+下面展示创建训练任务的请求结构；替换示例值并完成对应项目的环境准备后使用：
+
+镜像与版本 ID 必须来自当前平台查询，不能沿用其他项目示例。下述脚本演示 F1/X1 参数；Holosoma 使用 [references/holosoma-isaaclab.md](references/holosoma-isaaclab.md) 中的入口与参数。
 
 ```json
 {
@@ -308,8 +319,8 @@ Agent 执行：
     "taskDescription": "created by flux-cli",
     "taskTag": [],
     "goodsId": "goods_xxx",
-    "imageId": "BJX00000001",
-    "imageVersion": "V000057",
+    "imageId": "<IMAGE_ID>",
+    "imageVersion": "<IMAGE_VERSION_ID>",
     "personalDataPath": "/personal"
   },
   "taskCodeInfo": {
@@ -345,8 +356,8 @@ Agent 执行：
     "taskDescription": "resume from existing checkpoint",
     "taskTag": [],
     "goodsId": "goods_xxx",
-    "imageId": "BJX00000001",
-    "imageVersion": "V000057",
+    "imageId": "<SOURCE_IMAGE_ID>",
+    "imageVersion": "<SOURCE_IMAGE_VERSION_ID>",
     "personalDataPath": "/personal"
   },
   "taskCodeInfo": {

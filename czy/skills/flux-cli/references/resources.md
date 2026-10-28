@@ -1,4 +1,14 @@
-# F1/X1 镜像与算力选择
+# Flux RL 镜像与算力选择
+
+## 先识别仓库使用的仿真栈
+
+| 工作流 | 镜像选择依据 | 详细流程 |
+|---|---|---|
+| Holosoma IsaacSim 训练 | 仓库 `scripts/versions.sh` 中的 IsaacSim/IsaacLab 版本及 PyTorch、Python 约束 | [holosoma-isaaclab.md](holosoma-isaaclab.md) |
+| F1/X1 Isaac Gym 训练与回放 | Isaac Gym Preview 4 及对应 Python/PyTorch 组合 | 本文 F1/X1 配置与 [replay.md](replay.md) |
+| Holosoma MJWarp 训练 | 仓库 MuJoCo、mujoco-warp、warp-lang 和 CUDA 约束 | 查询兼容镜像后单独适配；IsaacLab 镜像不代表已经包含 MJWarp |
+
+不要按「版本最新」直接选择镜像，也不要把一个项目验证过的镜像作为所有 RL 任务的默认值。
 
 ## 选择原则
 
@@ -20,7 +30,21 @@ flux-cli `1.1.0` 已验证 RL 与 VLA 共用资源类别 `3`；类别 `6` 当前
 - 镜像版本返回中的 `id`：填写 `taskBaseInfo.imageVersion`；
 - `versionCode`：仅供展示，不能代替版本 `id`。
 
-## 当前项目已验证配置
+## Holosoma IsaacLab 镜像查询记录
+
+2026-10-27 使用 Flux CLI 1.1.0 实际查询得到：
+
+| 项目 | 值 |
+|---|---|
+| 官方镜像 ID | `BJX00000178` |
+| 镜像版本 ID（`imageVersion`） | `V000420` |
+| 可读版本名（不填入 `imageVersion`） | `isaac-lab2.3.2-v2` |
+| 运行环境描述 | IsaacSim 5.1 / IsaacLab 2.3.2 / Python 3.11.13 / PyTorch 2.7.0 / Ubuntu 22.04.5 |
+| 当前账号可见算力 | `ESKU000001`，`goodsBackId=SKUSL000002`，1×4090D 24G，`gpuNum=1` |
+
+该组合与当时 Holosoma 的 `ISAACSIM_VERSION=5.1.0`、`ISAACLAB_REF=v2.3.2`、PyTorch 2.7.0 要求匹配。查询记录证明存在匹配候选，尚未证明云端训练已跑通，也不保证实时库存。创建前重新查询。
+
+## F1/X1 历史已验证配置
 
 F1/X1 的 Isaac Gym RL 训练与回放已验证：
 
@@ -36,7 +60,7 @@ F1/X1 的 Isaac Gym RL 训练与回放已验证：
 
 ## 创建与恢复规则
 
-- 新建 RL 任务使用 `trainType=1`。
+- 新建 RL 任务使用 `trainType=1`；Holosoma 先按对应参考文档准备依赖与小规模训练入口。
 - 恢复训练通常使用 `trainType=2`，并复用源任务的算力、镜像、代码和 checkpoint 元数据。
 - Isaac Gym 回放的 checkpoint 挂载已验证不可靠，回放仍使用 `trainType=1` + 运行时下载。
 - RL `startScript` 必须以 `gm-run` 开头，即使客户端命令已经改为 `flux`。

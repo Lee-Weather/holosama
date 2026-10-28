@@ -2,6 +2,8 @@
 
 > 本教程覆盖从 API Key 创建、CLI 本地安装，到在 Cursor Agent 中配置 CLI Skill 的完整流程。
 
+本仓库补充了 [Holosoma IsaacLab 训练适配](references/holosoma-isaaclab.md) 与 [按仿真栈选择镜像](references/resources.md)。下文使用 Isaac Gym/F1/X1 路径的示例不代表平台仅支持 Isaac Gym；Holosoma 应先核对 IsaacSim/IsaacLab 镜像版本，并使用自身的 Tyro 配置和训练入口。
+
 ---
 ## 最简流程：从 API Key 到 Skill 使用（约 5 分钟）
 
@@ -13,7 +15,7 @@
 | **2. 安装 CLI** | 执行 `npm install -g @limxdynamics/flux-cli`（需 Node.js >= 16）。安装后执行 `flux --version` 确认。 |
 | **3. 配置** | `flux config set base_url "https://internal.limxdynamics.com/dev-api"`<br>`flux auth login --api-key "gm_sk_你的Key"` |
 | **4. 验证** | `flux auth status`（本地）→ `flux auth whoami`（服务端）。 |
-| **5. 安装 Skill** | `mkdir -p ~/.cursor/skills/flux-cli`，将 [SKILL.md](../npm/skills/flux-cli/SKILL.md) 放到该目录；或在 Cursor **Settings → Features → Agent Skills** 确认 Skills 路径为 `~/.cursor/skills/`。 |
+| **5. 安装 Skill** | `mkdir -p ~/.cursor/skills/flux-cli`，将 [SKILL.md](SKILL.md) 放到该目录；或在 Cursor **Settings → Features → Agent Skills** 确认 Skills 路径为 `~/.cursor/skills/`。 |
 | **6. 使用** | 在 Cursor Agent 里直接说「帮我列出任务」「查看任务 task_xxx 详情」「下载任务某个 checkpoint 的模型文件」等，或输入 `flux task list`；提到 `flux`、Flux、任务、项目、checkpoint、模型文件下载时 Agent 会自动使用 flux-cli Skill。 |
 
 详细说明与常见问题见下文各章节。
@@ -310,7 +312,7 @@ mkdir -p ~/.cursor/skills/flux-cli
 
 点击下方链接下载 flux-cli Skill 文件：
 
-**[下载 SKILL.md](../npm/skills/flux-cli/SKILL.md)**
+**[下载 SKILL.md](SKILL.md)**
 
 将下载的 `SKILL.md` 放到 `~/.cursor/skills/flux-cli/` 目录下：
 

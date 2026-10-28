@@ -13,6 +13,8 @@
 
 仅在用户要求回放训练策略、生成 `play_output.mp4`、导出 `isaac_diag.csv` 或下载完整回放产物时使用。回放不训练策略，只加载已有 checkpoint。
 
+本文具体脚本、参数、目录和 CSV 上传约定针对 F1/X1 Isaac Gym。Holosoma 的 IsaacLab/IsaacSim 工作流先读 [holosoma-isaaclab.md](holosoma-isaaclab.md)，评估其 `eval_agent.py` 和视频配置；不要假定仓库存在下述 `humanoid/scripts/play_gm.py`。
+
 仓库应提供 `humanoid/scripts/play_gm.py` 或等价脚本，并具备：
 
 - `--headless --num_envs=1` 回放；

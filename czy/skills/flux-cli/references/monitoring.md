@@ -71,7 +71,9 @@ play 任务即使产物成功也可能是 `6`，因此终态必须结合日志�
 
 ## 完成后的产物
 
-训练任务完成后：
+先按项目确定产物。Holosoma 的训练产物包括 `.pt` checkpoint、导出的 `.onnx` 和 TensorBoard 日志；按 [holosoma-isaaclab.md](holosoma-isaaclab.md) 核查平台实际上传情况。不要要求 Holosoma 默认生成 F1/X1 的 CSV 包，也不要把 `.onnx` 自动上传视为已验证能力。
+
+F1/X1 训练与回放任务完成后：
 
 1. 从 `data.rows` 选择最终 checkpoint，使用 `policUrlDown`；
 2. 回放任务读取 `play_output.mp4` 的 `videoUrlDown`；
