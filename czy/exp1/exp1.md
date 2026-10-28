@@ -7,6 +7,7 @@
 | 编号 | 日期 | 摘要 | 状态 | Task ID | Flux账号 | checkpoint |
 | --- | --- | --- | --- | --- | --- | --- |
 | [exp0](#实验-exp0flux-isaaclab-上的-g1-ppo-流程验证) | 2026-10-28 | 修复安装源与版本回溯，完成 128 环境 × 2 次 PPO 迭代；checkpoint 上传/下载及云端 ONNX 校验通过 | 已测试 | `TASK_20261028_224`（含两次失败尝试，见 §7） | `limxmts0elyormeym6@uberip.com` | [model_00001.pt](../data/exp0/model_00001.pt) |
+| [exp_1](#实验-exp_1g1-平地-ppo-正式训练) | 2026-10-28 | 从零进行 2048 环境 × 5000 次 PPO 迭代，沿用 exp0 仿真及奖励配置 | 待训练 | 待创建 | `limxmts0elyormeym6@uberip.com` | 待生成；计划 `model_04999.pt` |
 
 ## 实验 exp0：Flux IsaacLab 上的 G1 PPO 流程验证
 
@@ -186,3 +187,74 @@ Git 在本机使用用户代理 `http://10.12.202.95:1080`，训练启动前推�
 
 - 新目标记录为 `exp_1`：在另行确定的训练规模下评估 G1 平地 PPO 的长期奖励、episode 长度和行走表现，保留 exp0 作为环境基线。
 - 准备可保存并下载 ONNX 的产物通道，随后独立验证回放/视频及推理部署；本次归档不启动新计费任务。
+
+## 实验 exp_1：G1 平地 PPO 正式训练
+
+### 1. 上一实验结果与教训
+
+exp0 已在同账号的 `TASK_20261028_224` 正常完成，128 环境、2 次迭代、6,144 步；最后 Mean reward=-3.955621、Mean episode length=41.181820 steps（约 0.824 秒），训练速度约 3,570 steps/s。checkpoint 下载后权重有限，云端 ONNX 推理通过。全程 258 秒主要包含冷启动，不能用两轮短测的速度准确估算大规模训练。
+
+核心教训：依赖安装必须使用已验证的索引/约束；账号逐次核对；日志学习率 `0.0000` 实为格式化后的 `1e-5`。128 环境测试未证明大规模显存容量或收敛，因此本轮先选择 2048 环境，保留 6 小时训练时限和每 100 轮 checkpoint。
+
+### 2. 本轮修改目标
+
+- 用户已授权推送实验产物并开启一次正式训练。本轮从零训练 G1 平地 PPO，不从 exp0 两轮模型续训。
+- 完成 5000 次迭代，共计划采样 `2048 × 24 × 5000 = 245,760,000` 步。
+- 目标为获得可继续评估的平地策略，记录奖励、episode 长度、速度及 checkpoint；训练曲线不能替代行走回放验收。
+
+### 3. 修改内容
+
+### 修改一：提高规模并建立正式入口
+
+| 参数 | exp0 | exp_1 | 理由 |
+| --- | --- | --- | --- |
+| 包装入口 | `scripts/train_flux_smoke.py` | `scripts/train_flux.py` | 正式入口独立配置，保留 smoke 规模边界 |
+| 环境数 | 128 | 2048 | 在 24GB GPU 上开始规模训练；容量待实际启动验证 |
+| PPO 迭代数 | 2 | 5000 | 形成训练曲线与策略优化；首次正式运行不直接使用预设 25000 轮 |
+| 保存间隔 | 1 | 100（并保存最终模型） | 保留阶段性恢复点及最终 checkpoint |
+| 训练超时 | 600 秒 | 21600 秒（6 小时） | 明确本次运行边界；超时退出，不自动重试/续费续训 |
+
+### 修改二：复用已验证的依赖与验收
+
+提取 exp0 的环境准备、依赖安装和 CUDA 检查函数供两个入口共用；不修改 PPO、奖励、机器人和随机化实现。正式入口记录云端实际 Git SHA 与启动参数，完成后在新解释器加载最终 checkpoint、执行 ONNX CPU 推理并检查 TensorBoard。
+
+### 4. 修改文件
+
+- [scripts/train_flux.py](../../scripts/train_flux.py)：正式训练入口及规模/运行时限。
+- [scripts/train_flux_smoke.py](../../scripts/train_flux_smoke.py)：将既有 bootstrap 提取为共享函数；保留原 smoke 参数和验收。
+- [tests/test_flux_training.py](../../tests/test_flux_training.py)：验证无效规模不会启动、安装失败不会进入 GPU、训练超时不会重试。
+- 本笔记和 Flux 参考文档：记录开训计划、实际任务 ID 与后续进度。
+
+### 5. 训练参数
+
+| 参数 | 计划值 |
+| --- | --- |
+| 训练方式 / 实验编号 | 从零 / `exp_1` |
+| Flux账号 / 用户 ID / 项目 | `limxmts0elyormeym6@uberip.com` / `4390` / `PRO_20261028_008` |
+| 组合 | `exp:g1-29dof simulator:isaacsim logger:disabled terrain:terrain-locomotion-plane` |
+| 环境数 / seed | 2048 / 1 |
+| 迭代数 / 每环境采样步数 / 保存间隔 | 5000 / 24 / 100 |
+| actor / critic 学习率 | 初始均 `1e-5`，adaptive，desired KL=0.01；沿用预设 |
+| optimizer / 网络 / PPO 参数 | 与 exp0 相同：AdamW；MLP `[512,256,128]`；epoch=8，minibatch=4，gamma=0.99，lambda=0.95 |
+| 物理 / 控制频率 | 200 Hz / 50 Hz，control_dt=0.02 s |
+| GPU / 镜像 | `ESKU000001`（1×4090D 24G）/ `BJX00000178`，`V000420` |
+| 仓库 / 分支 | [Lee-Weather/holosama](https://github.com/Lee-Weather/holosama) / `main`；启动前推送并核对，云端计划记录实际 SHA |
+| 启动命令 | `gm-run holosama/scripts/train_flux.py --experiment exp_1 --num-envs 2048 --iterations 5000 --save-interval 100 --training-timeout 21600` |
+| 安装 / 训练 / 上传等待 | 900 秒 / 21600 秒 / 成功后 60 秒 |
+| 记录方式 | TensorBoard；关闭 Wandb、视频；本轮不包含回放任务 |
+
+### 6. 预期与验收
+
+| 指标 | exp0 | 本轮目标 | 异常信号 |
+| --- | --- | --- | --- |
+| 迭代 / 最终 checkpoint | 2 / `model_00001.pt` | 完成 5000；`model_04999.pt` 的 iter>=4999 | 提前结束、超时或权重非有限 |
+| GPU / 运行状态 | 128 环境可用 | 2048 环境正常采样，无 OOM/持续异常 | 显存不足、NaN/Inf、仿真崩溃 |
+| Mean episode length | 41.181820 steps | 目标末段 100 轮均值>=800 steps（16 秒）；待测 | 长期停留在短 episode，需分析终止原因 |
+| Mean reward | -3.955621 | 目标末段 100 轮均值高于 exp0；仅作方向参考 | 持续退化或非有限 |
+| 产物 | `.pt` 上传、ONNX 云端校验通过 | checkpoint 上传且可加载，最终 ONNX 校验通过 | 上传缺失、模型不可读 |
+
+以上是本轮预期，不是已验证效果。到达迭代上限与达到策略质量目标分别判定；行走表现留待后续回放。
+
+### 7. 实验结果
+
+待训练完成后补充。创建和启动后在此追加任务 ID、实际 commit、首轮状态与指标；训练期间索引标为「训练中」，不提前宣称收敛或完成。

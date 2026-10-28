@@ -145,6 +145,8 @@ gm-run holosama/src/holosoma/holosoma/train_agent.py exp:g1-29dof simulator:isaa
 
 正式训练再按 PPO/FastSAC、locomotion/WBT、视频需求和实际显存调整环境数及迭代数。WBT 使用真实 motion NPZ；仓库自带参考动作可作初始验证，不需要 F1/X1 的轨迹参数。
 
+当前正式训练入口为 `scripts/train_flux.py`，复用 exp0 bootstrap，默认 2048 环境、5000 次 PPO 迭代、每 100 轮保存，训练限时 21600 秒（安装另限 900 秒）。平台命令：`gm-run holosama/scripts/train_flux.py --experiment exp_1`。入口记录实际 Git SHA 和参数，正常完成后校验最终 checkpoint/ONNX/TensorBoard，并等待上传 60 秒；失败或超时不会自动重试。该规模正在 exp_1 验证，不能仅因 smoke 成功就声称容量和收敛已通过。
+
 ## 日志与产物
 
 Holosoma 默认写入 `logs/<project>/<timestamp>-<name>-<task>/`，包含 TensorBoard、配置、`.pt` 和导出的 `.onnx`。平台 SDK 是否发现、上传这些文件，需要实际日志和 `model list` 共同验证。

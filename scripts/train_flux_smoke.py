@@ -123,6 +123,63 @@ def select_package_index() -> str:
     raise RuntimeError("No reachable package index; aborting before dependency installation")
 
 
+def prepare_environment() -> dict[str, str]:
+    """Keep training and SDK in the image interpreter while refreshing child imports."""
+    os.chdir(REPO_ROOT)
+    os.environ.setdefault("OMNI_KIT_ACCEPT_EULA", "YES")
+    os.environ.setdefault("ACCEPT_EULA", "Y")
+    os.environ.setdefault("PYTHONUNBUFFERED", "1")
+    # New subprocesses see newly installed packages even if gm-run imported older
+    # versions into the wrapper process. The outer SDK can keep watching outputs.
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(REPO_ROOT / "src/holosoma") + os.pathsep + env.get("PYTHONPATH", "")
+    return env
+
+
+def install_training_package(env: dict[str, str], timeout: int) -> None:
+    index = select_package_index()
+    env["PIP_INDEX_URL"] = index
+    env["PIP_CONFIG_FILE"] = os.devnull
+    env["PIP_RETRIES"] = "1"
+    env["PIP_DEFAULT_TIMEOUT"] = "30"
+    env.pop("PIP_EXTRA_INDEX_URL", None)
+    env.pop("PIP_NO_INDEX", None)
+    subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "--disable-pip-version-check",
+            "--no-input",
+            "--index-url",
+            index,
+            "--prefer-binary",
+            "--timeout",
+            "30",
+            "--retries",
+            "1",
+            "-c",
+            "scripts/flux_smoke_constraints.txt",
+            "-e",
+            "./src/holosoma",
+        ],
+        check=True,
+        timeout=timeout,
+        env=env,
+    )
+
+
+def check_gpu(env: dict[str, str]) -> None:
+    probe = (
+        "import json,torch; "
+        "assert torch.cuda.is_available(), 'CUDA unavailable'; "
+        "print('FLUX_SMOKE_GPU', json.dumps({'torch':torch.__version__,"
+        "'gpu':torch.cuda.get_device_name(0),'vram_bytes':torch.cuda.get_device_properties(0).total_memory}))"
+    )
+    subprocess.run([sys.executable, "-c", probe], check=True, timeout=60, env=env)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--num-envs", type=int, default=128)
@@ -133,54 +190,11 @@ def main() -> None:
     args = parser.parse_args()
     run_name = "flux-smoke-" + time.strftime("%Y%m%d_%H%M%S", time.gmtime())
     command = training_command(args.num_envs, args.iterations, run_name)
-    os.chdir(REPO_ROOT)
-    os.environ.setdefault("OMNI_KIT_ACCEPT_EULA", "YES")
-    os.environ.setdefault("ACCEPT_EULA", "Y")
-    os.environ.setdefault("PYTHONUNBUFFERED", "1")
-    # New subprocesses see newly installed packages even if gm-run imported older
-    # versions into the wrapper process. The outer SDK can keep watching outputs.
-    env = os.environ.copy()
-    env["PYTHONPATH"] = str(REPO_ROOT / "src/holosoma") + os.pathsep + env.get("PYTHONPATH", "")
+    env = prepare_environment()
     print("FLUX_SMOKE_BOOTSTRAP", json.dumps({"python": sys.executable, "versions": package_versions()}), flush=True)
     if not args.skip_install:
-        index = select_package_index()
-        env["PIP_INDEX_URL"] = index
-        env["PIP_CONFIG_FILE"] = os.devnull
-        env["PIP_RETRIES"] = "1"
-        env["PIP_DEFAULT_TIMEOUT"] = "30"
-        env.pop("PIP_EXTRA_INDEX_URL", None)
-        env.pop("PIP_NO_INDEX", None)
-        subprocess.run(
-            [
-                sys.executable,
-                "-m",
-                "pip",
-                "install",
-                "--disable-pip-version-check",
-                "--no-input",
-                "--index-url",
-                index,
-                "--prefer-binary",
-                "--timeout",
-                "30",
-                "--retries",
-                "1",
-                "-c",
-                "scripts/flux_smoke_constraints.txt",
-                "-e",
-                "./src/holosoma",
-            ],
-            check=True,
-            timeout=args.install_timeout,
-            env=env,
-        )
-    probe = (
-        "import json,torch; "
-        "assert torch.cuda.is_available(), 'CUDA unavailable'; "
-        "print('FLUX_SMOKE_GPU', json.dumps({'torch':torch.__version__,"
-        "'gpu':torch.cuda.get_device_name(0),'vram_bytes':torch.cuda.get_device_properties(0).total_memory}))"
-    )
-    subprocess.run([sys.executable, "-c", probe], check=True, timeout=60, env=env)
+        install_training_package(env, args.install_timeout)
+    check_gpu(env)
     print("FLUX_SMOKE_TRAIN", json.dumps({"envs": args.num_envs, "iterations": args.iterations}), flush=True)
     subprocess.run(command, check=True, timeout=args.training_timeout, env=env)
     # Verify in a fresh process too, so dependency changes during bootstrap cannot

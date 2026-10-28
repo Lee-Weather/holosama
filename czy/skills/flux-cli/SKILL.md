@@ -41,7 +41,7 @@ description: "Operate Flux RL/VLA projects and training tasks: authentication, i
 ### 当前 Holosoma 项目的入口
 
 - 仓库 `Lee-Weather/holosama`，clone 目录 `holosama`，包名 `holosoma`。
-- 已实测入口：`gm-run holosama/scripts/train_flux_smoke.py`；默认 128 环境、2 次 PPO 迭代，安装依赖使用 `scripts/flux_smoke_constraints.txt`。扩大规模或训练收敛须单独配置正式入口，不能绕过 smoke 的规模边界。
+- 已实测入口：`gm-run holosama/scripts/train_flux_smoke.py`；默认 128 环境、2 次 PPO 迭代。正式入口为 `gm-run holosama/scripts/train_flux.py --experiment exp_1`，默认 2048 环境、5000 次迭代、每 100 轮保存、训练上限 6 小时；该规模仍待 exp_1 实测。两个入口共用 `scripts/flux_smoke_constraints.txt`，保留各自规模边界。
 - `exp0` 已验证镜像 `BJX00000178` / `V000420`、资源 `ESKU000001`；复用前仍查当前目录和库存。
 - 本地笔记 `czy/exp1/exp1.md`，最终模型 `czy/data/{编号}/`，日志/配置/曲线/校验结果 `czy/exp1/artifacts/{编号}/`。ONNX、视频、CSV 按实际取得的文件记录，不默认生成 F1/X1 三件套。
 
