@@ -60,8 +60,7 @@ def test_speed_probe_is_bounded_and_does_not_download_entire_wheel(monkeypatch):
     wheel = Wheel()
     index_html = SimpleNamespace(
         read=lambda _size: (
-            b'<a href="../../packages/'
-            b'onnxruntime-1.20.1-cp311-cp311-manylinux_2_27_x86_64.whl">wheel</a>'
+            b'<a href="../../packages/onnxruntime-1.20.1-cp311-cp311-manylinux_2_27_x86_64.whl">wheel</a>'
         )
     )
     responses = [index_html, wheel]
