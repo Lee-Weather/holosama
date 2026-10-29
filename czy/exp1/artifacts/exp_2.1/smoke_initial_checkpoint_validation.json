@@ -1,0 +1,20 @@
+{
+  "task": "TASK_20261029_267",
+  "stage": "smoke",
+  "project": "flux-exp_2.1-box-20261029_092927-smoke",
+  "uploaded_filename": "model_00001.pt",
+  "iteration": 1,
+  "bytes": 6839751,
+  "sha256": "4e914048b1761c1197dce58faddab18bb5b7c729fc3a4abb4060af64ffc64c36",
+  "num_envs": 128,
+  "planned_iterations": 2,
+  "observation_dimensions": {
+    "actor_obs": 154,
+    "critic_obs": 298
+  },
+  "actor_critic_normalizer_finite": true,
+  "box_task_contract_verified": true,
+  "box_fixed": false,
+  "robot_urdf": "g1/main_mesh_collision_halfspherehand.urdf",
+  "motion": "holosoma/data/motions/g1_29dof/whole_body_tracking/sub3_largebox_003_mj_w_obj.npz"
+}

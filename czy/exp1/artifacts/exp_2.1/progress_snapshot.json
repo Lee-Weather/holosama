@@ -1,5 +1,5 @@
 {
-  "queried_at": "2026-10-29T09:29:56.697167+00:00",
+  "queried_at": "2026-10-29T09:36:27.892201+00:00",
   "account": "limxmts0elyormeym6@uberip.com",
   "task": {
     "taskId": "TASK_20261029_267",
@@ -10,14 +10,26 @@
     "runtime": ""
   },
   "markers_in_excerpt": {
-    "FLUX_BOX_PLAN": true,
+    "FLUX_BOX_PLAN": false,
     "FLUX_BOX_PREFLIGHT": false,
     "FLUX_BOX_SMOKE_START": false,
     "FLUX_BOX_SMOKE_SUCCESS": false,
     "FLUX_BOX_TRAIN_START": false,
     "FLUX_BOX_TRAIN_SUCCESS": false
   },
-  "iteration_blocks_in_excerpt": [],
-  "recent_error_lines": [],
-  "worker_commit": "9d2845701df5a644ebfc1e36d3911ea36475f4c6"
+  "iteration_blocks_in_excerpt": [
+    [
+      "46",
+      "8000"
+    ],
+    [
+      "47",
+      "8000"
+    ],
+    [
+      "48",
+      "8000"
+    ]
+  ],
+  "recent_error_lines": []
 }

@@ -1,0 +1,20 @@
+{
+  "task": "TASK_20261029_267",
+  "stage": "formal",
+  "project": "flux-exp_2.1-box-20261029_092927",
+  "uploaded_filename": "model_00000.pt",
+  "iteration": 0,
+  "bytes": 6839751,
+  "sha256": "6080c2493b5fa69ef909500e5fdaf7595689bf04c61751979395c0e246a4883d",
+  "num_envs": 1024,
+  "planned_iterations": 8000,
+  "observation_dimensions": {
+    "actor_obs": 154,
+    "critic_obs": 298
+  },
+  "actor_critic_normalizer_finite": true,
+  "box_task_contract_verified": true,
+  "box_fixed": false,
+  "robot_urdf": "g1/main_mesh_collision_halfspherehand.urdf",
+  "motion": "holosoma/data/motions/g1_29dof/whole_body_tracking/sub3_largebox_003_mj_w_obj.npz"
+}

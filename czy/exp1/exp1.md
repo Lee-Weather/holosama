@@ -10,7 +10,7 @@
 | [exp_1](#实验-exp_1g1-平地-ppo-正式训练) | 2026-10-28 | 安装阶段下载 Open3D 时超过 900 秒，未进入 GPU 训练；2026-10-29 完成终止诊断 | 失败 | `TASK_20261028_251` | `limxmts0elyormeym6@uberip.com` | 无；未开始训练 |
 | [exp_1.1](#实验-exp_11精简依赖并重试正式训练) | 2026-10-29 | 完成 5000 轮；末段 episode 均值 887.93 steps；本机 MuJoCo 录像完成，云端录像清理失败 | 已测试 | `TASK_20261029_112`；回放 `TASK_20261029_249` | `limxmts0elyormeym6@uberip.com` | [model_04999.pt](../data/exp_1.1/model_04999.pt) |
 | [exp_2](#实验-exp_2g1-带箱体的搬运跟踪训练) | 2026-10-29 | 安装阶段发现入口切换目录后的输出路径问题，主动停止，未开始 PPO | 失败 | `TASK_20261029_261` | `limxmts0elyormeym6@uberip.com` | 无 |
-| [exp_2.1](#实验-exp_21修正搬箱子入口的工作目录) | 2026-10-29 | 固定 clone 下绝对输出路径；保持带箱体 WBT 及 1024 环境 × 8000 轮设置 | 待训练 | 待创建 | `limxmts0elyormeym6@uberip.com` | 待训练；预计 `model_07999.pt` |
+| [exp_2.1](#实验-exp_21修正搬箱子入口的工作目录) | 2026-10-29 | 带箱体 smoke 通过；1024 环境正式 PPO 已推进至 iter 48/8000，首个模型配置及权重验收通过 | 训练中 | `TASK_20261029_267` | `limxmts0elyormeym6@uberip.com` | 首个 `model_00000.pt` 已核对；最终预计 `model_07999.pt` |
 
 ## 实验 exp0：Flux IsaacLab 上的 G1 PPO 流程验证
 
@@ -554,3 +554,21 @@ exp_2 的带箱体 WBT 配置、CLI 和 motion 在本地验证通过，但任务
 ### 7. 实验结果
 
 工作目录回归和三项原保护测试共 4 项通过；父实验已确认终止，避免与重启任务并行消耗算力。修复已推送 `9d2845701df5a644ebfc1e36d3911ea36475f4c6`，重启任务 `TASK_20261029_267` 于 17:29:06 开始，指定账号用户 `4390`；17:29:56 为状态 3。云端实际 `FLUX_BOX_PLAN` 的 commit 与修复一致，处于依赖安装阶段，GPU smoke 和正式迭代尚未判定。[重启计划](artifacts/exp_2.1/launch_plan.json)、[云端实际计划](artifacts/exp_2.1/cloud_launch_plan.json)、[进度快照](artifacts/exp_2.1/progress_snapshot.json)。
+
+#### 带箱体 smoke 和正式开训验收（2026-10-29 17:36）
+
+**带箱体 GPU smoke 已通过，1024 环境的正式 PPO 已实际开始。** 云端约 17:33:58 创建 smoke 运行目录，17:34:14 完成 2 轮，17:34:16 打印 `FLUX_BOX_SMOKE_SUCCESS`；其后自动进入 `FLUX_BOX_TRAIN_START`。smoke 最终 iter=1，checkpoint 6,839,751 bytes，ONNX 1,157,380 bytes，CPU 推理输出 `[1,29]` 有限，TensorBoard 文件 1 个，object task contract 验收为 true。[云端 smoke 验收](artifacts/exp_2.1/cloud_smoke_validation.json)、[成功日志片段](artifacts/exp_2.1/smoke_success_excerpt.txt)。
+
+正式首个 checkpoint `model_00000.pt` 已上传并下载核对：实际项目 `flux-exp_2.1-box-20261029_092927`（无 smoke 后缀），num_envs=1024，计划 8000 轮，iter=0；actor/critic/actor 观测归一化张量有限。actor/critic 输入分别 154/298 维，与行走的 100/103 维不同；嵌入配置含自由箱体 fixed=False、`main_mesh_collision_halfspherehand.urdf`、带物体 motion 和两项箱体奖励。大小 6,839,751 bytes，SHA-256=`6080c2493b5fa69ef909500e5fdaf7595689bf04c61751979395c0e246a4883d`。中间 checkpoint 只缓存于 Git 忽略的 `logs/flux-validation/TASK_20261029_267/`，不冒充最终模型。[正式首个模型验收](artifacts/exp_2.1/formal_initial_checkpoint_validation.json)、[smoke 首个模型核对](artifacts/exp_2.1/smoke_initial_checkpoint_validation.json)、[已上传模型清单](artifacts/exp_2.1/models_snapshot.json)。
+
+| 指标 | iter 48/8000 的完整日志块 |
+| --- | --- |
+| 平台状态 / 账号用户 | 3 / 4390 |
+| Mean reward | 0.07（日志精度） |
+| Mean episode length | 10.32 steps，约 0.2064 秒；初始策略频繁跟踪失败，不是完整搬运表现 |
+| 箱体位置 / 姿态奖励 | 0.0167 / 0.0131（日志中 episode 奖励项，不反推位置 RMSE） |
+| 速度 / ETA | 11,810 steps/s / 17,184.1 秒，约 4 小时 46 分；早期估计会变化 |
+
+平台实际 keys 已包含箱体位置/姿态奖励及机器人跟踪误差，已取得 `precise` 初期曲线。[早期正式指标](artifacts/exp_2.1/early_formal_metrics.json)、[平台曲线](artifacts/exp_2.1/early_curves.json)。同一个任务含 smoke 和正式两套事件文件，0..1 step 可能重叠；曲线默认 session 不直接用来辨别阶段，阶段身份以 checkpoint 配置和正式日志为准。日志目录仍含旧的 `-locomotion` 后缀，此名称不是任务判据，实际 env_class/scene/motion/reward 均已核对为带箱体 WBT。
+
+**阶段结论：✅ 搬箱子任务身份、GPU smoke、1024 环境开训和首个模型上传/下载通过；8000 轮完成与搬运质量均待后续验收。** 无自动重试，不进行不同输入的误差对比。训练保持运行，正式阶段 21600 秒上限不变。
