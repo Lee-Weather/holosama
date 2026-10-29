@@ -553,4 +553,4 @@ exp_2 的带箱体 WBT 配置、CLI 和 motion 在本地验证通过，但任务
 
 ### 7. 实验结果
 
-待推送修复并创建任务。工作目录回归和三项原保护测试共 4 项通过；父实验已确认终止，避免与重启任务并行消耗算力。
+工作目录回归和三项原保护测试共 4 项通过；父实验已确认终止，避免与重启任务并行消耗算力。修复已推送 `9d2845701df5a644ebfc1e36d3911ea36475f4c6`，重启任务 `TASK_20261029_267` 于 17:29:06 开始，指定账号用户 `4390`；17:29:56 为状态 3。云端实际 `FLUX_BOX_PLAN` 的 commit 与修复一致，处于依赖安装阶段，GPU smoke 和正式迭代尚未判定。[重启计划](artifacts/exp_2.1/launch_plan.json)、[云端实际计划](artifacts/exp_2.1/cloud_launch_plan.json)、[进度快照](artifacts/exp_2.1/progress_snapshot.json)。

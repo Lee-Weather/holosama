@@ -180,4 +180,6 @@ Holosoma 默认写入 `logs/<project>/<timestamp>-<name>-<task>/`，包含 Tenso
 
 新增入口 `gm-run holosama/scripts/train_flux_box.py --experiment exp_2`：复用 bootstrap，安装后在新解释器核对完整任务配置、motion 哈希/维度/有限性和资产；运行 128 环境 × 2 轮并校验带物体 checkpoint、ONNX、TensorBoard，通过后在同一 worker 启动 1024 环境 × 8000 轮 PPO 首阶段，每 200 轮保存。安装和 smoke 分别上限 900 秒，正式阶段 21600 秒；失败不重试、不退回行走、不加载行走 checkpoint。
 
+启动目录边界：`prepare_environment()` 会切换到 checkout 根目录，须先调用它，再在该目录下建立日志根路径并转为绝对路径传给 preflight/验收。exp_2 的 `TASK_20261029_261` 在安装阶段发现这个包装器问题后主动停止（226 秒，0 轮 PPO），已通过目录切换回归修复。当前重启为 exp_2.1，任务 `TASK_20261029_267`，commit `9d28457`，已确认 worker 加载修复版本；GPU smoke 与正式训练以其后续证据为准，不把“运行中/安装中”当作已开始 PPO。
+
 首阶段迭代预算小于原生 WBT 的 30000 轮默认值，不能预先宣称收敛。保留原生奖励、`1e-3` 初始学习率、经验观测归一化、动态箱体随机化和力矩/PD 相关参数。箱体 URDF 基准质量 0.1 kg，当前 mass randomizer 的 `[1.0,4.0]` 是**加性质量偏移**，不是乘法比例，配置理论总质量为 1.1–4.1 kg，实际采样以云端为准。此任务是固定参考片段的箱体搬运跟踪，不等于自由规划搬运或其他负载范围的能力。训练后按箱体轨迹、抬升、脱手/跌落及完整片段回放验收，不能套用行走存活时长标准。
