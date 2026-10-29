@@ -188,7 +188,10 @@ def main() -> None:
     full_command = command(args.num_envs, args.iterations, args.save_interval, project)
     smoke_project = project + "-smoke"
     smoke_command = command(128, 2, 1, smoke_project)
-    root = Path("logs") / project
+    # Bootstrap changes cwd to the clone root. Establish it before creating
+    # paths, then keep the project root absolute across all child interpreters.
+    env = bootstrap.prepare_environment()
+    root = (Path("logs") / project).resolve()
     root.mkdir(parents=True, exist_ok=True)
     plan = {
         "commit": repository_commit(),
@@ -202,7 +205,6 @@ def main() -> None:
     }
     (root / "launch_plan.json").write_text(json.dumps(plan, indent=2), encoding="utf-8")
     print("FLUX_BOX_PLAN", json.dumps(plan), flush=True)
-    env = bootstrap.prepare_environment()
     bootstrap.install_training_package(env, args.install_timeout)
     fresh(f"box.preflight(Path({str(root)!r}))", env, 60)
     bootstrap.check_gpu(env)

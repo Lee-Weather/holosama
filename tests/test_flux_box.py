@@ -1,5 +1,6 @@
 """Protect the object-task contract and the smoke gate before paid training."""
 
+import ast
 import importlib
 import subprocess
 import sys
@@ -55,3 +56,33 @@ def test_smoke_failure_cannot_start_formal_training(box, monkeypatch, tmp_path):
     with pytest.raises(subprocess.CalledProcessError):
         box.main()
     assert len(attempted) == 1
+
+
+def test_preflight_uses_clone_directory_after_bootstrap_changes_cwd(box, monkeypatch, tmp_path):
+    outside = tmp_path / "sdk-working-directory"
+    clone = tmp_path / "checkout"
+    outside.mkdir()
+    clone.mkdir()
+    monkeypatch.chdir(outside)
+    monkeypatch.setattr(sys, "argv", ["train_flux_box.py"])
+    monkeypatch.setattr(box, "repository_commit", lambda: "test-commit")
+
+    def prepare():
+        monkeypatch.chdir(clone)
+        return {}
+
+    monkeypatch.setattr(box.bootstrap, "prepare_environment", prepare)
+    monkeypatch.setattr(box.bootstrap, "install_training_package", lambda *_: None)
+
+    def preflight(code, _env, _timeout):
+        statement = ast.parse(code).body[0]
+        target = Path(ast.literal_eval(statement.value.args[0].args[0]))
+        assert target.is_absolute() and target.is_dir()
+        assert target.is_relative_to(clone)
+        assert (target / "launch_plan.json").is_file()
+        assert not (outside / "logs").exists()
+        raise RuntimeError("Preflight target verified")
+
+    monkeypatch.setattr(box, "fresh", preflight)
+    with pytest.raises(RuntimeError, match="Preflight target verified"):
+        box.main()

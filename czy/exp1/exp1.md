@@ -9,7 +9,8 @@
 | [exp0](#实验-exp0flux-isaaclab-上的-g1-ppo-流程验证) | 2026-10-28 | 修复安装源与版本回溯，完成 128 环境 × 2 次 PPO 迭代；checkpoint 上传/下载及云端 ONNX 校验通过 | 已测试 | `TASK_20261028_224`（含两次失败尝试，见 §7） | `limxmts0elyormeym6@uberip.com` | [model_00001.pt](../data/exp0/model_00001.pt) |
 | [exp_1](#实验-exp_1g1-平地-ppo-正式训练) | 2026-10-28 | 安装阶段下载 Open3D 时超过 900 秒，未进入 GPU 训练；2026-10-29 完成终止诊断 | 失败 | `TASK_20261028_251` | `limxmts0elyormeym6@uberip.com` | 无；未开始训练 |
 | [exp_1.1](#实验-exp_11精简依赖并重试正式训练) | 2026-10-29 | 完成 5000 轮；末段 episode 均值 887.93 steps；本机 MuJoCo 录像完成，云端录像清理失败 | 已测试 | `TASK_20261029_112`；回放 `TASK_20261029_249` | `limxmts0elyormeym6@uberip.com` | [model_04999.pt](../data/exp_1.1/model_04999.pt) |
-| [exp_2](#实验-exp_2g1-带箱体的搬运跟踪训练) | 2026-10-29 | 切换真实箱体交互 WBT；先 128 环境 × 2 轮验证，再 1024 环境 × 8000 轮首阶段训练 | 待训练 | 待创建 | `limxmts0elyormeym6@uberip.com` | 待训练；预计 `model_07999.pt` |
+| [exp_2](#实验-exp_2g1-带箱体的搬运跟踪训练) | 2026-10-29 | 安装阶段发现入口切换目录后的输出路径问题，主动停止，未开始 PPO | 失败 | `TASK_20261029_261` | `limxmts0elyormeym6@uberip.com` | 无 |
+| [exp_2.1](#实验-exp_21修正搬箱子入口的工作目录) | 2026-10-29 | 固定 clone 下绝对输出路径；保持带箱体 WBT 及 1024 环境 × 8000 轮设置 | 待训练 | 待创建 | `limxmts0elyormeym6@uberip.com` | 待训练；预计 `model_07999.pt` |
 
 ## 实验 exp0：Flux IsaacLab 上的 G1 PPO 流程验证
 
@@ -484,7 +485,7 @@ exp_1.1 已完成 2048 环境、5000 轮平地 PPO，末段 100 轮 reward 均�
 | actor / critic 学习率 | 原生 WBT 初始均 `1e-3`，adaptive；启用经验观测归一化、关闭 symmetry |
 | 物理 / 控制 / 单回合上限 | 200 Hz / 50 Hz / 原生 WBT 10 秒；参考动作结束及跟踪失败可提前终止 |
 | 动作缩放 | `0.25 × effort_limit / kp`；启用自碰撞和手部交互模型 |
-| 箱体 | `large_box.urdf`，自由刚体；沿用仓库轻箱资产与原生质量/摩擦/惯量随机化，不宣称重箱负载能力 |
+| 箱体 | `large_box.urdf` 自由刚体；URDF 基准质量 0.1 kg，startup mass randomizer 为加性 `[1.0,4.0]` kg，因此配置理论范围 1.1–4.1 kg；沿用摩擦/惯量随机化，实际采样仍以云端为准 |
 | 安装 / smoke / 正式时限 | 900 / 900 / 21600 秒，失败不自动重试 |
 | 记录 / 录像 | TensorBoard 开启，Wandb/训练视频关闭；视频评估放到训练后 |
 | 启动命令 | `gm-run holosama/scripts/train_flux_box.py --experiment exp_2 --num-envs 1024 --iterations 8000 --save-interval 200 --training-timeout 21600` |
@@ -502,3 +503,54 @@ exp_1.1 已完成 2048 环境、5000 轮平地 PPO，末段 100 轮 reward 均�
 ### 7. 实验结果
 
 待创建训练任务。开训前已核实仓库确有带物体的 WBT 预设、自由箱体场景和 325 帧/29 关节的 motion 数据，全部数值数组有限；启动入口与相关 CPU 检查 15 项通过。本地在隔离环境实际解析与云端相同的 CLI，确认箱体 fixed=False、1024 环境、8000 轮、经验归一化开启、录像关闭，并执行 motion/资产预检查：[计划配置](artifacts/exp_2/planned_config.json)、[本地预检查](artifacts/exp_2/box_preflight.json)。云端 box preflight、GPU smoke 和正式迭代尚待实际运行，不能以本地配置检查替代云端验证。
+
+已创建并启动 `TASK_20261029_261`，账号用户 `4390`，17:22:52 开始；17:23:50 检查为状态 3，云端 `FLUX_BOX_PLAN` 记录实际 commit=`b482369b4a75dae4796ae183c06dd4cc94d88c5e`，正式计划为 1024 环境、8000 轮、每 200 轮保存，smoke 为 128 环境 × 2 轮。此时处于依赖安装阶段，尚不能称为正式 PPO 已开始。[提交计划](artifacts/exp_2/launch_plan.json)、[云端实际计划](artifacts/exp_2/cloud_launch_plan.json) 和 [进度快照](artifacts/exp_2/progress_snapshot.json) 保留身份与阶段证据。
+
+17:26 在审查启动路径时发现：`bootstrap.prepare_environment()` 会切换 cwd 到 clone 根目录，而新增入口此前先在 SDK 工作目录创建相对 `logs/<project>`，之后 preflight 会向 clone 下尚不存在的项目目录写入结果。该问题尚未在 worker 触发，但已能由源码和切换 cwd 的回归场景确定。为避免继续安装后必然失败，主动停止当前仍在安装阶段的任务；17:26:38 终态 6，运行 226 秒，日志没有 `FLUX_BOX_PREFLIGHT`、GPU smoke 或 PPO 迭代。按失败启动保留本编号，修复记为 exp_2.1，不虚构已出现的云端异常栈。
+
+## 实验 exp_2.1：修正搬箱子入口的工作目录
+
+### 1. 上一实验结果与教训
+
+exp_2 的带箱体 WBT 配置、CLI 和 motion 在本地验证通过，但任务在安装阶段被主动停止，运行 226 秒，0 轮 PPO、无 checkpoint。原因是新增入口在 bootstrap 切换 cwd 前创建相对结果目录；原有使用空字典替代 bootstrap 的测试未覆盖真实的目录切换行为。
+
+**核心教训：包装入口的本地检查必须覆盖 SDK 初始目录与 checkout 目录不同的情况。**
+
+### 2. 本轮修改目标
+
+- 修正 clone 根目录下输出位置，确保 preflight、训练和验收使用同一项目目录。
+- 保持 exp_2 的箱体场景、motion、奖励、PPO、1024 环境和 8000 轮首阶段预算。
+- 重新启动后确认真正完成带箱体 smoke，并观察正式阶段实际迭代。
+
+### 3. 修改内容
+
+### 修改三：先建立 bootstrap 环境，再创建绝对输出目录
+
+`prepare_environment()` 在创建日志和计划前执行，项目根目录转为绝对路径传给新解释器。新增回归场景从模拟 SDK 目录启动，bootstrap 切换至另一 checkout，检查 preflight 目标目录及 `launch_plan.json` 确实在 checkout 下；4 项搬箱子入口测试与 Ruff 均通过。
+
+### 4. 修改文件
+
+- [train_flux_box.py](../../scripts/train_flux_box.py)：调整环境准备顺序，使用绝对项目目录。
+- [test_flux_box.py](../../tests/test_flux_box.py)：覆盖 bootstrap 改变工作目录的真实边界。
+- 本笔记：保留 exp_2 主动终止证据和子实验重启记录。
+
+### 5. 训练参数
+
+| 参数 | 值 |
+| --- | --- |
+| 编号 / 初始化 | `exp_2.1` / 从零，父实验尚无模型 |
+| 账号 / 项目 | `limxmts0elyormeym6@uberip.com`，用户 4390 / `PRO_20261028_008` |
+| 预设 / motion / 箱体 | 与 exp_2 相同：`g1-29dof-wbt-w-object`，带箱体轨迹与自由箱体 |
+| smoke / 正式 | 128 环境 × 2 轮 / 1024 环境 × 8000 轮，每 200 轮保存 |
+| 镜像 / GPU | `BJX00000178` / `V000420` / 单 4090D 24G |
+| 时限 | 安装 900 秒、smoke 900 秒、正式训练 21600 秒，无自动重试 |
+| 其他 PPO / 物理 / 随机化 | 继承 exp_2，不修改奖励、数据或算法参数 |
+| 启动命令 | `gm-run holosama/scripts/train_flux_box.py --experiment exp_2.1 --num-envs 1024 --iterations 8000 --save-interval 200 --training-timeout 21600` |
+
+### 6. 预期与验收
+
+先验收实际云端 `FLUX_BOX_PREFLIGHT`、`FLUX_BOX_SMOKE_SUCCESS` 及 `FLUX_BOX_TRAIN_START`，并确认 1024 环境的正式迭代和 checkpoint。后续完整首阶段、箱体姿态/位置跟踪及独立搬运视频标准与 exp_2 §6 相同。通过路径回归测试不代表已开训或学会搬运。
+
+### 7. 实验结果
+
+待推送修复并创建任务。工作目录回归和三项原保护测试共 4 项通过；父实验已确认终止，避免与重启任务并行消耗算力。

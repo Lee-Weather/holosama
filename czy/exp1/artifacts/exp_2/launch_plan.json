@@ -1,0 +1,23 @@
+{
+  "create_intent": "holosoma-exp_2-g1-box-carry-ppo-20261029-172236",
+  "create_request_sent": true,
+  "commit": "b482369b4a75dae4796ae183c06dd4cc94d88c5e",
+  "experiment": "exp_2",
+  "account": "limxmts0elyormeym6@uberip.com",
+  "userId": 4390,
+  "projectId": "PRO_20261028_008",
+  "num_envs": 1024,
+  "iterations": 8000,
+  "save_interval": 200,
+  "training_timeout": 21600,
+  "install_timeout": 900,
+  "smoke_envs": 128,
+  "smoke_iterations": 2,
+  "smoke_timeout": 900,
+  "preset": "exp:g1-29dof-wbt-w-object",
+  "startup_command": "gm-run holosama/scripts/train_flux_box.py --experiment exp_2 --num-envs 1024 --iterations 8000 --save-interval 200 --training-timeout 21600",
+  "resume": false,
+  "taskId": "TASK_20261029_261",
+  "run_request_sent": true,
+  "task_status_observed": "2"
+}
