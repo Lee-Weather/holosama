@@ -77,6 +77,7 @@ python -m pip check
 
 - `TASK_20261028_067`：镜像默认源 `mirrors.ivolces.com` 在 worker 中无法解析，安装 build backend 失败。包装入口应探测可达源并显式传给 `python -m pip`。
 - `TASK_20261028_113`：PyPI 元数据下载有超时，且无上界的 Notebook/JupyterLab 与 IsaacSim 的 packaging 约束导致大量版本回溯，600 秒安装超时；没有 checkpoint。先修正依赖解析，再重试，不应仅反复增加计费任务。
+- `TASK_20261028_251`（exp_1，2026-10-29 诊断）：清华源索引可达，但相邻大包仅约 250 kB/s；日志停在 400.8 MB Open3D 下载，pip 达到 900 秒安装时限，任务运行 915 秒后状态 6。未进入 CUDA/训练，模型和指标均为空。索引探测不能证明大文件吞吐；修复应核查可选工具依赖、下载性能/备用源或预装环境，不应仅提高训练时限。完整证据见 exp_1 §7。
 - `gm-run` 使用 `/workspace/isaaclab/_isaac_sim/kit/python/bin/python3`；镜像可能没有名为 `pip` 的独立可执行文件，但 `python -m pip` 可用。IsaacLab 发行包元数据版本为 `0.54.2`，不能直接据此判定镜像不符 2.3.2 发布版本。
 - 内网代理仅用于本机 Git/CLI；云端安装源由 worker 自己探测。入口优先探测国内镜像，再回退 PyPI，避免索引可达但其文件 CDN 持续超时。
 
@@ -145,7 +146,7 @@ gm-run holosama/src/holosoma/holosoma/train_agent.py exp:g1-29dof simulator:isaa
 
 正式训练再按 PPO/FastSAC、locomotion/WBT、视频需求和实际显存调整环境数及迭代数。WBT 使用真实 motion NPZ；仓库自带参考动作可作初始验证，不需要 F1/X1 的轨迹参数。
 
-当前正式训练入口为 `scripts/train_flux.py`，复用 exp0 bootstrap，默认 2048 环境、5000 次 PPO 迭代、每 100 轮保存，训练限时 21600 秒（安装另限 900 秒）。平台命令：`gm-run holosama/scripts/train_flux.py --experiment exp_1`。入口记录实际 Git SHA 和参数，正常完成后校验最终 checkpoint/ONNX/TensorBoard，并等待上传 60 秒；失败或超时不会自动重试。该规模正在 exp_1 验证，不能仅因 smoke 成功就声称容量和收敛已通过。
+当前正式训练入口为 `scripts/train_flux.py`，复用 exp0 bootstrap，默认 2048 环境、5000 次 PPO 迭代、每 100 轮保存，训练限时 21600 秒（安装另限 900 秒）。平台命令：`gm-run holosama/scripts/train_flux.py --experiment exp_1`。入口记录实际 Git SHA 和参数，正常完成后校验最终 checkpoint/ONNX/TensorBoard，并等待上传 60 秒；失败或超时不会自动重试。exp_1 首次尝试失败于依赖下载，因此该规模的显存容量与收敛均未得到验证，重试前应先处理安装冷启动问题。
 
 ## 日志与产物
 

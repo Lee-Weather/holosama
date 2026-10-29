@@ -7,7 +7,7 @@
 | 编号 | 日期 | 摘要 | 状态 | Task ID | Flux账号 | checkpoint |
 | --- | --- | --- | --- | --- | --- | --- |
 | [exp0](#实验-exp0flux-isaaclab-上的-g1-ppo-流程验证) | 2026-10-28 | 修复安装源与版本回溯，完成 128 环境 × 2 次 PPO 迭代；checkpoint 上传/下载及云端 ONNX 校验通过 | 已测试 | `TASK_20261028_224`（含两次失败尝试，见 §7） | `limxmts0elyormeym6@uberip.com` | [model_00001.pt](../data/exp0/model_00001.pt) |
-| [exp_1](#实验-exp_1g1-平地-ppo-正式训练) | 2026-10-28 | 从零进行 2048 环境 × 5000 次 PPO 迭代，沿用 exp0 仿真及奖励配置 | 待训练 | 待创建 | `limxmts0elyormeym6@uberip.com` | 待生成；计划 `model_04999.pt` |
+| [exp_1](#实验-exp_1g1-平地-ppo-正式训练) | 2026-10-28 | 安装阶段下载 Open3D 时超过 900 秒，未进入 GPU 训练；2026-10-29 完成终止诊断 | 失败 | `TASK_20261028_251` | `limxmts0elyormeym6@uberip.com` | 无；未开始训练 |
 
 ## 实验 exp0：Flux IsaacLab 上的 G1 PPO 流程验证
 
@@ -257,4 +257,37 @@ exp0 已在同账号的 `TASK_20261028_224` 正常完成，128 环境、2 次迭
 
 ### 7. 实验结果
 
-待训练完成后补充。创建和启动后在此追加任务 ID、实际 commit、首轮状态与指标；训练期间索引标为「训练中」，不提前宣称收敛或完成。
+#### 最终状态与诊断（2026-10-29 核查）
+
+**结论：❌ exp_1 本次未达开训验收目标，失败于依赖安装阶段。**
+
+| 项目 | 实测结果 |
+| --- | --- |
+| 账号 / 用户 ID | `limxmts0elyormeym6@uberip.com` / `4390`，本次直连 `whoami` 已复核 |
+| 最终状态 | `6`（Terminated） |
+| 开始 / 结束 | 2026-10-28 18:32:09 / 18:47:24（北京时间） |
+| 任务全程 | 915 秒（15 分 15 秒） |
+| 异常 | `subprocess.TimeoutExpired`，pip 安装进程超过约 900 秒 |
+| 最后下载项 | 清华源的 Open3D wheel，400.8 MB；无下载完成记录 |
+| 相邻包下载速度 | Notebook 257.6 kB/s；ONNX Runtime 250.4 kB/s |
+| CUDA / PPO | 未出现 `FLUX_SMOKE_GPU`、`FLUX_TRAIN_START` 或 `Learning iteration` |
+| 完成迭代 / checkpoint | 0 / 平台模型列表 `total=0` |
+| 训练曲线 | 平台指标 keys 为空，Mean reward / episode length 均无本次数据 |
+
+**根因分析**：
+
+- `scripts/train_flux.py` 在调用 `bootstrap.install_training_package()` 时退出；该函数对 `pip install -c scripts/flux_smoke_constraints.txt -e ./src/holosoma` 设置 900 秒上限。异常和平台结束时间吻合。
+- 最终日志停在 `Downloading ... (400.8 MB)` 的 Open3D 下载。按相邻 ONNX Runtime 的 250.4 kB/s 粗估，Open3D 单包约需 1601 秒，已超过整个安装阶段 900 秒预算；这是估算，并非对 Open3D 下载速度的直接测量。
+- 包源选择仅验证索引 HTTP 可达，没有验证大文件吞吐。exp0 同配置的安装成功不保证另一节点或时段具备相同速度。
+- Open3D、Notebook、mypy 当前都是训练包的强制依赖；静态检索 `src/holosoma/holosoma/` 和 `scripts/` 未发现对三者的 import，造成此次 G1 无界面训练仍需下载大型工具包。下一次需核实依赖用途并拆分可选工具依赖，不能用 `--no-deps` 跳过依赖检查。
+- 此次未进入 GPU 仿真，因此无法据此判断 2048 环境的显存容量、训练速度或收敛。6 小时训练超时尚未开始计时。
+
+**证据归档**：[完整脱敏终止日志](artifacts/exp_1/terminated_cloud.txt)、[终态 API](artifacts/exp_1/task_final.json)、[空模型清单](artifacts/exp_1/models_final.json)、[空指标列表](artifacts/exp_1/metric_keys_final.json)、[诊断摘要](artifacts/exp_1/termination_diagnosis.json)。保留 [本地启动计划](artifacts/exp_1/launch_plan.json)、[云端实际计划](artifacts/exp_1/cloud_launch_plan.json) 和 [初始启动摘录](artifacts/exp_1/startup_excerpt.txt)。
+
+**下一轮方向**：先拆分非训练必需工具依赖，增加下载吞吐/备用源验证，或使用已补齐依赖的匹配镜像；本次只完成终止诊断与归档，不创建新的计费任务。保持原任务失败记录，不能将状态 3 的历史启动记录视为训练已经实际推进。
+
+#### 原始开训记录（保留历史）
+
+开训记录：`TASK_20261028_251`，2026-10-28 18:32:09 开始，所属用户 `4390`，平台状态 3。云端 `FLUX_TRAIN_PLAN` 已确认实际 Git SHA 为 `853ef2a29e164281d5f4422924e0fae11241721e`，2048 环境、5000 次迭代、保存间隔 100、训练超时 21600 秒。计划及身份/资源见 [launch_plan.json](artifacts/exp_1/launch_plan.json)。
+
+18:32:21 启动 bootstrap，选中清华源，开始安装。原始运行项目名为 `flux-exp_1-20261028_103221`。6 小时时限从训练子进程启动时计算，安装另有 900 秒上限。正式入口和 bootstrap 的 8 项 CPU 测试及 Ruff 检查通过；这些本地测试不验证云端下载带宽或真实训练容量。

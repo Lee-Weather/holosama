@@ -1,0 +1,18 @@
+{
+  "taskId": "TASK_20261028_251",
+  "projectId": "PRO_20261028_008",
+  "account": "limxmts0elyormeym6@uberip.com",
+  "userId": 4390,
+  "commit": "853ef2a29e164281d5f4422924e0fae11241721e",
+  "experiment": "exp_1",
+  "num_envs": 2048,
+  "iterations": 5000,
+  "save_interval": 100,
+  "training_timeout": 21600,
+  "startup_command": "gm-run holosama/scripts/train_flux.py --experiment exp_1 --num-envs 2048 --iterations 5000 --save-interval 100 --training-timeout 21600",
+  "image_id": "BJX00000178",
+  "image_version": "V000420",
+  "goods_id": "ESKU000001",
+  "seed": 1,
+  "resume": false
+}

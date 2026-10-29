@@ -1,0 +1,33 @@
+[SDK][INFO] 2026-10-28 18:32:21 Start scanning directory: /workspace/isaaclab[SDK][INFO] 2026-10-28 18:32:21 Obtained python dependency environment for training project[SDK][WARN] 2026-10-28 18:32:21 Error occurred while getting pip list: [Errno 2] No such file or directory: 'pip'[SDK][INFO] 2026-10-28 18:32:21 New file detected globally: /workspace/isaaclab/holosama/scripts/__pycache__/train_flux_smoke.cpython-311.pyc[SDK][INFO] 2026-10-28 18:32:21 New file detected globally: /workspace/isaaclab/holosama/logs/flux-exp_1-20261028_103221/launch_plan.jsonFLUX_TRAIN_PLAN {"commit": "853ef2a29e164281d5f4422924e0fae11241721e", "command": ["/workspace/isaaclab/_isaac_sim/kit/python/bin/python3", "/workspace/isaaclab/holosama/src/holosoma/holosoma/train_agent.py", "exp:g1-29dof", "simulator:isaacsim", "logger:disabled", "terrain:terrain-locomotion-plane", "--training.num-envs=2048", "--training.headless=True", "--training.seed=1", "--training.project=flux-exp_1-20261028_103221", "--training.name=g1_ppo", "--algo.config.num-learning-iterations=5000", "--algo.config.save-interval=100", "--logger.video.enabled=False"], "experiment": "exp_1", "num_envs": 2048, "iterations": 5000, "save_interval": 100, "install_timeout": 900, "training_timeout": 21600}
+FLUX_TRAIN_BOOTSTRAP {"isaacsim": "not installed as a distribution", "isaaclab": "0.54.2", "torch": "2.7.0+cu128", "numpy": "1.26.4", "pydantic": "2.11.7", "tyro": "not installed as a distribution", "tensordict": "0.9.0", "warp-lang": "1.10.1"}
+[SDK][INFO] 2026-10-28 18:32:21 Task(TASK_20261028_251) status updated to: Running , ret:TrueFLUX_SMOKE_PIP_INDEX pypi.tuna.tsinghua.edu.cn
+Looking in indexes: <URL omitted>
+Obtaining file:///workspace/isaaclab/holosama/src/holosoma
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Collecting astor (from holosoma==0.0.3)
+  Downloading <URL omitted> (27 kB)
+Requirement already satisfied: boto3 in /workspace/isaaclab/_isaac_sim/exts/omni.pip.cloud/pip_prebundle (from holosoma==0.0.3) (1.39.11)
+Collecting easydict (from holosoma==0.0.3)
+  Downloading <URL omitted> (6.8 kB)
+Collecting ipdb (from holosoma==0.0.3)
+  Downloading <URL omitted> (12 kB)
+Collecting joblib (from holosoma==0.0.3)
+  Downloading <URL omitted> (306 kB)
+Collecting loguru (from holosoma==0.0.3)
+  Downloading <URL omitted> (61 kB)
+Requirement already satisfied: lxml in /workspace/isaaclab/_isaac_sim/exts/isaacsim.asset.exporter.urdf/pip_prebundle (from holosoma==0.0.3) (5.4.0)
+Collecting lxml-stubs (from holosoma==0.0.3)
+  Downloading <URL omitted> (13 kB)
+Requirement already satisfied: matplotlib in /workspace/isaaclab/_isaac_sim/exts/omni.isaac.core_archive/pip_prebundle (from holosoma==0.0.3) (3.10.3)
+Collecting meshcat (from holosoma==0.0.3)
+  Downloading <URL omitted> (2.6 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.6/2.6 MB 2.5 MB/s eta 0:00:00
+Collecting mypy==1.14.1 (from holosoma==0.0.3)
+  Downloading <URL omitted> (12.7 MB)

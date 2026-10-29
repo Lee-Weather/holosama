@@ -1,0 +1,19 @@
+{
+  "queried_at": "2026-10-29T06:12:34.244394+00:00",
+  "account": "limxmts0elyormeym6@uberip.com",
+  "data": {
+    "taskId": "TASK_20261028_251",
+    "taskName": "holosoma-exp_1-g1-ppo-2048x5000-20261028",
+    "projectId": "PRO_20261028_008",
+    "userId": "4390",
+    "taskStatus": "6",
+    "startTime": "2026-10-28 18:32:09",
+    "endTime": "2026-10-28 18:47:24",
+    "runtime": "915",
+    "goodsId": "ESKU000001",
+    "goodsBackId": "SKUSL000002",
+    "gpuNum": 1,
+    "imageId": "BJX00000178",
+    "imageVersion": "V000420"
+  }
+}

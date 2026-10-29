@@ -1,0 +1,19 @@
+{
+  "task_id": "TASK_20261028_251",
+  "queried_at": "2026-10-29T06:12:34.244394+00:00",
+  "account": "limxmts0elyormeym6@uberip.com",
+  "user_id": 4390,
+  "status": "6",
+  "runtime_seconds": 915,
+  "log_source": "platform archived full log",
+  "install_timeout_seconds": 900,
+  "error": "subprocess.TimeoutExpired during pip install",
+  "last_package": "open3d",
+  "last_package_download_megabytes": 400.8,
+  "preceding_onnxruntime_megabytes_per_second": 0.2504,
+  "cuda_probe_present": false,
+  "training_start_present": false,
+  "learning_iteration_present": false,
+  "model_count": 0,
+  "metric_key_count": 0
+}
