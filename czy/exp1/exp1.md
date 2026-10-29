@@ -8,7 +8,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | [exp0](#实验-exp0flux-isaaclab-上的-g1-ppo-流程验证) | 2026-10-28 | 修复安装源与版本回溯，完成 128 环境 × 2 次 PPO 迭代；checkpoint 上传/下载及云端 ONNX 校验通过 | 已测试 | `TASK_20261028_224`（含两次失败尝试，见 §7） | `limxmts0elyormeym6@uberip.com` | [model_00001.pt](../data/exp0/model_00001.pt) |
 | [exp_1](#实验-exp_1g1-平地-ppo-正式训练) | 2026-10-28 | 安装阶段下载 Open3D 时超过 900 秒，未进入 GPU 训练；2026-10-29 完成终止诊断 | 失败 | `TASK_20261028_251` | `limxmts0elyormeym6@uberip.com` | 无；未开始训练 |
-| [exp_1.1](#实验-exp_11精简依赖并重试正式训练) | 2026-10-29 | 精简依赖及测速选源已通过云端启动验证；2048 环境实际推进，检查时到 iter 158 | 训练中 | `TASK_20261029_112` | `limxmts0elyormeym6@uberip.com` | 最新观测 `model_00100.pt`；非最终模型 |
+| [exp_1.1](#实验-exp_11精简依赖并重试正式训练) | 2026-10-29 | 完成 5000 轮；末段 100 轮 episode 均值 887.93 steps，最终模型与 ONNX 校验通过；回放录像进行中 | 已测试 | `TASK_20261029_112`；回放 `TASK_20261029_249` | `limxmts0elyormeym6@uberip.com` | [model_04999.pt](../data/exp_1.1/model_04999.pt) |
 
 ## 实验 exp0：Flux IsaacLab 上的 G1 PPO 流程验证
 
@@ -401,3 +401,24 @@ exp_1 的 `TASK_20261028_251` 运行 915 秒，在 pip 安装阶段触发 900 �
 入口沿用安装 bootstrap，安装 900 秒、回放 1200 秒时限；片段拼接为浏览器兼容 H.264，完整解码检查时长、尺寸、空帧/静止/截断，成功后预留 60 秒上传。19 项 CPU 测试通过，包含下载完整性、签名位置不进入错误信息，以及正常/黑屏/静止/截断视频验收；Ruff 通过。云端回放尚未开始，任务号与实际视频验证待补充；目标产物为 `czy/data/exp_1.1/play_output.mp4`，不新增训练实验编号。
 
 回放入口已推送至 `80121a9`。已启用本聊天心跳「Holosoma 训练完成后回放录像」（ID `holosoma`），每 5 分钟检查并接续；正常运行无变化时保持安静，完成/失败/需用户处理时通知，交付后停止。接续器在忽略的本地运行目录持久化任务状态，创建结果不明确时不重复发起；源任务失败不自动重训。此安排取代前述 14:41 快照时的“无监控计划”状态。
+
+#### 最终训练验收（2026-10-29 16:48）
+
+**5000 轮正式训练完成，流程及预设末段指标目标通过，独立回放录像仍在进行。** 任务 `TASK_20261029_112` 状态 5，14:30:53 开始、16:45:04 结束，平台运行 8051 秒（2 小时 14 分 11 秒，含安装/上传）。PPO 本体累计 7509.13 秒、245,760,000 采样步，最后迭代索引 4999。
+
+| 指标 | 最终值 / 验收 |
+| --- | --- |
+| Mean reward | 末段 100 轮均值 15.073078；末点 16.407948；高于 exp0 的 -3.955621，但规模与训练阶段不同，不作直接同条件比较 |
+| Mean episode length | 末段 100 轮均值 887.925098 steps ≈ 17.7585 秒，高于目标 800 steps / 16 秒；末点 892.409973 steps |
+| 训练速度 | 末段 100 轮均值 32,790.79 steps/s，末点 32,074 steps/s |
+| 曲线覆盖 | reward / episode / fps 均获取 steps 0..4999 共 5000 个 precise 实测点；末段统计取 4900..4999 |
+| checkpoint | `model_04999.pt`，iter=4999，5,300,224 bytes，actor/critic 张量均有限，配置来自本轮实际 checkpoint |
+| SHA-256 | `bca3da441b1a417c1b76e82cd548852a5de54faa920f4034e6c54db80bb11105` |
+| 云端 ONNX | 958,249 bytes，CPU 推理输出 `[1,29]` 且有限，TensorBoard 文件 1 个；日志存在 `FLUX_TRAIN_SUCCESS` |
+| 平台上传 | 最终模型 16:44:10 上传；共 51 个 checkpoint。ONNX 云端校验通过，未作为本地 ONNX 文件交付 |
+
+证据：[最终任务快照](artifacts/exp_1.1/final_progress_snapshot.json)、[最终日志](artifacts/exp_1.1/final_training_excerpt.txt)、[完整平台曲线](artifacts/exp_1.1/final_curves.json)、[末段统计](artifacts/exp_1.1/final_curve_statistics.json)、[checkpoint 校验](artifacts/exp_1.1/final_checkpoint_validation.json)、[上传清单](artifacts/exp_1.1/final_models_snapshot.json)。最终模型已归档至 [model_04999.pt](../data/exp_1.1/model_04999.pt)。曲线及权重验收不能替代独立回放中对步态、跌倒和命令跟踪的观察。
+
+#### 回放任务启动
+
+指定账号用户 `4390` 下已创建并启动唯一回放任务 `TASK_20261029_249`，使用入口 commit `ab53ac3832d4096d17ca217dbabb91b707689521`、同一 IsaacLab 镜像/单 GPU，源模型 SHA-256 如上。16:48 检查为状态 3，正在安装运行时依赖；此时尚未产生经验证的视频。后续继续核查原生评估、编码、平台 MP4 上传和本地解码，不以任务启动作为录像成功。

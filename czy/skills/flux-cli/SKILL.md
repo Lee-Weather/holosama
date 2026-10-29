@@ -41,7 +41,7 @@ description: "Operate Flux RL/VLA projects and training tasks: authentication, i
 ### 当前 Holosoma 项目的入口
 
 - 仓库 `Lee-Weather/holosama`，clone 目录 `holosama`，包名 `holosoma`。
-- 已实测入口：`gm-run holosama/scripts/train_flux_smoke.py`；默认 128 环境、2 次 PPO 迭代。正式入口为 `gm-run holosama/scripts/train_flux.py --experiment <编号>`，默认 2048 环境、5000 次迭代、每 100 轮保存、训练上限 6 小时；exp_1.1 已验证安装、2048 环境持续迭代及周期保存，完整收敛仍待验收。两个入口共用 `scripts/flux_smoke_constraints.txt`，保留各自规模边界。
+- 已实测入口：`gm-run holosama/scripts/train_flux_smoke.py`；默认 128 环境、2 次 PPO 迭代。正式入口为 `gm-run holosama/scripts/train_flux.py --experiment <编号>`，默认 2048 环境、5000 次迭代、每 100 轮保存、训练上限 6 小时；exp_1.1 已完成全部 5000 轮、最终 checkpoint/云端 ONNX 验收，末段 100 轮 episode 均值 887.93 steps；独立行走回放录像仍待验收。两个入口共用 `scripts/flux_smoke_constraints.txt`，保留各自规模边界。
 - `exp0` 已验证镜像 `BJX00000178` / `V000420`、资源 `ESKU000001`；复用前仍查当前目录和库存。
 - 本地笔记 `czy/exp1/exp1.md`，最终模型 `czy/data/{编号}/`，日志/配置/曲线/校验结果 `czy/exp1/artifacts/{编号}/`。ONNX、视频、CSV 按实际取得的文件记录，不默认生成 F1/X1 三件套。
 

@@ -1,0 +1,20 @@
+{
+  "source_task": "TASK_20261029_112",
+  "iter": 4999,
+  "sha256": "bca3da441b1a417c1b76e82cd548852a5de54faa920f4034e6c54db80bb11105",
+  "bytes": 5300224,
+  "actor_critic_finite": true,
+  "training_config": {
+    "headless": true,
+    "torch_deterministic": false,
+    "multigpu": false,
+    "num_envs": 2048,
+    "seed": 1,
+    "checkpoint": null,
+    "teacher_checkpoint": null,
+    "project": "flux-exp_1.1-20261029_063105",
+    "name": "g1_ppo",
+    "max_eval_steps": null,
+    "export_onnx": true
+  }
+}

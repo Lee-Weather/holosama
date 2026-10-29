@@ -162,6 +162,8 @@ Holosoma 默认写入 `logs/<project>/<timestamp>-<name>-<task>/`，包含 Tenso
 
 ## 最终模型回放与视频（待云端验收）
 
+更新：exp_1.1 于 2026-10-29 16:45:04 进入成功终态 5，完整完成 5000 轮；最终 checkpoint iter=4999、actor/critic 有限，云端 ONNX CPU 推理 `[1,29]` 有限。末段 100 轮 episode 均值 887.9251 steps（17.7585 秒），reward 均值 15.0731，达成本轮训练指标目标。回放任务 `TASK_20261029_249` 已在同账号用户 4390 下启动，入口 commit `ab53ac3`；录像成功仍需以下验收，不能由训练完成推断。
+
 用户于 2026-10-29 要求 exp_1.1 训练完成后回放并录像。新增 `scripts/replay_flux.py`：沿用已验证的 bootstrap，调用原生 `eval_agent.run_eval_with_tyro`，从 checkpoint 恢复完整配置与确定性策略，使用 1 环境、无界面 RTX 相机录制。默认 30 秒、1280×720，控制频率由保存的配置计算；本轮为 50 Hz / 1500 步。安装上限 900 秒，回放子进程上限 1200 秒，不自动重试。
 
 仅在源训练成功完成且最终 `model_04999.pt` 已上传、下载验证 iter=4999 和 actor/critic 权重有限后启动。签名 URL 在内存中编码为 `--checkpoint_url_b64`，同时传入本地计算的 `--checkpoint-sha256`；包装器下载后先核对 SHA-256。不要打印或提交包含该参数的完整启动命令。包装器必须先推送并核对远端 commit，任务使用同账号和兼容镜像。
