@@ -1,0 +1,32 @@
+{
+  "queried_at": "2026-10-29T06:41:54.514906+00:00",
+  "account": "limxmts0elyormeym6@uberip.com",
+  "task": {
+    "taskId": "TASK_20261029_112",
+    "taskName": "holosoma-exp_1.1-g1-ppo-lean-bootstrap-20261029",
+    "projectId": "PRO_20261028_008",
+    "userId": "4390",
+    "taskStatus": "3",
+    "startTime": "2026-10-29 14:30:53",
+    "endTime": null,
+    "runtime": "",
+    "goodsId": "ESKU000001",
+    "imageId": "BJX00000178",
+    "imageVersion": "V000420"
+  },
+  "latest_complete_log_block": {
+    "iteration": 158,
+    "total_iterations": 5000,
+    "mean_reward": 19.38,
+    "mean_episode_length": 250.51,
+    "fps": 31487.0,
+    "iteration_seconds": 1.56,
+    "eta_seconds": 7825.6
+  },
+  "cuda_probe_marker_in_excerpt": false,
+  "training_started": true,
+  "log_scope": "Platform task logs may return only a recent excerpt; absent startup markers do not imply a failed CUDA check.",
+  "optional_tools_collected": [],
+  "model_count": 2,
+  "worker_code_commit": "ed6c3c5120b349fdeb99ac2e6950068cf9136d81"
+}

@@ -8,7 +8,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | [exp0](#实验-exp0flux-isaaclab-上的-g1-ppo-流程验证) | 2026-10-28 | 修复安装源与版本回溯，完成 128 环境 × 2 次 PPO 迭代；checkpoint 上传/下载及云端 ONNX 校验通过 | 已测试 | `TASK_20261028_224`（含两次失败尝试，见 §7） | `limxmts0elyormeym6@uberip.com` | [model_00001.pt](../data/exp0/model_00001.pt) |
 | [exp_1](#实验-exp_1g1-平地-ppo-正式训练) | 2026-10-28 | 安装阶段下载 Open3D 时超过 900 秒，未进入 GPU 训练；2026-10-29 完成终止诊断 | 失败 | `TASK_20261028_251` | `limxmts0elyormeym6@uberip.com` | 无；未开始训练 |
-| [exp_1.1](#实验-exp_11精简依赖并重试正式训练) | 2026-10-29 | 将分析/开发工具改为可选依赖，按文件吞吐选择源；保留 2048 环境 × 5000 轮 | 待训练 | 待创建 | `limxmts0elyormeym6@uberip.com` | 待生成 |
+| [exp_1.1](#实验-exp_11精简依赖并重试正式训练) | 2026-10-29 | 精简依赖及测速选源已通过云端启动验证；2048 环境实际推进，检查时到 iter 158 | 训练中 | `TASK_20261029_112` | `limxmts0elyormeym6@uberip.com` | 最新观测 `model_00100.pt`；非最终模型 |
 
 ## 实验 exp0：Flux IsaacLab 上的 G1 PPO 流程验证
 
@@ -353,4 +353,49 @@ exp_1 的 `TASK_20261028_251` 运行 915 秒，在 pip 安装阶段触发 900 �
 
 ### 7. 实验结果
 
-待训练完成后补充。开训前已完成纯运行时依赖的 Linux/Python 3.11 解析：未包含 Open3D、Notebook、JupyterLab、mypy。后续追加新任务 ID、实际 commit、安装结果和初始训练指标。
+待训练完成后补充最终结果。开训前已完成纯运行时依赖的 Linux/Python 3.11 解析：未包含 Open3D、Notebook、JupyterLab、mypy；12 项 CPU 测试及 Ruff/格式检查通过。
+
+新任务 `TASK_20261029_112`，2026-10-29 14:30:53 开始，指定账号用户 `4390`，状态 3。云端实际 Git commit=`ed6c3c5120b349fdeb99ac2e6950068cf9136d81`，参数为 2048 环境、5000 轮、保存间隔 100、安装 900 秒/训练 21600 秒上限。证据：[启动计划](artifacts/exp_1.1/launch_plan.json)、[云端实际计划](artifacts/exp_1.1/cloud_launch_plan.json)、[初始日志](artifacts/exp_1.1/startup_excerpt.txt)、[本地依赖验证](artifacts/exp_1.1/bootstrap_validation.json)。运行时包解析见 [linux_runtime_resolution.txt](artifacts/exp_1.1/linux_runtime_resolution.txt)，它不是对镜像已有包的安装锁文件。
+
+#### 安装与实际开训验证
+
+14:31:05 开始 bootstrap。文件测速记录：清华 408 KiB/s、阿里云 478 KiB/s、PyPI 文件源 2577 KiB/s，因此选择 PyPI。默认运行时安装不再拉取 Open3D、Notebook、mypy，保留镜像 PyTorch `2.7.0+cu128`。14:37:16 的训练运行目录已创建，随后产生实际 PPO 迭代和 checkpoint；安装在 900 秒上限内完成。
+
+首次模型于 14:37:56 上传。下载 `model_00000.pt` 后验证：iter=0，5,300,224 bytes，actor/critic 张量均有限；内嵌实际配置为 2048 环境、5000 轮、seed=1、保存间隔 100，项目名 `flux-exp_1.1-20261029_063105`。SHA-256=`deb80277030404a20037dfef71b196742f5a1d53acf13353e9c453ded069a490`。该中间模型只缓存于 Git 忽略的 `logs/flux-validation/TASK_20261029_112/`，最终归档待训练完成。验证见 [initial_checkpoint_validation.json](artifacts/exp_1.1/initial_checkpoint_validation.json)。
+
+#### 2026-10-29 14:41:54 进度快照
+
+| 指标 | 当前观测 |
+| --- | --- |
+| 状态 / 迭代 | 3（Running）/ iter 158，计划 5000 轮，约完成 3.18% |
+| Mean reward | 19.38（日志显示精度） |
+| Mean episode length | 250.51 steps，按 0.02 s 换算约 5.01 s；不是独立行走回放验收 |
+| 速度 / 每轮耗时 | 31,487 steps/s / 约 1.56 s |
+| 预计剩余 | 日志 ETA=7825.6 秒，约 2 小时 10 分；早期估算会变化 |
+| 平台 checkpoint | `model_00000.pt`、`model_00100.pt`；后者 14:40:33 上传 |
+| 训练配置 | 下载模型内实际配置与计划一致；2048 环境已实际采样，无启动 OOM |
+
+证据：[进度快照](artifacts/exp_1.1/progress_snapshot.json)、[近期训练日志片段](artifacts/exp_1.1/early_training_excerpt.txt)、[平台 precise 早期曲线](artifacts/exp_1.1/early_curves.json)、[已上传模型清单](artifacts/exp_1.1/models_snapshot.json)。平台 `task logs` 可只返回近期片段，启动/CUDA 探针行不在片段里不能解释为探针失败；实际迭代和可读模型证明已通过先行检查。
+
+**阶段结论：依赖冷启动修复已通过实际安装、GPU 仿真、持续 PPO 迭代及周期保存验证。** 任务保持运行；5000 轮完成、最终 ONNX 验收和策略质量尚未判定。本任务没有自动重试或监控计划，6 小时训练时限仍有效。
+
+#### 2026-10-29 15:39 训练中检查
+
+`TASK_20261029_112` 仍为状态 3，用户 ID `4390`。日志和平台曲线均持续推进，约 iter 2440/5000（49%），累计约 1.19 亿采样步。日志速度约 32,319 steps/s，每轮 1.52 秒，ETA 约 3891 秒（65 分钟），按当时估算约北京时间 16:44–16:45 完成；该时间会变化。
+
+| 指标 | 观测 |
+| --- | --- |
+| Mean reward | 平台最近 100 个点均值 4.2052；该次查询末点 iter 2435 为 4.9595 |
+| Mean episode length | 平台最近 100 个点均值 691.3709 steps（约 13.83 秒）；末点 iter 2437 为 704.35 steps |
+| 惩罚课程系数 | 最近 100 个点均为 1.0，已达完整惩罚强度 |
+| 最新 checkpoint | `model_02400.pt`，15:38:41 上传；平台共列出 25 个周期 checkpoint |
+
+不同指标串行查询，末点相差数轮，不能拼成同一轮的精确观测。早期 iter 158 的惩罚系数较小，当前奖励不宜直接与当时 19.38 的值比较。当前 episode 长度较早期明显增加，仍低于本轮末段 100 轮均值 800 steps 的目标；训练未完成，不提前判定达标或收敛。此次检查没有停止、重启或修改任务。
+
+本次独立快照：[日志片段](artifacts/exp_1.1/progress_20261029_153936/log_excerpt.txt)、[奖励曲线](artifacts/exp_1.1/progress_20261029_153936/Train_mean_reward.json)、[episode 曲线](artifacts/exp_1.1/progress_20261029_153936/Train_mean_episode_length.json)、[惩罚系数曲线](artifacts/exp_1.1/progress_20261029_153936/Env_penalty_scale.json)。
+
+#### 最终模型回放与录像安排（2026-10-29）
+
+用户要求训练完成后进行回放并录制视频。入口 [replay_flux.py](../../scripts/replay_flux.py) 已准备：只使用本轮最终 `model_04999.pt`，先验证训练终态、iter、有限权重及下载 SHA-256，再用原生确定性评估单环境回放 30 秒（1280×720，50 Hz / 1500 步）。评估 timeout 显式为 60 秒，跌倒仍重置；录像不用于冒充训练 20 秒回合上限下的存活指标。
+
+入口沿用安装 bootstrap，安装 900 秒、回放 1200 秒时限；片段拼接为浏览器兼容 H.264，完整解码检查时长、尺寸、空帧/静止/截断，成功后预留 60 秒上传。19 项 CPU 测试通过，包含下载完整性、签名位置不进入错误信息，以及正常/黑屏/静止/截断视频验收；Ruff 通过。云端回放尚未开始，任务号与实际视频验证待补充；目标产物为 `czy/data/exp_1.1/play_output.mp4`，不新增训练实验编号。

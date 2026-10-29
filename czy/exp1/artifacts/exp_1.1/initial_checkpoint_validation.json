@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-10-29T06:40:31.191712+00:00",
+  "task_id": "TASK_20261029_112",
+  "checkpoint": "model_00000.pt",
+  "iteration": 0,
+  "bytes": 5300224,
+  "sha256": "deb80277030404a20037dfef71b196742f5a1d53acf13353e9c453ded069a490",
+  "actor_weights_finite": true,
+  "critic_weights_finite": true,
+  "actual_config": {
+    "project": "flux-exp_1.1-20261029_063105",
+    "num_envs": 2048,
+    "iterations": 5000,
+    "seed": 1,
+    "save_interval": 100
+  },
+  "local_cache": "logs/flux-validation/TASK_20261029_112/model_00000.pt",
+  "intermediate_checkpoint_only": true
+}

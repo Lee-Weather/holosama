@@ -1,0 +1,267 @@
+: -0.7831                                  │
+│ Mean episode rew_penalty_close_feet_xy: -0.0138                              │
+│  Mean episode rew_penalty_feet_ori: -0.3445                                  │
+│             Mean episode rew_alive: 0.7546                                   │
+│ Mean raw episode raw_rew_tracking_lin_vel: 12.7697                           │
+│ Mean raw episode raw_rew_tracking_ang_vel: 21.5231                           │
+│ Mean raw episode raw_rew_penalty_ang_vel_xy: 13.5203                         │
+│ Mean raw episode raw_rew_penalty_orientation: 0.1222                         │
+│ Mean raw episode raw_rew_penalty_action_rate: 86.2485                        │
+│ Mean raw episode raw_rew_feet_phase: 31.6195                                 │
+│      Mean raw episode raw_rew_pose: 78.3125                                  │
+│ Mean raw episode raw_rew_penalty_close_feet_xy: 0.0690                       │
+│ Mean raw episode raw_rew_penalty_feet_ori: 3.4450                            │
+│     Mean raw episode raw_rew_alive: 37.7319                                  │
+│ ---------------------------------------------------------------------------- │
+│ ----                                                                         │
+│                    Total timesteps: 118702080                                │
+│                     Iteration time: 1.54s                                    │
+│                         Total time: 3641.20s                                 │
+│                                ETA: 3899.0s                                  │
+│ Logging Directory:                                                           │
+│ logs/flux-exp_1.1-20261029_063105/20261029_063716-g1_ppo-locomotion          │
+╰──────────────────────────────────────────────────────────────────────────────╯╭──────────────────────────────── Training Log ────────────────────────────────╮
+│                       Learning iteration 2415/5000                     │
+│                                                                              │
+│                        Computation: 33347 steps/s (Collection: 1.248s,       │
+│ Learning 0.226s)                                                             │
+│                        Mean reward: 2.44                                     │
+│                Mean episode length: 654.45                                   │
+│                              Value: 0.3775                                   │
+│                          Surrogate: -0.0001                                  │
+│                            Entropy: -1.8169                                  │
+│                                 KL: 0.0145                                   │
+│                         actor_loss: 0.0182                                   │
+│                        critic_loss: 0.3775                                   │
+│                symmetry_actor_loss: 0.0001                                   │
+│               symmetry_critic_loss: 0.0054                                   │
+│                actor_learning_rate: 0.0001                                   │
+│               critic_learning_rate: 0.0001                                   │
+│                  Env/penalty_scale: 1.0000                                   │
+│               Env/action_clip_frac: 0.0000                                   │
+│         Env/average_episode_length: 688.1586                                 │
+│              Policy/mean_noise_std: 0.2279                                   │
+│  Mean episode rew_tracking_lin_vel: 0.3904                                   │
+│  Mean episode rew_tracking_ang_vel: 0.5281                                   │
+│ Mean episode rew_penalty_ang_vel_xy: -0.2256                                 │
+│ Mean episode rew_penalty_orientation: -0.0212                                │
+│ Mean episode rew_penalty_action_rate: -2.8276                                │
+│        Mean episode rew_feet_phase: 2.5596                                   │
+│              Mean episode rew_pose: -0.6373                                  │
+│ Mean episode rew_penalty_close_feet_xy: -0.0049                              │
+│  Mean episode rew_penalty_feet_ori: -0.2964                                  │
+│             Mean episode rew_alive: 0.6157                                   │
+│ Mean raw episode raw_rew_tracking_lin_vel: 9.7612                            │
+│ Mean raw episode raw_rew_tracking_ang_vel: 17.6045                           │
+│ Mean raw episode raw_rew_penalty_ang_vel_xy: 11.2795                         │
+│ Mean raw episode raw_rew_penalty_orientation: 0.1062                         │
+│ Mean raw episode raw_rew_penalty_action_rate: 70.6910                        │
+│ Mean raw episode raw_rew_feet_phase: 25.5964                                 │
+│      Mean raw episode raw_rew_pose: 63.7320                                  │
+│ Mean raw episode raw_rew_penalty_close_feet_xy: 0.0247                       │
+│ Mean raw episode raw_rew_penalty_feet_ori: 2.9636                            │
+│     Mean raw episode raw_rew_alive: 30.7849                                  │
+│ ---------------------------------------------------------------------------- │
+│ ----                                                                         │
+│                    Total timesteps: 118751232                                │
+│                     Iteration time: 1.47s                                    │
+│                         Total time: 3642.68s                                 │
+│                                ETA: 3897.5s                                  │
+│ Logging Directory:                                                           │
+│ logs/flux-exp_1.1-20261029_063105/20261029_063716-g1_ppo-locomotion          │
+╰──────────────────────────────────────────────────────────────────────────────╯╭──────────────────────────────── Training Log ────────────────────────────────╮
+│                       Learning iteration 2416/5000                     │
+│                                                                              │
+│                        Computation: 32799 steps/s (Collection: 1.271s,       │
+│ Learning 0.227s)                                                             │
+│                        Mean reward: 3.98                                     │
+│                Mean episode length: 627.82                                   │
+│                              Value: 0.2936                                   │
+│                          Surrogate: -0.0032                                  │
+│                            Entropy: -1.8082                                  │
+│                                 KL: 0.0120                                   │
+│                         actor_loss: 0.0149                                   │
+│                        critic_loss: 0.2936                                   │
+│                symmetry_actor_loss: 0.0001                                   │
+│               symmetry_critic_loss: 0.0046                                   │
+│                actor_learning_rate: 0.0001                                   │
+│               critic_learning_rate: 0.0001                                   │
+│                  Env/penalty_scale: 1.0000                                   │
+│               Env/action_clip_frac: 0.0000                                   │
+│         Env/average_episode_length: 679.4432                                 │
+│              Policy/mean_noise_std: 0.2278                                   │
+│  Mean episode rew_tracking_lin_vel: 0.4997                                   │
+│  Mean episode rew_tracking_ang_vel: 0.5853                                   │
+│ Mean episode rew_penalty_ang_vel_xy: -0.2508                                 │
+│ Mean episode rew_penalty_orientation: -0.0248                                │
+│ Mean episode rew_penalty_action_rate: -3.0822                                │
+│        Mean episode rew_feet_phase: 2.8954                                   │
+│              Mean episode rew_pose: -0.7092                                  │
+│ Mean episode rew_penalty_close_feet_xy: -0.0137                              │
+│  Mean episode rew_penalty_feet_ori: -0.3075                                  │
+│             Mean episode rew_alive: 0.6795                                   │
+│ Mean raw episode raw_rew_tracking_lin_vel: 12.4927                           │
+│ Mean raw episode raw_rew_tracking_ang_vel: 19.5115                           │
+│ Mean raw episode raw_rew_penalty_ang_vel_xy: 12.5420                         │
+│ Mean raw episode raw_rew_penalty_orientation: 0.1242                         │
+│ Mean raw episode raw_rew_penalty_action_rate: 77.0556                        │
+│ Mean raw episode raw_rew_feet_phase: 28.9540                                 │
+│      Mean raw episode raw_rew_pose: 70.9207                                  │
+│ Mean raw episode raw_rew_penalty_close_feet_xy: 0.0685                       │
+│ Mean raw episode raw_rew_penalty_feet_ori: 3.0754                            │
+│     Mean raw episode raw_rew_alive: 33.9723                                  │
+│ ---------------------------------------------------------------------------- │
+│ ----                                                                         │
+│                    Total timesteps: 118800384                                │
+│                     Iteration time: 1.50s                                    │
+│                         Total time: 3644.18s                                 │
+│                                ETA: 3896.0s                                  │
+│ Logging Directory:                                                           │
+│ logs/flux-exp_1.1-20261029_063105/20261029_063716-g1_ppo-locomotion          │
+╰──────────────────────────────────────────────────────────────────────────────╯╭──────────────────────────────── Training Log ────────────────────────────────╮
+│                       Learning iteration 2417/5000                     │
+│                                                                              │
+│                        Computation: 33559 steps/s (Collection: 1.240s,       │
+│ Learning 0.225s)                                                             │
+│                        Mean reward: 6.96                                     │
+│                Mean episode length: 702.10                                   │
+│                              Value: 0.2932                                   │
+│                          Surrogate: -0.0034                                  │
+│                            Entropy: -1.8208                                  │
+│                                 KL: 0.0158                                   │
+│                         actor_loss: 0.0148                                   │
+│                        critic_loss: 0.2932                                   │
+│                symmetry_actor_loss: 0.0001                                   │
+│               symmetry_critic_loss: 0.0047                                   │
+│                actor_learning_rate: 0.0001                                   │
+│               critic_learning_rate: 0.0001                                   │
+│                  Env/penalty_scale: 1.0000                                   │
+│               Env/action_clip_frac: 0.0000                                   │
+│         Env/average_episode_length: 683.0795                                 │
+│              Policy/mean_noise_std: 0.2278                                   │
+│  Mean episode rew_tracking_lin_vel: 0.5483                                   │
+│  Mean episode rew_tracking_ang_vel: 0.6122                                   │
+│ Mean episode rew_penalty_ang_vel_xy: -0.2485                                 │
+│ Mean episode rew_penalty_orientation: -0.0249                                │
+│ Mean episode rew_penalty_action_rate: -3.2112                                │
+│        Mean episode rew_feet_phase: 3.0048                                   │
+│              Mean episode rew_pose: -0.7261                                  │
+│ Mean episode rew_penalty_close_feet_xy: -0.0084                              │
+│  Mean episode rew_penalty_feet_ori: -0.3154                                  │
+│             Mean episode rew_alive: 0.7075                                   │
+│ Mean raw episode raw_rew_tracking_lin_vel: 13.7081                           │
+│ Mean raw episode raw_rew_tracking_ang_vel: 20.4078                           │
+│ Mean raw episode raw_rew_penalty_ang_vel_xy: 12.4236                         │
+│ Mean raw episode raw_rew_penalty_orientation: 0.1245                         │
+│ Mean raw episode raw_rew_penalty_action_rate: 80.2794                        │
+│ Mean raw episode raw_rew_feet_phase: 30.0476                                 │
+│      Mean raw episode raw_rew_pose: 72.6124                                  │
+│ Mean raw episode raw_rew_penalty_close_feet_xy: 0.0421                       │
+│ Mean raw episode raw_rew_penalty_feet_ori: 3.1538                            │
+│     Mean raw episode raw_rew_alive: 35.3768                                  │
+│ ---------------------------------------------------------------------------- │
+│ ----                                                                         │
+│                    Total timesteps: 118849536                                │
+│                     Iteration time: 1.46s                                    │
+│                         Total time: 3645.64s                                 │
+│                                ETA: 3894.4s                                  │
+│ Logging Directory:                                                           │
+│ logs/flux-exp_1.1-20261029_063105/20261029_063716-g1_ppo-locomotion          │
+╰──────────────────────────────────────────────────────────────────────────────╯╭──────────────────────────────── Training Log ────────────────────────────────╮
+│                       Learning iteration 2418/5000                     │
+│                                                                              │
+│                        Computation: 32633 steps/s (Collection: 1.275s,       │
+│ Learning 0.231s)                                                             │
+│                        Mean reward: 3.39                                     │
+│                Mean episode length: 724.62                                   │
+│                              Value: 0.2118                                   │
+│                          Surrogate: -0.0045                                  │
+│                            Entropy: -1.8365                                  │
+│                                 KL: 0.0129                                   │
+│                         actor_loss: 0.0140                                   │
+│                        critic_loss: 0.2118                                   │
+│                symmetry_actor_loss: 0.0001                                   │
+│               symmetry_critic_loss: 0.0046                                   │
+│                actor_learning_rate: 0.0001                                   │
+│               critic_learning_rate: 0.0001                                   │
+│                  Env/penalty_scale: 1.0000                                   │
+│               Env/action_clip_frac: 0.0000                                   │
+│         Env/average_episode_length: 685.5874                                 │
+│              Policy/mean_noise_std: 0.2275                                   │
+│  Mean episode rew_tracking_lin_vel: 0.4869                                   │
+│  Mean episode rew_tracking_ang_vel: 0.6211                                   │
+│ Mean episode rew_penalty_ang_vel_xy: -0.2672                                 │
+│ Mean episode rew_penalty_orientation: -0.0257                                │
+│ Mean episode rew_penalty_action_rate: -3.3499                                │
+│        Mean episode rew_feet_phase: 3.0440                                   │
+│              Mean episode rew_pose: -0.7676                                  │
+│ Mean episode rew_penalty_close_feet_xy: -0.0136                              │
+│  Mean episode rew_penalty_feet_ori: -0.3450                                  │
+│             Mean episode rew_alive: 0.7294                                   │
+│ Mean raw episode raw_rew_tracking_lin_vel: 12.1716                           │
+│ Mean raw episode raw_rew_tracking_ang_vel: 20.7026                           │
+│ Mean raw episode raw_rew_penalty_ang_vel_xy: 13.3602                         │
+│ Mean raw episode raw_rew_penalty_orientation: 0.1284                         │
+│ Mean raw episode raw_rew_penalty_action_rate: 83.7470                        │
+│ Mean raw episode raw_rew_feet_phase: 30.4401                                 │
+│      Mean raw episode raw_rew_pose: 76.7623                                  │
+│ Mean raw episode raw_rew_penalty_close_feet_xy: 0.0682                       │
+│ Mean raw episode raw_rew_penalty_feet_ori: 3.4496                            │
+│     Mean raw episode raw_rew_alive: 36.4688                                  │
+│ ---------------------------------------------------------------------------- │
+│ ----                                                                         │
+│                    Total timesteps: 118898688                                │
+│                     Iteration time: 1.51s                                    │
+│                         Total time: 3647.15s                                 │
+│                                ETA: 3892.9s                                  │
+│ Logging Directory:                                                           │
+│ logs/flux-exp_1.1-20261029_063105/20261029_063716-g1_ppo-locomotion          │
+╰──────────────────────────────────────────────────────────────────────────────╯╭──────────────────────────────── Training Log ────────────────────────────────╮
+│                       Learning iteration 2419/5000                     │
+│                                                                              │
+│                        Computation: 32319 steps/s (Collection: 1.286s,       │
+│ Learning 0.235s)                                                             │
+│                        Mean reward: 2.50                                     │
+│                Mean episode length: 697.18                                   │
+│                              Value: 0.3610                                   │
+│                          Surrogate: -0.0044                                  │
+│                            Entropy: -1.8919                                  │
+│                                 KL: 0.0152                                   │
+│                         actor_loss: 0.0146                                   │
+│                        critic_loss: 0.3610                                   │
+│                symmetry_actor_loss: 0.0001                                   │
+│               symmetry_critic_loss: 0.0056                                   │
+│                actor_learning_rate: 0.0001                                   │
+│               critic_learning_rate: 0.0001                                   │
+│                  Env/penalty_scale: 1.0000                                   │
+│               Env/action_clip_frac: 0.0000                                   │
+│         Env/average_episode_length: 688.6697                                 │
+│              Policy/mean_noise_std: 0.2272                                   │
+│  Mean episode rew_tracking_lin_vel: 0.4897                                   │
+│  Mean episode rew_tracking_ang_vel: 0.5644                                   │
+│ Mean episode rew_penalty_ang_vel_xy: -0.2430                                 │
+│ Mean episode rew_penalty_orientation: -0.0241                                │
+│ Mean episode rew_penalty_action_rate: -3.0423                                │
+│        Mean episode rew_feet_phase: 2.7871                                   │
+│              Mean episode rew_pose: -0.7066                                  │
+│ Mean episode rew_penalty_close_feet_xy: -0.0072                              │
+│  Mean episode rew_penalty_feet_ori: -0.3203                                  │
+│             Mean episode rew_alive: 0.6636                                   │
+│ Mean raw episode raw_rew_tracking_lin_vel: 12.2437                           │
+│ Mean raw episode raw_rew_tracking_ang_vel: 18.8149                           │
+│ Mean raw episode raw_rew_penalty_ang_vel_xy: 12.1479                         │
+│ Mean raw episode raw_rew_penalty_orientation: 0.1206                         │
+│ Mean raw episode raw_rew_penalty_action_rate: 76.0573                        │
+│ Mean raw episode raw_rew_feet_phase: 27.8709                                 │
+│      Mean raw episode raw_rew_pose: 70.6625                                  │
+│ Mean raw episode raw_rew_penalty_close_feet_xy: 0.0359                       │
+│ Mean raw episode raw_rew_penalty_feet_ori: 3.2028                            │
+│     Mean raw episode raw_rew_alive: 33.1788                                  │
+│ ---------------------------------------------------------------------------- │
+│ ----                                                                         │
+│                    Total timesteps: 118947840                                │
+│                     Iteration time: 1.52s                                    │
+│                         Total time: 3648.67s                                 │
+│                                ETA: 3891.4s                                  │
+│ Logging Directory:                                                           │
+│ logs/flux-exp_1.1-20261029_063105/20261029_063716-g1_ppo-locomotion          │

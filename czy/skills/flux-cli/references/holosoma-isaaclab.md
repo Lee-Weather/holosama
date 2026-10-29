@@ -146,7 +146,9 @@ gm-run holosama/src/holosoma/holosoma/train_agent.py exp:g1-29dof simulator:isaa
 
 正式训练再按 PPO/FastSAC、locomotion/WBT、视频需求和实际显存调整环境数及迭代数。WBT 使用真实 motion NPZ；仓库自带参考动作可作初始验证，不需要 F1/X1 的轨迹参数。
 
-当前正式训练入口为 `scripts/train_flux.py`，复用 exp0 bootstrap，默认 2048 环境、5000 次 PPO 迭代、每 100 轮保存，训练限时 21600 秒（安装另限 900 秒）。平台命令：`gm-run holosama/scripts/train_flux.py --experiment exp_1`。入口记录实际 Git SHA 和参数，正常完成后校验最终 checkpoint/ONNX/TensorBoard，并等待上传 60 秒；失败或超时不会自动重试。exp_1 首次尝试失败于依赖下载，因此该规模的显存容量与收敛均未得到验证，重试前应先处理安装冷启动问题。
+当前正式训练入口为 `scripts/train_flux.py`，复用 exp0 bootstrap，默认 2048 环境、5000 次 PPO 迭代、每 100 轮保存，训练限时 21600 秒（安装另限 900 秒）。平台命令：`gm-run holosama/scripts/train_flux.py --experiment <编号>`，支持 `exp_1.1` 子实验编号。入口记录实际 Git SHA 和参数，正常完成后校验最终 checkpoint/ONNX/TensorBoard，并等待上传 60 秒；失败或超时不会自动重试。
+
+exp_1 首次尝试失败于依赖下载。2026-10-29 的 exp_1.1（`TASK_20261029_112`，commit `ed6c3c5120b349fdeb99ac2e6950068cf9136d81`）已验证修复：实测吞吐后选 PyPI，去除大型可选工具，900 秒内完成安装；2048 环境实际推进，14:41:54 检查时为 iter 158/5000，约 31,487 steps/s；`model_00100.pt` 已上传，首个 checkpoint 下载后 actor/critic 权重有限。任务仍在运行，这证明冷启动、初期容量和保存流程可用，不证明 5000 轮完成或策略收敛。完整记录见 [实验笔记](../../../exp1/exp1.md)。
 
 ## 日志与产物
 
@@ -157,3 +159,13 @@ Holosoma 默认写入 `logs/<project>/<timestamp>-<name>-<task>/`，包含 Tenso
 - `.pt` 下载从 `model list` 获取 `policUrlDown`。上述成功任务的 SDK 发现了 ONNX 文件，但模型列表仅有两个 `.pt`，没有 ONNX 下载项；部署前需另行验证 ONNX 的保存/下载通道。不要把 ONNX 改成 `.pt` 扩展名来伪装上传。
 - 视频按 Holosoma 的 `logger.video` 配置另行验证；不默认要求 `play_output.mp4`、`model_isaac_csv.pt` 或 `isaac_diag.csv`。
 - 默认交付 checkpoint、需要部署的 ONNX，以及用户要求的日志/视频。记录任务 ID、实际镜像与版本、commit、实验预设、环境数、迭代数和验证范围；不记录密钥或签名 URL。
+
+## 最终模型回放与视频（待云端验收）
+
+用户于 2026-10-29 要求 exp_1.1 训练完成后回放并录像。新增 `scripts/replay_flux.py`：沿用已验证的 bootstrap，调用原生 `eval_agent.run_eval_with_tyro`，从 checkpoint 恢复完整配置与确定性策略，使用 1 环境、无界面 RTX 相机录制。默认 30 秒、1280×720，控制频率由保存的配置计算；本轮为 50 Hz / 1500 步。安装上限 900 秒，回放子进程上限 1200 秒，不自动重试。
+
+仅在源训练成功完成且最终 `model_04999.pt` 已上传、下载验证 iter=4999 和 actor/critic 权重有限后启动。签名 URL 在内存中编码为 `--checkpoint_url_b64`，同时传入本地计算的 `--checkpoint-sha256`；包装器下载后先核对 SHA-256。不要打印或提交包含该参数的完整启动命令。包装器必须先推送并核对远端 commit，任务使用同账号和兼容镜像。
+
+回放继承原生评估配置，显式将单回合 timeout 设为 60 秒以容纳连续 30 秒录像，跌倒等终止条件仍生效。这是录像配置，不能把视频长度当作训练 20 秒上限下的存活指标。每回合片段在资源关闭时写完，再按生成顺序拼接为 H.264/yuv420p、faststart 的 `logs/<replay-project>/play_output.mp4`。完整解码验证尺寸、时长、非空画面及帧间变化后，打印 `FLUX_REPLAY_SUCCESS` 并等待 60 秒上传。
+
+此入口本地校验通过不代表云端录像已验证。后续须检查日志、`task model list` 中的视频上传项，从 `videoUrlDown` 下载至 `czy/data/exp_1.1/play_output.mp4`，重新解码并人工查看代表帧；记录实际任务 ID、commit、视频大小/时长/哈希到 exp_1.1 §7。若源训练失败，不启动回放或自动重训；若回放失败，先定位错误，避免反复创建任务。
