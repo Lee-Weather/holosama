@@ -1,0 +1,13 @@
+{
+  "target_platform": "Linux x86_64 / Python 3.11",
+  "local_resolution_package_count": 150,
+  "excluded_optional_tools": [
+    "open3d",
+    "notebook",
+    "jupyterlab",
+    "mypy"
+  ],
+  "tests_passed": 12,
+  "ruff_passed": true,
+  "note": "Resolution is an offline preparation result, not a lock of the image-installed environment. Actual worker installation and training require cloud validation."
+}

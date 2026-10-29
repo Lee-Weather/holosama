@@ -8,9 +8,11 @@ simulator, runs two PPO iterations, and checks the exported policy on CPU.
 from __future__ import annotations
 
 import argparse
+import html
 import importlib.metadata
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -110,16 +112,60 @@ def _index_reachable(index: str) -> bool:
         return False
 
 
+def _index_download_speed(index: str) -> float:
+    """Sample up to 1 MiB of a known Linux wheel; do not install the probe wheel."""
+    try:
+        with urllib.request.urlopen(index + "/onnxruntime/", timeout=6) as response:  # noqa: S310
+            links = re.findall(r"href=[\"']([^\"']+)", response.read(2 * 1024 * 1024).decode("utf-8"))
+        for link in links:
+            url = urllib.parse.urljoin(index + "/onnxruntime/", html.unescape(link))
+            parsed = urllib.parse.urlparse(url)
+            filename = parsed.path.rsplit("/", 1)[-1]
+            if not (
+                filename.startswith("onnxruntime-1.20.1-cp311-cp311-manylinux") and filename.endswith("x86_64.whl")
+            ):
+                continue
+            if parsed.scheme != "https" or parsed.hostname not in {
+                "files.pythonhosted.org",
+                "pypi.tuna.tsinghua.edu.cn",
+                "mirrors.tuna.tsinghua.edu.cn",
+                "mirrors.aliyun.com",
+            }:
+                continue
+            request = urllib.request.Request(url, headers={"Range": "bytes=0-1048575"})  # noqa: S310
+            started = time.monotonic()
+            received = 0
+            # URL is HTTPS and its host is explicitly checked above.
+            with urllib.request.urlopen(request, timeout=6) as response:  # noqa: S310
+                while received < 1024 * 1024 and time.monotonic() - started < 6:
+                    chunk = response.read(min(64 * 1024, 1024 * 1024 - received))
+                    if not chunk:
+                        break
+                    received += len(chunk)
+            speed = received / max(time.monotonic() - started, 0.001)
+            print("FLUX_BOOTSTRAP_INDEX_SPEED", parsed.hostname, round(speed / 1024), "KiB/s", flush=True)
+            return speed
+    except OSError as error:
+        print(
+            "FLUX_BOOTSTRAP_SPEED_UNAVAILABLE", urllib.parse.urlparse(index).hostname, type(error).__name__, flush=True
+        )
+    return 0.0
+
+
 def select_package_index() -> str:
-    """The Flux image's mirrors.ivolces.com default may not resolve in its worker."""
-    for index in (
+    """Select a reachable index by measured artifact throughput, not HTTP 200 alone."""
+    indexes = (
         "https://pypi.tuna.tsinghua.edu.cn/simple",
         "https://mirrors.aliyun.com/pypi/simple",
         "https://pypi.org/simple",
-    ):
-        if _index_reachable(index):
-            print("FLUX_SMOKE_PIP_INDEX", urllib.parse.urlparse(index).hostname, flush=True)
-            return index
+    )
+    candidates = [(index, _index_download_speed(index)) for index in indexes if _index_reachable(index)]
+    if candidates:
+        # Stable ties preserve the domestic-first ordering; failed speed probes
+        # do not discard a reachable index when all throughput probes fail.
+        selected, _ = max(candidates, key=lambda item: item[1])
+        print("FLUX_SMOKE_PIP_INDEX", urllib.parse.urlparse(selected).hostname, flush=True)
+        return selected
     raise RuntimeError("No reachable package index; aborting before dependency installation")
 
 

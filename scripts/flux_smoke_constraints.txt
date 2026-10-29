@@ -1,7 +1,8 @@
 # Cloud bootstrap constraints for the IsaacLab 2.3.2 / IsaacSim 5.1 image.
 -c isaacsim_constraints.txt
 
-# Recent Jupyter releases require packaging>=23.2, but IsaacSim pins 23.0.
+# Optional [analysis] Jupyter releases require packaging>=23.2, but IsaacSim pins 23.0.
+# These constraints do not install the optional packages for headless training.
 # Resolve this compatible family directly instead of backtracking every release.
 notebook==7.3.3
 jupyterlab==4.3.8

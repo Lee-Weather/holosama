@@ -23,6 +23,16 @@ def test_invalid_scale_cannot_start_bootstrap(training, monkeypatch):
         training.main()
 
 
+def test_numbered_retry_is_supported_without_allowing_path_traversal(training, monkeypatch):
+    monkeypatch.setattr(sys, "argv", ["train_flux.py", "--experiment", "exp_1.1"])
+    monkeypatch.setattr(training.bootstrap, "prepare_environment", lambda: pytest.fail("Validated retry name"))
+    with pytest.raises(pytest.fail.Exception, match="Validated retry name"):
+        training.main()
+    monkeypatch.setattr(sys, "argv", ["train_flux.py", "--experiment", "../exp_1"])
+    with pytest.raises(SystemExit):
+        training.main()
+
+
 def test_install_failure_does_not_start_gpu(training, monkeypatch, tmp_path):
     monkeypatch.chdir(tmp_path)
     monkeypatch.setattr(sys, "argv", ["train_flux.py"])

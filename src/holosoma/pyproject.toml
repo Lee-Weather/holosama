@@ -27,17 +27,13 @@ dependencies = [
     "joblib",
     "loguru",
     "lxml",
-    "lxml-stubs",
     "matplotlib",
     "meshcat",
-    "mypy==1.14.1",
-    "notebook",
     "numpy-stl",
     "numpy>=1.23.5,<2",
     "omegaconf",  # Used for config resolvers and DictConfig type hints
     "onnx",
     "onnxruntime",
-    "open3d",
     "opencv-python",
     "pandas>=1.5,<3",  # Nightly validation uses W&B's DataFrame history.
     "plotly",
@@ -54,10 +50,6 @@ dependencies = [
     "termcolor",
     "tqdm",
     "trimesh",
-    "types-pynput",
-    "types-python-dateutil",
-    "types-requests",
-    "types-tqdm",
     "tyro>=1.0.0",
     "wandb==0.22.0", # pin version until https://github.com/wandb/wandb/issues/10647 is fixed
     # Keep the package floor broad for non-MuJoCo environments. MuJoCo-Warp setup pins 1.15 because
@@ -68,6 +60,17 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+# Interactive analysis and static checking are not required by headless training.
+# Keep them opt-in to avoid downloading Open3D/Jupyter on billed GPU workers.
+analysis = ["notebook", "open3d"]
+dev = [
+    "mypy==1.14.1",
+    "lxml-stubs",
+    "types-pynput",
+    "types-python-dateutil",
+    "types-requests",
+    "types-tqdm",
+]
 # Robot SDKs are published to PyPI (FAR forks). The import names are unchanged
 # (`unitree_interface`, `booster_robotics_sdk`) — only the distribution names
 # differ from the historical GitHub-release wheels. Previously computed

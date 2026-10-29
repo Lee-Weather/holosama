@@ -62,8 +62,8 @@ def main() -> None:
     parser.add_argument("--install-timeout", type=int, default=900)
     parser.add_argument("--training-timeout", type=int, default=21600)
     args = parser.parse_args()
-    if not re.fullmatch(r"[A-Za-z0-9_-]+", args.experiment):
-        parser.error("Experiment name must contain only letters, digits, underscores, or hyphens")
+    if not re.fullmatch(r"[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*", args.experiment):
+        parser.error("Experiment name must contain safe name segments, optionally separated by dots")
     if not 1 <= args.install_timeout <= 1800 or not 1 <= args.training_timeout <= 86400:
         parser.error("Installation limit must be 1..1800s; training limit must be 1..86400s")
     project = f"flux-{args.experiment}-" + time.strftime("%Y%m%d_%H%M%S", time.gmtime())

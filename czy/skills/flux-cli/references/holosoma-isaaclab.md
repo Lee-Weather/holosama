@@ -69,7 +69,7 @@ python -m pip install -c scripts/flux_smoke_constraints.txt -e ./src/holosoma
 python -m pip check
 ```
 
-这组约束已在上述任务完成安装和训练。Flux 专用约束包含原 IsaacSim 约束，并固定与 `packaging==23.0`、NumPy 1.x 兼容的 Jupyter/OpenCV 组合，复用镜像 TensorDict 0.9.0；修改后先在本地解析 Linux/Python 3.11 依赖。不要用 `--no-deps` 隐藏缺失项，也不要无依据整体升级镜像中的 torch、IsaacSim 或平台 SDK。仅做训练不必同时安装 inference/retargeting；后者 NumPy 2.3.5 与训练包 NumPy <2 冲突，应分环境。
+这组约束已在 exp0 完成安装和训练。Flux 专用约束包含原 IsaacSim 约束，并固定与 `packaging==23.0`、NumPy 1.x 兼容的 OpenCV 等组合，复用镜像 TensorDict 0.9.0。2026-10-29 针对 exp_1 下载超时，将 Open3D/Notebook 拆为训练包 `[analysis]` extras，mypy/类型 stub 拆为 `[dev]` extras；默认安装仍完整解析运行时依赖，Jupyter 约束仅在显式安装分析工具时生效。修改后先在本地解析 Linux/Python 3.11 依赖，确认大包未被其他依赖重新拉入。不要用 `--no-deps` 隐藏缺失项，也不要整体升级镜像中的 torch、IsaacSim 或平台 SDK。仅做训练不必同时安装 inference/retargeting；后者 NumPy 2.3.5 与训练包 NumPy <2 冲突，应分环境。
 
 上述成功任务仍有 pip 全局依赖告警：`nvidia-srl-usd` 未检测到 `usd-core` 发行包、`nvidia-srl-base` 要求 docstring-parser 0.16 而 Tyro 安装 0.18，以及镜像 FastAPI 0.115.7 与 Starlette 0.49.1 的声明不符。本次仿真、训练、SDK 上传均实际通过，但不能宣称全环境 `pip check` 通过。按使用范围分别诊断，不要直接往 IsaacSim 环境安装另一套 USD 来消除元数据告警。
 
@@ -79,7 +79,7 @@ python -m pip check
 - `TASK_20261028_113`：PyPI 元数据下载有超时，且无上界的 Notebook/JupyterLab 与 IsaacSim 的 packaging 约束导致大量版本回溯，600 秒安装超时；没有 checkpoint。先修正依赖解析，再重试，不应仅反复增加计费任务。
 - `TASK_20261028_251`（exp_1，2026-10-29 诊断）：清华源索引可达，但相邻大包仅约 250 kB/s；日志停在 400.8 MB Open3D 下载，pip 达到 900 秒安装时限，任务运行 915 秒后状态 6。未进入 CUDA/训练，模型和指标均为空。索引探测不能证明大文件吞吐；修复应核查可选工具依赖、下载性能/备用源或预装环境，不应仅提高训练时限。完整证据见 exp_1 §7。
 - `gm-run` 使用 `/workspace/isaaclab/_isaac_sim/kit/python/bin/python3`；镜像可能没有名为 `pip` 的独立可执行文件，但 `python -m pip` 可用。IsaacLab 发行包元数据版本为 `0.54.2`，不能直接据此判定镜像不符 2.3.2 发布版本。
-- 内网代理仅用于本机 Git/CLI；云端安装源由 worker 自己探测。入口优先探测国内镜像，再回退 PyPI，避免索引可达但其文件 CDN 持续超时。
+- 内网代理仅用于本机 Git；云端安装源由 worker 自己探测。2026-10-29 起，入口对清华、阿里云和 PyPI 探测索引及同一 Linux/Python 3.11 wheel 的前至多 1 MiB，选择实测吞吐较高的可达源；失败的测速不影响其他源，全部测速失败时回退第一个可达源。测速不安装所用 wheel，也不能保证后续所有大包速度，需检查实际安装日志。Flux CLI 在本次网络环境可直连，不继承过期代理。
 
 不要在已有匹配镜像中默认执行完整 `setup_isaacsim.sh`：它可能另建 Conda 环境、重复下载运行时，并使训练进程脱离 SDK 所在环境。`setup_isaacsim_delta.sh` 也有运行时路径和 Conda 布局前提，不能只凭镜像名称就直接套用。
 
@@ -98,10 +98,10 @@ holosama/src/holosoma/holosoma/train_agent.py
 训练前按 [git-mirror.md](git-mirror.md) 核对 `origin` 上的 commit；Git 操作可使用本会话用户指定的单次代理：
 
 ```powershell
-git -c http.proxy=http://10.12.202.95:1080 ls-remote origin refs/heads/main
+git -c http.proxy=socks5h://10.12.201.122:39009 ls-remote origin refs/heads/main
 ```
 
-该代理地址是用户于 2026-10-28 指定的本地网络配置；不要把本机或内网代理写入云端任务当成可访问的代理。
+该代理地址是用户于 2026-10-29 指定的本地网络配置，本次 HTTP CONNECT 失败、同地址 SOCKS5 可用。它不是技能通用默认值；不要把本机或内网代理写入云端任务。
 
 Holosoma 使用 Tyro/dataclass 组合配置：
 

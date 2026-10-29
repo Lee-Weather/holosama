@@ -14,6 +14,8 @@
 
 ## 训练
 
+纯训练安装使用 `python -m pip install -e ./src/holosoma`。交互式分析工具 Open3D、Notebook 已拆为可选依赖：需要时使用 `python -m pip install -e './src/holosoma[analysis]'`；静态检查工具和类型 stub 使用 `[dev]`。无界面云端训练不安装这些 extras，避免冷启动下载大型工具包。IsaacSim 环境仍需遵守 `scripts/isaacsim_constraints.txt`；Flux 安装入口使用包含该文件的 `scripts/flux_smoke_constraints.txt`。
+
 所有训练和评估脚本均支持通过 `--help` 查看可用参数，例如 `python src/holosoma/holosoma/train_agent.py --help`。
 
 > **提示：** 使用 `logger:wandb` 时，默认启用视频录制。在无显示界面的服务器上，可能需要关闭视频录制或配置渲染环境。详见下文的[视频录制](#video-recording)。

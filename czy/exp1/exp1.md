@@ -8,6 +8,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | [exp0](#实验-exp0flux-isaaclab-上的-g1-ppo-流程验证) | 2026-10-28 | 修复安装源与版本回溯，完成 128 环境 × 2 次 PPO 迭代；checkpoint 上传/下载及云端 ONNX 校验通过 | 已测试 | `TASK_20261028_224`（含两次失败尝试，见 §7） | `limxmts0elyormeym6@uberip.com` | [model_00001.pt](../data/exp0/model_00001.pt) |
 | [exp_1](#实验-exp_1g1-平地-ppo-正式训练) | 2026-10-28 | 安装阶段下载 Open3D 时超过 900 秒，未进入 GPU 训练；2026-10-29 完成终止诊断 | 失败 | `TASK_20261028_251` | `limxmts0elyormeym6@uberip.com` | 无；未开始训练 |
+| [exp_1.1](#实验-exp_11精简依赖并重试正式训练) | 2026-10-29 | 将分析/开发工具改为可选依赖，按文件吞吐选择源；保留 2048 环境 × 5000 轮 | 待训练 | 待创建 | `limxmts0elyormeym6@uberip.com` | 待生成 |
 
 ## 实验 exp0：Flux IsaacLab 上的 G1 PPO 流程验证
 
@@ -291,3 +292,65 @@ exp0 已在同账号的 `TASK_20261028_224` 正常完成，128 环境、2 次迭
 开训记录：`TASK_20261028_251`，2026-10-28 18:32:09 开始，所属用户 `4390`，平台状态 3。云端 `FLUX_TRAIN_PLAN` 已确认实际 Git SHA 为 `853ef2a29e164281d5f4422924e0fae11241721e`，2048 环境、5000 次迭代、保存间隔 100、训练超时 21600 秒。计划及身份/资源见 [launch_plan.json](artifacts/exp_1/launch_plan.json)。
 
 18:32:21 启动 bootstrap，选中清华源，开始安装。原始运行项目名为 `flux-exp_1-20261028_103221`。6 小时时限从训练子进程启动时计算，安装另有 900 秒上限。正式入口和 bootstrap 的 8 项 CPU 测试及 Ruff 检查通过；这些本地测试不验证云端下载带宽或真实训练容量。
+
+## 实验 exp_1.1：精简依赖并重试正式训练
+
+### 1. 上一实验结果与教训
+
+exp_1 的 `TASK_20261028_251` 运行 915 秒，在 pip 安装阶段触发 900 秒超时。最后下载项 Open3D 400.8 MB，相邻 ONNX Runtime 下载为 250.4 kB/s；完成训练迭代 0，模型数 0，指标 keys 为空。索引可达不能替代文件下载速度验证，无界面训练也不应默认下载大型交互分析工具。
+
+### 2. 本轮修改目标
+
+- 用户已同意公开推送 exp_1 诊断，修复后重训，Git 代理改为 `10.12.201.122:39009`。
+- 在完整运行时依赖解析下去除纯训练不需要的 Open3D/Jupyter/mypy 下载，按小段实际文件吞吐选择源。
+- 保留 exp_1 的 PPO、奖励、2048 环境、5000 次迭代、seed=1 和每 100 轮保存设置，验证正式训练实际推进。
+
+### 3. 修改内容
+
+### 修改三：将分析与开发工具改为可选依赖（继承 exp_1 修改编号）
+
+| 项目 | 旧值 | 新值 | 依据 |
+| --- | --- | --- | --- |
+| Open3D / Notebook | 默认强制安装 | `[analysis]` extras | 静态检索训练源码未找到对应 import；这是前次大型下载来源 |
+| mypy / 类型 stub | 默认强制安装 | `[dev]` extras | 静态检查不属于 GPU 训练运行时 |
+| 运行时依赖检查 | 完整 pip 解析 | 仍完整解析，无 `--no-deps` | 本地 Linux/Python 3.11 完整解析后确认四个工具包未重新引入 |
+| 原工具安装方式 | 训练安装时捆绑 | 显式 `-e './src/holosoma[analysis,dev]'` | 保留分析和开发工具的可用性 |
+
+### 修改四：测速选择包源并支持子实验编号
+
+清华、阿里云、PyPI 分别探测索引和同一个公开 wheel 的前至多 1 MiB，比较吞吐后选择可达源。仅采样下载，不安装测速 wheel；单请求设置超时，全测速不可用时保留可达源回退。修复备用源使用相对链接时的解析，测试验证采样字节上限。正式入口允许 `exp_1.1` 这样的安全分段编号，仍拒绝 `../exp_1` 等路径。
+
+### 4. 修改文件
+
+- [训练包依赖声明](../../src/holosoma/pyproject.toml)、[安装说明](../../src/holosoma/README.md)：可选 extras。
+- [Flux bootstrap](../../scripts/train_flux_smoke.py)：文件测速及源选择；安装/训练时限不变。
+- [正式入口](../../scripts/train_flux.py)：支持点分子实验编号。
+- [bootstrap 测试](../../tests/test_flux_smoke.py)、[正式入口测试](../../tests/test_flux_training.py)：测速选择、采样上限、编号和失败边界。
+- [依赖约束](../../scripts/flux_smoke_constraints.txt)、Flux skill 和本笔记：保留原 IsaacSim 合同并记录实测范围。
+
+### 5. 训练参数
+
+| 参数 | 值 |
+| --- | --- |
+| 编号 / 训练方式 | `exp_1.1` / 从零；上次没有可续训模型 |
+| 账号 / 用户 ID / 项目 | `limxmts0elyormeym6@uberip.com` / `4390` / `PRO_20261028_008` |
+| 预设 / 仿真 / 地形 | `exp:g1-29dof` / `simulator:isaacsim` / `terrain:terrain-locomotion-plane` |
+| 环境 / 迭代 / 保存 / seed | 2048 / 5000 / 100 / 1 |
+| actor / critic 学习率 | 初始均 `1e-5`，adaptive；其余 PPO、奖励、机器人参数继承 exp_1 |
+| 镜像 / GPU | `BJX00000178`，`V000420` / `ESKU000001`，1×4090D 24G |
+| 安装 / 训练时限 | 900 秒 / 21600 秒；无自动重试 |
+| 启动命令 | `gm-run holosama/scripts/train_flux.py --experiment exp_1.1 --num-envs 2048 --iterations 5000 --save-interval 100 --training-timeout 21600` |
+| 代码 / 日志 | GitHub `main`，启动前核对 commit；TensorBoard 开启，Wandb/视频关闭 |
+
+### 6. 预期与验收
+
+| 指标 | exp_1 | 本轮目标 | 异常信号 |
+| --- | --- | --- | --- |
+| 安装 | Open3D 下载超时 | 900 秒内完成，默认无 Open3D/Notebook/mypy | 仍下载这些工具或超时 |
+| GPU / 首轮训练 | 未进入 | 2048 环境完成实际 PPO 迭代，上传 checkpoint | OOM、资产/扩展异常、NaN/Inf |
+| 完整训练 | 0/5000 | 5000 轮，最终 `model_04999.pt` 可加载且 ONNX 验收通过 | 提前终止、权重非有限或产物缺失 |
+| 策略质量 | 无数据 | 沿用 exp_1 末段 episode 长度与奖励目标，待训练完成后判断 | 不以成功启动代替收敛 |
+
+### 7. 实验结果
+
+待训练完成后补充。开训前已完成纯运行时依赖的 Linux/Python 3.11 解析：未包含 Open3D、Notebook、JupyterLab、mypy。后续追加新任务 ID、实际 commit、安装结果和初始训练指标。

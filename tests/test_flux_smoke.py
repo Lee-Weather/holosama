@@ -31,7 +31,51 @@ def test_index_selection_falls_back_after_dns_failure(monkeypatch):
         return nullcontext(SimpleNamespace(status=200))
 
     monkeypatch.setattr(smoke.urllib.request, "urlopen", open_index)
+    monkeypatch.setattr(smoke, "_index_download_speed", lambda _index: 0.0)
     assert smoke.select_package_index() == "https://mirrors.aliyun.com/pypi/simple"
+
+
+def test_reachable_slow_index_does_not_hide_faster_artifact_source(monkeypatch):
+    monkeypatch.setattr(smoke, "_index_reachable", lambda _index: True)
+    rates = [250_000, 8_000_000, 1_000_000]
+    monkeypatch.setattr(smoke, "_index_download_speed", lambda _index: rates.pop(0))
+    assert smoke.select_package_index() == "https://mirrors.aliyun.com/pypi/simple"
+
+
+def test_failed_speed_probes_keep_reachable_index(monkeypatch):
+    monkeypatch.setattr(smoke, "_index_reachable", lambda _index: True)
+    monkeypatch.setattr(smoke, "_index_download_speed", lambda _index: 0.0)
+    assert smoke.select_package_index() == "https://pypi.tuna.tsinghua.edu.cn/simple"
+
+
+def test_speed_probe_is_bounded_and_does_not_download_entire_wheel(monkeypatch):
+    class Wheel:
+        def __init__(self):
+            self.bytes_read = 0
+
+        def read(self, size):
+            self.bytes_read += size
+            return b"x" * size
+
+    wheel = Wheel()
+    index_html = SimpleNamespace(
+        read=lambda _size: (
+            b'<a href="../../packages/'
+            b'onnxruntime-1.20.1-cp311-cp311-manylinux_2_27_x86_64.whl">wheel</a>'
+        )
+    )
+    responses = [index_html, wheel]
+    requests = []
+
+    def open_response(url, **_kwargs):
+        requests.append(url)
+        return nullcontext(responses.pop(0))
+
+    monkeypatch.setattr(smoke.urllib.request, "urlopen", open_response)
+    monkeypatch.setattr(smoke.time, "monotonic", lambda: 0.0)
+    assert smoke._index_download_speed("https://mirrors.aliyun.com/pypi/simple") > 0
+    assert wheel.bytes_read == 1024 * 1024
+    assert requests[1].full_url.startswith("https://mirrors.aliyun.com/pypi/packages/onnxruntime-")
 
 
 def test_unreachable_indexes_abort_installation(monkeypatch):
