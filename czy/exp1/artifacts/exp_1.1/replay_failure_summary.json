@@ -1,0 +1,16 @@
+{
+  "task": "TASK_20261029_249",
+  "status": 6,
+  "end_time_beijing": "2026-10-29 17:12:08",
+  "runtime_seconds": 1467,
+  "reason": "IsaacSim video cleanup failed on HydraTexture; application remained open until the replay subprocess timeout",
+  "final_merged_video_verified": false,
+  "error_lines": [
+    "RuntimeError: IsaacSim video recorder cleanup failed: AttributeError(\"'HydraTexture' object has no attribute 'split'\")",
+    "holosoma.simulator.base_simulator.hooks.HookCloseError: 1 close hook(s) failed: video.cleanup: RuntimeError('IsaacSim video recorder cleanup failed: AttributeError(\"\\'HydraTexture\\' object has no attribute \\'split\\'\")')",
+    "RuntimeError: IsaacSim video recorder cleanup failed: AttributeError(\"'HydraTexture' object has no attribute 'split'\")",
+    "holosoma.simulator.base_simulator.hooks.HookCloseError: 1 close hook(s) failed: video.cleanup: RuntimeError('IsaacSim video recorder cleanup failed: AttributeError(\"\\'HydraTexture\\' object has no attribute \\'split\\'\")')",
+    "    raise TimeoutExpired(self.args, timeout)",
+    "subprocess.TimeoutExpired: Command '['/workspace/isaaclab/_isaac_sim/kit/python/bin/python3', '/workspace/isaaclab/holosama/scripts/replay_flux.py', '--worker-plan', '/workspace/isaaclab/logs/flux-exp_1.1-replay-20261029_084753/replay_plan.json']' timed out after 1199.9999891743064 seconds"
+  ]
+}

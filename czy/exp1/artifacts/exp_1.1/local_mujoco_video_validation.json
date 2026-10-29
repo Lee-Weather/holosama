@@ -1,0 +1,26 @@
+{
+  "frames": 900,
+  "fps": 30.0,
+  "duration_s": 30.0,
+  "width": 1280,
+  "height": 720,
+  "max_sample_contrast": 28.77925682067871,
+  "max_sample_frame_difference": 15.894514083862305,
+  "bytes": 8750958,
+  "sha256": "a7c9c90d58728f3d991edf24b58eefc95bc30606695012c3d2c57ed5a6422159",
+  "source_checkpoint": "model_04999.pt",
+  "source_task": "TASK_20261029_112",
+  "simulator": "MuJoCo 3.15.0",
+  "command": [
+    0.3,
+    0,
+    0
+  ],
+  "episode_timeout_s": 20,
+  "manually_reviewed_frame_seconds": [
+    1,
+    5,
+    10,
+    25
+  ]
+}

@@ -171,3 +171,13 @@ Holosoma 默认写入 `logs/<project>/<timestamp>-<name>-<task>/`，包含 Tenso
 回放继承原生评估配置，显式将单回合 timeout 设为 60 秒以容纳连续 30 秒录像，跌倒等终止条件仍生效。这是录像配置，不能把视频长度当作训练 20 秒上限下的存活指标。每回合片段在资源关闭时写完，再按生成顺序拼接为 H.264/yuv420p、faststart 的 `logs/<replay-project>/play_output.mp4`。完整解码验证尺寸、时长、非空画面及帧间变化后，打印 `FLUX_REPLAY_SUCCESS` 并等待 60 秒上传。
 
 此入口本地校验通过不代表云端录像已验证。后续须检查日志、`task model list` 中的视频上传项，从 `videoUrlDown` 下载至 `czy/data/exp_1.1/play_output.mp4`，重新解码并人工查看代表帧；记录实际任务 ID、commit、视频大小/时长/哈希到 exp_1.1 §7。若源训练失败，不启动回放或自动重训；若回放失败，先定位错误，避免反复创建任务。
+
+2026-10-29 实测补充：`TASK_20261029_249` 在保存回放片段后，录像 cleanup 因 `HydraTexture has no attribute split` 失败，应用未关闭，最终触发 1200 秒子进程超时；17:12:08 进入状态 6。未取得完整合并视频，不能称为云端录像跑通。已在本机 MuJoCo 保存独立行走录像。该故障发生在启用 RTX 视频的清理路径，训练阶段保持 `logger.video.enabled=False`。
+
+## 搬箱子任务与行走任务的区分
+
+用户于 2026-10-29 明确将训练目标切换为搬箱子，记为 `exp_2`。必须使用 `exp:g1-29dof-wbt-w-object`：机器人 `main_mesh_collision_halfspherehand.urdf`，场景 `rigid_objects.object` 为自由的 `large_box.urdf`，motion 为 `sub3_largebox_003_mj_w_obj.npz`，reward 同时包含 `object_global_ref_position_error_exp` 和 `object_global_ref_orientation_error_exp`。仅 `g1-29dof` 是行走，`g1-29dof-wbt` 是不带箱体的机器人动作跟踪；参考动作回放也不是策略训练，三者不能冒充搬箱子。
+
+新增入口 `gm-run holosama/scripts/train_flux_box.py --experiment exp_2`：复用 bootstrap，安装后在新解释器核对完整任务配置、motion 哈希/维度/有限性和资产；运行 128 环境 × 2 轮并校验带物体 checkpoint、ONNX、TensorBoard，通过后在同一 worker 启动 1024 环境 × 8000 轮 PPO 首阶段，每 200 轮保存。安装和 smoke 分别上限 900 秒，正式阶段 21600 秒；失败不重试、不退回行走、不加载行走 checkpoint。
+
+首阶段迭代预算小于原生 WBT 的 30000 轮默认值，不能预先宣称收敛。保留原生奖励、`1e-3` 初始学习率、经验观测归一化、动态箱体随机化和力矩/PD 相关参数。此任务是固定参考片段的轻箱搬运跟踪，不等于自由规划搬运或重箱负载能力。训练后按箱体轨迹、抬升、脱手/跌落及完整片段回放验收，不能套用行走存活时长标准。

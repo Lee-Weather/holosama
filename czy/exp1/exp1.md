@@ -8,7 +8,8 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | [exp0](#实验-exp0flux-isaaclab-上的-g1-ppo-流程验证) | 2026-10-28 | 修复安装源与版本回溯，完成 128 环境 × 2 次 PPO 迭代；checkpoint 上传/下载及云端 ONNX 校验通过 | 已测试 | `TASK_20261028_224`（含两次失败尝试，见 §7） | `limxmts0elyormeym6@uberip.com` | [model_00001.pt](../data/exp0/model_00001.pt) |
 | [exp_1](#实验-exp_1g1-平地-ppo-正式训练) | 2026-10-28 | 安装阶段下载 Open3D 时超过 900 秒，未进入 GPU 训练；2026-10-29 完成终止诊断 | 失败 | `TASK_20261028_251` | `limxmts0elyormeym6@uberip.com` | 无；未开始训练 |
-| [exp_1.1](#实验-exp_11精简依赖并重试正式训练) | 2026-10-29 | 完成 5000 轮；末段 100 轮 episode 均值 887.93 steps，最终模型与 ONNX 校验通过；回放录像进行中 | 已测试 | `TASK_20261029_112`；回放 `TASK_20261029_249` | `limxmts0elyormeym6@uberip.com` | [model_04999.pt](../data/exp_1.1/model_04999.pt) |
+| [exp_1.1](#实验-exp_11精简依赖并重试正式训练) | 2026-10-29 | 完成 5000 轮；末段 episode 均值 887.93 steps；本机 MuJoCo 录像完成，云端录像清理失败 | 已测试 | `TASK_20261029_112`；回放 `TASK_20261029_249` | `limxmts0elyormeym6@uberip.com` | [model_04999.pt](../data/exp_1.1/model_04999.pt) |
+| [exp_2](#实验-exp_2g1-带箱体的搬运跟踪训练) | 2026-10-29 | 切换真实箱体交互 WBT；先 128 环境 × 2 轮验证，再 1024 环境 × 8000 轮首阶段训练 | 待训练 | 待创建 | `limxmts0elyormeym6@uberip.com` | 待训练；预计 `model_07999.pt` |
 
 ## 实验 exp0：Flux IsaacLab 上的 G1 PPO 流程验证
 
@@ -422,3 +423,82 @@ exp_1 的 `TASK_20261028_251` 运行 915 秒，在 pip 安装阶段触发 900 �
 #### 回放任务启动
 
 指定账号用户 `4390` 下已创建并启动唯一回放任务 `TASK_20261029_249`，使用入口 commit `ab53ac3832d4096d17ca217dbabb91b707689521`、同一 IsaacLab 镜像/单 GPU，源模型 SHA-256 如上。16:48 检查为状态 3，正在安装运行时依赖；此时尚未产生经验证的视频。后续继续核查原生评估、编码、平台 MP4 上传和本地解码，不以任务启动作为录像成功。
+
+#### 回放收尾与任务澄清
+
+云端回放 `TASK_20261029_249` 于 17:12:08 以状态 6 结束，运行 1467 秒。完整日志显示完成片段保存后，在 IsaacSim 录像资源清理时出现 `HydraTexture has no attribute split`，应用未正常关闭，最终达到 1200 秒回放子进程上限；未形成经验证的合并 `play_output.mp4`，不自动重试。摘要证据见 [replay_failure_summary.json](artifacts/exp_1.1/replay_failure_summary.json)。
+
+本机使用最终 checkpoint 完成 MuJoCo 策略闭环及 30 秒录像（[play_mujoco.mp4](../data/exp_1.1/play_mujoco.mp4)）；另一次固定前进命令 0.3 m/s、30 秒无渲染验证未触发本地跌倒检测，1500 控制步状态有限，20 秒时按本地回合时限重置。此判据不是 IsaacSim 的接触终止统计，不能称为不间断站立 30 秒。记录见 [local_mujoco_simulation.json](artifacts/exp_1.1/local_mujoco_simulation.json)。本机版本 MuJoCo 3.15.0，与项目 setup 的 3.10.0 不同；只记录本机实测范围。
+
+用户明确不需要不同输入的误差对比，已移除本地导出入口中的随机输入误差对比。用户同时确认目标应为搬箱子：exp_1.1 实际是平地行走，其模型不具备箱体交互训练目标。保留该历史结果，搬箱子切换任务并新建 exp_2。
+
+## 实验 exp_2：G1 带箱体的搬运跟踪训练
+
+### 1. 上一实验结果与教训
+
+exp_1.1 已完成 2048 环境、5000 轮平地 PPO，末段 100 轮 reward 均值 15.073078、episode 长度均值 887.925098 steps（17.7585 秒），最终模型与 ONNX 验收通过。但它使用行走速度指令，没有箱体和搬运奖励，不能作为搬箱子策略。云端录像清理异常与本机行走回放均不改变这个任务范围。
+
+**核心教训：先核对任务目标、场景对象、动作数据和奖励项，不能以行走流程跑通替代搬箱子训练。**
+
+### 2. 本轮修改目标
+
+- 使用 `exp:g1-29dof-wbt-w-object`，训练 G1 跟踪仓库中的抬箱/搬运参考动作，同时驱动物理箱体。
+- 开训前验证 NPZ 中机器人与箱体轨迹、关节名、哈希，以及自由箱体、手部碰撞 URDF 和箱体奖励。
+- 首阶段为 1024 环境、8000 轮 PPO；保持原生 WBT 奖励和优化参数。8000 轮是首阶段训练预算，原预设完整默认为 30000 轮，不能预先宣称策略收敛。
+- 验收分开判定：先确认有箱体的 GPU 训练实际推进、checkpoint/ONNX 可用；训练后再评估完整搬运片段中的箱体跟踪误差、抬升和跌落，不能只看行走 episode 长度。
+
+### 3. 修改内容
+
+### 修改一：将任务由平地行走切换到带物体 WBT
+
+| 项目 | exp_1.1 | exp_2 |
+| --- | --- | --- |
+| 预设 / 环境 | `g1-29dof` / locomotion | `g1-29dof-wbt-w-object` / WholeBodyTrackingManager |
+| 指令 | 随机线速度/角速度 | `sub3_largebox_003_mj_w_obj.npz` 的机器人与箱体参考轨迹 |
+| 场景 | 机器人、平地 | 机器人、平地及 `object` 自由箱体 |
+| 手部碰撞资产 | `g1_29dof.urdf` | `main_mesh_collision_halfspherehand.urdf` |
+| 箱体奖励 | 无 | 位置/姿态跟踪指数奖励，原生权重各 1.0 |
+| 初始化 | 从零 | 从零；不续训行走 checkpoint |
+
+### 修改二：为箱体任务添加独立启动与验收入口
+
+新增 `scripts/train_flux_box.py`，复用已验证的 Flux 依赖 bootstrap。云端安装后先检查任务配置和 motion 哈希，再运行 128 环境 × 2 轮；仅在箱体 checkpoint 配置、有限权重/归一化统计、ONNX 和 TensorBoard 验收通过后，自动进入正式阶段。任一阶段失败立即退出，不自动重试，也不静默退回行走任务。
+
+### 4. 修改文件
+
+- [train_flux_box.py](../../scripts/train_flux_box.py)：固定带箱体 WBT 预设，数据/任务检查、分阶段训练及成功验收。
+- [test_flux_box.py](../../tests/test_flux_box.py)：防止误用机器人单体动作或行走预设，验证 smoke 失败阻断正式训练。
+- [Flux 参考文档](../skills/flux-cli/references/holosoma-isaaclab.md) 和本笔记：记录任务边界与实际验证范围。
+
+### 5. 训练参数
+
+| 参数 | 值 |
+| --- | --- |
+| 账号 / 用户 / 项目 | `limxmts0elyormeym6@uberip.com` / `4390` / `PRO_20261028_008` |
+| 镜像 / 资源 | `BJX00000178` / `V000420`；`ESKU000001`，1×4090D 24G |
+| 预设 / 算法 / seed | `exp:g1-29dof-wbt-w-object` / PPO / 1 |
+| 小规模门槛 | 128 环境，2 轮，每轮保存；不作为策略质量验收 |
+| 正式环境 / 轮数 / 保存 | 1024 / 8000 / 每 200 轮，最终 `model_07999.pt` |
+| 参考动作 | 325 帧、50 Hz，名义 6.5 秒；箱体参考高度范围 0.1831–0.8449 m |
+| motion SHA-256 | `76077a5035726aabe25b084de5414f3113646c43ac1bfa6ccc0742e46b1a4cea` |
+| actor / critic 学习率 | 原生 WBT 初始均 `1e-3`，adaptive；启用经验观测归一化、关闭 symmetry |
+| 物理 / 控制 / 单回合上限 | 200 Hz / 50 Hz / 原生 WBT 10 秒；参考动作结束及跟踪失败可提前终止 |
+| 动作缩放 | `0.25 × effort_limit / kp`；启用自碰撞和手部交互模型 |
+| 箱体 | `large_box.urdf`，自由刚体；沿用仓库轻箱资产与原生质量/摩擦/惯量随机化，不宣称重箱负载能力 |
+| 安装 / smoke / 正式时限 | 900 / 900 / 21600 秒，失败不自动重试 |
+| 记录 / 录像 | TensorBoard 开启，Wandb/训练视频关闭；视频评估放到训练后 |
+| 启动命令 | `gm-run holosama/scripts/train_flux_box.py --experiment exp_2 --num-envs 1024 --iterations 8000 --save-interval 200 --training-timeout 21600` |
+
+### 6. 预期与验收
+
+| 指标 | 本轮目标 / 判定方式 |
+| --- | --- |
+| 任务身份 | 实际 checkpoint 有箱体 scene、带物体 motion、手部碰撞 URDF、箱体位置/姿态奖励 |
+| 初期启动 | 有箱体的 GPU 仿真完成 128 环境 smoke，随后 1024 环境持续迭代，无 OOM / 非有限状态 |
+| 首阶段完成 | 8000 轮，最终 iter=7999，actor/critic/观测归一化状态有限，ONNX 输出 29 个有限动作 |
+| 箱体跟踪 | 记录 object position/orientation reward 及真实位置误差；不套用行走 reward 阈值 |
+| 搬运质量 | 训练后独立回放完整参考片段，报告箱体是否抬起、是否脱手/跌落、轨迹误差；完成训练不等于通过此项 |
+
+### 7. 实验结果
+
+待创建训练任务。开训前已核实仓库确有带物体的 WBT 预设、自由箱体场景和 325 帧/29 关节的 motion 数据，全部数值数组有限；启动入口与相关 CPU 检查 15 项通过。本地在隔离环境实际解析与云端相同的 CLI，确认箱体 fixed=False、1024 环境、8000 轮、经验归一化开启、录像关闭，并执行 motion/资产预检查：[计划配置](artifacts/exp_2/planned_config.json)、[本地预检查](artifacts/exp_2/box_preflight.json)。云端 box preflight、GPU smoke 和正式迭代尚待实际运行，不能以本地配置检查替代云端验证。
