@@ -1,0 +1,48 @@
+{
+  "taskId": "TASK_20261030_051",
+  "taskStatus": "5",
+  "userId": "4391",
+  "startTime": "2026-10-30 09:10:14",
+  "endTime": "2026-10-30 09:14:05",
+  "runtime": "231",
+  "plan_seen": true,
+  "gpu_evaluation_started": true,
+  "successful_exit_marker": true,
+  "episode_records_in_excerpt": 128,
+  "traceback_in_excerpt": false,
+  "last_relevant_lines": [
+    "NATIVE_BOX_EPISODE {\"env_id\": 17, \"episode_index\": 4, \"duration_s\": 2.84, \"motion_frame_at_termination\": 142, \"first_clip_completed\": false, \"termination_reasons\": [\"bad_object_pos\"], \"object_position_error_m\": 0.2506069839000702, \"object_orientation_error_rad\": 0.2232101559638977}",
+    "NATIVE_BOX_EPISODE {\"env_id\": 25, \"episode_index\": 3, \"duration_s\": 0.28, \"motion_frame_at_termination\": 14, \"first_clip_completed\": false, \"termination_reasons\": [\"bad_motion_body_pos\", \"body_height:right_wrist_yaw_link\"], \"object_position_error_m\": 0.08436312526464462, \"object_orientation_error_rad\": 0.3949638307094574}",
+    "NATIVE_BOX_EPISODE {\"env_id\": 13, \"episode_index\": 2, \"duration_s\": 0.46, \"motion_frame_at_termination\": 23, \"first_clip_completed\": false, \"termination_reasons\": [\"bad_object_pos\"], \"object_position_error_m\": 0.2503219246864319, \"object_orientation_error_rad\": 0.5796518921852112}",
+    "NATIVE_BOX_EPISODE {\"env_id\": 13, \"episode_index\": 3, \"duration_s\": 0.3, \"motion_frame_at_termination\": 15, \"first_clip_completed\": false, \"termination_reasons\": [\"bad_motion_body_pos\", \"body_height:right_wrist_yaw_link\"], \"object_position_error_m\": 0.04266282916069031, \"object_orientation_error_rad\": 0.03562547639012337}",
+    "NATIVE_BOX_EPISODE {\"env_id\": 25, \"episode_index\": 4, \"duration_s\": 1.48, \"motion_frame_at_termination\": 74, \"first_clip_completed\": false, \"termination_reasons\": [\"bad_object_ori\"], \"object_position_error_m\": 0.20600281655788422, \"object_orientation_error_rad\": 0.8767273426055908}",
+    "NATIVE_BOX_EPISODE {\"env_id\": 13, \"episode_index\": 4, \"duration_s\": 1.44, \"motion_frame_at_termination\": 72, \"first_clip_completed\": false, \"termination_reasons\": [\"bad_object_ori\"], \"object_position_error_m\": 0.24097031354904175, \"object_orientation_error_rad\": 0.805690348148346}",
+    "NATIVE_BOX_EVAL_RESULT {\"completed_episodes\": 128, \"first_clip_completed_episodes\": 2, \"first_clip_success_rate\": 0.015625, \"mean_episode_seconds\": 0.88625, \"min_episode_seconds\": 0.12, \"max_episode_seconds\": 7.04, \"termination_counts_overlapping\": {\"bad_object_pos\": 56, \"bad_object_ori\": 35, \"bad_motion_body_pos\": 36, \"body_height:left_ankle_roll_link\": 5, \"body_height:right_wrist_yaw_link\": 16, \"body_height:left_wrist_yaw_link\": 15, \"bad_ref_ori\": 2, \"body_height:right_ankle_roll_link\": 1}, \"control_steps\": 462, \"active_state_samples\": 5672, \"object_position_rmse_before_reset_m\": 0.12068389998605612, \"object_mean_orientation_error_before_reset_rad\": 0.21722925139777624, \"box_max_center_height_m\": 0.8485284447669983, \"robot_min_root_height_m\": 0.12402898818254471}",
+    "FLUX_NATIVE_BOX_EVAL_SUCCESS {\"completed_episodes\": 128, \"first_clip_completed_episodes\": 2, \"first_clip_success_rate\": 0.015625, \"mean_episode_seconds\": 0.88625, \"min_episode_seconds\": 0.12, \"max_episode_seconds\": 7.04, \"termination_counts_overlapping\": {\"bad_object_pos\": 56, \"bad_object_ori\": 35, \"bad_motion_body_pos\": 36, \"body_height:left_ankle_roll_link\": 5, \"body_height:right_wrist_yaw_link\": 16, \"body_height:left_wrist_yaw_link\": 15, \"bad_ref_ori\": 2, \"body_height:right_ankle_roll_link\": 1}, \"control_steps\": 462, \"active_state_samples\": 5672, \"object_position_rmse_before_reset_m\": 0.12068389998605612, \"object_mean_orientation_error_before_reset_rad\": 0.21722925139777624, \"box_max_center_height_m\": 0.8485284447669983, \"robot_min_root_height_m\": 0.12402898818254471}"
+  ],
+  "evaluation_summary": {
+    "completed_episodes": 128,
+    "first_clip_completed_episodes": 2,
+    "first_clip_success_rate": 0.015625,
+    "mean_episode_seconds": 0.88625,
+    "min_episode_seconds": 0.12,
+    "max_episode_seconds": 7.04,
+    "termination_counts_overlapping": {
+      "bad_object_pos": 56,
+      "bad_object_ori": 35,
+      "bad_motion_body_pos": 36,
+      "body_height:left_ankle_roll_link": 5,
+      "body_height:right_wrist_yaw_link": 16,
+      "body_height:left_wrist_yaw_link": 15,
+      "bad_ref_ori": 2,
+      "body_height:right_ankle_roll_link": 1
+    },
+    "control_steps": 462,
+    "active_state_samples": 5672,
+    "object_position_rmse_before_reset_m": 0.12068389998605612,
+    "object_mean_orientation_error_before_reset_rad": 0.21722925139777624,
+    "box_max_center_height_m": 0.8485284447669983,
+    "robot_min_root_height_m": 0.12402898818254471
+  },
+  "verified": true
+}

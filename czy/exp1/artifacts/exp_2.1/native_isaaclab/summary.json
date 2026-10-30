@@ -1,0 +1,24 @@
+{
+  "completed_episodes": 128,
+  "first_clip_completed_episodes": 2,
+  "first_clip_success_rate": 0.015625,
+  "mean_episode_seconds": 0.88625,
+  "min_episode_seconds": 0.12,
+  "max_episode_seconds": 7.04,
+  "termination_counts_overlapping": {
+    "bad_object_pos": 56,
+    "bad_object_ori": 35,
+    "bad_motion_body_pos": 36,
+    "body_height:left_ankle_roll_link": 5,
+    "body_height:right_wrist_yaw_link": 16,
+    "body_height:left_wrist_yaw_link": 15,
+    "bad_ref_ori": 2,
+    "body_height:right_ankle_roll_link": 1
+  },
+  "control_steps": 462,
+  "active_state_samples": 5672,
+  "object_position_rmse_before_reset_m": 0.12068389998605612,
+  "object_mean_orientation_error_before_reset_rad": 0.21722925139777624,
+  "box_max_center_height_m": 0.8485284447669983,
+  "robot_min_root_height_m": 0.12402898818254471
+}

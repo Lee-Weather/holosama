@@ -99,8 +99,14 @@
   "independent_replay_performed": true,
   "independent_replay_backend": "MuJoCo 3.15.0",
   "independent_replay_carry_passed": false,
-  "native_isaaclab_final_replay_verified": false,
+  "native_isaaclab_final_replay_verified": true,
   "replay_evidence": "local_box_velocity_fixed.json",
   "initial_replay_velocity_bug_corrected": true,
-  "robot_only_replay_evidence": "local_robot_only_velocity_fixed.json"
+  "robot_only_replay_evidence": "local_robot_only_velocity_fixed.json",
+  "native_isaaclab_evaluation_task": "TASK_20261030_051",
+  "native_isaaclab_evaluation_account": "limxmts0f9p800yu7g@uberip.com",
+  "native_isaaclab_evaluation_user_id": 4391,
+  "native_first_clip_success_rate": 0.015625,
+  "native_quality_passed": false,
+  "native_evaluation_evidence": "native_isaaclab/final_validation.json"
 }

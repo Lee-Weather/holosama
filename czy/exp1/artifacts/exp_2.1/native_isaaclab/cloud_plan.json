@@ -1,0 +1,12 @@
+{
+  "commit": "cef2d3cbcc2127035f05567a7f199695740b68cf",
+  "checkpoint": "/workspace/isaaclab/holosama/czy/data/exp_2.1/model_07999.pt",
+  "checkpoint_sha256": "e2d120660bbc199d0dc03d0bce17a4989ef6117877c2f97f9da72d2c4dbc2c97",
+  "project": "flux-exp_2.1-native-eval-20261030_011112",
+  "result_dir": "/workspace/isaaclab/holosama/logs/flux-exp_2.1-native-eval-20261030_011112",
+  "num_envs": 32,
+  "episodes_per_env": 4,
+  "max_steps": 2500,
+  "install_timeout": 900,
+  "evaluation_timeout": 900
+}

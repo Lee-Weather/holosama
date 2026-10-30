@@ -1,0 +1,1576 @@
+[
+  {
+    "env_id": 9,
+    "episode_index": 1,
+    "duration_s": 0.12,
+    "motion_frame_at_termination": 6,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.3024277687072754,
+    "object_orientation_error_rad": 0.5637495517730713
+  },
+  {
+    "env_id": 30,
+    "episode_index": 1,
+    "duration_s": 0.16,
+    "motion_frame_at_termination": 8,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.2489209622144699,
+    "object_orientation_error_rad": 0.8655742406845093
+  },
+  {
+    "env_id": 1,
+    "episode_index": 1,
+    "duration_s": 0.2,
+    "motion_frame_at_termination": 10,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2680555284023285,
+    "object_orientation_error_rad": 0.72905033826828
+  },
+  {
+    "env_id": 3,
+    "episode_index": 1,
+    "duration_s": 0.2,
+    "motion_frame_at_termination": 10,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.26744064688682556,
+    "object_orientation_error_rad": 0.6299851536750793
+  },
+  {
+    "env_id": 5,
+    "episode_index": 1,
+    "duration_s": 0.22,
+    "motion_frame_at_termination": 11,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2513619363307953,
+    "object_orientation_error_rad": 0.5471338033676147
+  },
+  {
+    "env_id": 18,
+    "episode_index": 1,
+    "duration_s": 0.28,
+    "motion_frame_at_termination": 14,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2560771107673645,
+    "object_orientation_error_rad": 0.49184778332710266
+  },
+  {
+    "env_id": 20,
+    "episode_index": 1,
+    "duration_s": 0.28,
+    "motion_frame_at_termination": 14,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.2473316341638565,
+    "object_orientation_error_rad": 0.803083062171936
+  },
+  {
+    "env_id": 0,
+    "episode_index": 1,
+    "duration_s": 0.3,
+    "motion_frame_at_termination": 15,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_ankle_roll_link"
+    ],
+    "object_position_error_m": 0.20523229241371155,
+    "object_orientation_error_rad": 0.2695334255695343
+  },
+  {
+    "env_id": 16,
+    "episode_index": 1,
+    "duration_s": 0.3,
+    "motion_frame_at_termination": 15,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.1918790638446808,
+    "object_orientation_error_rad": 0.8046656847000122
+  },
+  {
+    "env_id": 6,
+    "episode_index": 1,
+    "duration_s": 0.38,
+    "motion_frame_at_termination": 19,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2582312524318695,
+    "object_orientation_error_rad": 0.4226299822330475
+  },
+  {
+    "env_id": 9,
+    "episode_index": 2,
+    "duration_s": 0.28,
+    "motion_frame_at_termination": 14,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.26280635595321655,
+    "object_orientation_error_rad": 0.5299882888793945
+  },
+  {
+    "env_id": 5,
+    "episode_index": 2,
+    "duration_s": 0.26,
+    "motion_frame_at_termination": 13,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25101104378700256,
+    "object_orientation_error_rad": 0.04145284369587898
+  },
+  {
+    "env_id": 23,
+    "episode_index": 1,
+    "duration_s": 0.48,
+    "motion_frame_at_termination": 24,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.232318714261055,
+    "object_orientation_error_rad": 0.8846909403800964
+  },
+  {
+    "env_id": 3,
+    "episode_index": 2,
+    "duration_s": 0.3,
+    "motion_frame_at_termination": 15,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.20655889809131622,
+    "object_orientation_error_rad": 0.6545539498329163
+  },
+  {
+    "env_id": 21,
+    "episode_index": 1,
+    "duration_s": 0.5,
+    "motion_frame_at_termination": 25,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25401487946510315,
+    "object_orientation_error_rad": 0.26318320631980896
+  },
+  {
+    "env_id": 24,
+    "episode_index": 1,
+    "duration_s": 0.5,
+    "motion_frame_at_termination": 25,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.08259396255016327,
+    "object_orientation_error_rad": 0.07499735057353973
+  },
+  {
+    "env_id": 29,
+    "episode_index": 1,
+    "duration_s": 0.5,
+    "motion_frame_at_termination": 25,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2523585557937622,
+    "object_orientation_error_rad": 0.1482728272676468
+  },
+  {
+    "env_id": 31,
+    "episode_index": 1,
+    "duration_s": 0.5,
+    "motion_frame_at_termination": 25,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.028721727430820465,
+    "object_orientation_error_rad": 0.11410563439130783
+  },
+  {
+    "env_id": 20,
+    "episode_index": 2,
+    "duration_s": 0.24,
+    "motion_frame_at_termination": 12,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2663053274154663,
+    "object_orientation_error_rad": 0.04053090885281563
+  },
+  {
+    "env_id": 6,
+    "episode_index": 2,
+    "duration_s": 0.16,
+    "motion_frame_at_termination": 8,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25756049156188965,
+    "object_orientation_error_rad": 0.7079352736473083
+  },
+  {
+    "env_id": 16,
+    "episode_index": 2,
+    "duration_s": 0.24,
+    "motion_frame_at_termination": 12,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2616075873374939,
+    "object_orientation_error_rad": 0.1749432533979416
+  },
+  {
+    "env_id": 19,
+    "episode_index": 1,
+    "duration_s": 0.54,
+    "motion_frame_at_termination": 27,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.07740355283021927,
+    "object_orientation_error_rad": 0.19517725706100464
+  },
+  {
+    "env_id": 4,
+    "episode_index": 1,
+    "duration_s": 0.56,
+    "motion_frame_at_termination": 28,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.12820783257484436,
+    "object_orientation_error_rad": 0.5476535558700562
+  },
+  {
+    "env_id": 10,
+    "episode_index": 1,
+    "duration_s": 0.56,
+    "motion_frame_at_termination": 28,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.10376368463039398,
+    "object_orientation_error_rad": 0.3152523338794708
+  },
+  {
+    "env_id": 26,
+    "episode_index": 1,
+    "duration_s": 0.56,
+    "motion_frame_at_termination": 28,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.09895209223031998,
+    "object_orientation_error_rad": 0.12263260781764984
+  },
+  {
+    "env_id": 1,
+    "episode_index": 2,
+    "duration_s": 0.4,
+    "motion_frame_at_termination": 20,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2516772449016571,
+    "object_orientation_error_rad": 0.062497708946466446
+  },
+  {
+    "env_id": 5,
+    "episode_index": 3,
+    "duration_s": 0.12,
+    "motion_frame_at_termination": 6,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.26678231358528137,
+    "object_orientation_error_rad": 0.4924905598163605
+  },
+  {
+    "env_id": 14,
+    "episode_index": 1,
+    "duration_s": 0.6,
+    "motion_frame_at_termination": 30,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.22957134246826172,
+    "object_orientation_error_rad": 0.810563325881958
+  },
+  {
+    "env_id": 28,
+    "episode_index": 1,
+    "duration_s": 0.6,
+    "motion_frame_at_termination": 30,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.18229825794696808,
+    "object_orientation_error_rad": 0.8541878461837769
+  },
+  {
+    "env_id": 15,
+    "episode_index": 1,
+    "duration_s": 0.68,
+    "motion_frame_at_termination": 34,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2579838037490845,
+    "object_orientation_error_rad": 0.20895817875862122
+  },
+  {
+    "env_id": 27,
+    "episode_index": 1,
+    "duration_s": 0.68,
+    "motion_frame_at_termination": 34,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2551218271255493,
+    "object_orientation_error_rad": 0.4428465962409973
+  },
+  {
+    "env_id": 29,
+    "episode_index": 2,
+    "duration_s": 0.22,
+    "motion_frame_at_termination": 11,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2528078258037567,
+    "object_orientation_error_rad": 0.6175881624221802
+  },
+  {
+    "env_id": 11,
+    "episode_index": 1,
+    "duration_s": 0.74,
+    "motion_frame_at_termination": 37,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25097593665122986,
+    "object_orientation_error_rad": 0.47822079062461853
+  },
+  {
+    "env_id": 20,
+    "episode_index": 3,
+    "duration_s": 0.22,
+    "motion_frame_at_termination": 11,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_ankle_roll_link"
+    ],
+    "object_position_error_m": 0.06596367806196213,
+    "object_orientation_error_rad": 0.03629655763506889
+  },
+  {
+    "env_id": 0,
+    "episode_index": 2,
+    "duration_s": 0.5,
+    "motion_frame_at_termination": 25,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.20961421728134155,
+    "object_orientation_error_rad": 0.561087965965271
+  },
+  {
+    "env_id": 8,
+    "episode_index": 1,
+    "duration_s": 0.88,
+    "motion_frame_at_termination": 44,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.18481341004371643,
+    "object_orientation_error_rad": 0.6383234262466431
+  },
+  {
+    "env_id": 18,
+    "episode_index": 2,
+    "duration_s": 0.62,
+    "motion_frame_at_termination": 31,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2522701025009155,
+    "object_orientation_error_rad": 0.4318269193172455
+  },
+  {
+    "env_id": 23,
+    "episode_index": 2,
+    "duration_s": 0.5,
+    "motion_frame_at_termination": 25,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.007536554243415594,
+    "object_orientation_error_rad": 0.06788825243711472
+  },
+  {
+    "env_id": 28,
+    "episode_index": 2,
+    "duration_s": 0.38,
+    "motion_frame_at_termination": 19,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.1359822154045105,
+    "object_orientation_error_rad": 0.30055922269821167
+  },
+  {
+    "env_id": 19,
+    "episode_index": 2,
+    "duration_s": 0.46,
+    "motion_frame_at_termination": 23,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2579921782016754,
+    "object_orientation_error_rad": 0.5081905126571655
+  },
+  {
+    "env_id": 3,
+    "episode_index": 3,
+    "duration_s": 0.56,
+    "motion_frame_at_termination": 28,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.11898673325777054,
+    "object_orientation_error_rad": 0.23336230218410492
+  },
+  {
+    "env_id": 26,
+    "episode_index": 2,
+    "duration_s": 0.5,
+    "motion_frame_at_termination": 25,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2512894570827484,
+    "object_orientation_error_rad": 0.06883475184440613
+  },
+  {
+    "env_id": 0,
+    "episode_index": 3,
+    "duration_s": 0.28,
+    "motion_frame_at_termination": 14,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.251219242811203,
+    "object_orientation_error_rad": 0.7129464149475098
+  },
+  {
+    "env_id": 14,
+    "episode_index": 2,
+    "duration_s": 0.56,
+    "motion_frame_at_termination": 28,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.055441420525312424,
+    "object_orientation_error_rad": 0.2431800663471222
+  },
+  {
+    "env_id": 29,
+    "episode_index": 3,
+    "duration_s": 0.44,
+    "motion_frame_at_termination": 22,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.24085018038749695,
+    "object_orientation_error_rad": 0.8070770502090454
+  },
+  {
+    "env_id": 23,
+    "episode_index": 3,
+    "duration_s": 0.2,
+    "motion_frame_at_termination": 10,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2518303394317627,
+    "object_orientation_error_rad": 0.3616617023944855
+  },
+  {
+    "env_id": 27,
+    "episode_index": 2,
+    "duration_s": 0.5,
+    "motion_frame_at_termination": 25,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.18226951360702515,
+    "object_orientation_error_rad": 0.8353272080421448
+  },
+  {
+    "env_id": 7,
+    "episode_index": 1,
+    "duration_s": 1.2,
+    "motion_frame_at_termination": 60,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_ref_ori"
+    ],
+    "object_position_error_m": 0.1761665940284729,
+    "object_orientation_error_rad": 0.41501301527023315
+  },
+  {
+    "env_id": 19,
+    "episode_index": 3,
+    "duration_s": 0.2,
+    "motion_frame_at_termination": 10,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25105422735214233,
+    "object_orientation_error_rad": 0.4351094663143158
+  },
+  {
+    "env_id": 11,
+    "episode_index": 2,
+    "duration_s": 0.5,
+    "motion_frame_at_termination": 25,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.14374589920043945,
+    "object_orientation_error_rad": 0.8407022356987
+  },
+  {
+    "env_id": 21,
+    "episode_index": 2,
+    "duration_s": 0.8,
+    "motion_frame_at_termination": 40,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.16333267092704773,
+    "object_orientation_error_rad": 0.8411960601806641
+  },
+  {
+    "env_id": 26,
+    "episode_index": 3,
+    "duration_s": 0.3,
+    "motion_frame_at_termination": 15,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.028011616319417953,
+    "object_orientation_error_rad": 0.07371152192354202
+  },
+  {
+    "env_id": 30,
+    "episode_index": 2,
+    "duration_s": 1.2,
+    "motion_frame_at_termination": 60,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.24382738769054413,
+    "object_orientation_error_rad": 0.8020148277282715
+  },
+  {
+    "env_id": 22,
+    "episode_index": 1,
+    "duration_s": 1.42,
+    "motion_frame_at_termination": 71,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25221192836761475,
+    "object_orientation_error_rad": 0.7877610325813293
+  },
+  {
+    "env_id": 28,
+    "episode_index": 3,
+    "duration_s": 0.48,
+    "motion_frame_at_termination": 24,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25080636143684387,
+    "object_orientation_error_rad": 0.13214197754859924
+  },
+  {
+    "env_id": 3,
+    "episode_index": 4,
+    "duration_s": 0.42,
+    "motion_frame_at_termination": 21,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25245991349220276,
+    "object_orientation_error_rad": 0.6623636484146118
+  },
+  {
+    "env_id": 1,
+    "episode_index": 3,
+    "duration_s": 0.9,
+    "motion_frame_at_termination": 45,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2546497583389282,
+    "object_orientation_error_rad": 0.7695921063423157
+  },
+  {
+    "env_id": 26,
+    "episode_index": 4,
+    "duration_s": 0.18,
+    "motion_frame_at_termination": 9,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.14069253206253052,
+    "object_orientation_error_rad": 0.8881574869155884
+  },
+  {
+    "env_id": 11,
+    "episode_index": 3,
+    "duration_s": 0.36,
+    "motion_frame_at_termination": 18,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_ankle_roll_link"
+    ],
+    "object_position_error_m": 0.09376142174005508,
+    "object_orientation_error_rad": 0.16361357271671295
+  },
+  {
+    "env_id": 23,
+    "episode_index": 4,
+    "duration_s": 0.44,
+    "motion_frame_at_termination": 22,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.20650023221969604,
+    "object_orientation_error_rad": 0.8143197894096375
+  },
+  {
+    "env_id": 31,
+    "episode_index": 2,
+    "duration_s": 1.1400000000000001,
+    "motion_frame_at_termination": 57,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_ref_ori"
+    ],
+    "object_position_error_m": 0.06770013272762299,
+    "object_orientation_error_rad": 0.07480321079492569
+  },
+  {
+    "env_id": 19,
+    "episode_index": 4,
+    "duration_s": 0.56,
+    "motion_frame_at_termination": 28,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2630345821380615,
+    "object_orientation_error_rad": 0.5929442048072815
+  },
+  {
+    "env_id": 0,
+    "episode_index": 4,
+    "duration_s": 0.7000000000000001,
+    "motion_frame_at_termination": 35,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.12080169469118118,
+    "object_orientation_error_rad": 0.4518624544143677
+  },
+  {
+    "env_id": 27,
+    "episode_index": 3,
+    "duration_s": 0.6,
+    "motion_frame_at_termination": 30,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.19559964537620544,
+    "object_orientation_error_rad": 0.8256132006645203
+  },
+  {
+    "env_id": 24,
+    "episode_index": 2,
+    "duration_s": 1.32,
+    "motion_frame_at_termination": 66,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2543668746948242,
+    "object_orientation_error_rad": 0.3431914150714874
+  },
+  {
+    "env_id": 21,
+    "episode_index": 3,
+    "duration_s": 0.54,
+    "motion_frame_at_termination": 27,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.14742378890514374,
+    "object_orientation_error_rad": 0.48775240778923035
+  },
+  {
+    "env_id": 9,
+    "episode_index": 3,
+    "duration_s": 1.52,
+    "motion_frame_at_termination": 76,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.19701166450977325,
+    "object_orientation_error_rad": 0.8181277513504028
+  },
+  {
+    "env_id": 10,
+    "episode_index": 2,
+    "duration_s": 1.46,
+    "motion_frame_at_termination": 73,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.1369374841451645,
+    "object_orientation_error_rad": 0.8838105797767639
+  },
+  {
+    "env_id": 11,
+    "episode_index": 4,
+    "duration_s": 0.42,
+    "motion_frame_at_termination": 21,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.247407466173172,
+    "object_orientation_error_rad": 0.8002550005912781
+  },
+  {
+    "env_id": 12,
+    "episode_index": 1,
+    "duration_s": 2.04,
+    "motion_frame_at_termination": 102,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25027671456336975,
+    "object_orientation_error_rad": 0.39905640482902527
+  },
+  {
+    "env_id": 1,
+    "episode_index": 4,
+    "duration_s": 0.56,
+    "motion_frame_at_termination": 28,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2583378851413727,
+    "object_orientation_error_rad": 0.7437103986740112
+  },
+  {
+    "env_id": 5,
+    "episode_index": 4,
+    "duration_s": 1.54,
+    "motion_frame_at_termination": 77,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.17833857238292694,
+    "object_orientation_error_rad": 0.8018141388893127
+  },
+  {
+    "env_id": 15,
+    "episode_index": 2,
+    "duration_s": 1.46,
+    "motion_frame_at_termination": 73,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.12503716349601746,
+    "object_orientation_error_rad": 0.8437696695327759
+  },
+  {
+    "env_id": 14,
+    "episode_index": 3,
+    "duration_s": 1.04,
+    "motion_frame_at_termination": 52,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2526800334453583,
+    "object_orientation_error_rad": 0.5618805885314941
+  },
+  {
+    "env_id": 18,
+    "episode_index": 3,
+    "duration_s": 1.44,
+    "motion_frame_at_termination": 72,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.1523696780204773,
+    "object_orientation_error_rad": 0.8083781599998474
+  },
+  {
+    "env_id": 24,
+    "episode_index": 3,
+    "duration_s": 0.52,
+    "motion_frame_at_termination": 26,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.18801821768283844,
+    "object_orientation_error_rad": 0.7628778219223022
+  },
+  {
+    "env_id": 29,
+    "episode_index": 4,
+    "duration_s": 1.22,
+    "motion_frame_at_termination": 61,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2544989287853241,
+    "object_orientation_error_rad": 0.5369229316711426
+  },
+  {
+    "env_id": 6,
+    "episode_index": 3,
+    "duration_s": 1.86,
+    "motion_frame_at_termination": 93,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.10466285049915314,
+    "object_orientation_error_rad": 0.8090456128120422
+  },
+  {
+    "env_id": 16,
+    "episode_index": 3,
+    "duration_s": 1.92,
+    "motion_frame_at_termination": 96,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.04190179705619812,
+    "object_orientation_error_rad": 0.8037086725234985
+  },
+  {
+    "env_id": 27,
+    "episode_index": 4,
+    "duration_s": 0.68,
+    "motion_frame_at_termination": 34,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.26705440878868103,
+    "object_orientation_error_rad": 0.29672035574913025
+  },
+  {
+    "env_id": 9,
+    "episode_index": 4,
+    "duration_s": 0.56,
+    "motion_frame_at_termination": 28,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.23037856817245483,
+    "object_orientation_error_rad": 0.8343359231948853
+  },
+  {
+    "env_id": 18,
+    "episode_index": 4,
+    "duration_s": 0.24,
+    "motion_frame_at_termination": 12,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.21458864212036133,
+    "object_orientation_error_rad": 0.8012985587120056
+  },
+  {
+    "env_id": 6,
+    "episode_index": 4,
+    "duration_s": 0.2,
+    "motion_frame_at_termination": 10,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2724091410636902,
+    "object_orientation_error_rad": 0.7538045644760132
+  },
+  {
+    "env_id": 12,
+    "episode_index": 2,
+    "duration_s": 0.56,
+    "motion_frame_at_termination": 28,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "bad_object_ori",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.1827937364578247,
+    "object_orientation_error_rad": 0.8451105952262878
+  },
+  {
+    "env_id": 16,
+    "episode_index": 4,
+    "duration_s": 0.18,
+    "motion_frame_at_termination": 9,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.27212291955947876,
+    "object_orientation_error_rad": 0.4819923937320709
+  },
+  {
+    "env_id": 15,
+    "episode_index": 3,
+    "duration_s": 0.52,
+    "motion_frame_at_termination": 26,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.18869709968566895,
+    "object_orientation_error_rad": 0.18641412258148193
+  },
+  {
+    "env_id": 24,
+    "episode_index": 4,
+    "duration_s": 0.32,
+    "motion_frame_at_termination": 16,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2594186067581177,
+    "object_orientation_error_rad": 0.2167472243309021
+  },
+  {
+    "env_id": 31,
+    "episode_index": 3,
+    "duration_s": 1.04,
+    "motion_frame_at_termination": 52,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.07369662821292877,
+    "object_orientation_error_rad": 0.3336268663406372
+  },
+  {
+    "env_id": 8,
+    "episode_index": 2,
+    "duration_s": 1.82,
+    "motion_frame_at_termination": 91,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25133833289146423,
+    "object_orientation_error_rad": 0.6014565229415894
+  },
+  {
+    "env_id": 14,
+    "episode_index": 4,
+    "duration_s": 0.52,
+    "motion_frame_at_termination": 26,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.1201155036687851,
+    "object_orientation_error_rad": 0.8550586700439453
+  },
+  {
+    "env_id": 7,
+    "episode_index": 2,
+    "duration_s": 1.54,
+    "motion_frame_at_termination": 77,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.14729507267475128,
+    "object_orientation_error_rad": 0.8514764308929443
+  },
+  {
+    "env_id": 22,
+    "episode_index": 2,
+    "duration_s": 1.46,
+    "motion_frame_at_termination": 73,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.10077492147684097,
+    "object_orientation_error_rad": 0.8116487860679626
+  },
+  {
+    "env_id": 28,
+    "episode_index": 4,
+    "duration_s": 1.42,
+    "motion_frame_at_termination": 71,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25515028834342957,
+    "object_orientation_error_rad": 0.3169820308685303
+  },
+  {
+    "env_id": 20,
+    "episode_index": 4,
+    "duration_s": 2.16,
+    "motion_frame_at_termination": 108,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.14599090814590454,
+    "object_orientation_error_rad": 0.8139870166778564
+  },
+  {
+    "env_id": 2,
+    "episode_index": 1,
+    "duration_s": 2.96,
+    "motion_frame_at_termination": 148,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2567823827266693,
+    "object_orientation_error_rad": 0.4294976592063904
+  },
+  {
+    "env_id": 4,
+    "episode_index": 2,
+    "duration_s": 2.6,
+    "motion_frame_at_termination": 130,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.250761479139328,
+    "object_orientation_error_rad": 0.20536211133003235
+  },
+  {
+    "env_id": 17,
+    "episode_index": 1,
+    "duration_s": 3.2,
+    "motion_frame_at_termination": 160,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2500251829624176,
+    "object_orientation_error_rad": 0.23668138682842255
+  },
+  {
+    "env_id": 21,
+    "episode_index": 4,
+    "duration_s": 1.4000000000000001,
+    "motion_frame_at_termination": 70,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2630404233932495,
+    "object_orientation_error_rad": 0.12645208835601807
+  },
+  {
+    "env_id": 31,
+    "episode_index": 4,
+    "duration_s": 0.56,
+    "motion_frame_at_termination": 28,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.08251456171274185,
+    "object_orientation_error_rad": 0.0762055516242981
+  },
+  {
+    "env_id": 17,
+    "episode_index": 2,
+    "duration_s": 0.28,
+    "motion_frame_at_termination": 14,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.20803223550319672,
+    "object_orientation_error_rad": 0.8123970627784729
+  },
+  {
+    "env_id": 30,
+    "episode_index": 3,
+    "duration_s": 2.12,
+    "motion_frame_at_termination": 106,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25153887271881104,
+    "object_orientation_error_rad": 0.25482240319252014
+  },
+  {
+    "env_id": 4,
+    "episode_index": 3,
+    "duration_s": 0.52,
+    "motion_frame_at_termination": 26,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.14379802346229553,
+    "object_orientation_error_rad": 0.4699341654777527
+  },
+  {
+    "env_id": 15,
+    "episode_index": 4,
+    "duration_s": 1.12,
+    "motion_frame_at_termination": 56,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25349336862564087,
+    "object_orientation_error_rad": 0.2986949682235718
+  },
+  {
+    "env_id": 12,
+    "episode_index": 3,
+    "duration_s": 1.24,
+    "motion_frame_at_termination": 62,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2508057951927185,
+    "object_orientation_error_rad": 0.6922544836997986
+  },
+  {
+    "env_id": 7,
+    "episode_index": 3,
+    "duration_s": 1.12,
+    "motion_frame_at_termination": 56,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.10209687054157257,
+    "object_orientation_error_rad": 0.13986064493656158
+  },
+  {
+    "env_id": 4,
+    "episode_index": 4,
+    "duration_s": 0.26,
+    "motion_frame_at_termination": 13,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.26171594858169556,
+    "object_orientation_error_rad": 0.434552401304245
+  },
+  {
+    "env_id": 30,
+    "episode_index": 4,
+    "duration_s": 0.46,
+    "motion_frame_at_termination": 23,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.18726202845573425,
+    "object_orientation_error_rad": 0.8215202689170837
+  },
+  {
+    "env_id": 8,
+    "episode_index": 3,
+    "duration_s": 1.36,
+    "motion_frame_at_termination": 68,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25664323568344116,
+    "object_orientation_error_rad": 0.18642063438892365
+  },
+  {
+    "env_id": 12,
+    "episode_index": 4,
+    "duration_s": 0.32,
+    "motion_frame_at_termination": 16,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_ankle_roll_link"
+    ],
+    "object_position_error_m": 0.09842687845230103,
+    "object_orientation_error_rad": 0.15897293388843536
+  },
+  {
+    "env_id": 10,
+    "episode_index": 3,
+    "duration_s": 2.3000000000000003,
+    "motion_frame_at_termination": 115,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.17781546711921692,
+    "object_orientation_error_rad": 0.8067907094955444
+  },
+  {
+    "env_id": 7,
+    "episode_index": 4,
+    "duration_s": 0.5,
+    "motion_frame_at_termination": 25,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.0483318567276001,
+    "object_orientation_error_rad": 0.02325671724975109
+  },
+  {
+    "env_id": 2,
+    "episode_index": 2,
+    "duration_s": 1.42,
+    "motion_frame_at_termination": 71,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.25373050570487976,
+    "object_orientation_error_rad": 0.3972109854221344
+  },
+  {
+    "env_id": 17,
+    "episode_index": 3,
+    "duration_s": 0.92,
+    "motion_frame_at_termination": 46,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_ankle_roll_link"
+    ],
+    "object_position_error_m": 0.0711662694811821,
+    "object_orientation_error_rad": 0.6444221138954163
+  },
+  {
+    "env_id": 22,
+    "episode_index": 3,
+    "duration_s": 1.54,
+    "motion_frame_at_termination": 77,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.12673859298229218,
+    "object_orientation_error_rad": 0.8736277222633362
+  },
+  {
+    "env_id": 8,
+    "episode_index": 4,
+    "duration_s": 0.54,
+    "motion_frame_at_termination": 27,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:left_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.02440941520035267,
+    "object_orientation_error_rad": 0.12855957448482513
+  },
+  {
+    "env_id": 22,
+    "episode_index": 4,
+    "duration_s": 0.3,
+    "motion_frame_at_termination": 15,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.07071911543607712,
+    "object_orientation_error_rad": 0.07749155163764954
+  },
+  {
+    "env_id": 2,
+    "episode_index": 3,
+    "duration_s": 0.52,
+    "motion_frame_at_termination": 26,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_ankle_roll_link",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.07284003496170044,
+    "object_orientation_error_rad": 0.0391278900206089
+  },
+  {
+    "env_id": 2,
+    "episode_index": 4,
+    "duration_s": 0.34,
+    "motion_frame_at_termination": 17,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2602955996990204,
+    "object_orientation_error_rad": 0.07650560140609741
+  },
+  {
+    "env_id": 10,
+    "episode_index": 4,
+    "duration_s": 1.86,
+    "motion_frame_at_termination": 93,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2555961012840271,
+    "object_orientation_error_rad": 0.7910056114196777
+  },
+  {
+    "env_id": 25,
+    "episode_index": 1,
+    "duration_s": 6.82,
+    "motion_frame_at_termination": 16,
+    "first_clip_completed": true,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.1398412436246872,
+    "object_orientation_error_rad": 0.6807422041893005
+  },
+  {
+    "env_id": 13,
+    "episode_index": 1,
+    "duration_s": 7.04,
+    "motion_frame_at_termination": 27,
+    "first_clip_completed": true,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2513647973537445,
+    "object_orientation_error_rad": 0.7387558221817017
+  },
+  {
+    "env_id": 25,
+    "episode_index": 2,
+    "duration_s": 0.28,
+    "motion_frame_at_termination": 14,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.030566608533263206,
+    "object_orientation_error_rad": 0.03552655130624771
+  },
+  {
+    "env_id": 17,
+    "episode_index": 4,
+    "duration_s": 2.84,
+    "motion_frame_at_termination": 142,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2506069839000702,
+    "object_orientation_error_rad": 0.2232101559638977
+  },
+  {
+    "env_id": 25,
+    "episode_index": 3,
+    "duration_s": 0.28,
+    "motion_frame_at_termination": 14,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.08436312526464462,
+    "object_orientation_error_rad": 0.3949638307094574
+  },
+  {
+    "env_id": 13,
+    "episode_index": 2,
+    "duration_s": 0.46,
+    "motion_frame_at_termination": 23,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_pos"
+    ],
+    "object_position_error_m": 0.2503219246864319,
+    "object_orientation_error_rad": 0.5796518921852112
+  },
+  {
+    "env_id": 13,
+    "episode_index": 3,
+    "duration_s": 0.3,
+    "motion_frame_at_termination": 15,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_motion_body_pos",
+      "body_height:right_wrist_yaw_link"
+    ],
+    "object_position_error_m": 0.04266282916069031,
+    "object_orientation_error_rad": 0.03562547639012337
+  },
+  {
+    "env_id": 25,
+    "episode_index": 4,
+    "duration_s": 1.48,
+    "motion_frame_at_termination": 74,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.20600281655788422,
+    "object_orientation_error_rad": 0.8767273426055908
+  },
+  {
+    "env_id": 13,
+    "episode_index": 4,
+    "duration_s": 1.44,
+    "motion_frame_at_termination": 72,
+    "first_clip_completed": false,
+    "termination_reasons": [
+      "bad_object_ori"
+    ],
+    "object_position_error_m": 0.24097031354904175,
+    "object_orientation_error_rad": 0.805690348148346
+  }
+]
