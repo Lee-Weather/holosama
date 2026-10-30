@@ -46,7 +46,7 @@
       }
     ],
     "success": true,
-    "time": "2026-10-30 09:38:37",
+    "time": "2026-10-30 09:57:28",
     "total": 1
   },
   "images": [
@@ -63,6 +63,10 @@
     }
   ],
   "projects": [
+    {
+      "projectId": "PRO_20261030_003",
+      "projectName": "Holosoma G1 box-carry training"
+    },
     {
       "projectId": "PRO_20261030_002",
       "projectName": "Holosoma native IsaacLab evaluation"

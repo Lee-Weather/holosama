@@ -1,0 +1,18 @@
+{
+  "taskId": "TASK_20261030_065",
+  "taskStatus": "3",
+  "userId": "4391",
+  "startTime": "2026-10-30 09:57:47",
+  "endTime": null,
+  "runtime": "",
+  "capacity_validated": false,
+  "formal_state_restored": true,
+  "last_iteration_in_excerpt": [
+    "8003",
+    "14000"
+  ],
+  "traceback_in_excerpt": false,
+  "last_relevant_lines": [
+    "[SDK][INFO] 2026-10-30 10:00:20 New file detected globally: /workspace/isaaclab/holosama/logs/flux-exp_2.2-box-resume-20261030_015802/formal/resume_restored.jsonFLUX_BOX_RESUME_RESTORED {\"source_iteration\": 7999, \"next_iteration\": 8000, \"additional_iterations\": 6000, \"expected_final_iteration\": 13999, \"weights_optimizers_normalizers_restored\": true, \"actor_optimizer_steps_min\": 160000.0, \"actor_optimizer_steps_max\": 160000.0, \"actor_learning_rate\": 3.3750000000000014e-05, \"critic_learning_rate\": 3.3750000000000014e-05, \"num_envs\": 4096, \"capacity\": false, \"checkpoint_sha256\": \"e2d120660bbc199d0dc03d0bce17a4989ef6117877c2f97f9da72d2c4dbc2c97\","
+  ]
+}

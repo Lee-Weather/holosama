@@ -1,0 +1,15 @@
+{
+  "commit": "168aa17e9f9d469dfd757cc6bb9921b4971b7f2b",
+  "source_checkpoint": "/workspace/isaaclab/holosama/czy/data/exp_2.1/model_07999.pt",
+  "source_sha256": "e2d120660bbc199d0dc03d0bce17a4989ef6117877c2f97f9da72d2c4dbc2c97",
+  "source_iteration": 7999,
+  "next_iteration": 8000,
+  "expected_final_iteration": 13999,
+  "num_envs": 4096,
+  "capacity_iterations": 2,
+  "experiment": "exp_2.2",
+  "additional_iterations": 6000,
+  "install_timeout": 900,
+  "capacity_timeout": 900,
+  "training_timeout": 86400
+}

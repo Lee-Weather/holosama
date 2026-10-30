@@ -1,0 +1,23 @@
+{
+  "taskId": "TASK_20261030_065",
+  "query_time": "2026-10-30T02:01:08.243956+00:00",
+  "iteration": 8000,
+  "num_envs": 4096,
+  "additional_iterations": 6000,
+  "formal_stage": true,
+  "sha256": "c17d1ac9a122ffa2c94d128af5ce2c0da30128ee811844c4a6609c71341aac6d",
+  "size_bytes": 6840071,
+  "source_sha256": "e2d120660bbc199d0dc03d0bce17a4989ef6117877c2f97f9da72d2c4dbc2c97",
+  "actor": {
+    "optimizer_step": 160020,
+    "normalizer_source_count": 196608000,
+    "normalizer_count": 196706304,
+    "model_and_normalizer_finite": true
+  },
+  "critic": {
+    "optimizer_step": 160020,
+    "normalizer_source_count": 196608000,
+    "normalizer_count": 196706304,
+    "model_and_normalizer_finite": true
+  }
+}

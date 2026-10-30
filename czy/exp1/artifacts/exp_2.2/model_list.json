@@ -1,0 +1,16 @@
+[
+  {
+    "fileName": "model_08001.pt",
+    "taskId": "TASK_20261030_065",
+    "checkpoint": "08001",
+    "loadRun": "capacity",
+    "createTime": "2026-10-30 09:59:54"
+  },
+  {
+    "fileName": "model_08000.pt",
+    "taskId": "TASK_20261030_065",
+    "checkpoint": "08000",
+    "loadRun": "formal",
+    "createTime": "2026-10-30 10:00:40"
+  }
+]

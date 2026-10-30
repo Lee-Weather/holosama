@@ -1,0 +1,15 @@
+{
+  "account": {
+    "email": "limxmts0f9p800yu7g@uberip.com",
+    "userId": 4391
+  },
+  "previous_task": {
+    "taskId": "TASK_20261030_061",
+    "taskStatus": "6",
+    "userId": "4391",
+    "projectId": "PRO_20261030_003",
+    "startTime": "2026-10-30 09:46:45",
+    "endTime": "2026-10-30 09:54:32",
+    "runtime": "467"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "taskId": "TASK_20261030_061",
+  "taskStatus": "3",
+  "userId": "4391",
+  "startTime": "2026-10-30 09:46:45",
+  "endTime": null,
+  "runtime": "",
+  "capacity_validated": false,
+  "formal_state_restored": false,
+  "last_iteration_in_excerpt": [
+    "8009",
+    "14000"
+  ],
+  "traceback_in_excerpt": false,
+  "last_relevant_lines": []
+}
