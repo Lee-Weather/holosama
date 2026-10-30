@@ -11,7 +11,7 @@
 | [exp_1.1](#实验-exp_11精简依赖并重试正式训练) | 2026-10-29 | 完成 5000 轮；末段 episode 均值 887.93 steps；本机 MuJoCo 录像完成，云端录像清理失败 | 已测试 | `TASK_20261029_112`；回放 `TASK_20261029_249` | `limxmts0elyormeym6@uberip.com` | [model_04999.pt](../data/exp_1.1/model_04999.pt) |
 | [exp_2](#实验-exp_2g1-带箱体的搬运跟踪训练) | 2026-10-29 | 安装阶段发现入口切换目录后的输出路径问题，主动停止，未开始 PPO | 失败 | `TASK_20261029_261` | `limxmts0elyormeym6@uberip.com` | 无 |
 | [exp_2.1](#实验-exp_21修正搬箱子入口的工作目录) | 2026-10-29 | 完成 8000 轮；原生评估完整片段通过 2/128（1.56%），主要为箱体/手脚跟踪失败 | 已测试 | 训练 `TASK_20261029_267`；评估 `TASK_20261030_051` | 训练 `limxmts0elyormeym6@uberip.com`；评估用户 4391，见 §7 | [model_07999.pt](../data/exp_2.1/model_07999.pt) |
-| [exp_2.2](#实验-exp_22原生规模下恢复完整状态续训) | 2026-10-30 | 从 exp_2.1 完整状态续训，4096 环境额外 6000 轮；清理逐步 DEBUG 后重新提交 | 续训中 | `TASK_20261030_065`（前次 061 主动停止，见 §7） | `limxmts0f9p800yu7g@uberip.com` / 4391 | 源 `model_07999.pt`；目标 `model_13999.pt` |
+| [exp_2.2](#实验-exp_22原生规模下恢复完整状态续训) | 2026-10-30 | 从 exp_2.1 完整状态续训，4096 环境额外 6000 轮；改为每 100 轮保存，复用容量验收 | 待训练 | 待重提（061、065 已停止，见 §7） | `limxmts0f9p800yu7g@uberip.com` / 4391 | 源 `model_07999.pt`；目标 `model_13999.pt` |
 
 ## 实验 exp0：Flux IsaacLab 上的 G1 PPO 流程验证
 
@@ -709,8 +709,8 @@ exp_2.1 在 1024 环境完成 8000 轮，最终 `model_07999.pt`；末段 100 �
 
 - 按用户要求使用原生 4096 环境规模，从现有最终模型**额外训练 6000 轮**。
 - 完整恢复优化器和观测归一化，正式编号从 8000 接到 13999，不重复旧的 7999。
-- 原生保存间隔 4000、seed=42；保留任务/奖励/数据/PD/随机化，恢复的学习率和探索 std 沿用模型状态，不重新初始化。
-- 先在同一 worker 做 4096 环境、2 轮完整恢复容量测试，成功后正式阶段重新加载原始 exp_2.1 模型。
+- seed=42，保存间隔按用户最新要求从原生 4000 改为 **100**；保留任务/奖励/数据/PD/随机化，恢复的学习率和探索 std 沿用模型状态，不重新初始化。
+- 4096 环境完整恢复容量已在前两次任务验证，本次明确复用容量结果，直接从原始 exp_2.1 模型正式续训，不重复首个 checkpoint 的下载校验。
 
 ### 3. 修改内容
 
@@ -723,6 +723,10 @@ exp_2.1 在 1024 环境完成 8000 轮，最终 `model_07999.pt`；末段 100 �
 恢复后逐项比较 actor、critic、两套 normalizer、两个 optimizer 的完整 state_dict，任何缺失/不一致立即失败。容量测试从源模型更新 2 次至 8001、校验 checkpoint/ONNX/TensorBoard 并退出释放 GPU；正式阶段从相同源重新恢复，容量测试权重不进入正式训练，失败不自动重试、不降低环境数。
 
 源 checkpoint 没有 `env_state`，因此旧仿真状态、RNG 与自适应采样器历史未恢复；扩大环境数后按 seed=42 重新建立。这里完整恢复指 checkpoint 中已有的网络、优化器与归一化状态，不代表逐帧续接原来的仿真轨迹。
+
+### 修改五：每 100 轮保存，复用已经验证的容量
+
+新增 `--save-interval`（默认 100）传入正式 worker 配置；预检、两个阶段及正式训练之间显式传递保存间隔。新增 `--skip-capacity-test`，默认仍保留容量门槛，仅在本次同规模重提时明确启用。保留源模型哈希、任务身份与内存中加载状态一致性检查，以及训练结束时的最终产物验收；按用户指示不再下载/校验首个新 checkpoint，不重复两轮容量测试。源仍为 `model_07999.pt`，未改为中间模型。相关配置与控制流共 8 项 CPU 测试、Ruff 通过。
 
 ### 4. 修改文件
 
@@ -745,15 +749,16 @@ exp_2.1 在 1024 环境完成 8000 轮，最终 `model_07999.pt`；末段 100 �
 | rollout / epochs / minibatches | 24 / 5 / 4；每 PPO 轮 98,304 个控制样本 |
 | 正式新增样本 | 589,824,000 个控制步；加旧模型累计约 786,432,000，容量测试不计入 |
 | 经验归一化 / optimizer | 两套归一化和两个 AdamW 完整恢复；初始实际 LR `3.375e-5`，adaptive 继续调整 |
-| seed / 保存间隔 | 原生 42 / 4000；首次正式保存 8000，后续 12000，最终 13999 |
+| seed / 保存间隔 | 原生 42 / 用户指定 **100**；保存 8000、8100…13900，结束另存 13999；前两次提交为 4000 |
+| 本次容量 / 首模型重复验收 | `--skip-capacity-test`；复用已验证的同规模配置，不重复下载校验首个 checkpoint |
 | 安装 / 容量 / 正式上限 | 900 / 900 / **86400 秒**；扩大规模后不受旧 6 小时包装器上限截断，完成指定轮数即退出 |
 | 记录 / 视频 | TensorBoard 开启；Wandb、RTX 视频关闭 |
 | 平台恢复方式 | 新任务 `trainType=1`，Python worker 执行原生完整 `PPO.load`；模型来自已授权仓库，不跨账号访问私有旧任务或挂载 checkpoint |
-| 启动入口 | `gm-run holosama/scripts/resume_flux_box.py --experiment exp_2.2 --additional-iterations 6000` |
+| 启动入口 | `gm-run holosama/scripts/resume_flux_box.py --experiment exp_2.2 --additional-iterations 6000 --save-interval 100 --skip-capacity-test` |
 
 ### 6. 预期与验收
 
-先验收新账号归属、实际 commit/源哈希、4096 环境容量恢复与 2 次更新；正式阶段必须再次从原始源模型恢复，起始 optimizer step=160000、iter=8000。确认首个正式模型 iter=8000、两个 optimizer step=160020、normalizer 计数延续，而非权重初始化。最终 model_13999.pt 应完成额外 6000 轮，checkpoint、ONNX、TensorBoard 验收通过。最终策略仍按同一原生 32×4 起点评估统计成功率及终止原因，不以训练完成替代搬运达标。
+前两次提交已验收 4096 环境容量、完整恢复与首个正式模型。本次只核对账号归属、实际 commit/源哈希、save_interval=100 和正式恢复标记，不重复容量或首模型下载校验。正式阶段从原始源恢复，起始 optimizer step=160000、iter=8000。最终 model_13999.pt 应完成额外 6000 轮，checkpoint、ONNX、TensorBoard 验收通过。最终策略仍按同一原生 32×4 起点评估统计成功率及终止原因，不以训练完成替代搬运达标。
 
 ### 7. 实验结果
 
@@ -765,10 +770,15 @@ exp_2.1 在 1024 环境完成 8000 轮，最终 `model_07999.pt`；末段 100 �
 
 #### 清理日志后按用户授权重新提交（同一 exp_2.2）
 
-已推送 commit **`681c06ec487f1917b32bc9399026edc353c6979c`**，仅删除每步同步前、同步后及无变化时的 3 条 DEBUG，Python 语法与 diff 检查通过；不改变同步调用、dirty flag、PPO 或训练参数。重新查询旧任务终态后，在相同账号/项目创建唯一的新任务 **`TASK_20261030_065`**，09:57:47 开始，平台状态 3。worker 启动计划已确认实际 commit 为 `681c06e`，源哈希、4096 环境及新增 6000 轮与上表一致。[本次启动记录](artifacts/exp_2.2/launch_plan.json)、[实际云端计划](artifacts/exp_2.2/cloud_launch_plan.json)、[最新进度](artifacts/exp_2.2/progress_snapshot.json)。
+已推送 commit **`681c06ec487f1917b32bc9399026edc353c6979c`**，仅删除每步同步前、同步后及无变化时的 3 条 DEBUG，Python 语法与 diff 检查通过；不改变同步调用、dirty flag、PPO 或训练参数。重新查询旧任务终态后，在相同账号/项目创建唯一的新任务 **`TASK_20261030_065`**，09:57:47 开始；重提之前已确认 10:11:10 结束、终态 6，总耗时 803 秒。worker 启动计划已确认实际 commit 为 `681c06e`，源哈希、4096 环境及新增 6000 轮与上表一致。[本次启动记录](artifacts/exp_2.2/attempt_TASK_20261030_065/launch_plan.json)、[实际云端计划](artifacts/exp_2.2/attempt_TASK_20261030_065/cloud_launch_plan.json)、[最新进度](artifacts/exp_2.2/attempt_TASK_20261030_065/progress_snapshot.json)。
 
 本次重新从原始 `model_07999.pt` 恢复，目标仍是 8000..13999；未从第一次提交的中间模型接续，不将其少量更新计入本次 6000 轮。仍执行独立的 4096 环境 × 2 轮容量门槛，无自动重试。
 
-**本次开训验收已通过**：容量阶段和正式阶段的完整恢复标记均已捕获，两个阶段均从 source iter=7999 / optimizer step=160000 开始，实际学习率 `3.3750000000000014e-5`。容量 checkpoint `model_08001.pt` 已上传，正式阶段进入 iter **8003/14000**。容量成功标记本身已不在 API 截断尾部，但包装器必须验收容量 checkpoint/ONNX/TensorBoard 后才会启动正式阶段，正式恢复与正式模型共同证明容量门槛已通过；不补造缺失的原始标记。[容量恢复](artifacts/exp_2.2/capacity_restored.json)、[正式恢复](artifacts/exp_2.2/formal_restored.json)、[模型列表安全字段](artifacts/exp_2.2/model_list.json)。
+**本次开训验收已通过**：容量阶段和正式阶段的完整恢复标记均已捕获，两个阶段均从 source iter=7999 / optimizer step=160000 开始，实际学习率 `3.3750000000000014e-5`。容量 checkpoint `model_08001.pt` 已上传，正式阶段进入 iter **8003/14000**。容量成功标记本身已不在 API 截断尾部，但包装器必须验收容量 checkpoint/ONNX/TensorBoard 后才会启动正式阶段，正式恢复与正式模型共同证明容量门槛已通过；不补造缺失的原始标记。[容量恢复](artifacts/exp_2.2/attempt_TASK_20261030_065/capacity_restored.json)、[正式恢复](artifacts/exp_2.2/attempt_TASK_20261030_065/formal_restored.json)、[模型列表安全字段](artifacts/exp_2.2/attempt_TASK_20261030_065/model_list.json)。
 
-首个正式 `model_08000.pt`（不是容量阶段的同名文件）已下载至忽略的验证缓存，6,840,071 字节，SHA-256=`c17d1ac9a122ffa2c94d128af5ce2c0da30128ee811844c4a6609c71341aac6d`。其保存配置为 4096 环境 / 新增 6000 轮 / load_optimizer=true；actor、critic 两个 AdamW 的 step 均为 **160020**，两套 normalizer count 均从 **196608000** 增至 **196706304**（增加 4096×24），网络与归一化张量均有限，验证了原模型完整状态延续。[首次正式模型验收](artifacts/exp_2.2/first_formal_checkpoint_validation.json)。本次已捕获的日志中未再出现删除的 3 条同步 DEBUG。[脱敏日志尾部 gzip](artifacts/exp_2.2/startup_excerpt.txt.gz)。最终 6000 轮完成情况及搬运质量仍待训练结束后验收。
+首个正式 `model_08000.pt`（不是容量阶段的同名文件）已下载至忽略的验证缓存，6,840,071 字节，SHA-256=`c17d1ac9a122ffa2c94d128af5ce2c0da30128ee811844c4a6609c71341aac6d`。其保存配置为 4096 环境 / 新增 6000 轮 / load_optimizer=true；actor、critic 两个 AdamW 的 step 均为 **160020**，两套 normalizer count 均从 **196608000** 增至 **196706304**（增加 4096×24），网络与归一化张量均有限，验证了原模型完整状态延续。[首次正式模型验收](artifacts/exp_2.2/attempt_TASK_20261030_065/first_formal_checkpoint_validation.json)。本次已捕获的日志中未再出现删除的 3 条同步 DEBUG。[脱敏日志尾部 gzip](artifacts/exp_2.2/attempt_TASK_20261030_065/startup_excerpt.txt.gz)。最终 6000 轮完成情况及搬运质量仍待训练结束后验收。
+
+
+#### 按用户要求改为每 100 轮保存并重提
+
+已确认前次任务 `TASK_20261030_065` 停止，仍使用账号 4391、4096 环境、源 `model_07999.pt`，新增 6000 轮至 13999。本次显式设置 `--save-interval 100 --skip-capacity-test`，复用上述容量验证，不重复首个 checkpoint 下载校验。8 项本地测试与 Ruff 通过；新任务实际 ID、commit 与开训情况待本次提交后补充。[前次终态](artifacts/exp_2.2/save100_previous_task_stop.json)。

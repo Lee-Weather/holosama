@@ -1,8 +1,9 @@
 """Resume the verified box policy for 6000 additional PPO updates at 4096 envs.
 
-A separate 4096-env/two-update capacity test must pass first. Formal training
+A separate 4096-env/two-update capacity test runs by default. Formal training
 reloads the original checkpoint, preserving both Adam optimizers and observation
-normalizers. No smoke weights are promoted into the formal run.
+normalizers. A previously validated configuration may explicitly skip the test.
+No smoke weights are promoted into the formal run.
 """
 
 from __future__ import annotations
@@ -46,7 +47,7 @@ def load_source():
     return data
 
 
-def resume_config(source, project, additional_iterations, *, capacity=False):
+def resume_config(source, project, additional_iterations, *, capacity=False, save_interval=100):
     from holosoma.config_types.experiment import ExperimentConfig  # noqa: PLC0415
     from holosoma.config_values.logger import disabled  # noqa: PLC0415
     from holosoma.config_values.wbt.g1.experiment import g1_29dof_wbt_w_object as native  # noqa: PLC0415
@@ -82,7 +83,7 @@ def resume_config(source, project, additional_iterations, *, capacity=False):
                 native.algo.config,
                 num_learning_iterations=additional_iterations,
                 load_optimizer=True,
-                save_interval=1 if capacity else native.algo.config.save_interval,
+                save_interval=1 if capacity else save_interval,
             ),
         ),
     )
@@ -146,7 +147,13 @@ def worker(plan):
     from holosoma.utils.sim_utils import setup_simulation_environment, simulation_resource_session  # noqa: PLC0415
 
     source = load_source()
-    config = resume_config(source, plan["project"], plan["additional_iterations"], capacity=plan["capacity"])
+    config = resume_config(
+        source,
+        plan["project"],
+        plan["additional_iterations"],
+        capacity=plan["capacity"],
+        save_interval=plan.get("save_interval", 100),
+    )
     output = Path(plan["result_dir"])
     config.save_config(str(output / "holosoma_config.yaml"))
     sys.argv = ["resume_flux_box.py"]
@@ -200,10 +207,16 @@ def verify(output, expected_iteration, updates):
     return result
 
 
-def stage(root, project, iterations, capacity, env, timeout):
+def stage(root, project, iterations, capacity, env, timeout, *, save_interval=100):
     output = root / ("capacity" if capacity else "formal")
     output.mkdir()
-    plan = {"project": project, "result_dir": str(output), "additional_iterations": iterations, "capacity": capacity}
+    plan = {
+        "project": project,
+        "result_dir": str(output),
+        "additional_iterations": iterations,
+        "capacity": capacity,
+        "save_interval": save_interval,
+    }
     path = output / "worker_plan.json"
     path.write_text(json.dumps(plan, indent=2), encoding="utf-8")
     subprocess.run(
@@ -223,6 +236,8 @@ def main():
     parser.add_argument("--verify-plan", type=Path)
     parser.add_argument("--experiment", default="exp_2.2")
     parser.add_argument("--additional-iterations", type=int, default=6000)
+    parser.add_argument("--save-interval", type=int, default=100)
+    parser.add_argument("--skip-capacity-test", action="store_true", help="Reuse prior same-scale capacity validation")
     parser.add_argument("--install-timeout", type=int, default=900)
     parser.add_argument("--capacity-timeout", type=int, default=900)
     parser.add_argument("--training-timeout", type=int, default=86400)
@@ -240,6 +255,8 @@ def main():
         parser.error("Invalid experiment identifier")
     if not 1 <= args.additional_iterations <= 30000 or not 1 <= args.training_timeout <= 86400:
         parser.error("Additional updates must be 1..30000; training timeout must be 1..86400 seconds")
+    if not 1 <= args.save_interval <= args.additional_iterations:
+        parser.error("Save interval must be 1..additional updates")
     if not 1 <= args.install_timeout <= 1800 or not 1 <= args.capacity_timeout <= 1800:
         parser.error("Installation and capacity limits must be 1..1800 seconds")
     env = box.bootstrap.prepare_environment()
@@ -256,7 +273,7 @@ def main():
         "next_iteration": 8000,
         "expected_final_iteration": 7999 + args.additional_iterations,
         "num_envs": 4096,
-        "capacity_iterations": 2,
+        "capacity_iterations": 0 if args.skip_capacity_test else 2,
         **vars(args),
     }
     plan.pop("worker_plan")
@@ -266,10 +283,15 @@ def main():
     box.bootstrap.install_training_package(env, args.install_timeout)
     box.bootstrap.check_gpu(env)
     env["TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD"] = "1"
-    print("FLUX_BOX_CAPACITY_START 4096 envs, 2 updates", flush=True)
-    stage(root, project + "-capacity", 2, True, env, args.capacity_timeout)
+    if args.skip_capacity_test:
+        print("FLUX_BOX_CAPACITY_SKIPPED prior same-scale validation reused", flush=True)
+    else:
+        print("FLUX_BOX_CAPACITY_START 4096 envs, 2 updates", flush=True)
+        stage(root, project + "-capacity", 2, True, env, args.capacity_timeout)
     print("FLUX_BOX_RESUME_FORMAL_START", project, flush=True)
-    stage(root, project, args.additional_iterations, False, env, args.training_timeout)
+    stage(
+        root, project, args.additional_iterations, False, env, args.training_timeout, save_interval=args.save_interval
+    )
     time.sleep(60)
 
 

@@ -1,0 +1,13 @@
+{
+  "tests_passed": 8,
+  "ruff": "passed",
+  "formal_save_interval": 100,
+  "skip_capacity_test": true,
+  "repeat_first_checkpoint_validation": false,
+  "source_iteration": 7999,
+  "next_iteration": 8000,
+  "expected_final_iteration": 13999,
+  "num_envs": 4096,
+  "additional_iterations": 6000,
+  "capacity_evidence_task": "TASK_20261030_065"
+}

@@ -26,7 +26,9 @@ def test_real_source_preserves_task_and_uses_native_scale(resume):
     assert cfg.training.num_envs == 4096 and cfg.training.seed == 42
     assert cfg.training.checkpoint == str(resume.SOURCE)
     assert cfg.algo.config.num_learning_iterations == 6000 and cfg.algo.config.load_optimizer
-    assert cfg.algo.config.save_interval == 4000
+    assert cfg.algo.config.save_interval == 100
+    assert resume.resume_config(source, "custom", 6000, save_interval=200).algo.config.save_interval == 200
+    assert resume.resume_config(source, "capacity", 2, capacity=True).algo.config.save_interval == 1
     resume.box.check_task_config(actual, allow_resume=True)
     with pytest.raises(ValueError, match="from scratch"):
         resume.box.check_task_config(actual)
@@ -102,3 +104,17 @@ def test_capacity_failure_cannot_start_formal_continuation(resume, monkeypatch, 
     with pytest.raises(RuntimeError, match="capacity failed"):
         resume.main()
     assert calls == [(2, True)]
+
+
+def test_authorized_skip_reuses_capacity_and_passes_formal_save_interval(resume, monkeypatch, tmp_path):
+    monkeypatch.setattr(resume, "ROOT", tmp_path)
+    monkeypatch.setattr(resume.sys, "argv", ["resume_flux_box.py", "--skip-capacity-test", "--save-interval", "100"])
+    monkeypatch.setattr(resume, "repository_commit", lambda: "test")
+    monkeypatch.setattr(resume.box.bootstrap, "prepare_environment", dict)
+    monkeypatch.setattr(resume.box.bootstrap, "install_training_package", lambda *_: None)
+    monkeypatch.setattr(resume.box.bootstrap, "check_gpu", lambda *_: None)
+    monkeypatch.setattr(resume.time, "sleep", lambda *_: None)
+    calls = []
+    monkeypatch.setattr(resume, "stage", lambda *args, **kwargs: calls.append((args[2:4], kwargs)))
+    resume.main()
+    assert calls == [((6000, False), {"save_interval": 100})]
