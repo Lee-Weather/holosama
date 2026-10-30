@@ -48,7 +48,7 @@ def command(num_envs: int, iterations: int, save_interval: int, project: str) ->
     ]
 
 
-def check_task_config(cfg: dict) -> None:
+def check_task_config(cfg: dict, *, allow_resume: bool = False) -> None:
     """Fail closed if this is robot-only WBT or the old locomotion task."""
     motion = cfg["command"]["setup_terms"]["motion_command"]["params"]["motion_config"]["motion_file"]
     if cfg["env_class"] != "holosoma.envs.wbt.wbt_manager.WholeBodyTrackingManager" or motion != MOTION:
@@ -65,7 +65,7 @@ def check_task_config(cfg: dict) -> None:
             raise ValueError("Object position/orientation rewards must be active")
     if "obj_pos_b" not in cfg["observation"]["groups"]["critic_obs"]["terms"]:
         raise ValueError("Critic object-state observations are missing")
-    if cfg["training"]["checkpoint"] is not None:
+    if cfg["training"]["checkpoint"] is not None and not allow_resume:
         raise ValueError("This experiment starts from scratch; no locomotion checkpoint is allowed")
 
 
