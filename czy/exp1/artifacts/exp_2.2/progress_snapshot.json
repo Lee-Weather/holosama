@@ -1,0 +1,24 @@
+{
+  "taskId": "TASK_20261030_073",
+  "taskStatus": "3",
+  "userId": "4391",
+  "startTime": "2026-10-30 10:18:21",
+  "endTime": null,
+  "runtime": "",
+  "save_interval": 100,
+  "capacity_skipped": true,
+  "repeat_first_checkpoint_validation": false,
+  "capacity_validated": false,
+  "formal_state_restored": false,
+  "last_iteration_in_excerpt": null,
+  "traceback_in_excerpt": false,
+  "last_relevant_lines": [
+    "  Downloading <URL omitted> (14.0 MB)",
+    "  Downloading <URL omitted> (92 kB)",
+    "  Downloading <URL omitted> (2.3 MB)",
+    "  Downloading <URL omitted> (76 kB)",
+    "  Downloading <URL omitted> (216 kB)",
+    "  Downloading <URL omitted> (19.6 MB)",
+    "  Downloading <URL omitted> (163.1 MB)"
+  ]
+}

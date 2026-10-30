@@ -11,7 +11,7 @@
 | [exp_1.1](#实验-exp_11精简依赖并重试正式训练) | 2026-10-29 | 完成 5000 轮；末段 episode 均值 887.93 steps；本机 MuJoCo 录像完成，云端录像清理失败 | 已测试 | `TASK_20261029_112`；回放 `TASK_20261029_249` | `limxmts0elyormeym6@uberip.com` | [model_04999.pt](../data/exp_1.1/model_04999.pt) |
 | [exp_2](#实验-exp_2g1-带箱体的搬运跟踪训练) | 2026-10-29 | 安装阶段发现入口切换目录后的输出路径问题，主动停止，未开始 PPO | 失败 | `TASK_20261029_261` | `limxmts0elyormeym6@uberip.com` | 无 |
 | [exp_2.1](#实验-exp_21修正搬箱子入口的工作目录) | 2026-10-29 | 完成 8000 轮；原生评估完整片段通过 2/128（1.56%），主要为箱体/手脚跟踪失败 | 已测试 | 训练 `TASK_20261029_267`；评估 `TASK_20261030_051` | 训练 `limxmts0elyormeym6@uberip.com`；评估用户 4391，见 §7 | [model_07999.pt](../data/exp_2.1/model_07999.pt) |
-| [exp_2.2](#实验-exp_22原生规模下恢复完整状态续训) | 2026-10-30 | 从 exp_2.1 完整状态续训，4096 环境额外 6000 轮；改为每 100 轮保存，复用容量验收 | 待训练 | 待重提（061、065 已停止，见 §7） | `limxmts0f9p800yu7g@uberip.com` / 4391 | 源 `model_07999.pt`；目标 `model_13999.pt` |
+| [exp_2.2](#实验-exp_22原生规模下恢复完整状态续训) | 2026-10-30 | 从 exp_2.1 完整状态续训，4096 环境额外 6000 轮；改为每 100 轮保存，复用容量验收 | 续训中 | `TASK_20261030_073`（061、065 已停止，见 §7） | `limxmts0f9p800yu7g@uberip.com` / 4391 | 源 `model_07999.pt`；目标 `model_13999.pt` |
 
 ## 实验 exp0：Flux IsaacLab 上的 G1 PPO 流程验证
 
@@ -781,4 +781,6 @@ exp_2.1 在 1024 环境完成 8000 轮，最终 `model_07999.pt`；末段 100 �
 
 #### 按用户要求改为每 100 轮保存并重提
 
-已确认前次任务 `TASK_20261030_065` 停止，仍使用账号 4391、4096 环境、源 `model_07999.pt`，新增 6000 轮至 13999。本次显式设置 `--save-interval 100 --skip-capacity-test`，复用上述容量验证，不重复首个 checkpoint 下载校验。8 项本地测试与 Ruff 通过；新任务实际 ID、commit 与开训情况待本次提交后补充。[前次终态](artifacts/exp_2.2/save100_previous_task_stop.json)。
+已确认前次任务 `TASK_20261030_065` 停止，仍使用账号 4391、4096 环境、源 `model_07999.pt`，新增 6000 轮至 13999。本次显式设置 `--save-interval 100 --skip-capacity-test`，复用上述容量验证，不重复首个 checkpoint 下载校验。8 项本地测试与 Ruff 通过。新任务 **`TASK_20261030_073`** 已在同一账号/项目启动，10:18:21 开始、平台状态 3，提交版本 `f6566f80dff2c3f8d1549464a2bd0ea38c32cbca`；实际 worker 计划已核对为相同 commit、4096 环境、新增 6000 轮、save_interval=100、skip_capacity_test=true、capacity_iterations=0；正式恢复与迭代进度以本次日志为准。[前次终态](artifacts/exp_2.2/save100_previous_task_stop.json)。
+
+[本次启动记录](artifacts/exp_2.2/launch_plan.json)、[本地参数验收](artifacts/exp_2.2/save100_local_validation.json)、[本次进度](artifacts/exp_2.2/progress_snapshot.json)。未重复下载校验首个新模型，未读取前次任务的私有模型来替换原始续训源。

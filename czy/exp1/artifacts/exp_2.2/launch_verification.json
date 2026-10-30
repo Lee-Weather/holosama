@@ -1,0 +1,14 @@
+{
+  "taskId": "TASK_20261030_073",
+  "query_time": "2026-10-30T02:22:23.253545+00:00",
+  "worker_commit": "f6566f80dff2c3f8d1549464a2bd0ea38c32cbca",
+  "save_interval": 100,
+  "num_envs": 4096,
+  "additional_iterations": 6000,
+  "skip_capacity_test": true,
+  "capacity_evidence_task": "TASK_20261030_065",
+  "first_checkpoint_download_or_validation_repeated": false,
+  "formal_restore_marker_captured": false,
+  "last_iteration_in_excerpt": null,
+  "traceback_in_excerpt": false
+}
