@@ -1087,15 +1087,10 @@ class IsaacSim(BaseSimulator):
         - Only performs sync if state adapter indicates dirty state (performance optimization)
         """
         if not self._state_adapter.is_dirty():
-            logger.debug("No object state changes to sync")
             return
-
-        logger.debug("Syncing object state changes to simulation")
 
         # Single call to sync all object state changes
         self.scene.write_data_to_sim()
 
         # Clear dirty flag via state adapter
         self._state_adapter.clear_dirty()
-
-        logger.debug("All object state changes synced to simulation")
