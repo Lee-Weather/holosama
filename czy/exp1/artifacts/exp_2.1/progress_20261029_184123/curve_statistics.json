@@ -1,0 +1,47 @@
+{
+  "Train/mean_reward": {
+    "point_count": 1860,
+    "last_step": 1859,
+    "last": 5.772611141204834,
+    "recent_100_mean": 3.9010749888420104,
+    "recent_step_start": 1760,
+    "recent_step_end": 1859,
+    "recent_steps_consecutive": true
+  },
+  "Train/mean_episode_length": {
+    "point_count": 1860,
+    "last_step": 1859,
+    "last": 96.45999908447266,
+    "recent_100_mean": 68.43149993896485,
+    "recent_step_start": 1760,
+    "recent_step_end": 1859,
+    "recent_steps_consecutive": true
+  },
+  "Episode/rew_object_global_ref_position_error_exp": {
+    "point_count": 1860,
+    "last_step": 1859,
+    "last": 0.13247112929821014,
+    "recent_100_mean": 0.11662010431289672,
+    "recent_step_start": 1760,
+    "recent_step_end": 1859,
+    "recent_steps_consecutive": true
+  },
+  "Episode/rew_object_global_ref_orientation_error_exp": {
+    "point_count": 1861,
+    "last_step": 1860,
+    "last": 0.11540816724300385,
+    "recent_100_mean": 0.1018440792709589,
+    "recent_step_start": 1761,
+    "recent_step_end": 1860,
+    "recent_steps_consecutive": true
+  },
+  "Perf/total_fps": {
+    "point_count": 1861,
+    "last_step": 1860,
+    "last": 10019,
+    "recent_100_mean": 10355.47,
+    "recent_step_start": 1761,
+    "recent_step_end": 1860,
+    "recent_steps_consecutive": true
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "task": "TASK_20261029_267",
+  "account": "limxmts0elyormeym6@uberip.com",
+  "iteration": 7999,
+  "bytes": 6839751,
+  "sha256": "e2d120660bbc199d0dc03d0bce17a4989ef6117877c2f97f9da72d2c4dbc2c97",
+  "num_envs": 1024,
+  "planned_iterations": 8000,
+  "observation_dimensions": {
+    "actor_obs": 154,
+    "critic_obs": 298
+  },
+  "actor_critic_normalizers_finite": true,
+  "box_task_contract_verified": true,
+  "model_path": "czy\\data\\exp_2.1\\model_07999.pt",
+  "normalizer_shapes": {
+    "_mean": [
+      1,
+      154
+    ],
+    "_var": [
+      1,
+      154
+    ],
+    "_std": [
+      1,
+      154
+    ],
+    "count": []
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "task": "TASK_20261029_267",
+  "account": "limxmts0elyormeym6@uberip.com",
+  "latest_complete_formal_log_block": {
+    "iteration": 1831,
+    "planned_iterations": 8000,
+    "mean_reward": 3.69,
+    "mean_episode_length": 65.22,
+    "fps": 11212.0,
+    "eta_seconds": 13359.3,
+    "object_position_reward": 0.1137,
+    "object_orientation_reward": 0.0974
+  },
+  "metric_keys": [
+    "Train/mean_reward",
+    "Train/mean_episode_length",
+    "Episode/rew_object_global_ref_position_error_exp",
+    "Episode/rew_object_global_ref_orientation_error_exp",
+    "Perf/total_fps"
+  ],
+  "training_complete": false
+}

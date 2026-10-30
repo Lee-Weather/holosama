@@ -10,7 +10,7 @@
 | [exp_1](#实验-exp_1g1-平地-ppo-正式训练) | 2026-10-28 | 安装阶段下载 Open3D 时超过 900 秒，未进入 GPU 训练；2026-10-29 完成终止诊断 | 失败 | `TASK_20261028_251` | `limxmts0elyormeym6@uberip.com` | 无；未开始训练 |
 | [exp_1.1](#实验-exp_11精简依赖并重试正式训练) | 2026-10-29 | 完成 5000 轮；末段 episode 均值 887.93 steps；本机 MuJoCo 录像完成，云端录像清理失败 | 已测试 | `TASK_20261029_112`；回放 `TASK_20261029_249` | `limxmts0elyormeym6@uberip.com` | [model_04999.pt](../data/exp_1.1/model_04999.pt) |
 | [exp_2](#实验-exp_2g1-带箱体的搬运跟踪训练) | 2026-10-29 | 安装阶段发现入口切换目录后的输出路径问题，主动停止，未开始 PPO | 失败 | `TASK_20261029_261` | `limxmts0elyormeym6@uberip.com` | 无 |
-| [exp_2.1](#实验-exp_21修正搬箱子入口的工作目录) | 2026-10-29 | 带箱体 smoke 通过；1024 环境正式 PPO 已推进至 iter 48/8000，首个模型配置及权重验收通过 | 训练中 | `TASK_20261029_267` | `limxmts0elyormeym6@uberip.com` | 首个 `model_00000.pt` 已核对；最终预计 `model_07999.pt` |
+| [exp_2.1](#实验-exp_21修正搬箱子入口的工作目录) | 2026-10-29 | 完成 8000 轮，末段回合均值 2.56 秒；本机 MuJoCo 物理回放失败，搬运质量未达标 | 已测试 | `TASK_20261029_267` | `limxmts0elyormeym6@uberip.com` | [model_07999.pt](../data/exp_2.1/model_07999.pt) |
 
 ## 实验 exp0：Flux IsaacLab 上的 G1 PPO 流程验证
 
@@ -572,3 +572,56 @@ exp_2 的带箱体 WBT 配置、CLI 和 motion 在本地验证通过，但任务
 平台实际 keys 已包含箱体位置/姿态奖励及机器人跟踪误差，已取得 `precise` 初期曲线。[早期正式指标](artifacts/exp_2.1/early_formal_metrics.json)、[平台曲线](artifacts/exp_2.1/early_curves.json)。同一个任务含 smoke 和正式两套事件文件，0..1 step 可能重叠；曲线默认 session 不直接用来辨别阶段，阶段身份以 checkpoint 配置和正式日志为准。日志目录仍含旧的 `-locomotion` 后缀，此名称不是任务判据，实际 env_class/scene/motion/reward 均已核对为带箱体 WBT。
 
 **阶段结论：✅ 搬箱子任务身份、GPU smoke、1024 环境开训和首个模型上传/下载通过；8000 轮完成与搬运质量均待后续验收。** 无自动重试，不进行不同输入的误差对比。训练保持运行，正式阶段 21600 秒上限不变。
+
+#### 2026-10-29 18:41 起的训练进度检查
+
+任务 `TASK_20261029_267` 保持状态 3，所属用户仍为 4390。日志读到 iter 1831/8000；稍后的 precise 曲线已到 1859–1860 轮，约完成 23.3%。近期日志未发现异常栈、超时或 OOM，周期 checkpoint 持续上传，最新 `model_01800.pt` 于 18:40:22 上传。
+
+| 指标 | 最近连续 100 轮 / 最新日志 |
+| --- | --- |
+| Mean reward | 平台 steps 1760..1859 均值 3.901075；开训 iter 48 日志为 0.07 |
+| Mean episode length | 同窗口均值 68.431500 steps，控制步长 0.02 秒，约 1.3686 秒；开训日志 10.32 steps |
+| 箱体位置跟踪奖励 | steps 1760..1859 均值 0.116620 |
+| 箱体姿态跟踪奖励 | steps 1761..1860 均值 0.101844；查询时间略晚，窗口与前三项差一轮 |
+| 训练速度 | steps 1761..1860 平均 10,355.47 steps/s；iter 1831 日志为 11,212 steps/s |
+| 日志 ETA | iter 1831 为 13,359.3 秒，约 3 小时 43 分；按该次查询时间估算约 22:25 完成，会随速度变化 |
+
+**判断：训练持续推进，奖励和回合长度较初期有所提高，但当前平均回合约 1.37 秒，仍不足以证明能稳定完成整段 6.5 秒参考搬运。** 箱体项是 episode 奖励，不直接反推位置 RMSE；完整抬升、搬运和脱手/跌落情况仍待独立回放。任务保持运行。
+
+本次单独保存：[日志片段](artifacts/exp_2.1/progress_20261029_184123/startup_excerpt.txt)、[日志指标](artifacts/exp_2.1/progress_20261029_184123/early_formal_metrics.json)、[平台 precise 曲线](artifacts/exp_2.1/progress_20261029_184123/early_curves.json)、[连续窗口统计](artifacts/exp_2.1/progress_20261029_184123/curve_statistics.json)。日志与 API 查询时间不同，不能把两者末点视为同一轮。
+
+#### 最终训练与模型验收（2026-10-30 收尾）
+
+**训练流程成功完成，搬运质量部分达标，尚不能交付稳定搬箱策略。** `TASK_20261029_267` 于 2026-10-29 **22:45:11** 进入成功终态 5，归属仍为指定账号用户 4390；从 17:29:06 起平台总运行 18,965 秒（5 小时 16 分 5 秒，包含安装、smoke 和上传，不能当作纯 PPO 耗时）。实际训练 commit 为 `9d2845701df5a644ebfc1e36d3911ea36475f4c6`。完整 8000 轮、最终 iter=7999，完整日志含 `FLUX_BOX_TRAIN_SUCCESS`。[最终汇总](artifacts/exp_2.1/final_summary.json)、[脱敏完整日志（gzip）](artifacts/exp_2.1/final_training_log.txt.gz)、[云端最终验收](artifacts/exp_2.1/final_flux_box_train_success.json)。
+
+最终 [model_07999.pt](../data/exp_2.1/model_07999.pt) 已下载，6,839,751 bytes，SHA-256=`e2d120660bbc199d0dc03d0bce17a4989ef6117877c2f97f9da72d2c4dbc2c97`；iter、正式项目、1024 环境和 8000 轮计划一致，actor/critic 与两套观测归一化状态均有限，动态箱体任务配置通过。云端 ONNX 1,157,383 bytes，CPU 输出 `[1,29]` 有限，TensorBoard 文件 1 个；未取得 ONNX 本地下载件，不把云端导出验收写成已下载。[模型校验](artifacts/exp_2.1/final_checkpoint_validation.json)、[模型嵌入的实际配置](artifacts/exp_2.1/actual_final_config.json)。
+
+| 指标 | precise 曲线末段 100 轮（7900..7999）均值 | 最后一轮 7999 |
+| --- | --- | --- |
+| Mean reward | 6.877422 | 6.208186 |
+| Mean episode length | 128.145200 steps，约 2.562904 秒 | 115.320000 steps，约 2.306400 秒 |
+| 箱体位置奖励 | 0.215164 | 0.214359 |
+| 箱体姿态奖励 | 0.198361 | 0.193227 |
+| 训练速度 | 9,094.81 steps/s | 8,284 steps/s |
+
+五项曲线均有 steps 0..7999 共 8000 点：[平台最终曲线](artifacts/exp_2.1/final_curves.json)、[窗口统计](artifacts/exp_2.1/final_curve_statistics.json)。相较早期回合约 0.2064 秒，跟踪持续时间提高，但 2.56 秒仍不足以说明稳定覆盖 6.5 秒整段参考片段；原生 WBT 在 motion 片段末尾可重置机器人和箱体而不结束 episode，因此也不能用 episode 长度反推出连续完整搬运次数。箱体奖励不反推位置 RMSE。
+
+#### 最终策略的本机 MuJoCo 物理回放
+
+新增 [replay_g1_box_mujoco.py](../../scripts/replay_g1_box_mujoco.py)，直接加载上述 checkpoint 的确定性 actor、154 维观测及保存的经验归一化（`(obs-mean)/(std+0.01)`），按训练关节名/参考动作顺序重排，保留保存的 PD、力矩限幅及 `0.25 × effort_limit / kp` 动作缩放。使用训练的手部碰撞 URDF、同一箱体碰撞网格；机器人/箱体仅在起始帧赋值，此后由力矩、自由刚体接触与 `mj_step` 推进，无轨迹强制写入、无自动复位、无物体位姿修正。此回放不是原始参考动作动画，也不进行不同输入的误差对比。
+
+本机 MuJoCo **3.15.0**，200 Hz 物理 / 50 Hz 控制，单次名义质量 **2.6 kg**，箱体 geom 滑动摩擦系数 0.35。初始根位置与参考一致，torso 的 URDF FK 与 motion 位置有约 0.01 m 差异；碰撞已启用、29 个电机使用单位 gear。MuJoCo 接触求解、摩擦混合与 PhysX 不同，未逐项复现训练域随机化；这是跨仿真单次物理回放，不能替代原生 IsaacLab 评估或归因所有失败于策略训练。
+
+| 实测结果 | 数值 / 观察 |
+| --- | --- |
+| 回放视频 | [play_box_mujoco.mp4](../data/exp_2.1/play_box_mujoco.mp4)，1280×720 / 50 fps / 325 帧 / 6.5 秒，H.264/yuv420p |
+| 箱体首次越过跟踪阈值 | 0.66 秒（位置 >0.25 m 或姿态 >0.8 rad） |
+| 箱体位置 RMSE / 最大误差 | 1.208848 / 1.629077 m，单次完整无复位回放的轨迹统计 |
+| 箱体最高中心高度 | 0.240614 m；参考片段最高 0.8449 m，未完成预期抬升 |
+| 机器人最低根高度 | 0.062949 m；代表帧约 2 秒已跌倒，箱体留在地面 |
+| 媒体验证 | OpenCV 全 325 帧解码及 FFmpeg `-xerror` 全片解码通过；非空画面，0/0.5/1/2/4/6 秒代表帧已人工查看 |
+| 视频大小 / SHA-256 | 447,470 bytes / `774e8f6384b38910839bd22fbd9ef7ca1079a505fce852ea09b062b1c2d281fd` |
+
+[物理回放与逐帧轨迹](artifacts/exp_2.1/local_box_replay_validation.json)、[视频解码校验](artifacts/exp_2.1/local_box_video_validation.json)、[代表帧](artifacts/exp_2.1/local_box_replay_frames.jpg)。复现：`python scripts/replay_g1_box_mujoco.py`，默认读取本轮最终模型并保存上述视频和证据；脚本 Ruff 检查与实际物理运行通过。
+
+**分级结论：✅ 8000 轮训练、最终 checkpoint/云端 ONNX/上传下载通过；❌ 本次本机 MuJoCo 完整搬运未通过；⚠️ 原生 IsaacLab 的最终策略搬运质量尚无独立回放验收。** 没有自动续训、切换账号或创建新计费回放任务。后续应先在原生环境评估箱体/机器人跟踪与终止原因，再决定是否增加训练预算或修正跨仿真适配，不能只凭本次视频自动重训。

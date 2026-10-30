@@ -1,0 +1,42 @@
+{
+  "Train/mean_reward": {
+    "total_points": 8000,
+    "last_step": 7999,
+    "last": 6.20818567276001,
+    "last_100_mean": 6.877422161102295,
+    "last_100_min": 4.977677345275879,
+    "last_100_max": 8.550651550292969
+  },
+  "Train/mean_episode_length": {
+    "total_points": 8000,
+    "last_step": 7999,
+    "last": 115.31999969482422,
+    "last_100_mean": 128.14519966125488,
+    "last_100_min": 97.22000122070312,
+    "last_100_max": 156.72999572753906
+  },
+  "Episode/rew_object_global_ref_position_error_exp": {
+    "total_points": 8000,
+    "last_step": 7999,
+    "last": 0.21435891091823578,
+    "last_100_mean": 0.21516392454504968,
+    "last_100_min": 0.16330862045288086,
+    "last_100_max": 0.25341278314590454
+  },
+  "Episode/rew_object_global_ref_orientation_error_exp": {
+    "total_points": 8000,
+    "last_step": 7999,
+    "last": 0.19322705268859863,
+    "last_100_mean": 0.1983606158196926,
+    "last_100_min": 0.1497775912284851,
+    "last_100_max": 0.23311662673950195
+  },
+  "Perf/total_fps": {
+    "total_points": 8000,
+    "last_step": 7999,
+    "last": 8284,
+    "last_100_mean": 9094.81,
+    "last_100_min": 8080,
+    "last_100_max": 10166
+  }
+}

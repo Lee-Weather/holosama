@@ -1,0 +1,104 @@
+{
+  "task": {
+    "taskId": "TASK_20261029_267",
+    "taskStatus": "5",
+    "userId": "4390",
+    "startTime": "2026-10-29 17:29:06",
+    "endTime": "2026-10-29 22:45:11",
+    "runtime": "18965"
+  },
+  "checkpoint": {
+    "task": "TASK_20261029_267",
+    "account": "limxmts0elyormeym6@uberip.com",
+    "iteration": 7999,
+    "bytes": 6839751,
+    "sha256": "e2d120660bbc199d0dc03d0bce17a4989ef6117877c2f97f9da72d2c4dbc2c97",
+    "num_envs": 1024,
+    "planned_iterations": 8000,
+    "observation_dimensions": {
+      "actor_obs": 154,
+      "critic_obs": 298
+    },
+    "actor_critic_normalizers_finite": true,
+    "box_task_contract_verified": true,
+    "model_path": "czy\\data\\exp_2.1\\model_07999.pt",
+    "normalizer_shapes": {
+      "_mean": [
+        1,
+        154
+      ],
+      "_var": [
+        1,
+        154
+      ],
+      "_std": [
+        1,
+        154
+      ],
+      "count": []
+    }
+  },
+  "acceptance": {
+    "checkpoint": "/workspace/isaaclab/holosama/logs/flux-exp_2.1-box-20261029_092927/20261029_093425-g1_box_carry_ppo-locomotion/model_07999.pt",
+    "checkpoint_bytes": 6839751,
+    "final_iteration": 7999,
+    "onnx": "/workspace/isaaclab/holosama/logs/flux-exp_2.1-box-20261029_092927/20261029_093425-g1_box_carry_ppo-locomotion/model_07999.onnx",
+    "onnx_bytes": 1157383,
+    "onnx_action_shape": [
+      1,
+      29
+    ],
+    "onnx_actions_finite": true,
+    "tensorboard_files": 1,
+    "preset": "exp:g1-29dof-wbt-w-object",
+    "num_envs": 1024,
+    "object_task_verified": true
+  },
+  "statistics": {
+    "Train/mean_reward": {
+      "total_points": 8000,
+      "last_step": 7999,
+      "last": 6.20818567276001,
+      "last_100_mean": 6.877422161102295,
+      "last_100_min": 4.977677345275879,
+      "last_100_max": 8.550651550292969
+    },
+    "Train/mean_episode_length": {
+      "total_points": 8000,
+      "last_step": 7999,
+      "last": 115.31999969482422,
+      "last_100_mean": 128.14519966125488,
+      "last_100_min": 97.22000122070312,
+      "last_100_max": 156.72999572753906
+    },
+    "Episode/rew_object_global_ref_position_error_exp": {
+      "total_points": 8000,
+      "last_step": 7999,
+      "last": 0.21435891091823578,
+      "last_100_mean": 0.21516392454504968,
+      "last_100_min": 0.16330862045288086,
+      "last_100_max": 0.25341278314590454
+    },
+    "Episode/rew_object_global_ref_orientation_error_exp": {
+      "total_points": 8000,
+      "last_step": 7999,
+      "last": 0.19322705268859863,
+      "last_100_mean": 0.1983606158196926,
+      "last_100_min": 0.1497775912284851,
+      "last_100_max": 0.23311662673950195
+    },
+    "Perf/total_fps": {
+      "total_points": 8000,
+      "last_step": 7999,
+      "last": 8284,
+      "last_100_mean": 9094.81,
+      "last_100_min": 8080,
+      "last_100_max": 10166
+    }
+  },
+  "independent_replay_performed": true,
+  "independent_replay_backend": "MuJoCo 3.15.0",
+  "independent_replay_carry_passed": false,
+  "native_isaaclab_final_replay_verified": false,
+  "replay_evidence": "local_box_replay_validation.json"
+}

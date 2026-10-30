@@ -1,0 +1,21 @@
+{
+  "video": "czy/data/exp_2.1/play_box_mujoco.mp4",
+  "sha256": "774e8f6384b38910839bd22fbd9ef7ca1079a505fce852ea09b062b1c2d281fd",
+  "bytes": 447470,
+  "width": 1280,
+  "height": 720,
+  "fps": 50.0,
+  "decoded_frames": 325,
+  "duration_s": 6.5,
+  "full_ffmpeg_decode": "passed",
+  "frame_std_min": 20.735221735289876,
+  "sample_frames": [
+    0,
+    25,
+    50,
+    100,
+    200,
+    300
+  ],
+  "visual_review": "reviewed: contact/tipping at 0.5s; no completed lift; robot fallen by 2s; box remains on ground"
+}
