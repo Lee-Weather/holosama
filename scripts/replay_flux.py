@@ -48,17 +48,17 @@ def download_checkpoint(encoded_url: str, destination: Path, expected_sha256: st
         raise RuntimeError(f"Checkpoint download or integrity check failed ({type(exc).__name__})") from None
 
 
-def run_worker(plan: dict) -> None:
-    # Match eval_agent.py's import order: simulator modules are loaded by its
-    # launcher, after IsaacSim starts. Use the native deterministic PPO evaluator.
+def replay_configuration(saved, plan):
+    """Build replay configuration without importing a simulator runtime."""
     import dataclasses  # noqa: PLC0415
 
-    from holosoma.eval_agent import run_eval_with_tyro  # noqa: PLC0415
-    from holosoma.utils.eval_utils import CheckpointConfig, load_saved_experiment_config  # noqa: PLC0415
+    if plan.get("box_task"):
+        from train_flux_box import check_task_config  # noqa: PLC0415
 
-    checkpoint_cfg = CheckpointConfig(checkpoint=plan["checkpoint"])
-    saved, wandb_path = load_saved_experiment_config(checkpoint_cfg)
-    if saved.training.num_envs != 2048 or saved.algo.config.num_learning_iterations != 5000:
+        check_task_config(saved.to_serializable_dict(), allow_resume=True)
+        if saved.training.num_envs != 4096 or saved.algo.config.num_learning_iterations != 6000:
+            raise RuntimeError("Box checkpoint does not match the verified continuation")
+    elif saved.training.num_envs != 2048 or saved.algo.config.num_learning_iterations != 5000:
         raise RuntimeError("Checkpoint configuration does not match the formal training run")
     config = saved.get_eval_config()
     video = dataclasses.replace(
@@ -83,6 +83,7 @@ def run_worker(plan: dict) -> None:
             max_eval_steps=steps,
             project=plan["project"],
             name="g1_replay",
+            export_onnx=False,
         ),
         logger=dataclasses.replace(config.logger, video=video, headless_recording=True),
         # Native evaluation otherwise uses a 100000-second timeout. A timeout
@@ -91,10 +92,38 @@ def run_worker(plan: dict) -> None:
             config.simulator,
             config=dataclasses.replace(
                 config.simulator.config,
-                sim=dataclasses.replace(config.simulator.config.sim, max_episode_length_s=60.0),
+                sim=dataclasses.replace(
+                    config.simulator.config.sim, max_episode_length_s=10.0 if plan.get("box_task") else 60.0
+                ),
             ),
         ),
     )
+    if plan.get("box_task"):
+        config = dataclasses.replace(
+            config,
+            algo=dataclasses.replace(config.algo, config=dataclasses.replace(config.algo.config, load_optimizer=False)),
+            observation=dataclasses.replace(
+                config.observation,
+                groups={
+                    name: dataclasses.replace(group, enable_noise=False)
+                    for name, group in config.observation.groups.items()
+                },
+            ),
+        )
+    return config
+
+
+def run_worker(plan: dict) -> None:
+    # Match eval_agent.py's import order: simulator modules are loaded by its
+    # launcher, after IsaacSim starts. Use the native deterministic PPO evaluator.
+    from holosoma.eval_agent import run_eval_with_tyro  # noqa: PLC0415
+    from holosoma.utils.eval_utils import CheckpointConfig, load_saved_experiment_config  # noqa: PLC0415
+
+    checkpoint_cfg = CheckpointConfig(checkpoint=plan["checkpoint"])
+    saved, wandb_path = load_saved_experiment_config(checkpoint_cfg)
+    config = replay_configuration(saved, plan)
+    control_hz = config.simulator.config.sim.fps / config.simulator.config.sim.control_decimation_steps
+    steps = config.training.max_eval_steps
     print("FLUX_REPLAY_EVAL", json.dumps({"steps": steps, "control_hz": control_hz}), flush=True)
     sys.argv = ["eval_agent.py"]
     run_eval_with_tyro(config, checkpoint_cfg, saved, wandb_path)

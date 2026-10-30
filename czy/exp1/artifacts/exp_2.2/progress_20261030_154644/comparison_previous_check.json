@@ -1,0 +1,55 @@
+{
+  "taskId": "TASK_20261030_073",
+  "as_of": "2026-10-30T15:46:44+08:00",
+  "window_current": [
+    11970,
+    12469
+  ],
+  "window_previous": [
+    9918,
+    10417
+  ],
+  "comparison": {
+    "Train/mean_reward": {
+      "previous_500_mean": 9.563667483329773,
+      "current_500_mean": 11.085848398208618,
+      "change_pct": 15.91628857373102
+    },
+    "Train/mean_episode_length": {
+      "previous_500_mean": 181.52037994384764,
+      "current_500_mean": 208.90482009887694,
+      "change_pct": 15.08615184890012
+    },
+    "Episode/rew_object_global_ref_position_error_exp": {
+      "previous_500_mean": 0.31727564281225207,
+      "current_500_mean": 0.365578928232193,
+      "change_pct": 15.224391318473952
+    },
+    "Episode/rew_object_global_ref_orientation_error_exp": {
+      "previous_500_mean": 0.2960414269864559,
+      "current_500_mean": 0.34515629363059996,
+      "change_pct": 16.59053840677207
+    },
+    "Env/motion/error_body_pos": {
+      "previous_500_mean": 0.06729270185530185,
+      "current_500_mean": 0.0641590559259057,
+      "change_pct": -4.656739650808439
+    },
+    "Env/motion/error_joint_pos": {
+      "previous_500_mean": 1.5439895083904267,
+      "current_500_mean": 1.5628162269592285,
+      "change_pct": 1.2193553431867787
+    },
+    "Perf/total_fps": {
+      "previous_500_mean": 23323.934,
+      "current_500_mean": 23084.256,
+      "change_pct": -1.027605377377594
+    },
+    "Loss/actor_learning_rate": {
+      "previous_500_mean": 0.00014820468952530063,
+      "current_500_mean": 0.00014410406455863268,
+      "change_pct": -2.766865866257162
+    }
+  },
+  "interpretation": "Training metrics improved; joint-position error did not improve and no full-clip success evaluation has been run."
+}

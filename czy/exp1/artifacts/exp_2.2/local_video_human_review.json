@@ -1,0 +1,14 @@
+{
+  "representative_times_s": [
+    0.5,
+    2.0,
+    4.0,
+    6.0
+  ],
+  "reviewed": true,
+  "findings": [
+    "Robot lifts and carries the free box, then lowers it near the end.",
+    "No fall observed in sampled frames; full rollout minimum root height 0.54677m.",
+    "Box orientation exceeds training threshold; replay is not a success-rate evaluation."
+  ]
+}

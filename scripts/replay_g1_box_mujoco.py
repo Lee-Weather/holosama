@@ -35,7 +35,7 @@ class BoxPolicy:
         self.cfg = saved["experiment_config"]
         import train_flux_box  # noqa: PLC0415
 
-        train_flux_box.check_task_config(self.cfg)
+        train_flux_box.check_task_config(self.cfg, allow_resume=True)
         self.iteration = int(saved["iter"])
         self.checkpoint_hash = hashlib.sha256(checkpoint.read_bytes()).hexdigest()
         robot = self.cfg["robot"]

@@ -1,0 +1,56 @@
+{
+  "taskId": "TASK_20261030_073",
+  "sampling_mode": "precise",
+  "source": "czy\\exp1\\artifacts\\exp_2.2\\progress_20261030_174602\\trend_summary.json",
+  "iteration": 13999,
+  "last_100": {
+    "Train/mean_reward": {
+      "start": 13900,
+      "end": 13999,
+      "count": 100,
+      "mean": 12.079987382888794
+    },
+    "Train/mean_episode_length": {
+      "start": 13900,
+      "end": 13999,
+      "count": 100,
+      "mean": 227.0076998901367
+    },
+    "Episode/rew_object_global_ref_position_error_exp": {
+      "start": 13900,
+      "end": 13999,
+      "count": 100,
+      "mean": 0.3952338966727257
+    },
+    "Episode/rew_object_global_ref_orientation_error_exp": {
+      "start": 13900,
+      "end": 13999,
+      "count": 100,
+      "mean": 0.3738227015733719
+    },
+    "Env/motion/error_body_pos": {
+      "start": 13900,
+      "end": 13999,
+      "count": 100,
+      "mean": 0.06354951247572899
+    },
+    "Env/motion/error_joint_pos": {
+      "start": 13900,
+      "end": 13999,
+      "count": 100,
+      "mean": 1.5387998163700103
+    },
+    "Perf/total_fps": {
+      "start": 13900,
+      "end": 13999,
+      "count": 100,
+      "mean": 22991.36
+    },
+    "Loss/actor_learning_rate": {
+      "start": 13900,
+      "end": 13999,
+      "count": 100,
+      "mean": 0.00014864765827951487
+    }
+  }
+}

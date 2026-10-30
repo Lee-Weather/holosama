@@ -134,7 +134,7 @@ class IsaacSimVideoRecorder(VideoRecorderInterface):
         self._rgb_annotator = rep.AnnotatorRegistry.get_annotator(
             "rgb", device=self.simulator.device, do_array_copy=False
         )
-        self._rgb_annotator.attach([self._render_product])
+        self._rgb_annotator.attach(self._render_product.path)
 
         logger.debug(f"Created replicator camera at: {self._camera_prim_path}")
         logger.debug(f"Render product resolution: {resolution}")
@@ -249,7 +249,7 @@ class IsaacSimVideoRecorder(VideoRecorderInterface):
         if self._rgb_annotator is not None:
             try:
                 if self._render_product is not None:
-                    self._rgb_annotator.detach([self._render_product])
+                    self._rgb_annotator.detach([self._render_product.path])
             except Exception as exc:
                 failures.append(exc)
             else:

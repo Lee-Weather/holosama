@@ -1,0 +1,21 @@
+{
+  "taskId": "TASK_20261030_073",
+  "account": "limxmts0f9p800yu7g@uberip.com",
+  "userId": 4391,
+  "iteration": 13999,
+  "sha256": "7546092cda21371a8c37a6fac3eb92952a560b9e0bf2484c256bec3a92d05120",
+  "bytes": 6840071,
+  "num_envs": 4096,
+  "additional_iterations": 6000,
+  "save_interval": 100,
+  "actor_critic_normalizers_finite": true,
+  "optimizer_step": 280000,
+  "normalizer_count": 786432000,
+  "model_path": "czy\\data\\exp_2.2\\model_13999.pt",
+  "task": {
+    "taskStatus": "5",
+    "startTime": "2026-10-30 10:18:21",
+    "endTime": "2026-10-30 17:37:08",
+    "runtime": "26327"
+  }
+}

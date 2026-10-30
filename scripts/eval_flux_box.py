@@ -189,8 +189,9 @@ def worker(plan):
 
     checkpoint = plan["checkpoint"]
     data = torch.load(checkpoint, map_location="cpu", weights_only=False)
-    check_task_config(data["experiment_config"])
-    assert int(data["iter"]) == 7999 and data["experiment_config"]["training"]["num_envs"] == 1024
+    check_task_config(data["experiment_config"], allow_resume=True)
+    assert int(data["iter"]) == plan.get("expected_iteration", 7999)
+    assert data["experiment_config"]["training"]["num_envs"] == plan.get("source_num_envs", 1024)
     for name in (
         "actor_model_state_dict",
         "critic_model_state_dict",

@@ -98,3 +98,26 @@ def test_terminal_snapshot_counts_overlapping_causes_once_and_enforces_env_quota
 def test_incomplete_evaluation_is_rejected(evaluation):
     with pytest.raises(RuntimeError, match="0/128"):
         evaluation.summarize([], 128)
+
+
+def test_resumed_box_video_uses_final_model_and_native_timeout(evaluation, monkeypatch, tmp_path):
+    import replay_flux  # noqa: PLC0415
+    from holosoma.config_types.experiment import ExperimentConfig  # noqa: PLC0415
+
+    path = evaluation.ROOT / "czy/data/exp_2.2/model_13999.pt"
+    saved = ExperimentConfig(**torch.load(path, map_location="cpu", weights_only=False)["experiment_config"])
+    config = replay_flux.replay_configuration(
+        saved,
+        {
+            "checkpoint": str(path),
+            "box_task": True,
+            "seconds": 30,
+            "segments": str(tmp_path),
+            "project": "test-resumed-box-video",
+        },
+    )
+    assert config.training.num_envs == 1 and config.training.max_eval_steps == 1500
+    assert config.simulator.config.sim.max_episode_length_s == 10
+    assert config.logger.video.enabled and not config.algo.config.load_optimizer
+    assert config.logger.video.width == 1280 and config.logger.video.height == 720
+    assert all(not group.enable_noise for group in config.observation.groups.values())

@@ -221,3 +221,10 @@ exp_2.1 实测更新（2026-10-29 17:36）：128 环境 × 2 轮带箱体 smoke 
 2026-10-30 用户进一步要求每 100 轮保存并重新提交，且不重复首个 checkpoint 校验。入口现支持 `--save-interval 100`（默认值同为100）和显式 `--skip-capacity-test`；后者仅用于已验证同规模配置的重提，默认仍运行容量门槛。本次跳过重复两轮容量及首模型下载，保留源哈希、任务/状态恢复检查与最终产物验收。4096环境、新增6000轮及原始源模型不变，历史任务不因调整保存间隔而改写参数。
 
 本次每100轮保存的任务为 `TASK_20261030_073`（账号4391），2026-10-30 10:18:21 启动；worker实际 commit `f6566f80dff2c3f8d1549464a2bd0ea38c32cbca`、save_interval=100、skip_capacity_test=true 已核对。没有重复执行首个checkpoint下载验收。任务后续完成情况另行记录。
+
+
+### exp_2.2 训练完成与顺序回放（2026-10-30）
+
+训练 `TASK_20261030_073` 已于17:37:08成功结束，完整4096环境×新增6000次更新至13999；最终checkpoint/ONNX/TensorBoard云端验收通过。仓库最终模型 `czy/data/exp_2.2/model_13999.pt`，digest `7546092cda21371a8c37a6fac3eb92952a560b9e0bf2484c256bec3a92d05120`，两个optimizer step=280000、normalizer count=786432000。最后100轮reward12.079987、episode4.540154秒，不直接等同完整搬运。
+
+用户要求先本地再线上。本机 `replay_g1_box_mujoco.py` 已显式允许续训配置，最终模型6.5秒真实物理回放视频已生成/全片解码/代表帧检查；可抬箱和放下，箱体姿态仍超阈值，不能宣称完整达标。原生线上入口 `replay_flux_box.py --checkpoint-sha256 <digest>` 计划先32×4无视频评估，再1环境30秒720p录像，保留原生失败和clip复位，不学习。新入口与既有旧模型评估分开，不改旧数据。针对旧录像HydraTexture.split错误，annotator现在使用texture.path字符串，随后调用texture.destroy；GPU录像修复是否生效以本次云端任务为准，不仅凭CPU回归宣称成功。

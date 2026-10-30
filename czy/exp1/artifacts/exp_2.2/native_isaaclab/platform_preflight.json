@@ -1,0 +1,75 @@
+{
+  "account": {
+    "email": "limxmts0f9p800yu7g@uberip.com",
+    "userId": 4391
+  },
+  "resources": {
+    "code": 200,
+    "hasNext": false,
+    "msg": "\u64cd\u4f5c\u6210\u529f",
+    "msgEn": "Operation successful",
+    "pageNum": 1,
+    "pageSize": 20,
+    "rows": [
+      {
+        "createBy": "Ash",
+        "createTime": "2025-08-05 15:16:44",
+        "delFlag": "0",
+        "goodsBackCategory": 3,
+        "goodsBackId": "SKUSL000002",
+        "goodsBackSku": {
+          "categoryId": 3,
+          "cpuNum": "20",
+          "createBy": "Ash",
+          "createTime": "2025-08-05 15:07:14",
+          "delFlag": "0",
+          "goodsBackDescription": null,
+          "goodsBackId": "SKUSL000002",
+          "goodsBackName": "1*4090D*24G",
+          "gpuModel": "4090D",
+          "gpuNum": 1,
+          "gpuSize": "24G",
+          "memorySize": "89G",
+          "status": "0",
+          "storageCategory": null,
+          "storageSize": null,
+          "type": "0",
+          "updateBy": "Ash",
+          "updateTime": "2026-09-02 09:48:20"
+        },
+        "goodsDescription": "20260612\u52a0\u6210\u7387\u4ece30%\u63d0\u5347\u81f350%",
+        "goodsId": "ESKU000001",
+        "goodsName": "1*4090D*24G",
+        "goodsPrice": 5.76,
+        "goodsStatus": "0",
+        "shelfTime": null,
+        "takedownTime": null,
+        "updateBy": "Ash",
+        "updateTime": "2026-10-28 10:00:47",
+        "userFlag": "2"
+      }
+    ],
+    "success": true,
+    "time": "2026-10-30 17:48:21",
+    "total": 1
+  },
+  "versions": [
+    {
+      "id": "V000446",
+      "name": "isaac-lab2.3.2-v3|IsaacSim:5.1 | IsaacLab:2.3.2 | python:3.11.13 | PyTorch:2.7.0 | Ubuntu 22.04.5 LTS",
+      "versionCode": "isaac-lab2.3.2-v3"
+    }
+  ],
+  "project": {
+    "createBy": "limxmts0f9p800yu7g",
+    "createTime": "2026-10-30 09:04:47",
+    "delFlag": "0",
+    "projectDescription": "Native IsaacLab evaluation of Holosoma exp_2.1 final policy; no training.",
+    "projectId": "PRO_20261030_002",
+    "projectName": "Holosoma native IsaacLab evaluation",
+    "taskCount": 1,
+    "updateBy": "limxmts0f9p800yu7g",
+    "updateTime": "2026-10-30 09:04:47",
+    "userId": "4391"
+  }
+}
