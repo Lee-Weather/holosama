@@ -29,6 +29,7 @@ def main():
     parser.add_argument("--install-timeout", type=int, default=900)
     parser.add_argument("--evaluation-timeout", type=int, default=900)
     parser.add_argument("--replay-timeout", type=int, default=900)
+    parser.add_argument("--video-only", action="store_true", help="Keep prior native evaluation and only record video")
     args = parser.parse_args()
     env = bootstrap.prepare_environment()
     checkpoint = ROOT / "czy/data/exp_2.2/model_13999.pt"
@@ -53,6 +54,7 @@ def main():
         "box_task": True,
         "seconds": 30,
         "segments": str(output / "segments"),
+        "video_only": args.video_only,
     }
     path = output / "native_replay_plan.json"
     path.write_text(json.dumps(plan, indent=2), encoding="utf-8")
@@ -61,7 +63,10 @@ def main():
     bootstrap.check_gpu(env)
     env["TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD"] = "1"
     env["LOGURU_LEVEL"] = "INFO"
-    for script, timeout in (("eval_flux_box.py", args.evaluation_timeout), ("replay_flux.py", args.replay_timeout)):
+    stages = [("replay_flux.py", args.replay_timeout)]
+    if not args.video_only:
+        stages.insert(0, ("eval_flux_box.py", args.evaluation_timeout))
+    for script, timeout in stages:
         subprocess.run(
             [sys.executable, str(ROOT / "scripts" / script), "--worker-plan", str(path)],
             check=True,
@@ -76,7 +81,7 @@ def main():
     code = (
         "import json,pathlib,sys; "
         f"sys.path.insert(0,{str(ROOT / 'scripts')!r}); import replay_flux; "
-        f"root=pathlib.Path({str(output)!r}); result=replay_flux.assemble_video(root,30); "
+        f"root=pathlib.Path({str(output)!r}); result=replay_flux.assemble_video(root,30,'play_output_13999.mp4'); "
         "(root/'video_result.json').write_text(json.dumps(result,indent=2)); "
         "print('FLUX_BOX_NATIVE_VIDEO_SUCCESS',json.dumps(result),flush=True)"
     )

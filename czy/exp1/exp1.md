@@ -11,7 +11,9 @@
 | [exp_1.1](#实验-exp_11精简依赖并重试正式训练) | 2026-10-29 | 完成 5000 轮；末段 episode 均值 887.93 steps；本机 MuJoCo 录像完成，云端录像清理失败 | 已测试 | `TASK_20261029_112`；回放 `TASK_20261029_249` | `limxmts0elyormeym6@uberip.com` | [model_04999.pt](../data/exp_1.1/model_04999.pt) |
 | [exp_2](#实验-exp_2g1-带箱体的搬运跟踪训练) | 2026-10-29 | 安装阶段发现入口切换目录后的输出路径问题，主动停止，未开始 PPO | 失败 | `TASK_20261029_261` | `limxmts0elyormeym6@uberip.com` | 无 |
 | [exp_2.1](#实验-exp_21修正搬箱子入口的工作目录) | 2026-10-29 | 完成 8000 轮；原生评估完整片段通过 2/128（1.56%），主要为箱体/手脚跟踪失败 | 已测试 | 训练 `TASK_20261029_267`；评估 `TASK_20261030_051` | 训练 `limxmts0elyormeym6@uberip.com`；评估用户 4391，见 §7 | [model_07999.pt](../data/exp_2.1/model_07999.pt) |
-| [exp_2.2](#实验-exp_22原生规模下恢复完整状态续训) | 2026-10-30 | 完成 4096 环境 × 新增 6000 轮；本地策略回放已录制，原生线上回放待验收 | 已测试 | `TASK_20261030_073`（061、065 已停止，见 §7） | `limxmts0f9p800yu7g@uberip.com` / 4391 | 源 `model_07999.pt`；目标 `model_13999.pt` |
+| [exp_2.2](#实验-exp_22原生规模下恢复完整状态续训) | 2026-10-30 | 完成新增6000轮；本地抬箱回放改善，原生片段通过25/128（19.53%），线上补录暂缓 | 已测试 | 训练 `TASK_20261030_073`；原生回放 `TASK_20261030_193`（早期停止尝试见 §7） | `limxmts0f9p800yu7g@uberip.com` / 4391 | 源 `model_07999.pt`；目标 `model_13999.pt` |
+
+| [exp_2.3](#实验-exp_23切换账号从13999继续训练10000轮) | 2026-10-30 | 使用新账号，从13999完整恢复，4096环境新增10000轮，每100轮保存；不录线上视频 | 待训练 | 待创建 | `limxeea82ul1yy1j@maxxspace.com` / 4648 | 源 `model_13999.pt`；目标 `model_23999.pt` |
 
 ## 实验 exp0：Flux IsaacLab 上的 G1 PPO 流程验证
 
@@ -870,3 +872,75 @@ exp_2.1 在 1024 环境完成 8000 轮，最终 `model_07999.pt`；末段 100 �
 按用户授权，在同一账号4391、评估项目 `PRO_20261030_002` 下，计划以最终模型先做与旧模型相同32环境×4回合的原生起点评估，再做1环境、30秒720p原生录像。视频保留10秒timeout、bad_tracking和clip自动复位，录像时长不当作连续搬运成功率。固定模型digest并从授权仓库读取，无训练、不自动重试、不切换账号。
 
 新增 `scripts/replay_flux_box.py` 复用bootstrap，更新原生评估worker允许续训模型并显式核对13999/4096身份。修复上次HydraTexture清理错误：RGB annotator使用render product的字符串path挂接/卸载，随后销毁持有的texture；依据[NVIDIA Replicator接口](https://docs.omniverse.nvidia.com/kit/docs/omni_replicator/1.12.27/source/extensions/omni.replicator.core/docs/API.html)及[返回值变更记录](https://docs.omniverse.nvidia.com/kit/docs/omni_replicator/1.12.27/source/extensions/omni.replicator.core/docs/CHANGELOG.html)。相关CPU检查共12项通过（包括新模型录像配置与HydraTexture清理回归）；本机没有IsaacSim，实际GPU录像效果须由线上任务验收。
+
+线上回放已按顺序创建为 **`TASK_20261030_193`**，账号 `limxmts0f9p800yu7g@uberip.com` / 4391，实际提交版本 `40413a6ad3d7f33292842a2130e9382635166ff2`，镜像 V000446、单GPU。新任务仅评估/录像，无学习。任务启动后结果待验收，不因平台进入运行状态宣称成功。[启动记录](artifacts/exp_2.2/native_isaaclab/launch_plan.json)。
+
+
+#### 原生评估与录像交付状态（2026-10-30 18:02）
+
+线上任务 **`TASK_20261030_193`** 成功终态5，17:51:02–18:02:14，总耗时672秒，账号4391、commit `40413a6ad3d7f33292842a2130e9382635166ff2`。最终13999模型SHA与本地一致；32环境各4条记录、128回合完整且唯一，首片段通过 **25/128=19.53125%**，旧模型为2/128=1.5625%，提高17.96875个百分点；平均回合2.211719秒，旧模型0.88625秒。协议均为原生起点、保留startup/reset随机化、无观测噪声、无push、10秒timeout；保存的seed由旧1变为42，不属于同随机样本的成对对照。
+
+103个首片段失败回合中，箱体位置61次、姿态24次、手脚高度21次（左腕13、左踝5、右腕3）；原因可重叠，涉及箱体的回合去重83/103。全部128回合结束事件另包含已过首片段后在后续片段失败/超时，不能混用计数。**策略质量明显改善，但19.53%的起点片段通过率仍无法支持稳定搬运。** [原生汇总](artifacts/exp_2.2/native_isaaclab/summary.json)、[128条记录](artifacts/exp_2.2/native_isaaclab/episodes.json)、[与旧模型对照](artifacts/exp_2.2/native_isaaclab/comparison.json)、[完整脱敏日志](artifacts/exp_2.2/native_isaaclab/full_log.txt.gz)。
+
+原生录像实际生成16段并成功合并、全片解码：1503帧/50Hz=30.06秒，1280×720，8,525,616字节，SHA=`e5c0b8d6b1cb6b680d8c1dce5746fe5cfef07d930aa3a975f9e0f667a4a69373`。上次HydraTexture清理故障未复现。但平台模型列表只发现14个episode片段，未发现合并视频，因此**不能宣称合并录像已下载交付**。SDK日志检测到`play_output.tmp`，未检测到重命名后的最终mp4；同时有RabbitMQ连接重置/重连日志。合并文件重命名未触发上传是当前定位的发布问题，已将发布改为创建新mp4并增加带模型编号的文件名，CPU回归通过，尚未做云端再验收。
+
+用户随后明确要求暂不录线上视频并切换账号续训：**已停止补录工作，没有创建新的录像任务**。不把视频目录中不存在的文件写成已交付。本地MuJoCo视频已实际归档。[云端视频验收](artifacts/exp_2.2/native_isaaclab/video_validation.json)、[任务终态](artifacts/exp_2.2/native_isaaclab/final_validation.json)、[平台可见文件](artifacts/exp_2.2/native_isaaclab/model_list.json)。
+
+## 实验 exp_2.3：切换账号从13999继续训练10000轮
+
+### 1. 上一实验结果与教训
+
+exp_2.2从旧7999模型新增6000轮至13999，4096环境，每100轮保存。最后100轮reward均值12.079987、episode均值227.007700步（4.540154秒），本地6.5秒回放可抬箱移动，最低根高度0.546773m，但箱体姿态最大误差1.298346rad，1.78秒首次越阈值。原生起点评估首片段通过25/128（19.53125%），相比旧模型2/128有提升，但103次失败中83次涉及箱体跟踪，尚未稳定搬运。
+
+最终13999模型保存完整网络、两套归一化、两套AdamW；两个optimizer step=280000、normalizer count=786432000，实际LR均为0.00017085937500000009。预算增加能继续改善的幅度尚不确定，不能保证再10000轮即可收敛。用户明确要求切换新账号并继续训练，暂不录制线上视频。
+
+### 2. 本轮修改目标
+
+- 仅使用 `limxeea82ul1yy1j@maxxspace.com` / 用户4648，从最终 `model_13999.pt` 完整恢复。
+- 新增10000次PPO更新，正式iter **14000..23999**，4096环境，每100轮保存。
+- 保留任务、奖励、motion、手部碰撞模型、PD、随机化、优化器与经验归一化；不重置成从零训练。
+- 复用已经验证的同规模容量，不重复容量测试或首个checkpoint下载校验，不启动线上录像。
+
+### 3. 修改内容
+
+### 修改六：续训源与计数改为显式参数
+
+`resume_flux_box.py`新增`--checkpoint`、`--checkpoint-sha256`、`--source-iteration`，默认保留旧7999入口兼容性；本轮显式传13999源与digest。父进程启动计划、worker加载、容量/正式阶段和最终验收均传递同一来源，目标按source_iteration+additional_iterations计算。worker允许已续训源的任务配置，逐项核对两套网络/归一化/optimizer后推进到下一轮。
+
+沿用skip-capacity、每100轮保存、原生seed42、24小时学习上限。源checkpoint仍没有env_state，仿真/RNG/采样器历史重新建立；完整恢复仅指checkpoint中已有状态，不代表逐帧续接仿真。新账号通过子进程FLUX_API_KEY固定选择，不回退、不访问旧账号私有checkpoint；读取已授权仓库里的最终模型并核对哈希。
+
+### 4. 修改文件
+
+- `scripts/resume_flux_box.py`：显式源模型、哈希、源迭代及全流程动态目标计数。
+- `tests/test_flux_box_resume.py`：新增13999源配置、错误源计数拒绝、10000轮CLI向正式worker传参验证。
+- 本笔记与flux-cli参考：记录新账号、exp_2.3和此前回放结果；线上视频发布修复保留为未做云端再验收的变更，不触发录像任务。
+
+### 5. 训练参数
+
+| 参数 | 值 |
+| --- | --- |
+| 方式 / 账号 / 用户 | 完整状态续训；`limxeea82ul1yy1j@maxxspace.com` / **4648** |
+| 项目 | `PRO_20261030_012` |
+| 镜像 / 资源 | 本次查询 `BJX00000178` / `V000446`；`ESKU000001` / `SKUSL000002`，单GPU24G |
+| 源模型 | `czy/data/exp_2.2/model_13999.pt`，6,840,071字节 |
+| 源SHA-256 | `7546092cda21371a8c37a6fac3eb92952a560b9e0bf2484c256bec3a92d05120` |
+| 原生任务 / 环境 | g1-29dof-wbt-w-object / **4096** |
+| 新增更新 / 全局编号 | **10000** / **14000..23999**，目标 `model_23999.pt` |
+| 保存 / seed / rollout | **100** / 42 / 24，每轮98,304控制样本 |
+| 本次 / 累计样本 | 983,040,000 / 1,769,472,000控制步 |
+| 优化器 / 归一化 | 两个AdamW、两个normalizer完整恢复；source step280000、count786432000 |
+| 初始实际LR | actor/critic均 **0.00017085937500000009**，adaptive继续调整，不重置1e-3 |
+| 最终预期step / count | 480000 / 1769472000 |
+| 安装 / 正式限时 | 900 / 86400秒；完成10000轮即退出，不强制跑满24小时 |
+| 容量 / 首模型重复校验 | `--skip-capacity-test`，不重复下载校验首个模型 |
+| 视频 / 记录 | 视频关闭；TensorBoard保留，Wandb关闭 |
+| 平台恢复 | trainType=1新worker，算法执行原生完整PPO.load，不跨账号挂载私有任务 |
+| 启动入口 | `gm-run holosama/scripts/resume_flux_box.py --experiment exp_2.3 --checkpoint czy/data/exp_2.2/model_13999.pt --checkpoint-sha256 7546092cda21371a8c37a6fac3eb92952a560b9e0bf2484c256bec3a92d05120 --source-iteration 13999 --additional-iterations 10000 --save-interval 100 --skip-capacity-test --training-timeout 86400` |
+
+### 6. 预期与验收
+
+启动验收只核对新账号/项目归属、云端实际commit、源哈希及13999→14000的完整恢复标记，不重复首checkpoint下载校验。保持同一任务不自动重训或换账号。最终23999模型应对应额外10000轮，optimizer step480000、normalizer count1769472000；结束时按实际结果核对checkpoint/ONNX/TensorBoard。质量目标是后续同协议原生起点评估优于25/128，训练预算完成不替代质量验收，暂不录制线上视频。
+
+### 7. 实验结果
+
+指定账号已经auth whoami核对为用户4648；兼容V000446和单GPU目录重新查询，专用训练项目已创建。真实源模型SHA、网络/优化器/归一化及与原生任务模块一致性核对通过；相关CPU测试共**10项通过**、Ruff通过。[平台预检查](artifacts/exp_2.3/platform_preflight.json)、[本地验证](artifacts/exp_2.3/local_validation.json)、[计划配置](artifacts/exp_2.3/planned_config.json)。尚未提交计费训练任务，任务ID与GPU正式启动结果待本次运行补充。

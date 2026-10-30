@@ -228,3 +228,10 @@ exp_2.1 实测更新（2026-10-29 17:36）：128 环境 × 2 轮带箱体 smoke 
 训练 `TASK_20261030_073` 已于17:37:08成功结束，完整4096环境×新增6000次更新至13999；最终checkpoint/ONNX/TensorBoard云端验收通过。仓库最终模型 `czy/data/exp_2.2/model_13999.pt`，digest `7546092cda21371a8c37a6fac3eb92952a560b9e0bf2484c256bec3a92d05120`，两个optimizer step=280000、normalizer count=786432000。最后100轮reward12.079987、episode4.540154秒，不直接等同完整搬运。
 
 用户要求先本地再线上。本机 `replay_g1_box_mujoco.py` 已显式允许续训配置，最终模型6.5秒真实物理回放视频已生成/全片解码/代表帧检查；可抬箱和放下，箱体姿态仍超阈值，不能宣称完整达标。原生线上入口 `replay_flux_box.py --checkpoint-sha256 <digest>` 计划先32×4无视频评估，再1环境30秒720p录像，保留原生失败和clip复位，不学习。新入口与既有旧模型评估分开，不改旧数据。针对旧录像HydraTexture.split错误，annotator现在使用texture.path字符串，随后调用texture.destroy；GPU录像修复是否生效以本次云端任务为准，不仅凭CPU回归宣称成功。
+
+
+### 原生评估收尾与下一次续训（exp_2.3）
+
+`TASK_20261030_193`（账号4391）成功完成32×4原生评估：13999模型首片段25/128=19.53125%，旧模型2/128；当前seed42、旧seed1，不是配对随机样本。30.06秒原生视频已在云端合并/解码，HydraTexture清理故障未复现，但SDK仅登记episode片段，未登记最终合并mp4；日志检测到.tmp创建、未检测到rename后mp4，并有MQ重连。已把assemble_video发布改为创建mp4、原生输出增加13999编号，CPU回归通过，云端再次上传尚未验证。用户要求暂缓线上录像，未创建新的补录任务，不宣称已交付完整线上视频。
+
+用户新指定 `limxeea82ul1yy1j@maxxspace.com` / 4648，exp_2.3从仓库13999最终模型新增10000轮、4096环境、save100、不重复容量和首模型下载校验。入口现支持显式checkpoint/digest/source-iteration，父计划、worker和最终验收都按13999→14000..23999推导；默认旧源参数兼容历史入口。两个optimizer/normalizer恢复，实际源LR1.70859375e-4，不重置1e-3；模拟器/RNG历史不在源checkpoint中。账号仅为本次用户选择，不作为技能默认账号。新任务实际开训以云端记录为准。

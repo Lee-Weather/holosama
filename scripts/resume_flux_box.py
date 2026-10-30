@@ -1,4 +1,4 @@
-"""Resume the verified box policy for 6000 additional PPO updates at 4096 envs.
+"""Resume a verified box policy for additional PPO updates at 4096 envs.
 
 A separate 4096-env/two-update capacity test runs by default. Formal training
 reloads the original checkpoint, preserving both Adam optimizers and observation
@@ -26,14 +26,14 @@ SOURCE = ROOT / "czy/data/exp_2.1/model_07999.pt"
 SOURCE_SHA256 = "e2d120660bbc199d0dc03d0bce17a4989ef6117877c2f97f9da72d2c4dbc2c97"
 
 
-def load_source():
+def load_source(checkpoint=SOURCE, expected_sha256=SOURCE_SHA256, expected_iteration=7999):
     import torch  # noqa: PLC0415
 
-    if hashlib.sha256(SOURCE.read_bytes()).hexdigest() != SOURCE_SHA256:
+    if hashlib.sha256(checkpoint.read_bytes()).hexdigest() != expected_sha256:
         raise RuntimeError("Source checkpoint digest mismatch")
-    data = torch.load(SOURCE, map_location="cpu", weights_only=False)
-    box.check_task_config(data["experiment_config"])
-    assert int(data["iter"]) == 7999
+    data = torch.load(checkpoint, map_location="cpu", weights_only=False)
+    box.check_task_config(data["experiment_config"], allow_resume=True)
+    assert int(data["iter"]) == expected_iteration
     for name in (
         "actor_model_state_dict",
         "critic_model_state_dict",
@@ -47,7 +47,7 @@ def load_source():
     return data
 
 
-def resume_config(source, project, additional_iterations, *, capacity=False, save_interval=100):
+def resume_config(source, project, additional_iterations, *, capacity=False, save_interval=100, checkpoint=SOURCE):
     from holosoma.config_types.experiment import ExperimentConfig  # noqa: PLC0415
     from holosoma.config_values.logger import disabled  # noqa: PLC0415
     from holosoma.config_values.wbt.g1.experiment import g1_29dof_wbt_w_object as native  # noqa: PLC0415
@@ -72,7 +72,7 @@ def resume_config(source, project, additional_iterations, *, capacity=False, sav
     return dataclasses.replace(
         native,
         training=dataclasses.replace(
-            native.training, checkpoint=str(SOURCE), headless=True, project=project, name="g1_box_resume_ppo"
+            native.training, checkpoint=str(checkpoint), headless=True, project=project, name="g1_box_resume_ppo"
         ),
         logger=dataclasses.replace(
             disabled, video=dataclasses.replace(disabled.video, enabled=False), headless_recording=False
@@ -125,7 +125,7 @@ def restore(algo, source, checkpoint):
             raise RuntimeError(f"Resume restoration mismatch: {name}")
     # Native PPO.load stores the last completed index, while learn starts at
     # current_learning_iteration and performs num_learning_iterations updates.
-    # Advance only this wrapper's runner so index 7999 is never repeated.
+    # Advance only this wrapper's runner so the last completed index is not repeated.
     algo.current_learning_iteration = int(source["iter"]) + 1
     algo.logging_helper.num_learning_iterations = algo.current_learning_iteration + algo.config.num_learning_iterations
     steps = [float(value["step"].item()) for value in source["actor_optimizer_state_dict"]["state"].values()]
@@ -146,13 +146,16 @@ def worker(plan):
     from holosoma.utils.helpers import get_class  # noqa: PLC0415
     from holosoma.utils.sim_utils import setup_simulation_environment, simulation_resource_session  # noqa: PLC0415
 
-    source = load_source()
+    checkpoint = Path(plan.get("source_checkpoint", SOURCE))
+    digest = plan.get("source_sha256", SOURCE_SHA256)
+    source = load_source(checkpoint, digest, plan.get("source_iteration", 7999))
     config = resume_config(
         source,
         plan["project"],
         plan["additional_iterations"],
         capacity=plan["capacity"],
         save_interval=plan.get("save_interval", 100),
+        checkpoint=checkpoint,
     )
     output = Path(plan["result_dir"])
     config.save_config(str(output / "holosoma_config.yaml"))
@@ -164,11 +167,11 @@ def worker(plan):
         )
         algo.setup()
         algo.attach_checkpoint_metadata(config)
-        restored = restore(algo, source, SOURCE)
+        restored = restore(algo, source, checkpoint)
         restored.update(
             num_envs=env.num_envs,
             capacity=plan["capacity"],
-            checkpoint_sha256=SOURCE_SHA256,
+            checkpoint_sha256=digest,
             seed=config.training.seed,
             save_interval=config.algo.config.save_interval,
         )
@@ -179,7 +182,7 @@ def worker(plan):
     print("FLUX_BOX_RESUME_WORKER_EXIT", json.dumps(restored), flush=True)
 
 
-def verify(output, expected_iteration, updates):
+def verify(output, expected_iteration, updates, *, checkpoint=SOURCE, source_sha256=SOURCE_SHA256):
     import torch  # noqa: PLC0415
 
     result = box.bootstrap.verify_artifacts(output, expected_iteration + 1)
@@ -187,7 +190,7 @@ def verify(output, expected_iteration, updates):
     cfg = saved["experiment_config"]
     box.check_task_config(cfg, allow_resume=True)
     assert int(saved["iter"]) == expected_iteration
-    assert cfg["training"]["num_envs"] == 4096 and cfg["training"]["checkpoint"] == str(SOURCE)
+    assert cfg["training"]["num_envs"] == 4096 and cfg["training"]["checkpoint"] == str(checkpoint)
     assert cfg["algo"]["config"]["num_learning_iterations"] == updates
     for name in (
         "actor_model_state_dict",
@@ -197,7 +200,7 @@ def verify(output, expected_iteration, updates):
     ):
         assert all(torch.isfinite(v).all() for v in saved[name].values())
     result.update(
-        source_sha256=SOURCE_SHA256,
+        source_sha256=source_sha256,
         num_envs=4096,
         additional_iterations=updates,
         final_iteration=expected_iteration,
@@ -207,7 +210,19 @@ def verify(output, expected_iteration, updates):
     return result
 
 
-def stage(root, project, iterations, capacity, env, timeout, *, save_interval=100):
+def stage(
+    root,
+    project,
+    iterations,
+    capacity,
+    env,
+    timeout,
+    *,
+    save_interval=100,
+    checkpoint=SOURCE,
+    checkpoint_sha256=SOURCE_SHA256,
+    source_iteration=7999,
+):
     output = root / ("capacity" if capacity else "formal")
     output.mkdir()
     plan = {
@@ -216,6 +231,9 @@ def stage(root, project, iterations, capacity, env, timeout, *, save_interval=10
         "additional_iterations": iterations,
         "capacity": capacity,
         "save_interval": save_interval,
+        "source_checkpoint": str(checkpoint),
+        "source_sha256": checkpoint_sha256,
+        "source_iteration": source_iteration,
     }
     path = output / "worker_plan.json"
     path.write_text(json.dumps(plan, indent=2), encoding="utf-8")
@@ -235,6 +253,9 @@ def main():
     parser.add_argument("--worker-plan", type=Path)
     parser.add_argument("--verify-plan", type=Path)
     parser.add_argument("--experiment", default="exp_2.2")
+    parser.add_argument("--checkpoint", type=Path, default=SOURCE)
+    parser.add_argument("--checkpoint-sha256", default=SOURCE_SHA256)
+    parser.add_argument("--source-iteration", type=int, default=7999)
     parser.add_argument("--additional-iterations", type=int, default=6000)
     parser.add_argument("--save-interval", type=int, default=100)
     parser.add_argument("--skip-capacity-test", action="store_true", help="Reuse prior same-scale capacity validation")
@@ -247,7 +268,13 @@ def main():
         return
     if args.verify_plan:
         plan = json.loads(args.verify_plan.read_text(encoding="utf-8"))
-        result = verify(Path(plan["result_dir"]), 7999 + plan["additional_iterations"], plan["additional_iterations"])
+        result = verify(
+            Path(plan["result_dir"]),
+            plan.get("source_iteration", 7999) + plan["additional_iterations"],
+            plan["additional_iterations"],
+            checkpoint=Path(plan.get("source_checkpoint", SOURCE)),
+            source_sha256=plan.get("source_sha256", SOURCE_SHA256),
+        )
         marker = "FLUX_BOX_CAPACITY_SUCCESS" if plan["capacity"] else "FLUX_BOX_RESUME_SUCCESS"
         print(marker, json.dumps(result), flush=True)
         return
@@ -259,38 +286,54 @@ def main():
         parser.error("Save interval must be 1..additional updates")
     if not 1 <= args.install_timeout <= 1800 or not 1 <= args.capacity_timeout <= 1800:
         parser.error("Installation and capacity limits must be 1..1800 seconds")
+    if args.source_iteration < 0 or not re.fullmatch(r"[a-f0-9]{64}", args.checkpoint_sha256):
+        parser.error("Source iteration must be non-negative and digest must be lowercase SHA-256")
     env = box.bootstrap.prepare_environment()
-    if hashlib.sha256(SOURCE.read_bytes()).hexdigest() != SOURCE_SHA256:
+    checkpoint = args.checkpoint.resolve()
+    if hashlib.sha256(checkpoint.read_bytes()).hexdigest() != args.checkpoint_sha256:
         raise RuntimeError("Source checkpoint digest mismatch before installation")
     project = f"flux-{args.experiment}-box-resume-" + time.strftime("%Y%m%d_%H%M%S", time.gmtime())
     root = (ROOT / "logs" / project).resolve()
     root.mkdir(parents=True)
     plan = {
         "commit": repository_commit(),
-        "source_checkpoint": str(SOURCE),
-        "source_sha256": SOURCE_SHA256,
-        "source_iteration": 7999,
-        "next_iteration": 8000,
-        "expected_final_iteration": 7999 + args.additional_iterations,
+        "source_checkpoint": str(checkpoint),
+        "source_sha256": args.checkpoint_sha256,
+        "source_iteration": args.source_iteration,
+        "next_iteration": args.source_iteration + 1,
+        "expected_final_iteration": args.source_iteration + args.additional_iterations,
         "num_envs": 4096,
         "capacity_iterations": 0 if args.skip_capacity_test else 2,
         **vars(args),
     }
     plan.pop("worker_plan")
     plan.pop("verify_plan")
+    plan["checkpoint"] = str(checkpoint)
     (root / "launch_plan.json").write_text(json.dumps(plan, indent=2), encoding="utf-8")
     print("FLUX_BOX_RESUME_PLAN", json.dumps(plan), flush=True)
     box.bootstrap.install_training_package(env, args.install_timeout)
     box.bootstrap.check_gpu(env)
     env["TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD"] = "1"
+    source_args = {
+        "checkpoint": checkpoint,
+        "checkpoint_sha256": args.checkpoint_sha256,
+        "source_iteration": args.source_iteration,
+    }
     if args.skip_capacity_test:
         print("FLUX_BOX_CAPACITY_SKIPPED prior same-scale validation reused", flush=True)
     else:
         print("FLUX_BOX_CAPACITY_START 4096 envs, 2 updates", flush=True)
-        stage(root, project + "-capacity", 2, True, env, args.capacity_timeout)
+        stage(root, project + "-capacity", 2, True, env, args.capacity_timeout, **source_args)
     print("FLUX_BOX_RESUME_FORMAL_START", project, flush=True)
     stage(
-        root, project, args.additional_iterations, False, env, args.training_timeout, save_interval=args.save_interval
+        root,
+        project,
+        args.additional_iterations,
+        False,
+        env,
+        args.training_timeout,
+        save_interval=args.save_interval,
+        **source_args,
     )
     time.sleep(60)
 

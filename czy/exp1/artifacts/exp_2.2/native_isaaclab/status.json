@@ -1,0 +1,15 @@
+{
+  "taskId": "TASK_20261030_193",
+  "taskStatus": "5",
+  "userId": "4391",
+  "startTime": "2026-10-30 17:51:02",
+  "endTime": "2026-10-30 18:02:14",
+  "runtime": "672",
+  "native_result_available": true,
+  "video_validated": true,
+  "success_marker": true,
+  "errors": [
+    "Traceback (most recent call last):",
+    "Traceback (most recent call last):"
+  ]
+}

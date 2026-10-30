@@ -1,0 +1,12 @@
+{
+  "segments": 16,
+  "frames": 1503,
+  "fps": 50.0,
+  "duration_s": 30.06,
+  "width": 1280,
+  "height": 720,
+  "max_sample_contrast": 37.58611297607422,
+  "max_sample_frame_difference": 19.787384033203125,
+  "bytes": 8525616,
+  "sha256": "e5c0b8d6b1cb6b680d8c1dce5746fe5cfef07d930aa3a975f9e0f667a4a69373"
+}

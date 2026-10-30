@@ -1,0 +1,1594 @@
+{
+  "summary": {
+    "completed_episodes": 128,
+    "first_clip_completed_episodes": 25,
+    "first_clip_success_rate": 0.1953125,
+    "mean_episode_seconds": 2.21171875,
+    "min_episode_seconds": 0.12,
+    "max_episode_seconds": 10.02,
+    "termination_counts_overlapping": {
+      "bad_object_ori": 31,
+      "bad_object_pos": 73,
+      "bad_motion_body_pos": 25,
+      "body_height:left_wrist_yaw_link": 16,
+      "body_height:left_ankle_roll_link": 5,
+      "body_height:right_wrist_yaw_link": 4,
+      "timeout": 3
+    },
+    "control_steps": 1040,
+    "active_state_samples": 14155,
+    "object_position_rmse_before_reset_m": 0.11850227874206082,
+    "object_mean_orientation_error_before_reset_rad": 0.24085220624154868,
+    "box_max_center_height_m": 0.8603578209877014,
+    "robot_min_root_height_m": 0.4678741991519928
+  },
+  "episodes": [
+    {
+      "env_id": 23,
+      "episode_index": 1,
+      "duration_s": 0.12,
+      "motion_frame_at_termination": 6,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.12294995039701462,
+      "object_orientation_error_rad": 0.8452342748641968
+    },
+    {
+      "env_id": 16,
+      "episode_index": 1,
+      "duration_s": 0.16,
+      "motion_frame_at_termination": 8,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2624116837978363,
+      "object_orientation_error_rad": 0.28418004512786865
+    },
+    {
+      "env_id": 1,
+      "episode_index": 1,
+      "duration_s": 0.2,
+      "motion_frame_at_termination": 10,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.08844277262687683,
+      "object_orientation_error_rad": 0.1506577879190445
+    },
+    {
+      "env_id": 15,
+      "episode_index": 1,
+      "duration_s": 0.2,
+      "motion_frame_at_termination": 10,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.07475436478853226,
+      "object_orientation_error_rad": 0.35322868824005127
+    },
+    {
+      "env_id": 18,
+      "episode_index": 1,
+      "duration_s": 0.2,
+      "motion_frame_at_termination": 10,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.250735342502594,
+      "object_orientation_error_rad": 0.6552476286888123
+    },
+    {
+      "env_id": 21,
+      "episode_index": 1,
+      "duration_s": 0.2,
+      "motion_frame_at_termination": 10,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.09955565631389618,
+      "object_orientation_error_rad": 0.2861946225166321
+    },
+    {
+      "env_id": 9,
+      "episode_index": 1,
+      "duration_s": 0.28,
+      "motion_frame_at_termination": 14,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.18301233649253845,
+      "object_orientation_error_rad": 0.8014640808105469
+    },
+    {
+      "env_id": 23,
+      "episode_index": 2,
+      "duration_s": 0.2,
+      "motion_frame_at_termination": 10,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.17315877974033356,
+      "object_orientation_error_rad": 0.8483624458312988
+    },
+    {
+      "env_id": 21,
+      "episode_index": 2,
+      "duration_s": 0.2,
+      "motion_frame_at_termination": 10,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "bad_object_ori",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.1974221169948578,
+      "object_orientation_error_rad": 0.8576383590698242
+    },
+    {
+      "env_id": 13,
+      "episode_index": 1,
+      "duration_s": 0.98,
+      "motion_frame_at_termination": 49,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.07619214802980423,
+      "object_orientation_error_rad": 0.8062204122543335
+    },
+    {
+      "env_id": 6,
+      "episode_index": 1,
+      "duration_s": 1.1400000000000001,
+      "motion_frame_at_termination": 57,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2579907178878784,
+      "object_orientation_error_rad": 0.10477142781019211
+    },
+    {
+      "env_id": 13,
+      "episode_index": 2,
+      "duration_s": 0.16,
+      "motion_frame_at_termination": 8,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_ankle_roll_link"
+      ],
+      "object_position_error_m": 0.17494527995586395,
+      "object_orientation_error_rad": 0.4583783447742462
+    },
+    {
+      "env_id": 7,
+      "episode_index": 1,
+      "duration_s": 1.26,
+      "motion_frame_at_termination": 63,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2509985566139221,
+      "object_orientation_error_rad": 0.16258330643177032
+    },
+    {
+      "env_id": 13,
+      "episode_index": 3,
+      "duration_s": 0.12,
+      "motion_frame_at_termination": 6,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2749430239200592,
+      "object_orientation_error_rad": 0.40218308568000793
+    },
+    {
+      "env_id": 8,
+      "episode_index": 1,
+      "duration_s": 1.28,
+      "motion_frame_at_termination": 64,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.23860841989517212,
+      "object_orientation_error_rad": 0.8224689960479736
+    },
+    {
+      "env_id": 28,
+      "episode_index": 1,
+      "duration_s": 1.28,
+      "motion_frame_at_termination": 64,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.28379592299461365,
+      "object_orientation_error_rad": 0.49730661511421204
+    },
+    {
+      "env_id": 17,
+      "episode_index": 1,
+      "duration_s": 1.32,
+      "motion_frame_at_termination": 66,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25924909114837646,
+      "object_orientation_error_rad": 0.5997238159179688
+    },
+    {
+      "env_id": 19,
+      "episode_index": 1,
+      "duration_s": 1.32,
+      "motion_frame_at_termination": 66,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2521761357784271,
+      "object_orientation_error_rad": 0.3205907642841339
+    },
+    {
+      "env_id": 25,
+      "episode_index": 1,
+      "duration_s": 1.32,
+      "motion_frame_at_termination": 66,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25930607318878174,
+      "object_orientation_error_rad": 0.29834067821502686
+    },
+    {
+      "env_id": 27,
+      "episode_index": 1,
+      "duration_s": 1.32,
+      "motion_frame_at_termination": 66,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.21025259792804718,
+      "object_orientation_error_rad": 0.8224029541015625
+    },
+    {
+      "env_id": 4,
+      "episode_index": 1,
+      "duration_s": 1.34,
+      "motion_frame_at_termination": 67,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25206848978996277,
+      "object_orientation_error_rad": 0.18126781284809113
+    },
+    {
+      "env_id": 3,
+      "episode_index": 1,
+      "duration_s": 1.36,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2618611454963684,
+      "object_orientation_error_rad": 0.29312217235565186
+    },
+    {
+      "env_id": 5,
+      "episode_index": 1,
+      "duration_s": 1.36,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25442594289779663,
+      "object_orientation_error_rad": 0.22253656387329102
+    },
+    {
+      "env_id": 11,
+      "episode_index": 1,
+      "duration_s": 1.36,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2651844918727875,
+      "object_orientation_error_rad": 0.2982679307460785
+    },
+    {
+      "env_id": 12,
+      "episode_index": 1,
+      "duration_s": 1.4000000000000001,
+      "motion_frame_at_termination": 70,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2534133195877075,
+      "object_orientation_error_rad": 0.7196245193481445
+    },
+    {
+      "env_id": 20,
+      "episode_index": 1,
+      "duration_s": 1.4000000000000001,
+      "motion_frame_at_termination": 70,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2610020637512207,
+      "object_orientation_error_rad": 0.5513037443161011
+    },
+    {
+      "env_id": 15,
+      "episode_index": 2,
+      "duration_s": 1.22,
+      "motion_frame_at_termination": 61,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.18023835122585297,
+      "object_orientation_error_rad": 0.854924201965332
+    },
+    {
+      "env_id": 2,
+      "episode_index": 1,
+      "duration_s": 1.44,
+      "motion_frame_at_termination": 72,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.16615118086338043,
+      "object_orientation_error_rad": 0.8056673407554626
+    },
+    {
+      "env_id": 13,
+      "episode_index": 4,
+      "duration_s": 0.18,
+      "motion_frame_at_termination": 9,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2513529062271118,
+      "object_orientation_error_rad": 0.7071062922477722
+    },
+    {
+      "env_id": 18,
+      "episode_index": 2,
+      "duration_s": 1.3,
+      "motion_frame_at_termination": 65,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2517516613006592,
+      "object_orientation_error_rad": 0.42120474576950073
+    },
+    {
+      "env_id": 27,
+      "episode_index": 2,
+      "duration_s": 0.18,
+      "motion_frame_at_termination": 9,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.17462705075740814,
+      "object_orientation_error_rad": 0.8463664650917053
+    },
+    {
+      "env_id": 1,
+      "episode_index": 2,
+      "duration_s": 1.32,
+      "motion_frame_at_termination": 66,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.21649150550365448,
+      "object_orientation_error_rad": 0.8260608911514282
+    },
+    {
+      "env_id": 5,
+      "episode_index": 2,
+      "duration_s": 0.26,
+      "motion_frame_at_termination": 13,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.24326512217521667,
+      "object_orientation_error_rad": 0.8151622414588928
+    },
+    {
+      "env_id": 20,
+      "episode_index": 2,
+      "duration_s": 0.22,
+      "motion_frame_at_termination": 11,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.22293716669082642,
+      "object_orientation_error_rad": 0.7540423274040222
+    },
+    {
+      "env_id": 23,
+      "episode_index": 3,
+      "duration_s": 1.3,
+      "motion_frame_at_termination": 65,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.23215390741825104,
+      "object_orientation_error_rad": 0.8250924944877625
+    },
+    {
+      "env_id": 3,
+      "episode_index": 2,
+      "duration_s": 0.32,
+      "motion_frame_at_termination": 16,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2533319592475891,
+      "object_orientation_error_rad": 0.6545145511627197
+    },
+    {
+      "env_id": 6,
+      "episode_index": 2,
+      "duration_s": 0.54,
+      "motion_frame_at_termination": 27,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:right_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.13982999324798584,
+      "object_orientation_error_rad": 0.5241935849189758
+    },
+    {
+      "env_id": 21,
+      "episode_index": 3,
+      "duration_s": 1.34,
+      "motion_frame_at_termination": 67,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.18171896040439606,
+      "object_orientation_error_rad": 0.8265008926391602
+    },
+    {
+      "env_id": 1,
+      "episode_index": 3,
+      "duration_s": 0.28,
+      "motion_frame_at_termination": 14,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos",
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.2605541944503784,
+      "object_orientation_error_rad": 0.8097866177558899
+    },
+    {
+      "env_id": 25,
+      "episode_index": 2,
+      "duration_s": 0.5,
+      "motion_frame_at_termination": 25,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:right_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.07320120930671692,
+      "object_orientation_error_rad": 0.14930665493011475
+    },
+    {
+      "env_id": 6,
+      "episode_index": 3,
+      "duration_s": 0.52,
+      "motion_frame_at_termination": 26,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.23199597001075745,
+      "object_orientation_error_rad": 0.804358184337616
+    },
+    {
+      "env_id": 1,
+      "episode_index": 4,
+      "duration_s": 0.56,
+      "motion_frame_at_termination": 28,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25234296917915344,
+      "object_orientation_error_rad": 0.6564702987670898
+    },
+    {
+      "env_id": 6,
+      "episode_index": 4,
+      "duration_s": 0.24,
+      "motion_frame_at_termination": 12,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2608543038368225,
+      "object_orientation_error_rad": 0.40128517150878906
+    },
+    {
+      "env_id": 11,
+      "episode_index": 2,
+      "duration_s": 1.22,
+      "motion_frame_at_termination": 61,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.21014833450317383,
+      "object_orientation_error_rad": 0.8000800609588623
+    },
+    {
+      "env_id": 7,
+      "episode_index": 2,
+      "duration_s": 1.34,
+      "motion_frame_at_termination": 67,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.2092331051826477,
+      "object_orientation_error_rad": 0.8669874668121338
+    },
+    {
+      "env_id": 28,
+      "episode_index": 2,
+      "duration_s": 1.36,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.26103276014328003,
+      "object_orientation_error_rad": 0.34410327672958374
+    },
+    {
+      "env_id": 4,
+      "episode_index": 2,
+      "duration_s": 1.36,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.266450434923172,
+      "object_orientation_error_rad": 0.5192146301269531
+    },
+    {
+      "env_id": 12,
+      "episode_index": 2,
+      "duration_s": 1.34,
+      "motion_frame_at_termination": 67,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2706456780433655,
+      "object_orientation_error_rad": 0.46407389640808105
+    },
+    {
+      "env_id": 18,
+      "episode_index": 3,
+      "duration_s": 1.3,
+      "motion_frame_at_termination": 65,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.26190635561943054,
+      "object_orientation_error_rad": 0.4596056640148163
+    },
+    {
+      "env_id": 7,
+      "episode_index": 3,
+      "duration_s": 0.26,
+      "motion_frame_at_termination": 13,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.252914696931839,
+      "object_orientation_error_rad": 0.37935951352119446
+    },
+    {
+      "env_id": 27,
+      "episode_index": 3,
+      "duration_s": 1.36,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2645234763622284,
+      "object_orientation_error_rad": 0.45392829179763794
+    },
+    {
+      "env_id": 15,
+      "episode_index": 3,
+      "duration_s": 1.5,
+      "motion_frame_at_termination": 75,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.23579023778438568,
+      "object_orientation_error_rad": 0.8236900568008423
+    },
+    {
+      "env_id": 3,
+      "episode_index": 3,
+      "duration_s": 1.26,
+      "motion_frame_at_termination": 63,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos",
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.2610885202884674,
+      "object_orientation_error_rad": 0.8043094277381897
+    },
+    {
+      "env_id": 23,
+      "episode_index": 4,
+      "duration_s": 1.32,
+      "motion_frame_at_termination": 66,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2564128041267395,
+      "object_orientation_error_rad": 0.7105627655982971
+    },
+    {
+      "env_id": 5,
+      "episode_index": 3,
+      "duration_s": 1.36,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2655333876609802,
+      "object_orientation_error_rad": 0.2517119348049164
+    },
+    {
+      "env_id": 8,
+      "episode_index": 2,
+      "duration_s": 1.76,
+      "motion_frame_at_termination": 88,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.253360390663147,
+      "object_orientation_error_rad": 0.17657268047332764
+    },
+    {
+      "env_id": 19,
+      "episode_index": 2,
+      "duration_s": 1.74,
+      "motion_frame_at_termination": 87,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2508983016014099,
+      "object_orientation_error_rad": 0.7675150632858276
+    },
+    {
+      "env_id": 7,
+      "episode_index": 4,
+      "duration_s": 0.22,
+      "motion_frame_at_termination": 11,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.21191412210464478,
+      "object_orientation_error_rad": 0.47773152589797974
+    },
+    {
+      "env_id": 25,
+      "episode_index": 3,
+      "duration_s": 1.34,
+      "motion_frame_at_termination": 67,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2547394335269928,
+      "object_orientation_error_rad": 0.31785377860069275
+    },
+    {
+      "env_id": 28,
+      "episode_index": 3,
+      "duration_s": 0.52,
+      "motion_frame_at_termination": 26,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_ankle_roll_link"
+      ],
+      "object_position_error_m": 0.1341911256313324,
+      "object_orientation_error_rad": 0.2578941285610199
+    },
+    {
+      "env_id": 21,
+      "episode_index": 4,
+      "duration_s": 1.52,
+      "motion_frame_at_termination": 76,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.2134406417608261,
+      "object_orientation_error_rad": 0.8013103604316711
+    },
+    {
+      "env_id": 15,
+      "episode_index": 4,
+      "duration_s": 0.46,
+      "motion_frame_at_termination": 23,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_ankle_roll_link"
+      ],
+      "object_position_error_m": 0.2207949310541153,
+      "object_orientation_error_rad": 0.3963039517402649
+    },
+    {
+      "env_id": 12,
+      "episode_index": 3,
+      "duration_s": 1.36,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.19196926057338715,
+      "object_orientation_error_rad": 0.8358489871025085
+    },
+    {
+      "env_id": 27,
+      "episode_index": 4,
+      "duration_s": 1.32,
+      "motion_frame_at_termination": 66,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2693149149417877,
+      "object_orientation_error_rad": 0.21955646574497223
+    },
+    {
+      "env_id": 5,
+      "episode_index": 4,
+      "duration_s": 1.26,
+      "motion_frame_at_termination": 63,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25213196873664856,
+      "object_orientation_error_rad": 0.5570024251937866
+    },
+    {
+      "env_id": 3,
+      "episode_index": 4,
+      "duration_s": 1.32,
+      "motion_frame_at_termination": 66,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25784629583358765,
+      "object_orientation_error_rad": 0.6927790641784668
+    },
+    {
+      "env_id": 8,
+      "episode_index": 3,
+      "duration_s": 1.3,
+      "motion_frame_at_termination": 65,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25133585929870605,
+      "object_orientation_error_rad": 0.3185407221317291
+    },
+    {
+      "env_id": 19,
+      "episode_index": 3,
+      "duration_s": 1.3800000000000001,
+      "motion_frame_at_termination": 69,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2517855763435364,
+      "object_orientation_error_rad": 0.21752554178237915
+    },
+    {
+      "env_id": 25,
+      "episode_index": 4,
+      "duration_s": 1.32,
+      "motion_frame_at_termination": 66,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25994375348091125,
+      "object_orientation_error_rad": 0.7428587675094604
+    },
+    {
+      "env_id": 28,
+      "episode_index": 4,
+      "duration_s": 1.32,
+      "motion_frame_at_termination": 66,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2614070177078247,
+      "object_orientation_error_rad": 0.590157151222229
+    },
+    {
+      "env_id": 12,
+      "episode_index": 4,
+      "duration_s": 1.36,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2611895501613617,
+      "object_orientation_error_rad": 0.18422819674015045
+    },
+    {
+      "env_id": 22,
+      "episode_index": 1,
+      "duration_s": 6.66,
+      "motion_frame_at_termination": 8,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.20237335562705994,
+      "object_orientation_error_rad": 0.6345503330230713
+    },
+    {
+      "env_id": 0,
+      "episode_index": 1,
+      "duration_s": 6.68,
+      "motion_frame_at_termination": 9,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25531622767448425,
+      "object_orientation_error_rad": 0.20143762230873108
+    },
+    {
+      "env_id": 10,
+      "episode_index": 1,
+      "duration_s": 6.86,
+      "motion_frame_at_termination": 18,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25289687514305115,
+      "object_orientation_error_rad": 0.6230770945549011
+    },
+    {
+      "env_id": 29,
+      "episode_index": 1,
+      "duration_s": 6.86,
+      "motion_frame_at_termination": 18,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_pos",
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.2571696639060974,
+      "object_orientation_error_rad": 0.8724805116653442
+    },
+    {
+      "env_id": 9,
+      "episode_index": 2,
+      "duration_s": 6.68,
+      "motion_frame_at_termination": 9,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.02761010266840458,
+      "object_orientation_error_rad": 0.0363045260310173
+    },
+    {
+      "env_id": 24,
+      "episode_index": 1,
+      "duration_s": 7.04,
+      "motion_frame_at_termination": 27,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.227976992726326,
+      "object_orientation_error_rad": 0.8011959791183472
+    },
+    {
+      "env_id": 29,
+      "episode_index": 2,
+      "duration_s": 0.24,
+      "motion_frame_at_termination": 12,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25200438499450684,
+      "object_orientation_error_rad": 0.18372273445129395
+    },
+    {
+      "env_id": 16,
+      "episode_index": 2,
+      "duration_s": 7.0200000000000005,
+      "motion_frame_at_termination": 26,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:right_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.03887353837490082,
+      "object_orientation_error_rad": 0.023622242733836174
+    },
+    {
+      "env_id": 26,
+      "episode_index": 1,
+      "duration_s": 7.18,
+      "motion_frame_at_termination": 34,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.12488815188407898,
+      "object_orientation_error_rad": 0.8153088688850403
+    },
+    {
+      "env_id": 29,
+      "episode_index": 3,
+      "duration_s": 0.2,
+      "motion_frame_at_termination": 10,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.17028549313545227,
+      "object_orientation_error_rad": 0.4312451183795929
+    },
+    {
+      "env_id": 16,
+      "episode_index": 3,
+      "duration_s": 0.2,
+      "motion_frame_at_termination": 10,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.27513420581817627,
+      "object_orientation_error_rad": 0.7887888550758362
+    },
+    {
+      "env_id": 26,
+      "episode_index": 2,
+      "duration_s": 0.2,
+      "motion_frame_at_termination": 10,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.03916926681995392,
+      "object_orientation_error_rad": 0.03627516329288483
+    },
+    {
+      "env_id": 14,
+      "episode_index": 1,
+      "duration_s": 7.84,
+      "motion_frame_at_termination": 67,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25546735525131226,
+      "object_orientation_error_rad": 0.19161522388458252
+    },
+    {
+      "env_id": 30,
+      "episode_index": 1,
+      "duration_s": 7.86,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2615646719932556,
+      "object_orientation_error_rad": 0.4714120328426361
+    },
+    {
+      "env_id": 31,
+      "episode_index": 1,
+      "duration_s": 7.86,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2535545527935028,
+      "object_orientation_error_rad": 0.34912729263305664
+    },
+    {
+      "env_id": 22,
+      "episode_index": 2,
+      "duration_s": 1.46,
+      "motion_frame_at_termination": 73,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2522376775741577,
+      "object_orientation_error_rad": 0.5236909985542297
+    },
+    {
+      "env_id": 17,
+      "episode_index": 2,
+      "duration_s": 6.82,
+      "motion_frame_at_termination": 16,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25161129236221313,
+      "object_orientation_error_rad": 0.5969440340995789
+    },
+    {
+      "env_id": 2,
+      "episode_index": 2,
+      "duration_s": 6.84,
+      "motion_frame_at_termination": 17,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.24200686812400818,
+      "object_orientation_error_rad": 0.8058791756629944
+    },
+    {
+      "env_id": 20,
+      "episode_index": 3,
+      "duration_s": 6.68,
+      "motion_frame_at_termination": 9,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.2464800477027893,
+      "object_orientation_error_rad": 0.8019066452980042
+    },
+    {
+      "env_id": 9,
+      "episode_index": 3,
+      "duration_s": 1.36,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.26325634121894836,
+      "object_orientation_error_rad": 0.16773992776870728
+    },
+    {
+      "env_id": 24,
+      "episode_index": 2,
+      "duration_s": 1.36,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2541501224040985,
+      "object_orientation_error_rad": 0.35762348771095276
+    },
+    {
+      "env_id": 30,
+      "episode_index": 2,
+      "duration_s": 0.56,
+      "motion_frame_at_termination": 28,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.062383897602558136,
+      "object_orientation_error_rad": 0.12114377319812775
+    },
+    {
+      "env_id": 31,
+      "episode_index": 2,
+      "duration_s": 0.56,
+      "motion_frame_at_termination": 28,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.040968168526887894,
+      "object_orientation_error_rad": 0.035378340631723404
+    },
+    {
+      "env_id": 9,
+      "episode_index": 4,
+      "duration_s": 0.22,
+      "motion_frame_at_termination": 11,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.26117560267448425,
+      "object_orientation_error_rad": 0.3329217731952667
+    },
+    {
+      "env_id": 31,
+      "episode_index": 3,
+      "duration_s": 0.18,
+      "motion_frame_at_termination": 9,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.22528484463691711,
+      "object_orientation_error_rad": 0.4841102361679077
+    },
+    {
+      "env_id": 29,
+      "episode_index": 4,
+      "duration_s": 1.3800000000000001,
+      "motion_frame_at_termination": 69,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2519285976886749,
+      "object_orientation_error_rad": 0.5722320675849915
+    },
+    {
+      "env_id": 16,
+      "episode_index": 4,
+      "duration_s": 1.36,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2612149715423584,
+      "object_orientation_error_rad": 0.38374951481819153
+    },
+    {
+      "env_id": 31,
+      "episode_index": 4,
+      "duration_s": 0.2,
+      "motion_frame_at_termination": 10,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.10688187181949615,
+      "object_orientation_error_rad": 0.409125417470932
+    },
+    {
+      "env_id": 30,
+      "episode_index": 3,
+      "duration_s": 0.5,
+      "motion_frame_at_termination": 25,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:right_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.22413302958011627,
+      "object_orientation_error_rad": 0.4586101770401001
+    },
+    {
+      "env_id": 30,
+      "episode_index": 4,
+      "duration_s": 0.16,
+      "motion_frame_at_termination": 8,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25219494104385376,
+      "object_orientation_error_rad": 0.7758908867835999
+    },
+    {
+      "env_id": 14,
+      "episode_index": 2,
+      "duration_s": 1.32,
+      "motion_frame_at_termination": 66,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.26508399844169617,
+      "object_orientation_error_rad": 0.3801274299621582
+    },
+    {
+      "env_id": 17,
+      "episode_index": 3,
+      "duration_s": 1.3,
+      "motion_frame_at_termination": 65,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2704251706600189,
+      "object_orientation_error_rad": 0.6494035124778748
+    },
+    {
+      "env_id": 18,
+      "episode_index": 4,
+      "duration_s": 6.68,
+      "motion_frame_at_termination": 9,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2622324824333191,
+      "object_orientation_error_rad": 0.08275508135557175
+    },
+    {
+      "env_id": 22,
+      "episode_index": 3,
+      "duration_s": 1.3800000000000001,
+      "motion_frame_at_termination": 69,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.26434722542762756,
+      "object_orientation_error_rad": 0.20933650434017181
+    },
+    {
+      "env_id": 2,
+      "episode_index": 3,
+      "duration_s": 1.32,
+      "motion_frame_at_termination": 66,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.265290230512619,
+      "object_orientation_error_rad": 0.18369793891906738
+    },
+    {
+      "env_id": 20,
+      "episode_index": 4,
+      "duration_s": 1.3800000000000001,
+      "motion_frame_at_termination": 69,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2664403021335602,
+      "object_orientation_error_rad": 0.3381733298301697
+    },
+    {
+      "env_id": 22,
+      "episode_index": 4,
+      "duration_s": 0.2,
+      "motion_frame_at_termination": 10,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.06828156113624573,
+      "object_orientation_error_rad": 0.10057032108306885
+    },
+    {
+      "env_id": 2,
+      "episode_index": 4,
+      "duration_s": 0.16,
+      "motion_frame_at_termination": 8,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.26702722907066345,
+      "object_orientation_error_rad": 0.4198661744594574
+    },
+    {
+      "env_id": 14,
+      "episode_index": 3,
+      "duration_s": 1.36,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25154125690460205,
+      "object_orientation_error_rad": 0.23650097846984863
+    },
+    {
+      "env_id": 4,
+      "episode_index": 3,
+      "duration_s": 7.84,
+      "motion_frame_at_termination": 67,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2656339108943939,
+      "object_orientation_error_rad": 0.27987152338027954
+    },
+    {
+      "env_id": 14,
+      "episode_index": 4,
+      "duration_s": 1.4000000000000001,
+      "motion_frame_at_termination": 70,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.26388853788375854,
+      "object_orientation_error_rad": 0.22086195647716522
+    },
+    {
+      "env_id": 8,
+      "episode_index": 4,
+      "duration_s": 7.86,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.256408154964447,
+      "object_orientation_error_rad": 0.5658263564109802
+    },
+    {
+      "env_id": 24,
+      "episode_index": 3,
+      "duration_s": 4.1,
+      "motion_frame_at_termination": 205,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.11498256772756577,
+      "object_orientation_error_rad": 0.8059855699539185
+    },
+    {
+      "env_id": 11,
+      "episode_index": 3,
+      "duration_s": 10.02,
+      "motion_frame_at_termination": 176,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "timeout"
+      ],
+      "object_position_error_m": 0.12918615341186523,
+      "object_orientation_error_rad": 0.47140800952911377
+    },
+    {
+      "env_id": 24,
+      "episode_index": 4,
+      "duration_s": 0.54,
+      "motion_frame_at_termination": 27,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.20086398720741272,
+      "object_orientation_error_rad": 0.8203439116477966
+    },
+    {
+      "env_id": 10,
+      "episode_index": 2,
+      "duration_s": 6.68,
+      "motion_frame_at_termination": 9,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_wrist_yaw_link"
+      ],
+      "object_position_error_m": 0.18020910024642944,
+      "object_orientation_error_rad": 0.330060750246048
+    },
+    {
+      "env_id": 11,
+      "episode_index": 4,
+      "duration_s": 1.3800000000000001,
+      "motion_frame_at_termination": 69,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2675824463367462,
+      "object_orientation_error_rad": 0.44380393624305725
+    },
+    {
+      "env_id": 19,
+      "episode_index": 4,
+      "duration_s": 10.02,
+      "motion_frame_at_termination": 176,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "timeout"
+      ],
+      "object_position_error_m": 0.10771416127681732,
+      "object_orientation_error_rad": 0.47594600915908813
+    },
+    {
+      "env_id": 26,
+      "episode_index": 3,
+      "duration_s": 7.86,
+      "motion_frame_at_termination": 68,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.25616660714149475,
+      "object_orientation_error_rad": 0.18557371199131012
+    },
+    {
+      "env_id": 26,
+      "episode_index": 4,
+      "duration_s": 0.2,
+      "motion_frame_at_termination": 10,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2716476321220398,
+      "object_orientation_error_rad": 0.23592476546764374
+    },
+    {
+      "env_id": 17,
+      "episode_index": 4,
+      "duration_s": 6.96,
+      "motion_frame_at_termination": 23,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.2116682529449463,
+      "object_orientation_error_rad": 0.8360320925712585
+    },
+    {
+      "env_id": 0,
+      "episode_index": 2,
+      "duration_s": 10.02,
+      "motion_frame_at_termination": 176,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "timeout"
+      ],
+      "object_position_error_m": 0.08153839409351349,
+      "object_orientation_error_rad": 0.5975314378738403
+    },
+    {
+      "env_id": 0,
+      "episode_index": 3,
+      "duration_s": 0.16,
+      "motion_frame_at_termination": 8,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_ankle_roll_link"
+      ],
+      "object_position_error_m": 0.021508432924747467,
+      "object_orientation_error_rad": 0.03629648685455322
+    },
+    {
+      "env_id": 0,
+      "episode_index": 4,
+      "duration_s": 1.02,
+      "motion_frame_at_termination": 51,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_motion_body_pos",
+        "body_height:left_ankle_roll_link"
+      ],
+      "object_position_error_m": 0.11627804487943649,
+      "object_orientation_error_rad": 0.46437716484069824
+    },
+    {
+      "env_id": 4,
+      "episode_index": 4,
+      "duration_s": 7.98,
+      "motion_frame_at_termination": 74,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_ori"
+      ],
+      "object_position_error_m": 0.18314403295516968,
+      "object_orientation_error_rad": 0.816768229007721
+    },
+    {
+      "env_id": 10,
+      "episode_index": 3,
+      "duration_s": 6.76,
+      "motion_frame_at_termination": 13,
+      "first_clip_completed": true,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2586197853088379,
+      "object_orientation_error_rad": 0.6378961801528931
+    },
+    {
+      "env_id": 10,
+      "episode_index": 4,
+      "duration_s": 0.5,
+      "motion_frame_at_termination": 25,
+      "first_clip_completed": false,
+      "termination_reasons": [
+        "bad_object_pos"
+      ],
+      "object_position_error_m": 0.2521211504936218,
+      "object_orientation_error_rad": 0.5666465163230896
+    }
+  ],
+  "checkpoint_sha256": "7546092cda21371a8c37a6fac3eb92952a560b9e0bf2484c256bec3a92d05120",
+  "commit": "40413a6ad3d7f33292842a2130e9382635166ff2"
+}

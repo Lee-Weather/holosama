@@ -1,0 +1,28 @@
+{
+  "source_sha256": "7546092cda21371a8c37a6fac3eb92952a560b9e0bf2484c256bec3a92d05120",
+  "source_iteration": 13999,
+  "next_iteration": 14000,
+  "expected_final_iteration": 23999,
+  "num_envs": 4096,
+  "additional_iterations": 10000,
+  "save_interval": 100,
+  "source_env_state_available": false,
+  "skip_capacity_test": true,
+  "repeat_first_checkpoint_validation": false,
+  "tests_passed": 10,
+  "ruff": "passed",
+  "actor": {
+    "learning_rate": 0.00017085937500000009,
+    "optimizer_steps": [
+      280000.0
+    ],
+    "normalizer_count": 786432000
+  },
+  "critic": {
+    "learning_rate": 0.00017085937500000009,
+    "optimizer_steps": [
+      280000.0
+    ],
+    "normalizer_count": 786432000
+  }
+}

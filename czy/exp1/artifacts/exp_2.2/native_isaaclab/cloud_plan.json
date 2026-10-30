@@ -1,0 +1,15 @@
+{
+  "commit": "40413a6ad3d7f33292842a2130e9382635166ff2",
+  "checkpoint": "/workspace/isaaclab/holosama/czy/data/exp_2.2/model_13999.pt",
+  "checkpoint_sha256": "7546092cda21371a8c37a6fac3eb92952a560b9e0bf2484c256bec3a92d05120",
+  "project": "flux-exp_2.2-native-replay-20261030_095122",
+  "result_dir": "/workspace/isaaclab/holosama/logs/flux-exp_2.2-native-replay-20261030_095122",
+  "num_envs": 32,
+  "episodes_per_env": 4,
+  "max_steps": 2500,
+  "expected_iteration": 13999,
+  "source_num_envs": 4096,
+  "box_task": true,
+  "seconds": 30,
+  "segments": "/workspace/isaaclab/holosama/logs/flux-exp_2.2-native-replay-20261030_095122/segments"
+}

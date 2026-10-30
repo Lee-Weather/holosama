@@ -174,7 +174,7 @@ def validate_video(path: Path, expected_seconds: int) -> dict:
     }
 
 
-def assemble_video(run_root: Path, expected_seconds: int) -> dict:
+def assemble_video(run_root: Path, expected_seconds: int, output_name: str = "play_output.mp4") -> dict:
     ffmpeg = shutil.which("ffmpeg")
     if ffmpeg is None:
         # IsaacLab commonly provides imageio-ffmpeg's bundled executable.
@@ -218,8 +218,11 @@ def assemble_video(run_root: Path, expected_seconds: int) -> dict:
         timeout=180,
     )
     result = validate_video(staging, expected_seconds)
-    staging.replace(run_root / "play_output.mp4")
-    return {"segments": len(segments), **result}
+    # Flux's upload watcher observes file creation; a rename from .tmp can be
+    # missed. Publish a newly created .mp4 after encoding/validation completes.
+    shutil.copyfile(staging, run_root / output_name)
+    staging.unlink()
+    return {"segments": len(segments), "filename": output_name, **result}
 
 
 def main() -> None:

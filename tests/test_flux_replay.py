@@ -47,6 +47,30 @@ def test_local_file_location_is_rejected_before_open(replay, monkeypatch, tmp_pa
         )
 
 
+def test_publish_creates_indexed_mp4_instead_of_renaming_tmp(replay, monkeypatch, tmp_path):
+    segments = tmp_path / "segments"
+    segments.mkdir()
+    (segments / "episode_1.mp4").write_bytes(b"segment")
+    monkeypatch.setattr(replay.shutil, "which", lambda _: "ffmpeg")
+    monkeypatch.setattr(
+        replay.subprocess, "run", lambda *_a, **_k: (tmp_path / "play_output.tmp").write_bytes(b"encoded")
+    )
+    monkeypatch.setattr(replay, "validate_video", lambda *_: {"bytes": 7})
+    monkeypatch.setattr(Path, "replace", lambda *_: pytest.fail("Rename does not trigger Flux upload creation"))
+    created = []
+    original_open = replay.shutil.copyfile
+
+    def publish(src, dst):
+        assert not dst.exists() and dst.name == "play_output_13999.mp4"
+        created.append(dst)
+        return original_open(src, dst)
+
+    monkeypatch.setattr(replay.shutil, "copyfile", publish)
+    result = replay.assemble_video(tmp_path, 30, "play_output_13999.mp4")
+    assert len(created) == 1 and created[0].read_bytes() == b"encoded"
+    assert result["filename"] == "play_output_13999.mp4" and not (tmp_path / "play_output.tmp").exists()
+
+
 @pytest.mark.parametrize("kind", ["valid", "black", "static", "truncated"])
 def test_video_acceptance_decodes_content(replay, tmp_path, kind):
     cv2 = pytest.importorskip("cv2")

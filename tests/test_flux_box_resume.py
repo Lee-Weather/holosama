@@ -96,7 +96,7 @@ def test_capacity_failure_cannot_start_formal_continuation(resume, monkeypatch, 
     monkeypatch.setattr(resume.box.bootstrap, "check_gpu", lambda *_: None)
     calls = []
 
-    def fail_capacity(_root, _project, iterations, capacity, _env, _timeout):
+    def fail_capacity(_root, _project, iterations, capacity, _env, _timeout, **_kwargs):
         calls.append((iterations, capacity))
         raise RuntimeError("capacity failed")
 
@@ -117,4 +117,53 @@ def test_authorized_skip_reuses_capacity_and_passes_formal_save_interval(resume,
     calls = []
     monkeypatch.setattr(resume, "stage", lambda *args, **kwargs: calls.append((args[2:4], kwargs)))
     resume.main()
-    assert calls == [((6000, False), {"save_interval": 100})]
+    assert len(calls) == 1 and calls[0][0] == (6000, False)
+    assert calls[0][1]["save_interval"] == 100 and calls[0][1]["source_iteration"] == 7999
+
+
+def test_latest_box_checkpoint_can_resume_for_10000_updates(resume):
+    path = resume.ROOT / "czy/data/exp_2.2/model_13999.pt"
+    digest = "7546092cda21371a8c37a6fac3eb92952a560b9e0bf2484c256bec3a92d05120"
+    source = resume.load_source(path, digest, 13999)
+    cfg = resume.resume_config(source, "exp_2.3", 10000, checkpoint=path)
+    assert cfg.training.checkpoint == str(path) and cfg.training.num_envs == 4096
+    assert cfg.algo.config.num_learning_iterations == 10000 and cfg.algo.config.save_interval == 100
+    assert cfg.algo.config.load_optimizer
+    assert int(source["iter"]) + 1 == 14000 and int(source["iter"]) + 10000 == 23999
+    with pytest.raises(AssertionError):
+        resume.load_source(path, digest, 7999)
+
+
+def test_cli_propagates_latest_checkpoint_and_exact_iteration_budget(resume, monkeypatch, tmp_path):
+    path = resume.ROOT / "czy/data/exp_2.2/model_13999.pt"
+    digest = "7546092cda21371a8c37a6fac3eb92952a560b9e0bf2484c256bec3a92d05120"
+    monkeypatch.setattr(resume, "ROOT", tmp_path)
+    monkeypatch.setattr(
+        resume.sys,
+        "argv",
+        [
+            "resume_flux_box.py",
+            "--experiment",
+            "exp_2.3",
+            "--checkpoint",
+            str(path),
+            "--checkpoint-sha256",
+            digest,
+            "--source-iteration",
+            "13999",
+            "--additional-iterations",
+            "10000",
+            "--skip-capacity-test",
+        ],
+    )
+    monkeypatch.setattr(resume, "repository_commit", lambda: "test")
+    monkeypatch.setattr(resume.box.bootstrap, "prepare_environment", dict)
+    monkeypatch.setattr(resume.box.bootstrap, "install_training_package", lambda *_: None)
+    monkeypatch.setattr(resume.box.bootstrap, "check_gpu", lambda *_: None)
+    monkeypatch.setattr(resume.time, "sleep", lambda *_: None)
+    calls = []
+    monkeypatch.setattr(resume, "stage", lambda *args, **kwargs: calls.append((args, kwargs)))
+    resume.main()
+    assert len(calls) == 1 and calls[0][0][2:4] == (10000, False)
+    assert calls[0][1]["checkpoint"] == path and calls[0][1]["source_iteration"] == 13999
+    assert calls[0][1]["checkpoint_sha256"] == digest and calls[0][1]["save_interval"] == 100
