@@ -608,6 +608,8 @@ exp_2 的带箱体 WBT 配置、CLI 和 motion 在本地验证通过，但任务
 
 #### 最终策略的本机 MuJoCo 物理回放
 
+**后续更正：本节及下一节的初版回放存在根部初始速度适配错误，旧录像保留为历史证据；修复版结果见末尾「失败诊断与根部速度修正」。初版数据不能作为严格复现训练初态的评估。**
+
 新增 [replay_g1_box_mujoco.py](../../scripts/replay_g1_box_mujoco.py)，直接加载上述 checkpoint 的确定性 actor、154 维观测及保存的经验归一化（`(obs-mean)/(std+0.01)`），按训练关节名/参考动作顺序重排，保留保存的 PD、力矩限幅及 `0.25 × effort_limit / kp` 动作缩放。使用训练的手部碰撞 URDF、同一箱体碰撞网格；机器人/箱体仅在起始帧赋值，此后由力矩、自由刚体接触与 `mj_step` 推进，无轨迹强制写入、无自动复位、无物体位姿修正。此回放不是原始参考动作动画，也不进行不同输入的误差对比。
 
 本机 MuJoCo **3.15.0**，200 Hz 物理 / 50 Hz 控制，单次名义质量 **2.6 kg**，箱体 geom 滑动摩擦系数 0.35。初始根位置与参考一致，torso 的 URDF FK 与 motion 位置有约 0.01 m 差异；碰撞已启用、29 个电机使用单位 gear。MuJoCo 接触求解、摩擦混合与 PhysX 不同，未逐项复现训练域随机化；这是跨仿真单次物理回放，不能替代原生 IsaacLab 评估或归因所有失败于策略训练。
@@ -633,3 +635,20 @@ exp_2 的带箱体 WBT 配置、CLI 和 motion 在本地验证通过，但任务
 复现命令：`python scripts/replay_g1_box_mujoco.py --no-box`。[无箱体视频](../data/exp_2.1/play_robot_only_mujoco.mp4) 为 1280×720、50 fps、325 帧、6.5 秒，499,320 bytes，SHA-256=`c216ce42d0480dfddd4e20ca24ebd0fb73346f19c404779dc6f854d85402e466`。OpenCV 和 FFmpeg 全片解码通过，0/0.5/1/2/4/6 秒代表帧已人工检查，画面确认没有箱子。机器人约 1 秒坐倒、2 秒侧倒，最低根高度 0.066108 m；移除箱体后仍未保持动作跟踪，不能据此认定之前的失败仅由箱体尺寸引起，也不能将无负载表现当成搬运能力验收。
 
 [无箱体运行证据](artifacts/exp_2.1/local_robot_only_replay_validation.json)、[视频校验](artifacts/exp_2.1/local_robot_only_video_validation.json)、[代表帧](artifacts/exp_2.1/local_robot_only_replay_frames.jpg)。本次仅补充同一实验 §7，不新增训练编号。
+
+#### 失败诊断与根部速度修正（2026-10-30）
+
+按用户要求排查失败原因，确认新增 MuJoCo 适配器有一处初态错误：`body_lin_vel_w` 是质心线速度，不能直接写入自由根关节的平移速度。根据 `v_origin = v_COM - omega_world × (p_COM-p_origin)` 转换后，与 motion 的 `joint_vel[0,:3]` 仅相差约 `1.02e-7 m/s`，证实原实现造成约 **0.19454 m/s** 初始速度偏差。现在直接读取 NPZ 保存的原生 MuJoCo `joint_vel[0,:6]`（世界系原点线速度 + 局部系角速度）；此修复不改变模型、观测归一化、PD、参考片段或训练权重。
+
+修复后分别重跑一次有箱和无箱物理回放，均为 325 帧 / 6.5 秒 / 720p，完整解码与代表帧人工检查通过：
+
+| 条件 | 修正后的实际结果 | 视频 / 证据 |
+| --- | --- | --- |
+| 动态箱体 2.6 kg | 箱体首次越阈值 1.12 秒，最高中心 0.262192 m，位置 RMSE 1.228499 m；约 2 秒机器人跌倒，最低根高度 0.062081 m | [录像](../data/exp_2.1/play_box_velocity_fixed.mp4) / [轨迹](artifacts/exp_2.1/local_box_velocity_fixed.json) / [视频校验](artifacts/exp_2.1/local_box_velocity_fixed_video.json) |
+| 完全移除箱体 | 箱体 body 数 0，约 2 秒机器人仍跌倒，最低根高度 0.071294 m | [录像](../data/exp_2.1/play_robot_only_velocity_fixed.mp4) / [轨迹](artifacts/exp_2.1/local_robot_only_velocity_fixed.json) / [视频校验](artifacts/exp_2.1/local_robot_only_velocity_fixed_video.json) |
+
+因此根部速度适配错误是已确认的问题，**不是全部失败的解释**。初始接触检查为足部与地面约毫米级穿入，电机 gain/gear 为 1、实际关节力矩非零；没有发现「未施加控制」或严重初始自穿透的证据。观测项顺序、154 维归一化公式、动作缩放、PD、控制频率及关节名映射已按源码核对，但尚不能据此宣称 PhysX 与 MuJoCo 完全等价。
+
+训练侧同样没有达到稳定完整跟踪的证据：末段平均回合 2.56 秒，低于 10 秒 timeout；本配置的另一终止项为 bad_tracking（机器人姿态、手脚高度或箱体跟踪）。最后两个千轮窗口的奖励均值仍从 6.459955 升至 6.767822，episode 均值从 120.078130 升至 127.319900 steps。仅完成预算 8000 轮不等于收敛；原生预设 30000 轮是预算对照，不能保证延长即可成功。训练从自适应采样的片段相位重置，因此也不能用平均回合时长直接计算整段成功率。
+
+**诊断边界：已确认训练稳定跟踪未达标、初版回放有速度适配错误；修复后两种场景仍失败。其他接触/碰撞、惯量与求解器差异对失败的贡献，以及原生环境究竟是哪类 bad_tracking 终止，仍需原生 IsaacLab 无视频评估和终止分项统计。** 无箱体仍跌倒不能支持「箱体尺寸是唯一原因」，且去掉箱体改变了训练时的交互条件，不构成完整因果隔离。未自动创建计费任务或重训。[诊断数值与限制](artifacts/exp_2.1/failure_diagnosis.json)。

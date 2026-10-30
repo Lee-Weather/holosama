@@ -1,0 +1,3611 @@
+{
+  "summary": {
+    "checkpoint": "E:\\G1\\holosoma\\czy\\data\\exp_2.1\\model_07999.pt",
+    "checkpoint_sha256": "e2d120660bbc199d0dc03d0bce17a4989ef6117877c2f97f9da72d2c4dbc2c97",
+    "iteration": 7999,
+    "mujoco": "3.15.0",
+    "box_removed": false,
+    "box_body_count": 1,
+    "box_mass_kg": 2.6,
+    "box_sliding_friction": 0.35,
+    "frames": 325,
+    "duration_s": 6.5,
+    "control_dt": 0.02,
+    "initial_alignment": {
+      "root_velocity_source": "motion.joint_vel[0,:6]: world origin linear / local angular",
+      "root_position_difference_m": 0.0,
+      "torso_position_difference_m": 0.01000028427639059,
+      "collision_geometries": 40,
+      "unit_motor_gears": true
+    },
+    "automatic_resets": 0,
+    "pose_corrections_after_initialization": 0,
+    "robot_min_height_m": 0.06208084103452618,
+    "video_bytes": 451554,
+    "video_sha256": "76a58bf8df29c729aabc31aad052903afe78938c90d84bf49a9601b33eafaeb1",
+    "replay_script_sha256": "1a818faaaeea973a1650ab664cd1a2449c5ad84e25fe80339f0661656d2a4a33",
+    "note": "Cross-simulator evaluation using training robot collision URDF. This is an independent physical rollout, not reference motion playback.",
+    "box_position_rmse_m": 1.228499082340072,
+    "box_position_max_error_m": 1.6546980022521836,
+    "box_orientation_max_error_rad": 1.819142587945893,
+    "first_box_tracking_violation_s": 1.12,
+    "box_max_height_m": 0.2621922119771453
+  },
+  "trajectory": [
+    {
+      "time_s": 0.0,
+      "robot_height_m": 0.770483136177063,
+      "box_position": [
+        0.6762382984161377,
+        0.4933716654777527,
+        0.18436242640018463
+      ],
+      "box_position_error_m": 0.0,
+      "box_orientation_error_rad": 0.0
+    },
+    {
+      "time_s": 0.02,
+      "robot_height_m": 0.7524593761939748,
+      "box_position": [
+        0.6773865742562788,
+        0.49311943915074774,
+        0.18442648538594703
+      ],
+      "box_position_error_m": 0.0011430233598347904,
+      "box_orientation_error_rad": 0.006516708811104282
+    },
+    {
+      "time_s": 0.04,
+      "robot_height_m": 0.7333774358694745,
+      "box_position": [
+        0.679763126403347,
+        0.4927767023742286,
+        0.18350779008258306
+      ],
+      "box_position_error_m": 0.003612525660989477,
+      "box_orientation_error_rad": 0.019622263119835226
+    },
+    {
+      "time_s": 0.06,
+      "robot_height_m": 0.71657192415261,
+      "box_position": [
+        0.6807469682090264,
+        0.49292511922364,
+        0.18364558120044858
+      ],
+      "box_position_error_m": 0.004527061026547837,
+      "box_orientation_error_rad": 0.024272451821706623
+    },
+    {
+      "time_s": 0.08,
+      "robot_height_m": 0.7017728728348225,
+      "box_position": [
+        0.6806160363598386,
+        0.4929560020944317,
+        0.18393008113929124
+      ],
+      "box_position_error_m": 0.004359102970517693,
+      "box_orientation_error_rad": 0.023441027596260898
+    },
+    {
+      "time_s": 0.1,
+      "robot_height_m": 0.6909393573583836,
+      "box_position": [
+        0.6802540227923154,
+        0.49273477534503446,
+        0.18403200310207787
+      ],
+      "box_position_error_m": 0.0040183461073174135,
+      "box_orientation_error_rad": 0.02168361057968818
+    },
+    {
+      "time_s": 0.12,
+      "robot_height_m": 0.6835714188199321,
+      "box_position": [
+        0.6799939062577669,
+        0.4925334104741766,
+        0.18407720155050905
+      ],
+      "box_position_error_m": 0.0037926093242801346,
+      "box_orientation_error_rad": 0.020543882507047452
+    },
+    {
+      "time_s": 0.14,
+      "robot_height_m": 0.6779133176381265,
+      "box_position": [
+        0.6796723612041237,
+        0.4906829224157025,
+        0.1854586087643405
+      ],
+      "box_position_error_m": 0.004448846223689996,
+      "box_orientation_error_rad": 0.02307774578877572
+    },
+    {
+      "time_s": 0.16,
+      "robot_height_m": 0.672506384677983,
+      "box_position": [
+        0.6797228692333902,
+        0.4879436123809664,
+        0.18719971221258305
+      ],
+      "box_position_error_m": 0.007003279755531595,
+      "box_orientation_error_rad": 0.03316920116998878
+    },
+    {
+      "time_s": 0.18,
+      "robot_height_m": 0.6666620103130855,
+      "box_position": [
+        0.6804533050036478,
+        0.48550358771138563,
+        0.18820611881908544
+      ],
+      "box_position_error_m": 0.009690313890811104,
+      "box_orientation_error_rad": 0.04538438331981106
+    },
+    {
+      "time_s": 0.2,
+      "robot_height_m": 0.6603101742786498,
+      "box_position": [
+        0.6808258126095552,
+        0.4829685284085453,
+        0.18930941350413774
+      ],
+      "box_position_error_m": 0.01240240101046153,
+      "box_orientation_error_rad": 0.05684383083132536
+    },
+    {
+      "time_s": 0.22,
+      "robot_height_m": 0.6552528287252272,
+      "box_position": [
+        0.6817848300332537,
+        0.4818054487784138,
+        0.1892376486667148
+      ],
+      "box_position_error_m": 0.013762512113835132,
+      "box_orientation_error_rad": 0.06126833923939948
+    },
+    {
+      "time_s": 0.24,
+      "robot_height_m": 0.6518741978973782,
+      "box_position": [
+        0.6835893668913537,
+        0.4817198201098995,
+        0.19026601785875308
+      ],
+      "box_position_error_m": 0.015025305255099094,
+      "box_orientation_error_rad": 0.06714507152956284
+    },
+    {
+      "time_s": 0.26,
+      "robot_height_m": 0.6498252271665574,
+      "box_position": [
+        0.6856626589373308,
+        0.48294056035807675,
+        0.19116726269594547
+      ],
+      "box_position_error_m": 0.015564002082752404,
+      "box_orientation_error_rad": 0.07349295430910377
+    },
+    {
+      "time_s": 0.28,
+      "robot_height_m": 0.648760885532417,
+      "box_position": [
+        0.6874127314318393,
+        0.485286117923216,
+        0.1911790116403296
+      ],
+      "box_position_error_m": 0.01528152246566588,
+      "box_orientation_error_rad": 0.0778156640698765
+    },
+    {
+      "time_s": 0.3,
+      "robot_height_m": 0.648437372436995,
+      "box_position": [
+        0.6888666141141861,
+        0.4885168231281713,
+        0.19034650505007536
+      ],
+      "box_position_error_m": 0.014670743707635393,
+      "box_orientation_error_rad": 0.08287926111370501
+    },
+    {
+      "time_s": 0.32,
+      "robot_height_m": 0.6488154026137785,
+      "box_position": [
+        0.6903322725592408,
+        0.4922396023661889,
+        0.18915181415595275
+      ],
+      "box_position_error_m": 0.014752260532253085,
+      "box_orientation_error_rad": 0.09522925257593155
+    },
+    {
+      "time_s": 0.34,
+      "robot_height_m": 0.649267798951317,
+      "box_position": [
+        0.6920795508209541,
+        0.49628608355000087,
+        0.18783044198918586
+      ],
+      "box_position_error_m": 0.01626671648469901,
+      "box_orientation_error_rad": 0.099202966218231
+    },
+    {
+      "time_s": 0.36,
+      "robot_height_m": 0.648889594039575,
+      "box_position": [
+        0.6943542899268369,
+        0.5018352867751853,
+        0.18583361494809192
+      ],
+      "box_position_error_m": 0.01984074367865148,
+      "box_orientation_error_rad": 0.10261595012548792
+    },
+    {
+      "time_s": 0.38,
+      "robot_height_m": 0.6469836302340971,
+      "box_position": [
+        0.6974874181872982,
+        0.5063527726992479,
+        0.18517588253229242
+      ],
+      "box_position_error_m": 0.02471111383465736,
+      "box_orientation_error_rad": 0.12297103224050822
+    },
+    {
+      "time_s": 0.4,
+      "robot_height_m": 0.6434356088173198,
+      "box_position": [
+        0.6998437977697974,
+        0.5073338449129817,
+        0.18646575930301768
+      ],
+      "box_position_error_m": 0.02731262827446251,
+      "box_orientation_error_rad": 0.13045254069260376
+    },
+    {
+      "time_s": 0.42,
+      "robot_height_m": 0.6390323709779999,
+      "box_position": [
+        0.7025498785180618,
+        0.5073242704510751,
+        0.18848521468704518
+      ],
+      "box_position_error_m": 0.029887180547839502,
+      "box_orientation_error_rad": 0.13579511762492133
+    },
+    {
+      "time_s": 0.44,
+      "robot_height_m": 0.6344445249215952,
+      "box_position": [
+        0.7059551870444151,
+        0.5072230564107117,
+        0.19099989843749549
+      ],
+      "box_position_error_m": 0.03328875536329118,
+      "box_orientation_error_rad": 0.14373852060580836
+    },
+    {
+      "time_s": 0.46,
+      "robot_height_m": 0.6297725746642481,
+      "box_position": [
+        0.710143869415261,
+        0.507161910915373,
+        0.19397980129290596
+      ],
+      "box_position_error_m": 0.037693941506400826,
+      "box_orientation_error_rad": 0.1555689933892692
+    },
+    {
+      "time_s": 0.48,
+      "robot_height_m": 0.6247805532036518,
+      "box_position": [
+        0.7136056884648334,
+        0.5071616982819491,
+        0.19621903482920988
+      ],
+      "box_position_error_m": 0.0414254910164538,
+      "box_orientation_error_rad": 0.16675767294649718
+    },
+    {
+      "time_s": 0.5,
+      "robot_height_m": 0.6195169920961012,
+      "box_position": [
+        0.7163671118948776,
+        0.5072447793791084,
+        0.19794851319160697
+      ],
+      "box_position_error_m": 0.044469382675720384,
+      "box_orientation_error_rad": 0.1763687625789792
+    },
+    {
+      "time_s": 0.52,
+      "robot_height_m": 0.6149444687289564,
+      "box_position": [
+        0.7189941725910337,
+        0.5073988099133262,
+        0.19958716136184154
+      ],
+      "box_position_error_m": 0.04742351152921249,
+      "box_orientation_error_rad": 0.18614104317304353
+    },
+    {
+      "time_s": 0.54,
+      "robot_height_m": 0.6112493444754349,
+      "box_position": [
+        0.7216822513431822,
+        0.5075979344230983,
+        0.20122885763344728
+      ],
+      "box_position_error_m": 0.05044707465854322,
+      "box_orientation_error_rad": 0.19643922685512566
+    },
+    {
+      "time_s": 0.56,
+      "robot_height_m": 0.6078217685231998,
+      "box_position": [
+        0.7244409328552003,
+        0.5077439689052422,
+        0.2028663805548167
+      ],
+      "box_position_error_m": 0.0534987136798769,
+      "box_orientation_error_rad": 0.2070193223880392
+    },
+    {
+      "time_s": 0.58,
+      "robot_height_m": 0.6039028200377122,
+      "box_position": [
+        0.7272817020963637,
+        0.5077336210403709,
+        0.20449436364940582
+      ],
+      "box_position_error_m": 0.05661517308027392,
+      "box_orientation_error_rad": 0.21770417709079226
+    },
+    {
+      "time_s": 0.6,
+      "robot_height_m": 0.5989295266268102,
+      "box_position": [
+        0.7301743336501382,
+        0.507558220748059,
+        0.20608702006285118
+      ],
+      "box_position_error_m": 0.0597511438637039,
+      "box_orientation_error_rad": 0.2283421134650368
+    },
+    {
+      "time_s": 0.62,
+      "robot_height_m": 0.5930185352145749,
+      "box_position": [
+        0.7331981903458282,
+        0.5073467905192163,
+        0.20772396314224653
+      ],
+      "box_position_error_m": 0.06304170631936142,
+      "box_orientation_error_rad": 0.23947203017726448
+    },
+    {
+      "time_s": 0.64,
+      "robot_height_m": 0.5858808047293338,
+      "box_position": [
+        0.736279630896332,
+        0.507220157649964,
+        0.20933394814179296
+      ],
+      "box_position_error_m": 0.06639834089298263,
+      "box_orientation_error_rad": 0.251234340631573
+    },
+    {
+      "time_s": 0.66,
+      "robot_height_m": 0.5774820352358991,
+      "box_position": [
+        0.7397178777042903,
+        0.5071040826671062,
+        0.21106251800926046
+      ],
+      "box_position_error_m": 0.07011690874116584,
+      "box_orientation_error_rad": 0.26497944089499914
+    },
+    {
+      "time_s": 0.68,
+      "robot_height_m": 0.5681456137194199,
+      "box_position": [
+        0.7442900371342067,
+        0.5071561730663869,
+        0.21330946601700373
+      ],
+      "box_position_error_m": 0.07511001710622299,
+      "box_orientation_error_rad": 0.2837010497757644
+    },
+    {
+      "time_s": 0.7000000000000001,
+      "robot_height_m": 0.5585678715309144,
+      "box_position": [
+        0.7500429820105703,
+        0.5077882695043916,
+        0.21568011266983453
+      ],
+      "box_position_error_m": 0.08133678544314786,
+      "box_orientation_error_rad": 0.3076055579665381
+    },
+    {
+      "time_s": 0.72,
+      "robot_height_m": 0.5513516245648868,
+      "box_position": [
+        0.7563617928644142,
+        0.50757419689972,
+        0.21836717616456208
+      ],
+      "box_position_error_m": 0.088130080409865,
+      "box_orientation_error_rad": 0.33710298956025997
+    },
+    {
+      "time_s": 0.74,
+      "robot_height_m": 0.5474602404383475,
+      "box_position": [
+        0.7624820593511689,
+        0.5081961694692002,
+        0.22057674370905833
+      ],
+      "box_position_error_m": 0.09469131781160887,
+      "box_orientation_error_rad": 0.3641354142689369
+    },
+    {
+      "time_s": 0.76,
+      "robot_height_m": 0.5451886835077796,
+      "box_position": [
+        0.7674590624156391,
+        0.5087418953962979,
+        0.22293218938484863
+      ],
+      "box_position_error_m": 0.10022760331905832,
+      "box_orientation_error_rad": 0.3862070785594348
+    },
+    {
+      "time_s": 0.78,
+      "robot_height_m": 0.5446175891233859,
+      "box_position": [
+        0.7708727390971032,
+        0.5088539129278346,
+        0.22436256055359757
+      ],
+      "box_position_error_m": 0.10386623919738312,
+      "box_orientation_error_rad": 0.4006655904718211
+    },
+    {
+      "time_s": 0.8,
+      "robot_height_m": 0.545452326204923,
+      "box_position": [
+        0.7736274967657003,
+        0.5093960805512959,
+        0.22549908154811363
+      ],
+      "box_position_error_m": 0.1068283619476254,
+      "box_orientation_error_rad": 0.41228227788652855
+    },
+    {
+      "time_s": 0.8200000000000001,
+      "robot_height_m": 0.546464501443608,
+      "box_position": [
+        0.7761978454592342,
+        0.5102935761526846,
+        0.22664053317482877
+      ],
+      "box_position_error_m": 0.10947850854627153,
+      "box_orientation_error_rad": 0.42314386000151616
+    },
+    {
+      "time_s": 0.84,
+      "robot_height_m": 0.5474132854154758,
+      "box_position": [
+        0.7785236220398403,
+        0.5113930018270874,
+        0.22784642524624246
+      ],
+      "box_position_error_m": 0.11180023543963431,
+      "box_orientation_error_rad": 0.43051432033400294
+    },
+    {
+      "time_s": 0.86,
+      "robot_height_m": 0.5481524954711573,
+      "box_position": [
+        0.7820093568518651,
+        0.513155341019324,
+        0.2297496505722396
+      ],
+      "box_position_error_m": 0.11524084664996195,
+      "box_orientation_error_rad": 0.43818395624195344
+    },
+    {
+      "time_s": 0.88,
+      "robot_height_m": 0.5473205253285006,
+      "box_position": [
+        0.7866371476009945,
+        0.5154317171430942,
+        0.2322603841795525
+      ],
+      "box_position_error_m": 0.11999557059085914,
+      "box_orientation_error_rad": 0.44983105642798776
+    },
+    {
+      "time_s": 0.9,
+      "robot_height_m": 0.5435280316626787,
+      "box_position": [
+        0.7923660337223015,
+        0.5177667177782156,
+        0.2349722860725866
+      ],
+      "box_position_error_m": 0.12582487571855097,
+      "box_orientation_error_rad": 0.466025957433733
+    },
+    {
+      "time_s": 0.92,
+      "robot_height_m": 0.5362130334215724,
+      "box_position": [
+        0.799583173662025,
+        0.5199514326349525,
+        0.23770648611825548
+      ],
+      "box_position_error_m": 0.1327260607798679,
+      "box_orientation_error_rad": 0.4909047761986198
+    },
+    {
+      "time_s": 0.9400000000000001,
+      "robot_height_m": 0.5268129741156142,
+      "box_position": [
+        0.8077706812595937,
+        0.5216626713653004,
+        0.24004273626528966
+      ],
+      "box_position_error_m": 0.14055650525679708,
+      "box_orientation_error_rad": 0.5232935715362571
+    },
+    {
+      "time_s": 0.96,
+      "robot_height_m": 0.5161286051648671,
+      "box_position": [
+        0.8163442377175482,
+        0.5225800009983752,
+        0.24168373803950932
+      ],
+      "box_position_error_m": 0.1489355329835189,
+      "box_orientation_error_rad": 0.5636038775526064
+    },
+    {
+      "time_s": 0.98,
+      "robot_height_m": 0.5045838987132769,
+      "box_position": [
+        0.8256941358778356,
+        0.5229614598766091,
+        0.24269686689319958
+      ],
+      "box_position_error_m": 0.15780885696013816,
+      "box_orientation_error_rad": 0.6073212568199483
+    },
+    {
+      "time_s": 1.0,
+      "robot_height_m": 0.49349661792225186,
+      "box_position": [
+        0.8337610331417099,
+        0.5233583607480724,
+        0.24319319199137884
+      ],
+      "box_position_error_m": 0.16548595092700769,
+      "box_orientation_error_rad": 0.6447019205431068
+    },
+    {
+      "time_s": 1.02,
+      "robot_height_m": 0.48405940752603527,
+      "box_position": [
+        0.8410404451242584,
+        0.524324555282941,
+        0.24378478852605856
+      ],
+      "box_position_error_m": 0.17240020455180627,
+      "box_orientation_error_rad": 0.6730215431670613
+    },
+    {
+      "time_s": 1.04,
+      "robot_height_m": 0.4770298480160743,
+      "box_position": [
+        0.8482688327002694,
+        0.5269502922151957,
+        0.24503023086487957
+      ],
+      "box_position_error_m": 0.1800090220647211,
+      "box_orientation_error_rad": 0.7035909187261841
+    },
+    {
+      "time_s": 1.06,
+      "robot_height_m": 0.4725561883629841,
+      "box_position": [
+        0.855025901082561,
+        0.5314825789656769,
+        0.24715508894217514
+      ],
+      "box_position_error_m": 0.18818131958014003,
+      "box_orientation_error_rad": 0.7342940986323366
+    },
+    {
+      "time_s": 1.08,
+      "robot_height_m": 0.46998087845590847,
+      "box_position": [
+        0.8613853769638069,
+        0.5379260826750363,
+        0.25004519819326504
+      ],
+      "box_position_error_m": 0.19699362401233367,
+      "box_orientation_error_rad": 0.7670298267499688
+    },
+    {
+      "time_s": 1.1,
+      "robot_height_m": 0.4680089257403144,
+      "box_position": [
+        0.8665351568888379,
+        0.5454654673025803,
+        0.25323398627337124
+      ],
+      "box_position_error_m": 0.20551619481789643,
+      "box_orientation_error_rad": 0.7951501946465788
+    },
+    {
+      "time_s": 1.12,
+      "robot_height_m": 0.4650221818878764,
+      "box_position": [
+        0.8703334461095034,
+        0.5526913301105284,
+        0.2560815763335574
+      ],
+      "box_position_error_m": 0.21328841268094362,
+      "box_orientation_error_rad": 0.8136864771393012
+    },
+    {
+      "time_s": 1.1400000000000001,
+      "robot_height_m": 0.4606877842571178,
+      "box_position": [
+        0.873675744488243,
+        0.5592923215302167,
+        0.25842052575256974
+      ],
+      "box_position_error_m": 0.22094697685027415,
+      "box_orientation_error_rad": 0.8299303221518554
+    },
+    {
+      "time_s": 1.16,
+      "robot_height_m": 0.4551596232321278,
+      "box_position": [
+        0.8769644329036453,
+        0.5649191750036764,
+        0.26015438814303504
+      ],
+      "box_position_error_m": 0.22878912493004327,
+      "box_orientation_error_rad": 0.84453496524364
+    },
+    {
+      "time_s": 1.18,
+      "robot_height_m": 0.44820531179175505,
+      "box_position": [
+        0.8805699298612402,
+        0.5696068753997513,
+        0.2613243648797738
+      ],
+      "box_position_error_m": 0.23701853726959787,
+      "box_orientation_error_rad": 0.8580177005384942
+    },
+    {
+      "time_s": 1.2,
+      "robot_height_m": 0.43955425790470753,
+      "box_position": [
+        0.8845354035809038,
+        0.5733840448228593,
+        0.26199168435195364
+      ],
+      "box_position_error_m": 0.24584199688957697,
+      "box_orientation_error_rad": 0.8712605081968682
+    },
+    {
+      "time_s": 1.22,
+      "robot_height_m": 0.42954436036309407,
+      "box_position": [
+        0.8889057843472391,
+        0.5762784833185812,
+        0.2621922119771453
+      ],
+      "box_position_error_m": 0.25546993816954094,
+      "box_orientation_error_rad": 0.8834555973800156
+    },
+    {
+      "time_s": 1.24,
+      "robot_height_m": 0.4177198075915585,
+      "box_position": [
+        0.8937279061377997,
+        0.578315834773071,
+        0.2619381611362711
+      ],
+      "box_position_error_m": 0.26601302636797963,
+      "box_orientation_error_rad": 0.8965883110336704
+    },
+    {
+      "time_s": 1.26,
+      "robot_height_m": 0.4033416470439875,
+      "box_position": [
+        0.8990505072394279,
+        0.5795184694205014,
+        0.26122052603817697
+      ],
+      "box_position_error_m": 0.27762611858002895,
+      "box_orientation_error_rad": 0.91060384809649
+    },
+    {
+      "time_s": 1.28,
+      "robot_height_m": 0.3858545086124909,
+      "box_position": [
+        0.9049239584539809,
+        0.5799051247068803,
+        0.260010072582471
+      ],
+      "box_position_error_m": 0.29070811629179605,
+      "box_orientation_error_rad": 0.926575387638234
+    },
+    {
+      "time_s": 1.3,
+      "robot_height_m": 0.3650830871559745,
+      "box_position": [
+        0.9113996242808675,
+        0.579491176992564,
+        0.2582570661144647
+      ],
+      "box_position_error_m": 0.30524847184842796,
+      "box_orientation_error_rad": 0.9445709390154369
+    },
+    {
+      "time_s": 1.32,
+      "robot_height_m": 0.3408709671357823,
+      "box_position": [
+        0.9185287559047856,
+        0.5782894478912953,
+        0.2558900541542892
+      ],
+      "box_position_error_m": 0.3219682814868845,
+      "box_orientation_error_rad": 0.9678131492877282
+    },
+    {
+      "time_s": 1.34,
+      "robot_height_m": 0.3133163058881088,
+      "box_position": [
+        0.9263607812164825,
+        0.576311532248922,
+        0.25281394080568104
+      ],
+      "box_position_error_m": 0.34040106714352997,
+      "box_orientation_error_rad": 0.9941374107913954
+    },
+    {
+      "time_s": 1.36,
+      "robot_height_m": 0.2825658885816022,
+      "box_position": [
+        0.9349408143245098,
+        0.5735697013951118,
+        0.24890753935755996
+      ],
+      "box_position_error_m": 0.36084466852131863,
+      "box_orientation_error_rad": 1.0244698611121026
+    },
+    {
+      "time_s": 1.3800000000000001,
+      "robot_height_m": 0.24852099688713888,
+      "box_position": [
+        0.9443061604103771,
+        0.570079485689281,
+        0.2440207965459876
+      ],
+      "box_position_error_m": 0.3830506390403118,
+      "box_orientation_error_rad": 1.056868304973769
+    },
+    {
+      "time_s": 1.4000000000000001,
+      "robot_height_m": 0.21104594904242296,
+      "box_position": [
+        0.9544815437743074,
+        0.565863080165859,
+        0.23797194174544176
+      ],
+      "box_position_error_m": 0.4071294997370278,
+      "box_orientation_error_rad": 1.092378818964408
+    },
+    {
+      "time_s": 1.42,
+      "robot_height_m": 0.1702549970085111,
+      "box_position": [
+        0.9654223918581312,
+        0.5609949217282789,
+        0.23039733606506832
+      ],
+      "box_position_error_m": 0.43305655871474025,
+      "box_orientation_error_rad": 1.1311530842586195
+    },
+    {
+      "time_s": 1.44,
+      "robot_height_m": 0.12722289869845976,
+      "box_position": [
+        0.9771867340414552,
+        0.5554618045316451,
+        0.22126486586426894
+      ],
+      "box_position_error_m": 0.4610281058901272,
+      "box_orientation_error_rad": 1.1756257073710632
+    },
+    {
+      "time_s": 1.46,
+      "robot_height_m": 0.10312899197424005,
+      "box_position": [
+        0.9897062914754242,
+        0.549341228263303,
+        0.21025723278673375
+      ],
+      "box_position_error_m": 0.4911300615979246,
+      "box_orientation_error_rad": 1.2269863506519274
+    },
+    {
+      "time_s": 1.48,
+      "robot_height_m": 0.09692981779391077,
+      "box_position": [
+        1.0036578385633652,
+        0.5479229863068116,
+        0.20464375994346487
+      ],
+      "box_position_error_m": 0.5197061816761256,
+      "box_orientation_error_rad": 1.2965136155458976
+    },
+    {
+      "time_s": 1.5,
+      "robot_height_m": 0.09207607871948738,
+      "box_position": [
+        1.0184069345604536,
+        0.5489000717947575,
+        0.19929161938070797
+      ],
+      "box_position_error_m": 0.549102428798868,
+      "box_orientation_error_rad": 1.3733965986801082
+    },
+    {
+      "time_s": 1.52,
+      "robot_height_m": 0.0856030398567823,
+      "box_position": [
+        1.0334533210456422,
+        0.5506824429646193,
+        0.1914106982180307
+      ],
+      "box_position_error_m": 0.5802559493163991,
+      "box_orientation_error_rad": 1.4536528808299833
+    },
+    {
+      "time_s": 1.54,
+      "robot_height_m": 0.07737953370953424,
+      "box_position": [
+        1.0487179220946463,
+        0.5530663780822973,
+        0.18072599610047965
+      ],
+      "box_position_error_m": 0.6135135336467048,
+      "box_orientation_error_rad": 1.5372879296141997
+    },
+    {
+      "time_s": 1.56,
+      "robot_height_m": 0.082029599355747,
+      "box_position": [
+        1.06410985342385,
+        0.5558240429448023,
+        0.16688004114054444
+      ],
+      "box_position_error_m": 0.6488589309954008,
+      "box_orientation_error_rad": 1.6233920831051836
+    },
+    {
+      "time_s": 1.58,
+      "robot_height_m": 0.08371095275253009,
+      "box_position": [
+        1.0697460601892126,
+        0.5637882025386861,
+        0.16505027030596597
+      ],
+      "box_position_error_m": 0.669528319329979,
+      "box_orientation_error_rad": 1.6571921372608966
+    },
+    {
+      "time_s": 1.6,
+      "robot_height_m": 0.08201358850679297,
+      "box_position": [
+        1.0708728370257785,
+        0.5707254715426602,
+        0.16829654451887763
+      ],
+      "box_position_error_m": 0.683203112917638,
+      "box_orientation_error_rad": 1.666159534568665
+    },
+    {
+      "time_s": 1.62,
+      "robot_height_m": 0.08274561073209862,
+      "box_position": [
+        1.0703842459305601,
+        0.5743546913037796,
+        0.17259402248098168
+      ],
+      "box_position_error_m": 0.6934392446062877,
+      "box_orientation_error_rad": 1.6649732428025867
+    },
+    {
+      "time_s": 1.6400000000000001,
+      "robot_height_m": 0.08630147289596482,
+      "box_position": [
+        1.0692323794270067,
+        0.5766326093968729,
+        0.1750483470912534
+      ],
+      "box_position_error_m": 0.7039325432735013,
+      "box_orientation_error_rad": 1.658511749772208
+    },
+    {
+      "time_s": 1.6600000000000001,
+      "robot_height_m": 0.09100151583709144,
+      "box_position": [
+        1.06746610125773,
+        0.5776703728471175,
+        0.17553130991734106
+      ],
+      "box_position_error_m": 0.7143989448641368,
+      "box_orientation_error_rad": 1.6461246186112604
+    },
+    {
+      "time_s": 1.68,
+      "robot_height_m": 0.09442595263112473,
+      "box_position": [
+        1.0650704083037517,
+        0.5774482055882937,
+        0.17411729453442693
+      ],
+      "box_position_error_m": 0.7249506412534874,
+      "box_orientation_error_rad": 1.6299543706612871
+    },
+    {
+      "time_s": 1.7,
+      "robot_height_m": 0.09783180688024927,
+      "box_position": [
+        1.0620348091777212,
+        0.5759600942517992,
+        0.17083277259347648
+      ],
+      "box_position_error_m": 0.7359765501199598,
+      "box_orientation_error_rad": 1.6094691649215647
+    },
+    {
+      "time_s": 1.72,
+      "robot_height_m": 0.10161756723122023,
+      "box_position": [
+        1.0583674935593155,
+        0.5732367162130482,
+        0.16562674481786568
+      ],
+      "box_position_error_m": 0.7470924207939148,
+      "box_orientation_error_rad": 1.5863062953755078
+    },
+    {
+      "time_s": 1.74,
+      "robot_height_m": 0.10424167792208108,
+      "box_position": [
+        1.0575571028201474,
+        0.5685564393371977,
+        0.1627980359479203
+      ],
+      "box_position_error_m": 0.7576027891587528,
+      "box_orientation_error_rad": 1.5809075674415012
+    },
+    {
+      "time_s": 1.76,
+      "robot_height_m": 0.10506445466689093,
+      "box_position": [
+        1.0594783026577432,
+        0.5642433886898158,
+        0.16101747861867732
+      ],
+      "box_position_error_m": 0.7685217153896762,
+      "box_orientation_error_rad": 1.5940100863599775
+    },
+    {
+      "time_s": 1.78,
+      "robot_height_m": 0.10374467889768509,
+      "box_position": [
+        1.0604391586867126,
+        0.5630653070679467,
+        0.1620353451618989
+      ],
+      "box_position_error_m": 0.7765603904534724,
+      "box_orientation_error_rad": 1.601179835756763
+    },
+    {
+      "time_s": 1.8,
+      "robot_height_m": 0.10002520407085212,
+      "box_position": [
+        1.0602845988366263,
+        0.5633829339830587,
+        0.16238971648980954
+      ],
+      "box_position_error_m": 0.7843607781358455,
+      "box_orientation_error_rad": 1.6015879726513798
+    },
+    {
+      "time_s": 1.82,
+      "robot_height_m": 0.09385277818572464,
+      "box_position": [
+        1.059749702075257,
+        0.5649309267216569,
+        0.16131460629388342
+      ],
+      "box_position_error_m": 0.7923690641881835,
+      "box_orientation_error_rad": 1.6005124329460265
+    },
+    {
+      "time_s": 1.84,
+      "robot_height_m": 0.08509767700830231,
+      "box_position": [
+        1.05980194899345,
+        0.5669855348624433,
+        0.16042543766154682
+      ],
+      "box_position_error_m": 0.8003442651661372,
+      "box_orientation_error_rad": 1.6038440102597706
+    },
+    {
+      "time_s": 1.86,
+      "robot_height_m": 0.075907040599581,
+      "box_position": [
+        1.060324207199514,
+        0.5677814885525719,
+        0.16071742103513295
+      ],
+      "box_position_error_m": 0.8067445113800161,
+      "box_orientation_error_rad": 1.6098609250669138
+    },
+    {
+      "time_s": 1.8800000000000001,
+      "robot_height_m": 0.07274398585335738,
+      "box_position": [
+        1.0602930214363617,
+        0.5676976105673134,
+        0.16078526212040425
+      ],
+      "box_position_error_m": 0.8120908746595606,
+      "box_orientation_error_rad": 1.6131365118703056
+    },
+    {
+      "time_s": 1.9000000000000001,
+      "robot_height_m": 0.07210125276687995,
+      "box_position": [
+        1.0600878275458252,
+        0.5673636839019488,
+        0.16077390426306443
+      ],
+      "box_position_error_m": 0.8169914230222163,
+      "box_orientation_error_rad": 1.6159777423703074
+    },
+    {
+      "time_s": 1.92,
+      "robot_height_m": 0.07159422135538436,
+      "box_position": [
+        1.0600829451499407,
+        0.5672715783812785,
+        0.16082646214691387
+      ],
+      "box_position_error_m": 0.8210632761112232,
+      "box_orientation_error_rad": 1.6210612584351332
+    },
+    {
+      "time_s": 1.94,
+      "robot_height_m": 0.07099326232931842,
+      "box_position": [
+        1.0601316980357238,
+        0.5673162422693576,
+        0.16085430856202443
+      ],
+      "box_position_error_m": 0.8250102578815067,
+      "box_orientation_error_rad": 1.6266703417768191
+    },
+    {
+      "time_s": 1.96,
+      "robot_height_m": 0.07017713778255648,
+      "box_position": [
+        1.0601728748398378,
+        0.5673690781081385,
+        0.16086988717407033
+      ],
+      "box_position_error_m": 0.8285334115007145,
+      "box_orientation_error_rad": 1.632550905962794
+    },
+    {
+      "time_s": 1.98,
+      "robot_height_m": 0.06951576665832629,
+      "box_position": [
+        1.060197461602183,
+        0.5674028275232771,
+        0.16087807703945603
+      ],
+      "box_position_error_m": 0.8317535492988288,
+      "box_orientation_error_rad": 1.6371491101313855
+    },
+    {
+      "time_s": 2.0,
+      "robot_height_m": 0.06905659108902693,
+      "box_position": [
+        1.060209891916193,
+        0.5674200575273532,
+        0.16088207475126534
+      ],
+      "box_position_error_m": 0.8348569952770613,
+      "box_orientation_error_rad": 1.6410894121458508
+    },
+    {
+      "time_s": 2.02,
+      "robot_height_m": 0.06861383605232498,
+      "box_position": [
+        1.0602154680582676,
+        0.5674276016634839,
+        0.1608839050855484
+      ],
+      "box_position_error_m": 0.8376552516274476,
+      "box_orientation_error_rad": 1.6423843525344517
+    },
+    {
+      "time_s": 2.04,
+      "robot_height_m": 0.06823264395678055,
+      "box_position": [
+        1.0602177077908066,
+        0.5674304341273577,
+        0.16088469991943397
+      ],
+      "box_position_error_m": 0.8405140274118681,
+      "box_orientation_error_rad": 1.6428295693523782
+    },
+    {
+      "time_s": 2.06,
+      "robot_height_m": 0.06770621320448011,
+      "box_position": [
+        1.0602185001276663,
+        0.5674312842856518,
+        0.16088503157350056
+      ],
+      "box_position_error_m": 0.8434315901698436,
+      "box_orientation_error_rad": 1.641589185922231
+    },
+    {
+      "time_s": 2.08,
+      "robot_height_m": 0.0673461207124715,
+      "box_position": [
+        1.0602187323354935,
+        0.5674314237604688,
+        0.1608851671136818
+      ],
+      "box_position_error_m": 0.846580423274765,
+      "box_orientation_error_rad": 1.6391335021967688
+    },
+    {
+      "time_s": 2.1,
+      "robot_height_m": 0.06704918195033588,
+      "box_position": [
+        1.060218776474994,
+        0.5674313667973012,
+        0.16088522302206676
+      ],
+      "box_position_error_m": 0.8498916584075932,
+      "box_orientation_error_rad": 1.6360714485883912
+    },
+    {
+      "time_s": 2.12,
+      "robot_height_m": 0.06644939403602634,
+      "box_position": [
+        1.0602187708199187,
+        0.5674312886295271,
+        0.1608852472679723
+      ],
+      "box_position_error_m": 0.8536455231425465,
+      "box_orientation_error_rad": 1.6306453075956748
+    },
+    {
+      "time_s": 2.14,
+      "robot_height_m": 0.06560734009663113,
+      "box_position": [
+        1.0602187589959018,
+        0.567431232832503,
+        0.1608852587430365
+      ],
+      "box_position_error_m": 0.8576363530360163,
+      "box_orientation_error_rad": 1.6250236524960098
+    },
+    {
+      "time_s": 2.16,
+      "robot_height_m": 0.06459304182403101,
+      "box_position": [
+        1.0602187510038557,
+        0.5674312006382608,
+        0.1608852647261684
+      ],
+      "box_position_error_m": 0.862010657882862,
+      "box_orientation_error_rad": 1.6190073945029624
+    },
+    {
+      "time_s": 2.18,
+      "robot_height_m": 0.06367350921422422,
+      "box_position": [
+        1.0602187470242639,
+        0.5674311841730378,
+        0.1608852680796339
+      ],
+      "box_position_error_m": 0.8669112372492594,
+      "box_orientation_error_rad": 1.6137487375861068
+    },
+    {
+      "time_s": 2.2,
+      "robot_height_m": 0.06337530976386345,
+      "box_position": [
+        1.060218745448514,
+        0.567431176441435,
+        0.1608852700258388
+      ],
+      "box_position_error_m": 0.8721340428595283,
+      "box_orientation_error_rad": 1.6088817796954735
+    },
+    {
+      "time_s": 2.22,
+      "robot_height_m": 0.063522360379484,
+      "box_position": [
+        1.060218744999283,
+        0.5674311730484235,
+        0.16088527116121698
+      ],
+      "box_position_error_m": 0.878078879967526,
+      "box_orientation_error_rad": 1.6047141384673753
+    },
+    {
+      "time_s": 2.24,
+      "robot_height_m": 0.06376169404799055,
+      "box_position": [
+        1.060218744974653,
+        0.5674311716398553,
+        0.1608852718160246
+      ],
+      "box_position_error_m": 0.8842916234969981,
+      "box_orientation_error_rad": 1.6009069331583583
+    },
+    {
+      "time_s": 2.2600000000000002,
+      "robot_height_m": 0.06400929602748062,
+      "box_position": [
+        1.0602187450624228,
+        0.567431171079339,
+        0.16088527218678278
+      ],
+      "box_position_error_m": 0.8909237430120963,
+      "box_orientation_error_rad": 1.5977910337929409
+    },
+    {
+      "time_s": 2.2800000000000002,
+      "robot_height_m": 0.06426621268185949,
+      "box_position": [
+        1.0602187451505967,
+        0.5674311708609173,
+        0.16088527239260397
+      ],
+      "box_position_error_m": 0.8978400203636018,
+      "box_orientation_error_rad": 1.5964019394108575
+    },
+    {
+      "time_s": 2.3000000000000003,
+      "robot_height_m": 0.06453766414376148,
+      "box_position": [
+        1.0602187452120992,
+        0.5674311707743914,
+        0.16088527250479984
+      ],
+      "box_position_error_m": 0.9049457104319673,
+      "box_orientation_error_rad": 1.5959123686751144
+    },
+    {
+      "time_s": 2.32,
+      "robot_height_m": 0.06474978037575657,
+      "box_position": [
+        1.0602187452487801,
+        0.5674311707376165,
+        0.16088527256502838
+      ],
+      "box_position_error_m": 0.9122082467080841,
+      "box_orientation_error_rad": 1.5973411210021624
+    },
+    {
+      "time_s": 2.34,
+      "robot_height_m": 0.06508388116040116,
+      "box_position": [
+        1.06021874526871,
+        0.5674311707200523,
+        0.16088527259697685
+      ],
+      "box_position_error_m": 0.9195468680866722,
+      "box_orientation_error_rad": 1.5986192269092125
+    },
+    {
+      "time_s": 2.36,
+      "robot_height_m": 0.06595870249558691,
+      "box_position": [
+        1.0602187452788723,
+        0.5674311707106169,
+        0.16088527261378185
+      ],
+      "box_position_error_m": 0.9269424309607928,
+      "box_orientation_error_rad": 1.5995323260218095
+    },
+    {
+      "time_s": 2.38,
+      "robot_height_m": 0.06690274119903382,
+      "box_position": [
+        1.060218745283825,
+        0.5674311707051581,
+        0.16088527262257588
+      ],
+      "box_position_error_m": 0.934382787450444,
+      "box_orientation_error_rad": 1.5983545103692682
+    },
+    {
+      "time_s": 2.4,
+      "robot_height_m": 0.06763866887176113,
+      "box_position": [
+        1.0602187452861649,
+        0.5674311707019201,
+        0.16088527262716704
+      ],
+      "box_position_error_m": 0.9418901921762997,
+      "box_orientation_error_rad": 1.5961342984989992
+    },
+    {
+      "time_s": 2.42,
+      "robot_height_m": 0.06785209872753445,
+      "box_position": [
+        1.0602187452872234,
+        0.5674311707000332,
+        0.1608852726295239
+      ],
+      "box_position_error_m": 0.9490927744900096,
+      "box_orientation_error_rad": 1.5925406413474712
+    },
+    {
+      "time_s": 2.44,
+      "robot_height_m": 0.06750768561286816,
+      "box_position": [
+        1.060218745287708,
+        0.5674311706989562,
+        0.16088527263074937
+      ],
+      "box_position_error_m": 0.9562611407646557,
+      "box_orientation_error_rad": 1.588857007920176
+    },
+    {
+      "time_s": 2.46,
+      "robot_height_m": 0.06719721946774215,
+      "box_position": [
+        1.0602187452879435,
+        0.5674311706983654,
+        0.16088527263140015
+      ],
+      "box_position_error_m": 0.9632781171220497,
+      "box_orientation_error_rad": 1.5849583721787646
+    },
+    {
+      "time_s": 2.48,
+      "robot_height_m": 0.06681289072543477,
+      "box_position": [
+        1.0602187452880656,
+        0.5674311706980503,
+        0.16088527263175448
+      ],
+      "box_position_error_m": 0.9701196793562052,
+      "box_orientation_error_rad": 1.5814306172731993
+    },
+    {
+      "time_s": 2.5,
+      "robot_height_m": 0.06639335935272841,
+      "box_position": [
+        1.0602187452881395,
+        0.5674311706978284,
+        0.16088527263197436
+      ],
+      "box_position_error_m": 0.9769106806951792,
+      "box_orientation_error_rad": 1.5780972665955761
+    },
+    {
+      "time_s": 2.52,
+      "robot_height_m": 0.06581766097810796,
+      "box_position": [
+        1.0602187452881717,
+        0.5674311706977135,
+        0.16088527263209693
+      ],
+      "box_position_error_m": 0.9832950908052721,
+      "box_orientation_error_rad": 1.5763711603517956
+    },
+    {
+      "time_s": 2.54,
+      "robot_height_m": 0.06515274665809483,
+      "box_position": [
+        1.06021874528821,
+        0.5674311706976469,
+        0.16088527263221108
+      ],
+      "box_position_error_m": 0.9896248928223751,
+      "box_orientation_error_rad": 1.5751839970604802
+    },
+    {
+      "time_s": 2.56,
+      "robot_height_m": 0.06469384236310224,
+      "box_position": [
+        1.0602187452881922,
+        0.5674311706976249,
+        0.16088527263219563
+      ],
+      "box_position_error_m": 0.9957714806284909,
+      "box_orientation_error_rad": 1.575057719817098
+    },
+    {
+      "time_s": 2.58,
+      "robot_height_m": 0.06450470586260011,
+      "box_position": [
+        1.0602187452881904,
+        0.5674311706976076,
+        0.16088527263221256
+      ],
+      "box_position_error_m": 1.001668097714352,
+      "box_orientation_error_rad": 1.5758013952921488
+    },
+    {
+      "time_s": 2.6,
+      "robot_height_m": 0.0644071427297931,
+      "box_position": [
+        1.0602187452881813,
+        0.5674311706976055,
+        0.1608852726321913
+      ],
+      "box_position_error_m": 1.0074835299552105,
+      "box_orientation_error_rad": 1.5769919620339974
+    },
+    {
+      "time_s": 2.62,
+      "robot_height_m": 0.06447703922436294,
+      "box_position": [
+        1.0602187452881808,
+        0.567431170697603,
+        0.16088527263217606
+      ],
+      "box_position_error_m": 1.0129226447444692,
+      "box_orientation_error_rad": 1.57833222527816
+    },
+    {
+      "time_s": 2.64,
+      "robot_height_m": 0.06477920237448605,
+      "box_position": [
+        1.0602187452881853,
+        0.5674311706975996,
+        0.16088527263217056
+      ],
+      "box_position_error_m": 1.0183485321251815,
+      "box_orientation_error_rad": 1.5798564772955985
+    },
+    {
+      "time_s": 2.66,
+      "robot_height_m": 0.06525599974596444,
+      "box_position": [
+        1.0602187452881915,
+        0.5674311706975954,
+        0.1608852726321633
+      ],
+      "box_position_error_m": 1.0236638301070002,
+      "box_orientation_error_rad": 1.5817217156150774
+    },
+    {
+      "time_s": 2.68,
+      "robot_height_m": 0.06577754046603834,
+      "box_position": [
+        1.0602187452882,
+        0.5674311706975896,
+        0.16088527263216215
+      ],
+      "box_position_error_m": 1.0290018776552057,
+      "box_orientation_error_rad": 1.5841059098960637
+    },
+    {
+      "time_s": 2.7,
+      "robot_height_m": 0.06625346478320901,
+      "box_position": [
+        1.0602187452882084,
+        0.5674311706975838,
+        0.16088527263215693
+      ],
+      "box_position_error_m": 1.034410031943744,
+      "box_orientation_error_rad": 1.5867609853181084
+    },
+    {
+      "time_s": 2.72,
+      "robot_height_m": 0.06651845163028586,
+      "box_position": [
+        1.0602187452882246,
+        0.5674311706975714,
+        0.16088527263220756
+      ],
+      "box_position_error_m": 1.0399563738372088,
+      "box_orientation_error_rad": 1.5901553065267704
+    },
+    {
+      "time_s": 2.74,
+      "robot_height_m": 0.06636427781614494,
+      "box_position": [
+        1.0602187452882224,
+        0.5674311706975709,
+        0.16088527263219538
+      ],
+      "box_position_error_m": 1.045681799306642,
+      "box_orientation_error_rad": 1.5936446463408054
+    },
+    {
+      "time_s": 2.7600000000000002,
+      "robot_height_m": 0.06601594250097648,
+      "box_position": [
+        1.060218745288229,
+        0.5674311706975638,
+        0.1608852726322499
+      ],
+      "box_position_error_m": 1.05164959090349,
+      "box_orientation_error_rad": 1.5972985520136682
+    },
+    {
+      "time_s": 2.7800000000000002,
+      "robot_height_m": 0.06609683131337445,
+      "box_position": [
+        1.0602187452882141,
+        0.5674311706975718,
+        0.16088527263221739
+      ],
+      "box_position_error_m": 1.0579727966808787,
+      "box_orientation_error_rad": 1.6012115320334477
+    },
+    {
+      "time_s": 2.8000000000000003,
+      "robot_height_m": 0.06629411087177155,
+      "box_position": [
+        1.060218745288216,
+        0.5674311706975692,
+        0.16088527263226582
+      ],
+      "box_position_error_m": 1.06453381314419,
+      "box_orientation_error_rad": 1.6052702025991383
+    },
+    {
+      "time_s": 2.82,
+      "robot_height_m": 0.0664005837385826,
+      "box_position": [
+        1.0602187452881966,
+        0.5674311706975818,
+        0.16088527263222505
+      ],
+      "box_position_error_m": 1.0716596841465382,
+      "box_orientation_error_rad": 1.6079005632041627
+    },
+    {
+      "time_s": 2.84,
+      "robot_height_m": 0.06646119552549759,
+      "box_position": [
+        1.0602187452881924,
+        0.567431170697584,
+        0.1608852726322517
+      ],
+      "box_position_error_m": 1.0790049456813302,
+      "box_orientation_error_rad": 1.610174745053865
+    },
+    {
+      "time_s": 2.86,
+      "robot_height_m": 0.06647672583973412,
+      "box_position": [
+        1.0602187452881728,
+        0.5674311706975985,
+        0.16088527263218477
+      ],
+      "box_position_error_m": 1.0866694929946592,
+      "box_orientation_error_rad": 1.6117094241613386
+    },
+    {
+      "time_s": 2.88,
+      "robot_height_m": 0.06644950192305384,
+      "box_position": [
+        1.0602187452881793,
+        0.5674311706975961,
+        0.1608852726322102
+      ],
+      "box_position_error_m": 1.094628626171181,
+      "box_orientation_error_rad": 1.6126761955116626
+    },
+    {
+      "time_s": 2.9,
+      "robot_height_m": 0.06635168041801282,
+      "box_position": [
+        1.0602187452881722,
+        0.5674311706976035,
+        0.16088527263215027
+      ],
+      "box_position_error_m": 1.1027776094963069,
+      "box_orientation_error_rad": 1.6133640577960056
+    },
+    {
+      "time_s": 2.92,
+      "robot_height_m": 0.0663089731173944,
+      "box_position": [
+        1.0602187452881904,
+        0.567431170697593,
+        0.16088527263219285
+      ],
+      "box_position_error_m": 1.11123919006316,
+      "box_orientation_error_rad": 1.6145189369998296
+    },
+    {
+      "time_s": 2.94,
+      "robot_height_m": 0.06627168724885213,
+      "box_position": [
+        1.0602187452881868,
+        0.5674311706975966,
+        0.16088527263213626
+      ],
+      "box_position_error_m": 1.1198374384199274,
+      "box_orientation_error_rad": 1.615722987560761
+    },
+    {
+      "time_s": 2.96,
+      "robot_height_m": 0.06592880682066081,
+      "box_position": [
+        1.0602187452882101,
+        0.5674311706975816,
+        0.16088527263218685
+      ],
+      "box_position_error_m": 1.1286245884743649,
+      "box_orientation_error_rad": 1.6170134148967874
+    },
+    {
+      "time_s": 2.98,
+      "robot_height_m": 0.06571470698715859,
+      "box_position": [
+        1.0602187452882168,
+        0.5674311706975765,
+        0.16088527263218955
+      ],
+      "box_position_error_m": 1.1375085091379498,
+      "box_orientation_error_rad": 1.6173904277858724
+    },
+    {
+      "time_s": 3.0,
+      "robot_height_m": 0.06556487281109553,
+      "box_position": [
+        1.0602187452882288,
+        0.5674311706975652,
+        0.16088527263226785
+      ],
+      "box_position_error_m": 1.1464762700857927,
+      "box_orientation_error_rad": 1.6173232997659812
+    },
+    {
+      "time_s": 3.02,
+      "robot_height_m": 0.06496613462684478,
+      "box_position": [
+        1.060218745288204,
+        0.5674311706975785,
+        0.16088527263222627
+      ],
+      "box_position_error_m": 1.1552449762132355,
+      "box_orientation_error_rad": 1.615230657908546
+    },
+    {
+      "time_s": 3.04,
+      "robot_height_m": 0.06453533285092845,
+      "box_position": [
+        1.060218745288198,
+        0.5674311706975808,
+        0.16088527263225239
+      ],
+      "box_position_error_m": 1.1639726850103205,
+      "box_orientation_error_rad": 1.6128890458960163
+    },
+    {
+      "time_s": 3.06,
+      "robot_height_m": 0.0638454425313289,
+      "box_position": [
+        1.0602187452881746,
+        0.567431170697597,
+        0.16088527263218536
+      ],
+      "box_position_error_m": 1.1725468398240266,
+      "box_orientation_error_rad": 1.610033275782285
+    },
+    {
+      "time_s": 3.08,
+      "robot_height_m": 0.0635524103884163,
+      "box_position": [
+        1.0602187452881815,
+        0.5674311706975941,
+        0.16088527263221059
+      ],
+      "box_position_error_m": 1.181001750386876,
+      "box_orientation_error_rad": 1.6076043568293756
+    },
+    {
+      "time_s": 3.1,
+      "robot_height_m": 0.06337614165675105,
+      "box_position": [
+        1.0602187452881733,
+        0.5674311706976022,
+        0.16088527263215047
+      ],
+      "box_position_error_m": 1.1894268211948047,
+      "box_orientation_error_rad": 1.6054354605158634
+    },
+    {
+      "time_s": 3.12,
+      "robot_height_m": 0.06323828918523212,
+      "box_position": [
+        1.0602187452881944,
+        0.5674311706975901,
+        0.1608852726321931
+      ],
+      "box_position_error_m": 1.1976231294102402,
+      "box_orientation_error_rad": 1.6042213622316643
+    },
+    {
+      "time_s": 3.14,
+      "robot_height_m": 0.06313461873397111,
+      "box_position": [
+        1.0602187452881904,
+        0.5674311706975939,
+        0.1608852726321362
+      ],
+      "box_position_error_m": 1.2057893866453153,
+      "box_orientation_error_rad": 1.6028944651087056
+    },
+    {
+      "time_s": 3.16,
+      "robot_height_m": 0.06306370806577638,
+      "box_position": [
+        1.060218745288217,
+        0.5674311706975769,
+        0.160885272632187
+      ],
+      "box_position_error_m": 1.2138375418311065,
+      "box_orientation_error_rad": 1.6012315696402997
+    },
+    {
+      "time_s": 3.18,
+      "robot_height_m": 0.06307721316902098,
+      "box_position": [
+        1.0602187452882215,
+        0.5674311706975739,
+        0.1608852726321633
+      ],
+      "box_position_error_m": 1.221800246589806,
+      "box_orientation_error_rad": 1.6002139760196963
+    },
+    {
+      "time_s": 3.2,
+      "robot_height_m": 0.0630520169708001,
+      "box_position": [
+        1.060218745288241,
+        0.5674311706975596,
+        0.16088527263221974
+      ],
+      "box_position_error_m": 1.2297448642732691,
+      "box_orientation_error_rad": 1.5995601622122075
+    },
+    {
+      "time_s": 3.22,
+      "robot_height_m": 0.06297106029471168,
+      "box_position": [
+        1.0602187452882346,
+        0.5674311706975618,
+        0.16088527263220492
+      ],
+      "box_position_error_m": 1.2374173873600045,
+      "box_orientation_error_rad": 1.5997770278834618
+    },
+    {
+      "time_s": 3.24,
+      "robot_height_m": 0.06288656620964642,
+      "box_position": [
+        1.060218745288238,
+        0.5674311706975571,
+        0.16088527263224792
+      ],
+      "box_position_error_m": 1.2449941263194098,
+      "box_orientation_error_rad": 1.600255112619335
+    },
+    {
+      "time_s": 3.2600000000000002,
+      "robot_height_m": 0.06288534090109692,
+      "box_position": [
+        1.0602187452882197,
+        0.5674311706975675,
+        0.16088527263221963
+      ],
+      "box_position_error_m": 1.2523304420960595,
+      "box_orientation_error_rad": 1.601176338239634
+    },
+    {
+      "time_s": 3.2800000000000002,
+      "robot_height_m": 0.06272386624524591,
+      "box_position": [
+        1.0602187452882188,
+        0.567431170697567,
+        0.16088527263225974
+      ],
+      "box_position_error_m": 1.2594132982310386,
+      "box_orientation_error_rad": 1.6019498703344488
+    },
+    {
+      "time_s": 3.3000000000000003,
+      "robot_height_m": 0.06255100331327271,
+      "box_position": [
+        1.0602187452881953,
+        0.5674311706975819,
+        0.1608852726322252
+      ],
+      "box_position_error_m": 1.2663943502689787,
+      "box_orientation_error_rad": 1.6026625532428846
+    },
+    {
+      "time_s": 3.3200000000000003,
+      "robot_height_m": 0.06236158068822325,
+      "box_position": [
+        1.0602187452881935,
+        0.5674311706975824,
+        0.1608852726322669
+      ],
+      "box_position_error_m": 1.2731490825086618,
+      "box_orientation_error_rad": 1.6024304612227525
+    },
+    {
+      "time_s": 3.34,
+      "robot_height_m": 0.062237419642693116,
+      "box_position": [
+        1.0602187452881664,
+        0.5674311706975999,
+        0.16088527263222832
+      ],
+      "box_position_error_m": 1.2799003968389357,
+      "box_orientation_error_rad": 1.6016702745243787
+    },
+    {
+      "time_s": 3.36,
+      "robot_height_m": 0.062147864132876054,
+      "box_position": [
+        1.0602187452881553,
+        0.5674311706976076,
+        0.16088527263222843
+      ],
+      "box_position_error_m": 1.2865966988127633,
+      "box_orientation_error_rad": 1.5998311218179686
+    },
+    {
+      "time_s": 3.38,
+      "robot_height_m": 0.06210698601884694,
+      "box_position": [
+        1.0602187452881446,
+        0.5674311706976167,
+        0.16088527263220279
+      ],
+      "box_position_error_m": 1.2933644387343852,
+      "box_orientation_error_rad": 1.5964690409167852
+    },
+    {
+      "time_s": 3.4,
+      "robot_height_m": 0.06208084103452618,
+      "box_position": [
+        1.0602187452881442,
+        0.5674311706976198,
+        0.16088527263218524
+      ],
+      "box_position_error_m": 1.3002007364386161,
+      "box_orientation_error_rad": 1.5923503606959277
+    },
+    {
+      "time_s": 3.42,
+      "robot_height_m": 0.06213410135609683,
+      "box_position": [
+        1.060218745288153,
+        0.5674311706976168,
+        0.16088527263217825
+      ],
+      "box_position_error_m": 1.3071941537265408,
+      "box_orientation_error_rad": 1.5869491288476212
+    },
+    {
+      "time_s": 3.44,
+      "robot_height_m": 0.06228000111983399,
+      "box_position": [
+        1.060218745288163,
+        0.5674311706976122,
+        0.16088527263217048
+      ],
+      "box_position_error_m": 1.3142734978884096,
+      "box_orientation_error_rad": 1.5813048150944236
+    },
+    {
+      "time_s": 3.46,
+      "robot_height_m": 0.06244832777787217,
+      "box_position": [
+        1.0602187452881773,
+        0.567431170697604,
+        0.1608852726321689
+      ],
+      "box_position_error_m": 1.3214582733899136,
+      "box_orientation_error_rad": 1.5751604345227936
+    },
+    {
+      "time_s": 3.48,
+      "robot_height_m": 0.06264675688322703,
+      "box_position": [
+        1.0602187452881908,
+        0.5674311706975959,
+        0.1608852726321636
+      ],
+      "box_position_error_m": 1.32881916479196,
+      "box_orientation_error_rad": 1.5684679217200765
+    },
+    {
+      "time_s": 3.5,
+      "robot_height_m": 0.0629464245009702,
+      "box_position": [
+        1.0602187452882135,
+        0.5674311706975803,
+        0.16088527263220723
+      ],
+      "box_position_error_m": 1.3362922715001133,
+      "box_orientation_error_rad": 1.561530787734967
+    },
+    {
+      "time_s": 3.52,
+      "robot_height_m": 0.0634647794943062,
+      "box_position": [
+        1.0602187452882113,
+        0.56743117069758,
+        0.1608852726321963
+      ],
+      "box_position_error_m": 1.3440604193963226,
+      "box_orientation_error_rad": 1.5537284217129987
+    },
+    {
+      "time_s": 3.54,
+      "robot_height_m": 0.06410047792398509,
+      "box_position": [
+        1.0602187452882192,
+        0.567431170697572,
+        0.16088527263224428
+      ],
+      "box_position_error_m": 1.3520288595200893,
+      "box_orientation_error_rad": 1.5460258396055075
+    },
+    {
+      "time_s": 3.56,
+      "robot_height_m": 0.06468647245905873,
+      "box_position": [
+        1.0602187452881986,
+        0.5674311706975832,
+        0.16088527263221558
+      ],
+      "box_position_error_m": 1.3603489788692893,
+      "box_orientation_error_rad": 1.538472416019813
+    },
+    {
+      "time_s": 3.58,
+      "robot_height_m": 0.06524978248197447,
+      "box_position": [
+        1.0602187452881995,
+        0.567431170697581,
+        0.16088527263225888
+      ],
+      "box_position_error_m": 1.3691351324084085,
+      "box_orientation_error_rad": 1.5323581190601838
+    },
+    {
+      "time_s": 3.6,
+      "robot_height_m": 0.06576560016834244,
+      "box_position": [
+        1.0602187452881717,
+        0.5674311706975979,
+        0.16088527263222255
+      ],
+      "box_position_error_m": 1.3781642534567713,
+      "box_orientation_error_rad": 1.5271227557331122
+    },
+    {
+      "time_s": 3.62,
+      "robot_height_m": 0.06616558286550119,
+      "box_position": [
+        1.060218745288165,
+        0.5674311706976017,
+        0.16088527263224683
+      ],
+      "box_position_error_m": 1.3874271787887809,
+      "box_orientation_error_rad": 1.5259990621245871
+    },
+    {
+      "time_s": 3.64,
+      "robot_height_m": 0.06650798521975053,
+      "box_position": [
+        1.0602187452881382,
+        0.5674311706976203,
+        0.16088527263218647
+      ],
+      "box_position_error_m": 1.3967902004256774,
+      "box_orientation_error_rad": 1.5256173431492088
+    },
+    {
+      "time_s": 3.66,
+      "robot_height_m": 0.06703604677364623,
+      "box_position": [
+        1.0602187452881466,
+        0.5674311706976168,
+        0.16088527263220956
+      ],
+      "box_position_error_m": 1.4063322443310382,
+      "box_orientation_error_rad": 1.5264025546793534
+    },
+    {
+      "time_s": 3.68,
+      "robot_height_m": 0.0673945851375528,
+      "box_position": [
+        1.0602187452881375,
+        0.5674311706976256,
+        0.16088527263215463
+      ],
+      "box_position_error_m": 1.4157292167161168,
+      "box_orientation_error_rad": 1.52816333346807
+    },
+    {
+      "time_s": 3.7,
+      "robot_height_m": 0.06757671818020146,
+      "box_position": [
+        1.0602187452881626,
+        0.5674311706976115,
+        0.16088527263219365
+      ],
+      "box_position_error_m": 1.425059080227186,
+      "box_orientation_error_rad": 1.5305382209484277
+    },
+    {
+      "time_s": 3.72,
+      "robot_height_m": 0.06762485407037652,
+      "box_position": [
+        1.0602187452881588,
+        0.5674311706976155,
+        0.16088527263214114
+      ],
+      "box_position_error_m": 1.4340752495856723,
+      "box_orientation_error_rad": 1.532983014256019
+    },
+    {
+      "time_s": 3.74,
+      "robot_height_m": 0.06723163171242703,
+      "box_position": [
+        1.060218745288191,
+        0.5674311706975957,
+        0.16088527263218794
+      ],
+      "box_position_error_m": 1.4429387317194036,
+      "box_orientation_error_rad": 1.5351780692149442
+    },
+    {
+      "time_s": 3.7600000000000002,
+      "robot_height_m": 0.06654037377368387,
+      "box_position": [
+        1.060218745288197,
+        0.5674311706975921,
+        0.16088527263216587
+      ],
+      "box_position_error_m": 1.4514854839029323,
+      "box_orientation_error_rad": 1.536621803910666
+    },
+    {
+      "time_s": 3.7800000000000002,
+      "robot_height_m": 0.0657082740749396,
+      "box_position": [
+        1.0602187452882144,
+        0.56743117069758,
+        0.16088527263218852
+      ],
+      "box_position_error_m": 1.4599061751414253,
+      "box_orientation_error_rad": 1.5373459221254604
+    },
+    {
+      "time_s": 3.8000000000000003,
+      "robot_height_m": 0.06486564489573188,
+      "box_position": [
+        1.0602187452882086,
+        0.5674311706975835,
+        0.1608852726321301
+      ],
+      "box_position_error_m": 1.4682665726001858,
+      "box_orientation_error_rad": 1.5378317136682649
+    },
+    {
+      "time_s": 3.8200000000000003,
+      "robot_height_m": 0.06408434574747258,
+      "box_position": [
+        1.060218745288248,
+        0.5674311706975591,
+        0.16088527263218297
+      ],
+      "box_position_error_m": 1.4762774637917793,
+      "box_orientation_error_rad": 1.5386566059914
+    },
+    {
+      "time_s": 3.84,
+      "robot_height_m": 0.06350305002945034,
+      "box_position": [
+        1.0602187452882559,
+        0.5674311706975544,
+        0.1608852726321613
+      ],
+      "box_position_error_m": 1.4841505164534763,
+      "box_orientation_error_rad": 1.5399418503381908
+    },
+    {
+      "time_s": 3.86,
+      "robot_height_m": 0.06304454758792609,
+      "box_position": [
+        1.0602187452882827,
+        0.5674311706975353,
+        0.1608852726322179
+      ],
+      "box_position_error_m": 1.491743555523032,
+      "box_orientation_error_rad": 1.5418896377081241
+    },
+    {
+      "time_s": 3.88,
+      "robot_height_m": 0.06283298884100252,
+      "box_position": [
+        1.0602187452882748,
+        0.5674311706975379,
+        0.16088527263220387
+      ],
+      "box_position_error_m": 1.499146294375777,
+      "box_orientation_error_rad": 1.5459104804104722
+    },
+    {
+      "time_s": 3.9,
+      "robot_height_m": 0.0629280158233674,
+      "box_position": [
+        1.0602187452882792,
+        0.5674311706975319,
+        0.16088527263224703
+      ],
+      "box_position_error_m": 1.5064630413961828,
+      "box_orientation_error_rad": 1.551071934440993
+    },
+    {
+      "time_s": 3.92,
+      "robot_height_m": 0.06299730253740388,
+      "box_position": [
+        1.0602187452882554,
+        0.5674311706975449,
+        0.16088527263221905
+      ],
+      "box_position_error_m": 1.5132564829452768,
+      "box_orientation_error_rad": 1.557090323792296
+    },
+    {
+      "time_s": 3.94,
+      "robot_height_m": 0.0629338955555074,
+      "box_position": [
+        1.0602187452882539,
+        0.5674311706975442,
+        0.16088527263225946
+      ],
+      "box_position_error_m": 1.5198356966465845,
+      "box_orientation_error_rad": 1.563798581369741
+    },
+    {
+      "time_s": 3.96,
+      "robot_height_m": 0.06279329962448975,
+      "box_position": [
+        1.0602187452882237,
+        0.5674311706975625,
+        0.1608852726322251
+      ],
+      "box_position_error_m": 1.5259694866631586,
+      "box_orientation_error_rad": 1.5716849590030444
+    },
+    {
+      "time_s": 3.98,
+      "robot_height_m": 0.06289378010294948,
+      "box_position": [
+        1.0602187452882108,
+        0.5674311706975705,
+        0.16088527263222577
+      ],
+      "box_position_error_m": 1.5318959155543281,
+      "box_orientation_error_rad": 1.5790188952571607
+    },
+    {
+      "time_s": 4.0,
+      "robot_height_m": 0.06308251367998767,
+      "box_position": [
+        1.0602187452881988,
+        0.5674311706975799,
+        0.16088527263220245
+      ],
+      "box_position_error_m": 1.5377353714817836,
+      "box_orientation_error_rad": 1.5860918235156292
+    },
+    {
+      "time_s": 4.0200000000000005,
+      "robot_height_m": 0.06317024098703745,
+      "box_position": [
+        1.0602187452881984,
+        0.5674311706975828,
+        0.1608852726321862
+      ],
+      "box_position_error_m": 1.5430689921572354,
+      "box_orientation_error_rad": 1.5936195272841231
+    },
+    {
+      "time_s": 4.04,
+      "robot_height_m": 0.06319794397395073,
+      "box_position": [
+        1.060218745288209,
+        0.567431170697579,
+        0.16088527263217983
+      ],
+      "box_position_error_m": 1.5483294336615232,
+      "box_orientation_error_rad": 1.6010832801404637
+    },
+    {
+      "time_s": 4.0600000000000005,
+      "robot_height_m": 0.06321855700410284,
+      "box_position": [
+        1.0602187452882206,
+        0.5674311706975735,
+        0.16088527263217234
+      ],
+      "box_position_error_m": 1.5534092874159788,
+      "box_orientation_error_rad": 1.608394075807742
+    },
+    {
+      "time_s": 4.08,
+      "robot_height_m": 0.06323708442026174,
+      "box_position": [
+        1.060218745288237,
+        0.5674311706975642,
+        0.1608852726321709
+      ],
+      "box_position_error_m": 1.558491065238915,
+      "box_orientation_error_rad": 1.6152593858522806
+    },
+    {
+      "time_s": 4.1,
+      "robot_height_m": 0.0632731268027924,
+      "box_position": [
+        1.0602187452882526,
+        0.5674311706975551,
+        0.16088527263216557
+      ],
+      "box_position_error_m": 1.563597936610512,
+      "box_orientation_error_rad": 1.6219131229295138
+    },
+    {
+      "time_s": 4.12,
+      "robot_height_m": 0.06334175281485899,
+      "box_position": [
+        1.0602187452882783,
+        0.567431170697538,
+        0.16088527263220698
+      ],
+      "box_position_error_m": 1.568584765374765,
+      "box_orientation_error_rad": 1.6288042500870814
+    },
+    {
+      "time_s": 4.14,
+      "robot_height_m": 0.06343311772761459,
+      "box_position": [
+        1.0602187452882774,
+        0.5674311706975362,
+        0.16088527263221242
+      ],
+      "box_position_error_m": 1.5735311200664994,
+      "box_orientation_error_rad": 1.6360345129531462
+    },
+    {
+      "time_s": 4.16,
+      "robot_height_m": 0.06352641761167724,
+      "box_position": [
+        1.060218745288251,
+        0.5674311706975502,
+        0.1608852726321652
+      ],
+      "box_position_error_m": 1.5783451456773958,
+      "box_orientation_error_rad": 1.6439225101074204
+    },
+    {
+      "time_s": 4.18,
+      "robot_height_m": 0.06364718750260828,
+      "box_position": [
+        1.0602187452882774,
+        0.5674311706975346,
+        0.1608852726321984
+      ],
+      "box_position_error_m": 1.5831779928654153,
+      "box_orientation_error_rad": 1.6517068213072101
+    },
+    {
+      "time_s": 4.2,
+      "robot_height_m": 0.0637515589097974,
+      "box_position": [
+        1.0602187452882739,
+        0.5674311706975365,
+        0.1608852726321978
+      ],
+      "box_position_error_m": 1.588035734711873,
+      "box_orientation_error_rad": 1.6594409111858932
+    },
+    {
+      "time_s": 4.22,
+      "robot_height_m": 0.06378443479263995,
+      "box_position": [
+        1.060218745288262,
+        0.5674311706975421,
+        0.1608852726321947
+      ],
+      "box_position_error_m": 1.5926740734740914,
+      "box_orientation_error_rad": 1.6643431180470778
+    },
+    {
+      "time_s": 4.24,
+      "robot_height_m": 0.0637962023297851,
+      "box_position": [
+        1.0602187452882998,
+        0.5674311706975208,
+        0.16088527263221664
+      ],
+      "box_position_error_m": 1.5971581916213786,
+      "box_orientation_error_rad": 1.668406117084818
+    },
+    {
+      "time_s": 4.26,
+      "robot_height_m": 0.0638394330679872,
+      "box_position": [
+        1.0602187452882803,
+        0.5674311706975323,
+        0.16088527263219898
+      ],
+      "box_position_error_m": 1.6012993703381044,
+      "box_orientation_error_rad": 1.6707887843669573
+    },
+    {
+      "time_s": 4.28,
+      "robot_height_m": 0.06387083168919319,
+      "box_position": [
+        1.0602187452881686,
+        0.5674311706975963,
+        0.16088527263212474
+      ],
+      "box_position_error_m": 1.605371708392481,
+      "box_orientation_error_rad": 1.6707329234577155
+    },
+    {
+      "time_s": 4.3,
+      "robot_height_m": 0.06390995966747173,
+      "box_position": [
+        1.0602187452882341,
+        0.5674311706975607,
+        0.1608852726321825
+      ],
+      "box_position_error_m": 1.6094287893865318,
+      "box_orientation_error_rad": 1.669460207790554
+    },
+    {
+      "time_s": 4.32,
+      "robot_height_m": 0.06396362753599097,
+      "box_position": [
+        1.060218745288219,
+        0.5674311706975765,
+        0.16088527263215707
+      ],
+      "box_position_error_m": 1.6131610677981147,
+      "box_orientation_error_rad": 1.6685591598700809
+    },
+    {
+      "time_s": 4.34,
+      "robot_height_m": 0.06401032348973652,
+      "box_position": [
+        1.0602187452882714,
+        0.567431170697543,
+        0.16088527263222088
+      ],
+      "box_position_error_m": 1.6167081971025963,
+      "box_orientation_error_rad": 1.6685455462833705
+    },
+    {
+      "time_s": 4.36,
+      "robot_height_m": 0.0640242367050124,
+      "box_position": [
+        1.0602187452882592,
+        0.5674311706975494,
+        0.16088527263220445
+      ],
+      "box_position_error_m": 1.6198488271356448,
+      "box_orientation_error_rad": 1.6702967084575386
+    },
+    {
+      "time_s": 4.38,
+      "robot_height_m": 0.06409121060129687,
+      "box_position": [
+        1.060218745288279,
+        0.5674311706975322,
+        0.1608852726322535
+      ],
+      "box_position_error_m": 1.6230388316965274,
+      "box_orientation_error_rad": 1.6730055477557384
+    },
+    {
+      "time_s": 4.4,
+      "robot_height_m": 0.06432850740591477,
+      "box_position": [
+        1.0602187452882537,
+        0.5674311706975459,
+        0.16088527263222135
+      ],
+      "box_position_error_m": 1.6262825308539486,
+      "box_orientation_error_rad": 1.6762295369733846
+    },
+    {
+      "time_s": 4.42,
+      "robot_height_m": 0.0644575298412182,
+      "box_position": [
+        1.0602187452882477,
+        0.5674311706975481,
+        0.16088527263222407
+      ],
+      "box_position_error_m": 1.6293752431448898,
+      "box_orientation_error_rad": 1.681898477960437
+    },
+    {
+      "time_s": 4.44,
+      "robot_height_m": 0.06446794844150476,
+      "box_position": [
+        1.0602187452882361,
+        0.5674311706975567,
+        0.16088527263220093
+      ],
+      "box_position_error_m": 1.632285066644127,
+      "box_orientation_error_rad": 1.6877587911493557
+    },
+    {
+      "time_s": 4.46,
+      "robot_height_m": 0.06451237349865586,
+      "box_position": [
+        1.0602187452882355,
+        0.5674311706975594,
+        0.16088527263218494
+      ],
+      "box_position_error_m": 1.634771594824467,
+      "box_orientation_error_rad": 1.6939427526037176
+    },
+    {
+      "time_s": 4.48,
+      "robot_height_m": 0.06465245015351553,
+      "box_position": [
+        1.0602187452882421,
+        0.5674311706975579,
+        0.16088527263217867
+      ],
+      "box_position_error_m": 1.6369418431267564,
+      "box_orientation_error_rad": 1.6980416363588096
+    },
+    {
+      "time_s": 4.5,
+      "robot_height_m": 0.0647235415857874,
+      "box_position": [
+        1.060218745288251,
+        0.5674311706975543,
+        0.16088527263217148
+      ],
+      "box_position_error_m": 1.6390024168513764,
+      "box_orientation_error_rad": 1.701132035263826
+    },
+    {
+      "time_s": 4.5200000000000005,
+      "robot_height_m": 0.0648380756662399,
+      "box_position": [
+        1.060218745288263,
+        0.5674311706975482,
+        0.1608852726321701
+      ],
+      "box_position_error_m": 1.6402829199460611,
+      "box_orientation_error_rad": 1.7007681226884899
+    },
+    {
+      "time_s": 4.54,
+      "robot_height_m": 0.06514437212384316,
+      "box_position": [
+        1.060218745288275,
+        0.5674311706975417,
+        0.16088527263216512
+      ],
+      "box_position_error_m": 1.641429586072057,
+      "box_orientation_error_rad": 1.6995441364412398
+    },
+    {
+      "time_s": 4.5600000000000005,
+      "robot_height_m": 0.0657332194901263,
+      "box_position": [
+        1.0602187452882896,
+        0.5674311706975332,
+        0.16088527263216512
+      ],
+      "box_position_error_m": 1.6422201341491127,
+      "box_orientation_error_rad": 1.696536479941349
+    },
+    {
+      "time_s": 4.58,
+      "robot_height_m": 0.06657609760966,
+      "box_position": [
+        1.0602187452883034,
+        0.5674311706975251,
+        0.16088527263216051
+      ],
+      "box_position_error_m": 1.6429708919260146,
+      "box_orientation_error_rad": 1.6938365692971022
+    },
+    {
+      "time_s": 4.6000000000000005,
+      "robot_height_m": 0.06761426917191678,
+      "box_position": [
+        1.0602187452883263,
+        0.5674311706975091,
+        0.1608852726322068
+      ],
+      "box_position_error_m": 1.6437833144013736,
+      "box_orientation_error_rad": 1.6913317990047034
+    },
+    {
+      "time_s": 4.62,
+      "robot_height_m": 0.06867315998980762,
+      "box_position": [
+        1.060218745288324,
+        0.5674311706975086,
+        0.16088527263219568
+      ],
+      "box_position_error_m": 1.6442516440911892,
+      "box_orientation_error_rad": 1.690126725758464
+    },
+    {
+      "time_s": 4.64,
+      "robot_height_m": 0.06962472504620035,
+      "box_position": [
+        1.0602187452883323,
+        0.5674311706974999,
+        0.160885272632246
+      ],
+      "box_position_error_m": 1.6448186998341892,
+      "box_orientation_error_rad": 1.6899486922350015
+    },
+    {
+      "time_s": 4.66,
+      "robot_height_m": 0.07070482649618277,
+      "box_position": [
+        1.0602187452883123,
+        0.5674311706975106,
+        0.16088527263221614
+      ],
+      "box_position_error_m": 1.6454269726653163,
+      "box_orientation_error_rad": 1.6917694052073602
+    },
+    {
+      "time_s": 4.68,
+      "robot_height_m": 0.07198995619748642,
+      "box_position": [
+        1.0602187452883134,
+        0.5674311706975079,
+        0.16088527263226132
+      ],
+      "box_position_error_m": 1.646244632231146,
+      "box_orientation_error_rad": 1.694688898729967
+    },
+    {
+      "time_s": 4.7,
+      "robot_height_m": 0.07344596543678976,
+      "box_position": [
+        1.0602187452882865,
+        0.5674311706975242,
+        0.16088527263222352
+      ],
+      "box_position_error_m": 1.647281532313701,
+      "box_orientation_error_rad": 1.6982129555162846
+    },
+    {
+      "time_s": 4.72,
+      "robot_height_m": 0.07506409355523828,
+      "box_position": [
+        1.06021874528828,
+        0.5674311706975276,
+        0.16088527263224872
+      ],
+      "box_position_error_m": 1.6483687231908641,
+      "box_orientation_error_rad": 1.70341161656086
+    },
+    {
+      "time_s": 4.74,
+      "robot_height_m": 0.07688057201042979,
+      "box_position": [
+        1.0602187452882537,
+        0.5674311706975458,
+        0.16088527263218602
+      ],
+      "box_position_error_m": 1.6495063749223804,
+      "box_orientation_error_rad": 1.7067892032310021
+    },
+    {
+      "time_s": 4.76,
+      "robot_height_m": 0.07854319183557992,
+      "box_position": [
+        1.0602187452882619,
+        0.5674311706975423,
+        0.16088527263220995
+      ],
+      "box_position_error_m": 1.6505168156831393,
+      "box_orientation_error_rad": 1.7064153591171292
+    },
+    {
+      "time_s": 4.78,
+      "robot_height_m": 0.0800178284293796,
+      "box_position": [
+        1.060218745288253,
+        0.5674311706975511,
+        0.16088527263215313
+      ],
+      "box_position_error_m": 1.6514220411648282,
+      "box_orientation_error_rad": 1.7050967881998935
+    },
+    {
+      "time_s": 4.8,
+      "robot_height_m": 0.08148358252457738,
+      "box_position": [
+        1.0602187452882776,
+        0.5674311706975373,
+        0.16088527263219352
+      ],
+      "box_position_error_m": 1.6523701236093473,
+      "box_orientation_error_rad": 1.7033175938954175
+    },
+    {
+      "time_s": 4.82,
+      "robot_height_m": 0.08300344623288484,
+      "box_position": [
+        1.0602187452882739,
+        0.5674311706975413,
+        0.1608852726321392
+      ],
+      "box_position_error_m": 1.6530177553761753,
+      "box_orientation_error_rad": 1.7023801631802133
+    },
+    {
+      "time_s": 4.84,
+      "robot_height_m": 0.0844587199491018,
+      "box_position": [
+        1.0602187452883052,
+        0.5674311706975219,
+        0.16088527263218752
+      ],
+      "box_position_error_m": 1.653729608045064,
+      "box_orientation_error_rad": 1.7026162881305233
+    },
+    {
+      "time_s": 4.86,
+      "robot_height_m": 0.08567515638226963,
+      "box_position": [
+        1.06021874528831,
+        0.5674311706975194,
+        0.1608852726321597
+      ],
+      "box_position_error_m": 1.6543699925607003,
+      "box_orientation_error_rad": 1.7051676206488537
+    },
+    {
+      "time_s": 4.88,
+      "robot_height_m": 0.08677609627889475,
+      "box_position": [
+        1.0602187452883434,
+        0.5674311706974976,
+        0.1608852726322157
+      ],
+      "box_position_error_m": 1.654606767435655,
+      "box_orientation_error_rad": 1.7094334492116574
+    },
+    {
+      "time_s": 4.9,
+      "robot_height_m": 0.08786603064711639,
+      "box_position": [
+        1.0602187452883438,
+        0.5674311706974949,
+        0.1608852726322264
+      ],
+      "box_position_error_m": 1.6546980022521836,
+      "box_orientation_error_rad": 1.7145607318018845
+    },
+    {
+      "time_s": 4.92,
+      "robot_height_m": 0.08883066224949289,
+      "box_position": [
+        1.060218745288335,
+        0.5674311706974965,
+        0.16088527263223681
+      ],
+      "box_position_error_m": 1.6541407990027464,
+      "box_orientation_error_rad": 1.7199146572006745
+    },
+    {
+      "time_s": 4.94,
+      "robot_height_m": 0.08948770175088151,
+      "box_position": [
+        1.0602187452883114,
+        0.5674311706975103,
+        0.16088527263219582
+      ],
+      "box_position_error_m": 1.6535617945139018,
+      "box_orientation_error_rad": 1.7262512775496708
+    },
+    {
+      "time_s": 4.96,
+      "robot_height_m": 0.08998766102761217,
+      "box_position": [
+        1.0602187452883147,
+        0.5674311706975087,
+        0.16088527263220834
+      ],
+      "box_position_error_m": 1.6528208984504942,
+      "box_orientation_error_rad": 1.7345399674590811
+    },
+    {
+      "time_s": 4.98,
+      "robot_height_m": 0.09004813982327114,
+      "box_position": [
+        1.0602187452883047,
+        0.5674311706975174,
+        0.16088527263216088
+      ],
+      "box_position_error_m": 1.6521282835079405,
+      "box_orientation_error_rad": 1.744947494439409
+    },
+    {
+      "time_s": 5.0,
+      "robot_height_m": 0.08975896514578433,
+      "box_position": [
+        1.060218745288326,
+        0.5674311706975056,
+        0.16088527263219024
+      ],
+      "box_position_error_m": 1.6514872949137425,
+      "box_orientation_error_rad": 1.7564240862139995
+    },
+    {
+      "time_s": 5.0200000000000005,
+      "robot_height_m": 0.08893708136189638,
+      "box_position": [
+        1.060218745288324,
+        0.5674311706975087,
+        0.1608852726321469
+      ],
+      "box_position_error_m": 1.6508440642963598,
+      "box_orientation_error_rad": 1.764542850209754
+    },
+    {
+      "time_s": 5.04,
+      "robot_height_m": 0.0876062774822414,
+      "box_position": [
+        1.060218745288352,
+        0.5674311706974916,
+        0.16088527263218358
+      ],
+      "box_position_error_m": 1.650168203364584,
+      "box_orientation_error_rad": 1.7705260282541306
+    },
+    {
+      "time_s": 5.0600000000000005,
+      "robot_height_m": 0.08604455826534452,
+      "box_position": [
+        1.0602187452883585,
+        0.5674311706974883,
+        0.16088527263215915
+      ],
+      "box_position_error_m": 1.6493700757636107,
+      "box_orientation_error_rad": 1.77223283108825
+    },
+    {
+      "time_s": 5.08,
+      "robot_height_m": 0.08436810669771352,
+      "box_position": [
+        1.060218745288386,
+        0.5674311706974693,
+        0.16088527263222
+      ],
+      "box_position_error_m": 1.6485218183486314,
+      "box_orientation_error_rad": 1.7704131857717618
+    },
+    {
+      "time_s": 5.1000000000000005,
+      "robot_height_m": 0.0823316831498805,
+      "box_position": [
+        1.0602187452883776,
+        0.5674311706974728,
+        0.1608852726321968
+      ],
+      "box_position_error_m": 1.6476586290821882,
+      "box_orientation_error_rad": 1.7668502415125602
+    },
+    {
+      "time_s": 5.12,
+      "robot_height_m": 0.08443605856603842,
+      "box_position": [
+        1.060218745288387,
+        0.5674311706974637,
+        0.160885272632252
+      ],
+      "box_position_error_m": 1.6466742291781473,
+      "box_orientation_error_rad": 1.7621401861176165
+    },
+    {
+      "time_s": 5.14,
+      "robot_height_m": 0.0867562451987245,
+      "box_position": [
+        1.0602187452883618,
+        0.567431170697478,
+        0.1608852726322128
+      ],
+      "box_position_error_m": 1.6457127514793892,
+      "box_orientation_error_rad": 1.7565883544320382
+    },
+    {
+      "time_s": 5.16,
+      "robot_height_m": 0.08828802114895669,
+      "box_position": [
+        1.0602187452883656,
+        0.5674311706974737,
+        0.1608852726322656
+      ],
+      "box_position_error_m": 1.6447735080526054,
+      "box_orientation_error_rad": 1.7493201987137188
+    },
+    {
+      "time_s": 5.18,
+      "robot_height_m": 0.09052297081344372,
+      "box_position": [
+        1.0602187452883332,
+        0.5674311706974935,
+        0.16088527263221858
+      ],
+      "box_position_error_m": 1.6440051327006022,
+      "box_orientation_error_rad": 1.7418047310537184
+    },
+    {
+      "time_s": 5.2,
+      "robot_height_m": 0.09358351943119285,
+      "box_position": [
+        1.0602187452883272,
+        0.567431170697497,
+        0.16088527263224076
+      ],
+      "box_position_error_m": 1.6433235483369057,
+      "box_orientation_error_rad": 1.734168004186768
+    },
+    {
+      "time_s": 5.22,
+      "robot_height_m": 0.09798295435258673,
+      "box_position": [
+        1.060218745288304,
+        0.5674311706975134,
+        0.16088527263218813
+      ],
+      "box_position_error_m": 1.6432593941979643,
+      "box_orientation_error_rad": 1.7355777051312355
+    },
+    {
+      "time_s": 5.24,
+      "robot_height_m": 0.10376871641125456,
+      "box_position": [
+        1.0602187452883116,
+        0.5674311706975107,
+        0.16088527263220198
+      ],
+      "box_position_error_m": 1.6435017323438375,
+      "box_orientation_error_rad": 1.7403322219703843
+    },
+    {
+      "time_s": 5.26,
+      "robot_height_m": 0.10975597660954019,
+      "box_position": [
+        1.0602187452883085,
+        0.5674311706975157,
+        0.16088527263216149
+      ],
+      "box_position_error_m": 1.6443532039253603,
+      "box_orientation_error_rad": 1.751813323111882
+    },
+    {
+      "time_s": 5.28,
+      "robot_height_m": 0.11584171640745036,
+      "box_position": [
+        1.0602187452883305,
+        0.5674311706975036,
+        0.1608852726321881
+      ],
+      "box_position_error_m": 1.6452095759240566,
+      "box_orientation_error_rad": 1.762810993713966
+    },
+    {
+      "time_s": 5.3,
+      "robot_height_m": 0.12191418830646203,
+      "box_position": [
+        1.060218745288332,
+        0.567431170697504,
+        0.16088527263215005
+      ],
+      "box_position_error_m": 1.6460690395958815,
+      "box_orientation_error_rad": 1.7735726261267262
+    },
+    {
+      "time_s": 5.32,
+      "robot_height_m": 0.12768827503036181,
+      "box_position": [
+        1.06021874528836,
+        0.5674311706974872,
+        0.16088527263218258
+      ],
+      "box_position_error_m": 1.6470143508399473,
+      "box_orientation_error_rad": 1.7846266040336194
+    },
+    {
+      "time_s": 5.34,
+      "robot_height_m": 0.13322657784037203,
+      "box_position": [
+        1.0602187452883718,
+        0.5674311706974795,
+        0.16088527263218197
+      ],
+      "box_position_error_m": 1.6480510676579665,
+      "box_orientation_error_rad": 1.7950866077058707
+    },
+    {
+      "time_s": 5.36,
+      "robot_height_m": 0.13903596927338463,
+      "box_position": [
+        1.060218745288383,
+        0.5674311706974708,
+        0.160885272632204
+      ],
+      "box_position_error_m": 1.6492688887239901,
+      "box_orientation_error_rad": 1.804328584890172
+    },
+    {
+      "time_s": 5.38,
+      "robot_height_m": 0.14470556182908398,
+      "box_position": [
+        1.0602187452883833,
+        0.5674311706974682,
+        0.16088527263221936
+      ],
+      "box_position_error_m": 1.6505791341794829,
+      "box_orientation_error_rad": 1.8108014415343712
+    },
+    {
+      "time_s": 5.4,
+      "robot_height_m": 0.14971366791496363,
+      "box_position": [
+        1.0602187452883702,
+        0.5674311706974751,
+        0.160885272632193
+      ],
+      "box_position_error_m": 1.6519356097941658,
+      "box_orientation_error_rad": 1.8159138925837306
+    },
+    {
+      "time_s": 5.42,
+      "robot_height_m": 0.1546879072715126,
+      "box_position": [
+        1.0602187452883742,
+        0.5674311706974735,
+        0.16088527263218155
+      ],
+      "box_position_error_m": 1.652545090996311,
+      "box_orientation_error_rad": 1.8165811443251303
+    },
+    {
+      "time_s": 5.44,
+      "robot_height_m": 0.15941736880238677,
+      "box_position": [
+        1.060218745288384,
+        0.5674311706974693,
+        0.1608852726321708
+      ],
+      "box_position_error_m": 1.6528642610276296,
+      "box_orientation_error_rad": 1.816488348742849
+    },
+    {
+      "time_s": 5.46,
+      "robot_height_m": 0.16381257031265029,
+      "box_position": [
+        1.0602187452884075,
+        0.5674311706974546,
+        0.160885272632211
+      ],
+      "box_position_error_m": 1.6526026168386152,
+      "box_orientation_error_rad": 1.814870368536973
+    },
+    {
+      "time_s": 5.48,
+      "robot_height_m": 0.1674457341273631,
+      "box_position": [
+        1.0602187452884035,
+        0.5674311706974561,
+        0.16088527263219848
+      ],
+      "box_position_error_m": 1.6523801412187304,
+      "box_orientation_error_rad": 1.8143008086778674
+    },
+    {
+      "time_s": 5.5,
+      "robot_height_m": 0.1702935037190541,
+      "box_position": [
+        1.0602187452884122,
+        0.5674311706974481,
+        0.16088527263224536
+      ],
+      "box_position_error_m": 1.652177154836873,
+      "box_orientation_error_rad": 1.814255429921511
+    },
+    {
+      "time_s": 5.5200000000000005,
+      "robot_height_m": 0.17214817500941465,
+      "box_position": [
+        1.0602187452883878,
+        0.5674311706974614,
+        0.1608852726322163
+      ],
+      "box_position_error_m": 1.6524369286473128,
+      "box_orientation_error_rad": 1.8158674456234727
+    },
+    {
+      "time_s": 5.54,
+      "robot_height_m": 0.17300251115526535,
+      "box_position": [
+        1.0602187452883884,
+        0.5674311706974593,
+        0.1608852726322594
+      ],
+      "box_position_error_m": 1.6526886553049134,
+      "box_orientation_error_rad": 1.817484784112694
+    },
+    {
+      "time_s": 5.5600000000000005,
+      "robot_height_m": 0.17299110185740724,
+      "box_position": [
+        1.0602187452883567,
+        0.5674311706974786,
+        0.16088527263222294
+      ],
+      "box_position_error_m": 1.6529242925602567,
+      "box_orientation_error_rad": 1.819110351157894
+    },
+    {
+      "time_s": 5.58,
+      "robot_height_m": 0.17217324304557496,
+      "box_position": [
+        1.0602187452883483,
+        0.567431170697483,
+        0.16088527263224733
+      ],
+      "box_position_error_m": 1.6529089678525675,
+      "box_orientation_error_rad": 1.819142587945893
+    },
+    {
+      "time_s": 5.6000000000000005,
+      "robot_height_m": 0.17055160441015477,
+      "box_position": [
+        1.0602187452883176,
+        0.5674311706975037,
+        0.16088527263218666
+      ],
+      "box_position_error_m": 1.6527681378648087,
+      "box_orientation_error_rad": 1.8183778969345439
+    },
+    {
+      "time_s": 5.62,
+      "robot_height_m": 0.16835828461565291,
+      "box_position": [
+        1.060218745288327,
+        0.5674311706974998,
+        0.16088527263220992
+      ],
+      "box_position_error_m": 1.6527121586737947,
+      "box_orientation_error_rad": 1.8179750227995446
+    },
+    {
+      "time_s": 5.64,
+      "robot_height_m": 0.16588982472529457,
+      "box_position": [
+        1.060218745288317,
+        0.5674311706975094,
+        0.1608852726321545
+      ],
+      "box_position_error_m": 1.6527089610665684,
+      "box_orientation_error_rad": 1.8178674781079107
+    },
+    {
+      "time_s": 5.66,
+      "robot_height_m": 0.16309725858130375,
+      "box_position": [
+        1.0602187452883456,
+        0.5674311706974933,
+        0.16088527263219382
+      ],
+      "box_position_error_m": 1.6528115905415557,
+      "box_orientation_error_rad": 1.8183506091341646
+    },
+    {
+      "time_s": 5.68,
+      "robot_height_m": 0.15972339155812515,
+      "box_position": [
+        1.0602187452883416,
+        0.5674311706974975,
+        0.1608852726321406
+      ],
+      "box_position_error_m": 1.6528061220843466,
+      "box_orientation_error_rad": 1.818419769923917
+    },
+    {
+      "time_s": 5.7,
+      "robot_height_m": 0.15553620173187702,
+      "box_position": [
+        1.0602187452883782,
+        0.5674311706974752,
+        0.16088527263218796
+      ],
+      "box_position_error_m": 1.652746478194597,
+      "box_orientation_error_rad": 1.8182820180698152
+    },
+    {
+      "time_s": 5.72,
+      "robot_height_m": 0.1503192349848282,
+      "box_position": [
+        1.0602187452883858,
+        0.5674311706974711,
+        0.16088527263216545
+      ],
+      "box_position_error_m": 1.652741102247732,
+      "box_orientation_error_rad": 1.818150185241975
+    },
+    {
+      "time_s": 5.74,
+      "robot_height_m": 0.1439434888129271,
+      "box_position": [
+        1.0602187452884122,
+        0.567431170697453,
+        0.16088527263221875
+      ],
+      "box_position_error_m": 1.65275286618552,
+      "box_orientation_error_rad": 1.8181193091290186
+    },
+    {
+      "time_s": 5.76,
+      "robot_height_m": 0.137429732211695,
+      "box_position": [
+        1.0602187452884035,
+        0.5674311706974561,
+        0.16088527263220476
+      ],
+      "box_position_error_m": 1.6527988954904422,
+      "box_orientation_error_rad": 1.8182903346138066
+    },
+    {
+      "time_s": 5.78,
+      "robot_height_m": 0.1311082608890819,
+      "box_position": [
+        1.060218745288407,
+        0.5674311706974507,
+        0.16088527263224595
+      ],
+      "box_position_error_m": 1.6527643696050223,
+      "box_orientation_error_rad": 1.8179823426817736
+    },
+    {
+      "time_s": 5.8,
+      "robot_height_m": 0.12707828409482552,
+      "box_position": [
+        1.0602187452883824,
+        0.5674311706974645,
+        0.16088527263221897
+      ],
+      "box_position_error_m": 1.6526894074790692,
+      "box_orientation_error_rad": 1.8174348084754908
+    },
+    {
+      "time_s": 5.82,
+      "robot_height_m": 0.12342992670072203,
+      "box_position": [
+        1.0602187452883804,
+        0.5674311706974643,
+        0.1608852726322578
+      ],
+      "box_position_error_m": 1.652733571529524,
+      "box_orientation_error_rad": 1.8178035848072098
+    },
+    {
+      "time_s": 5.84,
+      "robot_height_m": 0.12127132221993178,
+      "box_position": [
+        1.0602187452883434,
+        0.5674311706974858,
+        0.1608852726322316
+      ],
+      "box_position_error_m": 1.6527667255560419,
+      "box_orientation_error_rad": 1.8180329265092967
+    },
+    {
+      "time_s": 5.86,
+      "robot_height_m": 0.12037524728661277,
+      "box_position": [
+        1.0602187452882947,
+        0.5674311706975136,
+        0.1608852726322104
+      ],
+      "box_position_error_m": 1.6527779259663877,
+      "box_orientation_error_rad": 1.8179835675792526
+    },
+    {
+      "time_s": 5.88,
+      "robot_height_m": 0.12019001602742484,
+      "box_position": [
+        1.0602187452882346,
+        0.5674311706975476,
+        0.1608852726321942
+      ],
+      "box_position_error_m": 1.6527788597335273,
+      "box_orientation_error_rad": 1.8181267713857787
+    },
+    {
+      "time_s": 5.9,
+      "robot_height_m": 0.12052716518583335,
+      "box_position": [
+        1.0602187452881626,
+        0.5674311706975879,
+        0.16088527263218302
+      ],
+      "box_position_error_m": 1.652774600461021,
+      "box_orientation_error_rad": 1.8183661756677059
+    },
+    {
+      "time_s": 5.92,
+      "robot_height_m": 0.12121684966094091,
+      "box_position": [
+        1.0602187452880791,
+        0.5674311706976345,
+        0.16088527263217683
+      ],
+      "box_position_error_m": 1.6527792742635528,
+      "box_orientation_error_rad": 1.8183766080621089
+    },
+    {
+      "time_s": 5.94,
+      "robot_height_m": 0.12236244933996886,
+      "box_position": [
+        1.0602187452879839,
+        0.5674311706976873,
+        0.16088527263217564
+      ],
+      "box_position_error_m": 1.6527833285509246,
+      "box_orientation_error_rad": 1.8183747520263853
+    },
+    {
+      "time_s": 5.96,
+      "robot_height_m": 0.12386355274337739,
+      "box_position": [
+        1.060218745288028,
+        0.5674311706976747,
+        0.16088527263219296
+      ],
+      "box_position_error_m": 1.6527859565899725,
+      "box_orientation_error_rad": 1.818348339696724
+    },
+    {
+      "time_s": 5.98,
+      "robot_height_m": 0.12540706061137416,
+      "box_position": [
+        1.0602187452882517,
+        0.5674311706975778,
+        0.160885272632228
+      ],
+      "box_position_error_m": 1.6527696745446359,
+      "box_orientation_error_rad": 1.8183731755914616
+    },
+    {
+      "time_s": 6.0,
+      "robot_height_m": 0.12718266483180898,
+      "box_position": [
+        1.060218745288199,
+        0.5674311706976051,
+        0.16088527263220856
+      ],
+      "box_position_error_m": 1.6527440376087634,
+      "box_orientation_error_rad": 1.818423756589027
+    },
+    {
+      "time_s": 6.0200000000000005,
+      "robot_height_m": 0.12918834809572702,
+      "box_position": [
+        1.0602187452883234,
+        0.5674311706975061,
+        0.1608852726322482
+      ],
+      "box_position_error_m": 1.6527436699627398,
+      "box_orientation_error_rad": 1.8184808974948363
+    },
+    {
+      "time_s": 6.04,
+      "robot_height_m": 0.13146443189075835,
+      "box_position": [
+        1.0602187452883094,
+        0.5674311706975055,
+        0.1608852726322188
+      ],
+      "box_position_error_m": 1.6527488061402669,
+      "box_orientation_error_rad": 1.8185127933203085
+    },
+    {
+      "time_s": 6.0600000000000005,
+      "robot_height_m": 0.1339500134172916,
+      "box_position": [
+        1.060218745288366,
+        0.5674311706974611,
+        0.16088527263225189
+      ],
+      "box_position_error_m": 1.6527650301185284,
+      "box_orientation_error_rad": 1.8184940427933467
+    },
+    {
+      "time_s": 6.08,
+      "robot_height_m": 0.13661993076484155,
+      "box_position": [
+        1.0602187452883407,
+        0.5674311706974768,
+        0.16088527263219932
+      ],
+      "box_position_error_m": 1.6527749753236394,
+      "box_orientation_error_rad": 1.8185289528268707
+    },
+    {
+      "time_s": 6.1000000000000005,
+      "robot_height_m": 0.13951657936425307,
+      "box_position": [
+        1.0602187452883396,
+        0.5674311706974746,
+        0.16088527263221156
+      ],
+      "box_position_error_m": 1.6527817818780606,
+      "box_orientation_error_rad": 1.81859059252572
+    },
+    {
+      "time_s": 6.12,
+      "robot_height_m": 0.14281168923526372,
+      "box_position": [
+        1.060218745288308,
+        0.567431170697502,
+        0.16088527263215616
+      ],
+      "box_position_error_m": 1.6527847135038938,
+      "box_orientation_error_rad": 1.8186228089172525
+    },
+    {
+      "time_s": 6.140000000000001,
+      "robot_height_m": 0.14672964798873506,
+      "box_position": [
+        1.0602187452883034,
+        0.567431170697506,
+        0.16088527263218919
+      ],
+      "box_position_error_m": 1.6527777014239926,
+      "box_orientation_error_rad": 1.8186611759627702
+    },
+    {
+      "time_s": 6.16,
+      "robot_height_m": 0.14801028932328417,
+      "box_position": [
+        1.0602187452882839,
+        0.5674311706975258,
+        0.1608852726321412
+      ],
+      "box_position_error_m": 1.6527506164427757,
+      "box_orientation_error_rad": 1.8187117938870474
+    },
+    {
+      "time_s": 6.18,
+      "robot_height_m": 0.14912121332798475,
+      "box_position": [
+        1.0602187452882748,
+        0.5674311706975314,
+        0.1608852726321818
+      ],
+      "box_position_error_m": 1.6527525282719069,
+      "box_orientation_error_rad": 1.8186179937581886
+    },
+    {
+      "time_s": 6.2,
+      "robot_height_m": 0.15031249190917623,
+      "box_position": [
+        1.0602187452882623,
+        0.5674311706975453,
+        0.16088527263213412
+      ],
+      "box_position_error_m": 1.6527688659634023,
+      "box_orientation_error_rad": 1.8184520032565377
+    },
+    {
+      "time_s": 6.22,
+      "robot_height_m": 0.15137841333574345,
+      "box_position": [
+        1.06021874528825,
+        0.5674311706975518,
+        0.16088527263217847
+      ],
+      "box_position_error_m": 1.652766464951176,
+      "box_orientation_error_rad": 1.818518921427333
+    },
+    {
+      "time_s": 6.24,
+      "robot_height_m": 0.1520239163319063,
+      "box_position": [
+        1.0602187452882417,
+        0.5674311706975623,
+        0.1608852726321291
+      ],
+      "box_position_error_m": 1.6527656822481196,
+      "box_orientation_error_rad": 1.8185667356901525
+    },
+    {
+      "time_s": 6.26,
+      "robot_height_m": 0.15189862769350113,
+      "box_position": [
+        1.0602187452882272,
+        0.5674311706975697,
+        0.16088527263217645
+      ],
+      "box_position_error_m": 1.6527682536476647,
+      "box_orientation_error_rad": 1.818576308149251
+    },
+    {
+      "time_s": 6.28,
+      "robot_height_m": 0.15091783995435964,
+      "box_position": [
+        1.0602187452882208,
+        0.5674311706975779,
+        0.16088527263212482
+      ],
+      "box_position_error_m": 1.6527739958690777,
+      "box_orientation_error_rad": 1.8185729798087846
+    },
+    {
+      "time_s": 6.3,
+      "robot_height_m": 0.14911035200483685,
+      "box_position": [
+        1.0602187452882057,
+        0.5674311706975868,
+        0.16088527263214522
+      ],
+      "box_position_error_m": 1.6527812511965103,
+      "box_orientation_error_rad": 1.8185632695884826
+    },
+    {
+      "time_s": 6.32,
+      "robot_height_m": 0.146509255743529,
+      "box_position": [
+        1.0602187452881835,
+        0.5674311706975987,
+        0.16088527263218244
+      ],
+      "box_position_error_m": 1.652788868108489,
+      "box_orientation_error_rad": 1.818472239604675
+    },
+    {
+      "time_s": 6.34,
+      "robot_height_m": 0.14335405953755706,
+      "box_position": [
+        1.060218745288156,
+        0.5674311706976143,
+        0.16088527263221536
+      ],
+      "box_position_error_m": 1.6527903230732928,
+      "box_orientation_error_rad": 1.8184507049583012
+    },
+    {
+      "time_s": 6.36,
+      "robot_height_m": 0.13989873380452916,
+      "box_position": [
+        1.0602187452881633,
+        0.5674311706976083,
+        0.1608852726321998
+      ],
+      "box_position_error_m": 1.6527793870113459,
+      "box_orientation_error_rad": 1.8185680729106504
+    },
+    {
+      "time_s": 6.38,
+      "robot_height_m": 0.13633872588950607,
+      "box_position": [
+        1.06021874528823,
+        0.5674311706975655,
+        0.16088527263210925
+      ],
+      "box_position_error_m": 1.6527722393557631,
+      "box_orientation_error_rad": 1.8185536918325873
+    },
+    {
+      "time_s": 6.4,
+      "robot_height_m": 0.13258540796760362,
+      "box_position": [
+        1.060218745288242,
+        0.5674311706975558,
+        0.16088527263212477
+      ],
+      "box_position_error_m": 1.6527669860369276,
+      "box_orientation_error_rad": 1.8184734586001652
+    },
+    {
+      "time_s": 6.42,
+      "robot_height_m": 0.1287807539531298,
+      "box_position": [
+        1.0602187452882397,
+        0.5674311706975674,
+        0.16088527263213118
+      ],
+      "box_position_error_m": 1.6527830965297652,
+      "box_orientation_error_rad": 1.8185077340827114
+    },
+    {
+      "time_s": 6.44,
+      "robot_height_m": 0.12499659061727886,
+      "box_position": [
+        1.0602187452882186,
+        0.567431170697581,
+        0.16088527263220165
+      ],
+      "box_position_error_m": 1.6527796091241211,
+      "box_orientation_error_rad": 1.8185837234506386
+    },
+    {
+      "time_s": 6.46,
+      "robot_height_m": 0.12116726006721193,
+      "box_position": [
+        1.0602187452882175,
+        0.5674311706975832,
+        0.16088527263219057
+      ],
+      "box_position_error_m": 1.6527370596203004,
+      "box_orientation_error_rad": 1.8187431853836575
+    },
+    {
+      "time_s": 6.48,
+      "robot_height_m": 0.11724379011598676,
+      "box_position": [
+        1.0602187452882026,
+        0.567431170697587,
+        0.16088527263225838
+      ],
+      "box_position_error_m": 1.6527314636846062,
+      "box_orientation_error_rad": 1.8187126701051521
+    }
+  ]
+}

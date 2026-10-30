@@ -100,5 +100,7 @@
   "independent_replay_backend": "MuJoCo 3.15.0",
   "independent_replay_carry_passed": false,
   "native_isaaclab_final_replay_verified": false,
-  "replay_evidence": "local_box_replay_validation.json"
+  "replay_evidence": "local_box_velocity_fixed.json",
+  "initial_replay_velocity_bug_corrected": true,
+  "robot_only_replay_evidence": "local_robot_only_velocity_fixed.json"
 }

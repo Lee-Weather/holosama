@@ -1,0 +1,1331 @@
+{
+  "summary": {
+    "checkpoint": "E:\\G1\\holosoma\\czy\\data\\exp_2.1\\model_07999.pt",
+    "checkpoint_sha256": "e2d120660bbc199d0dc03d0bce17a4989ef6117877c2f97f9da72d2c4dbc2c97",
+    "iteration": 7999,
+    "mujoco": "3.15.0",
+    "box_removed": true,
+    "box_body_count": 0,
+    "box_mass_kg": null,
+    "box_sliding_friction": null,
+    "frames": 325,
+    "duration_s": 6.5,
+    "control_dt": 0.02,
+    "initial_alignment": {
+      "root_velocity_source": "motion.joint_vel[0,:6]: world origin linear / local angular",
+      "root_position_difference_m": 0.0,
+      "torso_position_difference_m": 0.01000028427639059,
+      "collision_geometries": 39,
+      "unit_motor_gears": true
+    },
+    "automatic_resets": 0,
+    "pose_corrections_after_initialization": 0,
+    "robot_min_height_m": 0.07129395865060717,
+    "video_bytes": 577163,
+    "video_sha256": "7cf4dadcb11fdf29e7d5114094c0039b66bb419cb81fe42bb0e24e7d36d1c36c",
+    "replay_script_sha256": "1a818faaaeea973a1650ab664cd1a2449c5ad84e25fe80339f0661656d2a4a33",
+    "note": "Cross-simulator evaluation using training robot collision URDF. This is an independent physical rollout, not reference motion playback."
+  },
+  "trajectory": [
+    {
+      "time_s": 0.0,
+      "robot_height_m": 0.770483136177063
+    },
+    {
+      "time_s": 0.02,
+      "robot_height_m": 0.7524593761939748
+    },
+    {
+      "time_s": 0.04,
+      "robot_height_m": 0.7333774358694745
+    },
+    {
+      "time_s": 0.06,
+      "robot_height_m": 0.71657192415261
+    },
+    {
+      "time_s": 0.08,
+      "robot_height_m": 0.7017728728348225
+    },
+    {
+      "time_s": 0.1,
+      "robot_height_m": 0.6909393573583836
+    },
+    {
+      "time_s": 0.12,
+      "robot_height_m": 0.6835714188199321
+    },
+    {
+      "time_s": 0.14,
+      "robot_height_m": 0.6779330040904927
+    },
+    {
+      "time_s": 0.16,
+      "robot_height_m": 0.6725465099619012
+    },
+    {
+      "time_s": 0.18,
+      "robot_height_m": 0.6666260616419404
+    },
+    {
+      "time_s": 0.2,
+      "robot_height_m": 0.6598444760365296
+    },
+    {
+      "time_s": 0.22,
+      "robot_height_m": 0.6520908056377508
+    },
+    {
+      "time_s": 0.24,
+      "robot_height_m": 0.6437573180166789
+    },
+    {
+      "time_s": 0.26,
+      "robot_height_m": 0.6354740920657588
+    },
+    {
+      "time_s": 0.28,
+      "robot_height_m": 0.6270524797134089
+    },
+    {
+      "time_s": 0.3,
+      "robot_height_m": 0.619075566972317
+    },
+    {
+      "time_s": 0.32,
+      "robot_height_m": 0.6120601227706193
+    },
+    {
+      "time_s": 0.34,
+      "robot_height_m": 0.6063812206595494
+    },
+    {
+      "time_s": 0.36,
+      "robot_height_m": 0.601859367659922
+    },
+    {
+      "time_s": 0.38,
+      "robot_height_m": 0.5973365897015912
+    },
+    {
+      "time_s": 0.4,
+      "robot_height_m": 0.5921429024945136
+    },
+    {
+      "time_s": 0.42,
+      "robot_height_m": 0.586475480279549
+    },
+    {
+      "time_s": 0.44,
+      "robot_height_m": 0.5808809092563314
+    },
+    {
+      "time_s": 0.46,
+      "robot_height_m": 0.5756368373554035
+    },
+    {
+      "time_s": 0.48,
+      "robot_height_m": 0.5711406673795146
+    },
+    {
+      "time_s": 0.5,
+      "robot_height_m": 0.5673462600190385
+    },
+    {
+      "time_s": 0.52,
+      "robot_height_m": 0.5637561046054352
+    },
+    {
+      "time_s": 0.54,
+      "robot_height_m": 0.5630622470366822
+    },
+    {
+      "time_s": 0.56,
+      "robot_height_m": 0.5656409640093865
+    },
+    {
+      "time_s": 0.58,
+      "robot_height_m": 0.5693084389599646
+    },
+    {
+      "time_s": 0.6,
+      "robot_height_m": 0.573103297207947
+    },
+    {
+      "time_s": 0.62,
+      "robot_height_m": 0.5754630298188637
+    },
+    {
+      "time_s": 0.64,
+      "robot_height_m": 0.5752808836215598
+    },
+    {
+      "time_s": 0.66,
+      "robot_height_m": 0.5725855914727485
+    },
+    {
+      "time_s": 0.68,
+      "robot_height_m": 0.5677359581707722
+    },
+    {
+      "time_s": 0.7000000000000001,
+      "robot_height_m": 0.560983231940817
+    },
+    {
+      "time_s": 0.72,
+      "robot_height_m": 0.553271775841435
+    },
+    {
+      "time_s": 0.74,
+      "robot_height_m": 0.545559794105318
+    },
+    {
+      "time_s": 0.76,
+      "robot_height_m": 0.5390598465547056
+    },
+    {
+      "time_s": 0.78,
+      "robot_height_m": 0.534658567954983
+    },
+    {
+      "time_s": 0.8,
+      "robot_height_m": 0.5317036938409131
+    },
+    {
+      "time_s": 0.8200000000000001,
+      "robot_height_m": 0.5298368017699823
+    },
+    {
+      "time_s": 0.84,
+      "robot_height_m": 0.528573626583916
+    },
+    {
+      "time_s": 0.86,
+      "robot_height_m": 0.5275374935571542
+    },
+    {
+      "time_s": 0.88,
+      "robot_height_m": 0.5265901130642895
+    },
+    {
+      "time_s": 0.9,
+      "robot_height_m": 0.5254305527275757
+    },
+    {
+      "time_s": 0.92,
+      "robot_height_m": 0.5245660089559968
+    },
+    {
+      "time_s": 0.9400000000000001,
+      "robot_height_m": 0.5240797012133659
+    },
+    {
+      "time_s": 0.96,
+      "robot_height_m": 0.5229003996798134
+    },
+    {
+      "time_s": 0.98,
+      "robot_height_m": 0.520263960329778
+    },
+    {
+      "time_s": 1.0,
+      "robot_height_m": 0.5163113440445325
+    },
+    {
+      "time_s": 1.02,
+      "robot_height_m": 0.5119735779647363
+    },
+    {
+      "time_s": 1.04,
+      "robot_height_m": 0.5083784310179345
+    },
+    {
+      "time_s": 1.06,
+      "robot_height_m": 0.5055469172847679
+    },
+    {
+      "time_s": 1.08,
+      "robot_height_m": 0.503322266012728
+    },
+    {
+      "time_s": 1.1,
+      "robot_height_m": 0.5015084779759078
+    },
+    {
+      "time_s": 1.12,
+      "robot_height_m": 0.499373080848245
+    },
+    {
+      "time_s": 1.1400000000000001,
+      "robot_height_m": 0.4962720226387572
+    },
+    {
+      "time_s": 1.16,
+      "robot_height_m": 0.4932363751148647
+    },
+    {
+      "time_s": 1.18,
+      "robot_height_m": 0.49286476110280564
+    },
+    {
+      "time_s": 1.2,
+      "robot_height_m": 0.49334100190380087
+    },
+    {
+      "time_s": 1.22,
+      "robot_height_m": 0.4937746596997899
+    },
+    {
+      "time_s": 1.24,
+      "robot_height_m": 0.4942415255469894
+    },
+    {
+      "time_s": 1.26,
+      "robot_height_m": 0.4941624381069666
+    },
+    {
+      "time_s": 1.28,
+      "robot_height_m": 0.4937927482636419
+    },
+    {
+      "time_s": 1.3,
+      "robot_height_m": 0.49475212820862474
+    },
+    {
+      "time_s": 1.32,
+      "robot_height_m": 0.4981580251648032
+    },
+    {
+      "time_s": 1.34,
+      "robot_height_m": 0.5032495387264895
+    },
+    {
+      "time_s": 1.36,
+      "robot_height_m": 0.5102157101929581
+    },
+    {
+      "time_s": 1.3800000000000001,
+      "robot_height_m": 0.5180305681929203
+    },
+    {
+      "time_s": 1.4000000000000001,
+      "robot_height_m": 0.527162720707315
+    },
+    {
+      "time_s": 1.42,
+      "robot_height_m": 0.5350073152747691
+    },
+    {
+      "time_s": 1.44,
+      "robot_height_m": 0.5375417407932208
+    },
+    {
+      "time_s": 1.46,
+      "robot_height_m": 0.534723702155388
+    },
+    {
+      "time_s": 1.48,
+      "robot_height_m": 0.5260681206182289
+    },
+    {
+      "time_s": 1.5,
+      "robot_height_m": 0.5131724099990319
+    },
+    {
+      "time_s": 1.52,
+      "robot_height_m": 0.4968438701871281
+    },
+    {
+      "time_s": 1.54,
+      "robot_height_m": 0.4782358188296049
+    },
+    {
+      "time_s": 1.56,
+      "robot_height_m": 0.4579412092854584
+    },
+    {
+      "time_s": 1.58,
+      "robot_height_m": 0.43642268808002915
+    },
+    {
+      "time_s": 1.6,
+      "robot_height_m": 0.41574130837719325
+    },
+    {
+      "time_s": 1.62,
+      "robot_height_m": 0.4084678925772302
+    },
+    {
+      "time_s": 1.6400000000000001,
+      "robot_height_m": 0.40410121480461386
+    },
+    {
+      "time_s": 1.6600000000000001,
+      "robot_height_m": 0.3976392313739523
+    },
+    {
+      "time_s": 1.68,
+      "robot_height_m": 0.38674795885365243
+    },
+    {
+      "time_s": 1.7,
+      "robot_height_m": 0.37194543147306797
+    },
+    {
+      "time_s": 1.72,
+      "robot_height_m": 0.3553462739016208
+    },
+    {
+      "time_s": 1.74,
+      "robot_height_m": 0.3378387007904755
+    },
+    {
+      "time_s": 1.76,
+      "robot_height_m": 0.31971862767773496
+    },
+    {
+      "time_s": 1.78,
+      "robot_height_m": 0.30182786191231814
+    },
+    {
+      "time_s": 1.8,
+      "robot_height_m": 0.28542266026850266
+    },
+    {
+      "time_s": 1.82,
+      "robot_height_m": 0.2691154096772488
+    },
+    {
+      "time_s": 1.84,
+      "robot_height_m": 0.2513144078215684
+    },
+    {
+      "time_s": 1.86,
+      "robot_height_m": 0.23137269232860888
+    },
+    {
+      "time_s": 1.8800000000000001,
+      "robot_height_m": 0.2089463452411305
+    },
+    {
+      "time_s": 1.9000000000000001,
+      "robot_height_m": 0.18446541013661483
+    },
+    {
+      "time_s": 1.92,
+      "robot_height_m": 0.15789920673631164
+    },
+    {
+      "time_s": 1.94,
+      "robot_height_m": 0.13504064919290432
+    },
+    {
+      "time_s": 1.96,
+      "robot_height_m": 0.1180047378823795
+    },
+    {
+      "time_s": 1.98,
+      "robot_height_m": 0.104641403569179
+    },
+    {
+      "time_s": 2.0,
+      "robot_height_m": 0.09295009858466506
+    },
+    {
+      "time_s": 2.02,
+      "robot_height_m": 0.08060251277861945
+    },
+    {
+      "time_s": 2.04,
+      "robot_height_m": 0.07777139376855767
+    },
+    {
+      "time_s": 2.06,
+      "robot_height_m": 0.07915412273329207
+    },
+    {
+      "time_s": 2.08,
+      "robot_height_m": 0.08061722680642806
+    },
+    {
+      "time_s": 2.1,
+      "robot_height_m": 0.08152996287720136
+    },
+    {
+      "time_s": 2.12,
+      "robot_height_m": 0.08170750983224401
+    },
+    {
+      "time_s": 2.14,
+      "robot_height_m": 0.08136066562499451
+    },
+    {
+      "time_s": 2.16,
+      "robot_height_m": 0.07960757913353078
+    },
+    {
+      "time_s": 2.18,
+      "robot_height_m": 0.07888236656068896
+    },
+    {
+      "time_s": 2.2,
+      "robot_height_m": 0.07951177625457259
+    },
+    {
+      "time_s": 2.22,
+      "robot_height_m": 0.08170463203569941
+    },
+    {
+      "time_s": 2.24,
+      "robot_height_m": 0.08537313235758655
+    },
+    {
+      "time_s": 2.2600000000000002,
+      "robot_height_m": 0.08998238375225513
+    },
+    {
+      "time_s": 2.2800000000000002,
+      "robot_height_m": 0.09050408511871379
+    },
+    {
+      "time_s": 2.3000000000000003,
+      "robot_height_m": 0.08990511023161342
+    },
+    {
+      "time_s": 2.32,
+      "robot_height_m": 0.08855468712029128
+    },
+    {
+      "time_s": 2.34,
+      "robot_height_m": 0.09075841394037636
+    },
+    {
+      "time_s": 2.36,
+      "robot_height_m": 0.09596551319854328
+    },
+    {
+      "time_s": 2.38,
+      "robot_height_m": 0.1034470242139906
+    },
+    {
+      "time_s": 2.4,
+      "robot_height_m": 0.11248566156240931
+    },
+    {
+      "time_s": 2.42,
+      "robot_height_m": 0.12182521773141441
+    },
+    {
+      "time_s": 2.44,
+      "robot_height_m": 0.1305600877457681
+    },
+    {
+      "time_s": 2.46,
+      "robot_height_m": 0.13849071516809178
+    },
+    {
+      "time_s": 2.48,
+      "robot_height_m": 0.14632089298249262
+    },
+    {
+      "time_s": 2.5,
+      "robot_height_m": 0.15419121088416982
+    },
+    {
+      "time_s": 2.52,
+      "robot_height_m": 0.1618506296982293
+    },
+    {
+      "time_s": 2.54,
+      "robot_height_m": 0.16922026118438055
+    },
+    {
+      "time_s": 2.56,
+      "robot_height_m": 0.17596850420993604
+    },
+    {
+      "time_s": 2.58,
+      "robot_height_m": 0.18155451583889218
+    },
+    {
+      "time_s": 2.6,
+      "robot_height_m": 0.18607825211935117
+    },
+    {
+      "time_s": 2.62,
+      "robot_height_m": 0.1899345200937656
+    },
+    {
+      "time_s": 2.64,
+      "robot_height_m": 0.19446378658685928
+    },
+    {
+      "time_s": 2.66,
+      "robot_height_m": 0.2000987396563845
+    },
+    {
+      "time_s": 2.68,
+      "robot_height_m": 0.20623712253789375
+    },
+    {
+      "time_s": 2.7,
+      "robot_height_m": 0.21253296634818966
+    },
+    {
+      "time_s": 2.72,
+      "robot_height_m": 0.2187188179219637
+    },
+    {
+      "time_s": 2.74,
+      "robot_height_m": 0.2245042776488207
+    },
+    {
+      "time_s": 2.7600000000000002,
+      "robot_height_m": 0.2295355119477262
+    },
+    {
+      "time_s": 2.7800000000000002,
+      "robot_height_m": 0.23317790291359494
+    },
+    {
+      "time_s": 2.8000000000000003,
+      "robot_height_m": 0.234612569434609
+    },
+    {
+      "time_s": 2.82,
+      "robot_height_m": 0.23326882721791697
+    },
+    {
+      "time_s": 2.84,
+      "robot_height_m": 0.23151095805370697
+    },
+    {
+      "time_s": 2.86,
+      "robot_height_m": 0.23167313099674372
+    },
+    {
+      "time_s": 2.88,
+      "robot_height_m": 0.2304855854697248
+    },
+    {
+      "time_s": 2.9,
+      "robot_height_m": 0.2282266582894312
+    },
+    {
+      "time_s": 2.92,
+      "robot_height_m": 0.22471662133223944
+    },
+    {
+      "time_s": 2.94,
+      "robot_height_m": 0.22016336981566853
+    },
+    {
+      "time_s": 2.96,
+      "robot_height_m": 0.21584262331201107
+    },
+    {
+      "time_s": 2.98,
+      "robot_height_m": 0.2127786955063676
+    },
+    {
+      "time_s": 3.0,
+      "robot_height_m": 0.21161065360178316
+    },
+    {
+      "time_s": 3.02,
+      "robot_height_m": 0.21183257935440847
+    },
+    {
+      "time_s": 3.04,
+      "robot_height_m": 0.21064162538355788
+    },
+    {
+      "time_s": 3.06,
+      "robot_height_m": 0.21376032402534867
+    },
+    {
+      "time_s": 3.08,
+      "robot_height_m": 0.21982990227071775
+    },
+    {
+      "time_s": 3.1,
+      "robot_height_m": 0.2291873766890876
+    },
+    {
+      "time_s": 3.12,
+      "robot_height_m": 0.24264715174619073
+    },
+    {
+      "time_s": 3.14,
+      "robot_height_m": 0.26264107516573343
+    },
+    {
+      "time_s": 3.16,
+      "robot_height_m": 0.28322324665792004
+    },
+    {
+      "time_s": 3.18,
+      "robot_height_m": 0.29999381143133763
+    },
+    {
+      "time_s": 3.2,
+      "robot_height_m": 0.3096567269954229
+    },
+    {
+      "time_s": 3.22,
+      "robot_height_m": 0.31109134177497005
+    },
+    {
+      "time_s": 3.24,
+      "robot_height_m": 0.30250674684063356
+    },
+    {
+      "time_s": 3.2600000000000002,
+      "robot_height_m": 0.2843705445566429
+    },
+    {
+      "time_s": 3.2800000000000002,
+      "robot_height_m": 0.25972390792533784
+    },
+    {
+      "time_s": 3.3000000000000003,
+      "robot_height_m": 0.23281964179778333
+    },
+    {
+      "time_s": 3.3200000000000003,
+      "robot_height_m": 0.20626821317021118
+    },
+    {
+      "time_s": 3.34,
+      "robot_height_m": 0.18888266114634522
+    },
+    {
+      "time_s": 3.36,
+      "robot_height_m": 0.1816180467279737
+    },
+    {
+      "time_s": 3.38,
+      "robot_height_m": 0.17410749870394254
+    },
+    {
+      "time_s": 3.4,
+      "robot_height_m": 0.16302061973445156
+    },
+    {
+      "time_s": 3.42,
+      "robot_height_m": 0.14723524679858008
+    },
+    {
+      "time_s": 3.44,
+      "robot_height_m": 0.12916037574447944
+    },
+    {
+      "time_s": 3.46,
+      "robot_height_m": 0.11107503582753576
+    },
+    {
+      "time_s": 3.48,
+      "robot_height_m": 0.10911212398237337
+    },
+    {
+      "time_s": 3.5,
+      "robot_height_m": 0.12328085062937742
+    },
+    {
+      "time_s": 3.52,
+      "robot_height_m": 0.13895967454199123
+    },
+    {
+      "time_s": 3.54,
+      "robot_height_m": 0.15080087785294297
+    },
+    {
+      "time_s": 3.56,
+      "robot_height_m": 0.15678000512531398
+    },
+    {
+      "time_s": 3.58,
+      "robot_height_m": 0.15713460415865094
+    },
+    {
+      "time_s": 3.6,
+      "robot_height_m": 0.15459400301274953
+    },
+    {
+      "time_s": 3.62,
+      "robot_height_m": 0.1515275454856496
+    },
+    {
+      "time_s": 3.64,
+      "robot_height_m": 0.14894918966352172
+    },
+    {
+      "time_s": 3.66,
+      "robot_height_m": 0.14633763121295226
+    },
+    {
+      "time_s": 3.68,
+      "robot_height_m": 0.14284302373239896
+    },
+    {
+      "time_s": 3.7,
+      "robot_height_m": 0.1402935275286535
+    },
+    {
+      "time_s": 3.72,
+      "robot_height_m": 0.1418566879544997
+    },
+    {
+      "time_s": 3.74,
+      "robot_height_m": 0.14696040824670212
+    },
+    {
+      "time_s": 3.7600000000000002,
+      "robot_height_m": 0.15488732627064072
+    },
+    {
+      "time_s": 3.7800000000000002,
+      "robot_height_m": 0.1663622667004108
+    },
+    {
+      "time_s": 3.8000000000000003,
+      "robot_height_m": 0.17797510616244372
+    },
+    {
+      "time_s": 3.8200000000000003,
+      "robot_height_m": 0.18857631365559976
+    },
+    {
+      "time_s": 3.84,
+      "robot_height_m": 0.19976848557668367
+    },
+    {
+      "time_s": 3.86,
+      "robot_height_m": 0.20944533472058155
+    },
+    {
+      "time_s": 3.88,
+      "robot_height_m": 0.21606587827380788
+    },
+    {
+      "time_s": 3.9,
+      "robot_height_m": 0.21875906534247258
+    },
+    {
+      "time_s": 3.92,
+      "robot_height_m": 0.2204329442501154
+    },
+    {
+      "time_s": 3.94,
+      "robot_height_m": 0.2232101225608559
+    },
+    {
+      "time_s": 3.96,
+      "robot_height_m": 0.22663252883271706
+    },
+    {
+      "time_s": 3.98,
+      "robot_height_m": 0.22912266646141347
+    },
+    {
+      "time_s": 4.0,
+      "robot_height_m": 0.22935096826368567
+    },
+    {
+      "time_s": 4.0200000000000005,
+      "robot_height_m": 0.22709868342699638
+    },
+    {
+      "time_s": 4.04,
+      "robot_height_m": 0.22233910909052754
+    },
+    {
+      "time_s": 4.0600000000000005,
+      "robot_height_m": 0.2149176534222691
+    },
+    {
+      "time_s": 4.08,
+      "robot_height_m": 0.20576552138227608
+    },
+    {
+      "time_s": 4.1,
+      "robot_height_m": 0.2052452987981914
+    },
+    {
+      "time_s": 4.12,
+      "robot_height_m": 0.2099502620303325
+    },
+    {
+      "time_s": 4.14,
+      "robot_height_m": 0.21332240400161492
+    },
+    {
+      "time_s": 4.16,
+      "robot_height_m": 0.21343090017604108
+    },
+    {
+      "time_s": 4.18,
+      "robot_height_m": 0.21149693959416724
+    },
+    {
+      "time_s": 4.2,
+      "robot_height_m": 0.20955645120286498
+    },
+    {
+      "time_s": 4.22,
+      "robot_height_m": 0.21094817467911503
+    },
+    {
+      "time_s": 4.24,
+      "robot_height_m": 0.2160652857508662
+    },
+    {
+      "time_s": 4.26,
+      "robot_height_m": 0.22564869756345252
+    },
+    {
+      "time_s": 4.28,
+      "robot_height_m": 0.24117622580729156
+    },
+    {
+      "time_s": 4.3,
+      "robot_height_m": 0.2620545273018259
+    },
+    {
+      "time_s": 4.32,
+      "robot_height_m": 0.28394745533400106
+    },
+    {
+      "time_s": 4.34,
+      "robot_height_m": 0.30642206281533496
+    },
+    {
+      "time_s": 4.36,
+      "robot_height_m": 0.3250069572583455
+    },
+    {
+      "time_s": 4.38,
+      "robot_height_m": 0.33974632362339513
+    },
+    {
+      "time_s": 4.4,
+      "robot_height_m": 0.3533345702217426
+    },
+    {
+      "time_s": 4.42,
+      "robot_height_m": 0.36514548396874286
+    },
+    {
+      "time_s": 4.44,
+      "robot_height_m": 0.37421391822077216
+    },
+    {
+      "time_s": 4.46,
+      "robot_height_m": 0.37954080401800944
+    },
+    {
+      "time_s": 4.48,
+      "robot_height_m": 0.3802873539918028
+    },
+    {
+      "time_s": 4.5,
+      "robot_height_m": 0.37612482124553837
+    },
+    {
+      "time_s": 4.5200000000000005,
+      "robot_height_m": 0.36813734205446486
+    },
+    {
+      "time_s": 4.54,
+      "robot_height_m": 0.3562204272181861
+    },
+    {
+      "time_s": 4.5600000000000005,
+      "robot_height_m": 0.3437250354277736
+    },
+    {
+      "time_s": 4.58,
+      "robot_height_m": 0.33429059845864373
+    },
+    {
+      "time_s": 4.6000000000000005,
+      "robot_height_m": 0.3282366291161518
+    },
+    {
+      "time_s": 4.62,
+      "robot_height_m": 0.324282061396432
+    },
+    {
+      "time_s": 4.64,
+      "robot_height_m": 0.32284163348368267
+    },
+    {
+      "time_s": 4.66,
+      "robot_height_m": 0.3239798189970558
+    },
+    {
+      "time_s": 4.68,
+      "robot_height_m": 0.3261031065489037
+    },
+    {
+      "time_s": 4.7,
+      "robot_height_m": 0.32840633241236133
+    },
+    {
+      "time_s": 4.72,
+      "robot_height_m": 0.32966830744094994
+    },
+    {
+      "time_s": 4.74,
+      "robot_height_m": 0.3303001121478354
+    },
+    {
+      "time_s": 4.76,
+      "robot_height_m": 0.33100689798158606
+    },
+    {
+      "time_s": 4.78,
+      "robot_height_m": 0.3314455852153414
+    },
+    {
+      "time_s": 4.8,
+      "robot_height_m": 0.3317799704080217
+    },
+    {
+      "time_s": 4.82,
+      "robot_height_m": 0.3319750618106085
+    },
+    {
+      "time_s": 4.84,
+      "robot_height_m": 0.3319677850138658
+    },
+    {
+      "time_s": 4.86,
+      "robot_height_m": 0.3319594086070526
+    },
+    {
+      "time_s": 4.88,
+      "robot_height_m": 0.3316605796463469
+    },
+    {
+      "time_s": 4.9,
+      "robot_height_m": 0.3308768643363468
+    },
+    {
+      "time_s": 4.92,
+      "robot_height_m": 0.32966225992145864
+    },
+    {
+      "time_s": 4.94,
+      "robot_height_m": 0.3280214388080714
+    },
+    {
+      "time_s": 4.96,
+      "robot_height_m": 0.3262496034643639
+    },
+    {
+      "time_s": 4.98,
+      "robot_height_m": 0.32400193205149425
+    },
+    {
+      "time_s": 5.0,
+      "robot_height_m": 0.3203870733056025
+    },
+    {
+      "time_s": 5.0200000000000005,
+      "robot_height_m": 0.31549665955203593
+    },
+    {
+      "time_s": 5.04,
+      "robot_height_m": 0.30944989088725317
+    },
+    {
+      "time_s": 5.0600000000000005,
+      "robot_height_m": 0.30208306087264863
+    },
+    {
+      "time_s": 5.08,
+      "robot_height_m": 0.2937078167360419
+    },
+    {
+      "time_s": 5.1000000000000005,
+      "robot_height_m": 0.2843751509942036
+    },
+    {
+      "time_s": 5.12,
+      "robot_height_m": 0.27425762131300196
+    },
+    {
+      "time_s": 5.14,
+      "robot_height_m": 0.26373148677670183
+    },
+    {
+      "time_s": 5.16,
+      "robot_height_m": 0.25256928163910924
+    },
+    {
+      "time_s": 5.18,
+      "robot_height_m": 0.24104064675118703
+    },
+    {
+      "time_s": 5.2,
+      "robot_height_m": 0.2294961720840777
+    },
+    {
+      "time_s": 5.22,
+      "robot_height_m": 0.21793629140060122
+    },
+    {
+      "time_s": 5.24,
+      "robot_height_m": 0.20591778626711615
+    },
+    {
+      "time_s": 5.26,
+      "robot_height_m": 0.1930801376793972
+    },
+    {
+      "time_s": 5.28,
+      "robot_height_m": 0.1792586714108957
+    },
+    {
+      "time_s": 5.3,
+      "robot_height_m": 0.16833671311283874
+    },
+    {
+      "time_s": 5.32,
+      "robot_height_m": 0.1661412646755394
+    },
+    {
+      "time_s": 5.34,
+      "robot_height_m": 0.16417065155680122
+    },
+    {
+      "time_s": 5.36,
+      "robot_height_m": 0.16148327400943763
+    },
+    {
+      "time_s": 5.38,
+      "robot_height_m": 0.15787010719437095
+    },
+    {
+      "time_s": 5.4,
+      "robot_height_m": 0.1534300621445297
+    },
+    {
+      "time_s": 5.42,
+      "robot_height_m": 0.1482195978772735
+    },
+    {
+      "time_s": 5.44,
+      "robot_height_m": 0.14127984637481306
+    },
+    {
+      "time_s": 5.46,
+      "robot_height_m": 0.1337005700605844
+    },
+    {
+      "time_s": 5.48,
+      "robot_height_m": 0.1270378883357577
+    },
+    {
+      "time_s": 5.5,
+      "robot_height_m": 0.12077189253779369
+    },
+    {
+      "time_s": 5.5200000000000005,
+      "robot_height_m": 0.11453971061234487
+    },
+    {
+      "time_s": 5.54,
+      "robot_height_m": 0.11316571501972411
+    },
+    {
+      "time_s": 5.5600000000000005,
+      "robot_height_m": 0.11366482179302297
+    },
+    {
+      "time_s": 5.58,
+      "robot_height_m": 0.11432050561916504
+    },
+    {
+      "time_s": 5.6000000000000005,
+      "robot_height_m": 0.11492085389261526
+    },
+    {
+      "time_s": 5.62,
+      "robot_height_m": 0.11527153666931758
+    },
+    {
+      "time_s": 5.64,
+      "robot_height_m": 0.11514880624862403
+    },
+    {
+      "time_s": 5.66,
+      "robot_height_m": 0.11460118467133566
+    },
+    {
+      "time_s": 5.68,
+      "robot_height_m": 0.11381503012647938
+    },
+    {
+      "time_s": 5.7,
+      "robot_height_m": 0.11328056984224157
+    },
+    {
+      "time_s": 5.72,
+      "robot_height_m": 0.11334034552805734
+    },
+    {
+      "time_s": 5.74,
+      "robot_height_m": 0.11349673860425329
+    },
+    {
+      "time_s": 5.76,
+      "robot_height_m": 0.11434458791408685
+    },
+    {
+      "time_s": 5.78,
+      "robot_height_m": 0.11584160539594728
+    },
+    {
+      "time_s": 5.8,
+      "robot_height_m": 0.1178237830096828
+    },
+    {
+      "time_s": 5.82,
+      "robot_height_m": 0.11986933170758694
+    },
+    {
+      "time_s": 5.84,
+      "robot_height_m": 0.12159600290498145
+    },
+    {
+      "time_s": 5.86,
+      "robot_height_m": 0.12243828383699133
+    },
+    {
+      "time_s": 5.88,
+      "robot_height_m": 0.12080479731352674
+    },
+    {
+      "time_s": 5.9,
+      "robot_height_m": 0.11934547883422872
+    },
+    {
+      "time_s": 5.92,
+      "robot_height_m": 0.11923160155354245
+    },
+    {
+      "time_s": 5.94,
+      "robot_height_m": 0.11921239397202889
+    },
+    {
+      "time_s": 5.96,
+      "robot_height_m": 0.11672551623593763
+    },
+    {
+      "time_s": 5.98,
+      "robot_height_m": 0.11391879111062363
+    },
+    {
+      "time_s": 6.0,
+      "robot_height_m": 0.11077747224330559
+    },
+    {
+      "time_s": 6.0200000000000005,
+      "robot_height_m": 0.10719474072127569
+    },
+    {
+      "time_s": 6.04,
+      "robot_height_m": 0.102676773743001
+    },
+    {
+      "time_s": 6.0600000000000005,
+      "robot_height_m": 0.0973485876019364
+    },
+    {
+      "time_s": 6.08,
+      "robot_height_m": 0.0918463910454173
+    },
+    {
+      "time_s": 6.1000000000000005,
+      "robot_height_m": 0.08966160084197457
+    },
+    {
+      "time_s": 6.12,
+      "robot_height_m": 0.08685453111614962
+    },
+    {
+      "time_s": 6.140000000000001,
+      "robot_height_m": 0.08490244469246384
+    },
+    {
+      "time_s": 6.16,
+      "robot_height_m": 0.08418456296804766
+    },
+    {
+      "time_s": 6.18,
+      "robot_height_m": 0.08388465207359434
+    },
+    {
+      "time_s": 6.2,
+      "robot_height_m": 0.08433436161354001
+    },
+    {
+      "time_s": 6.22,
+      "robot_height_m": 0.0852994781324382
+    },
+    {
+      "time_s": 6.24,
+      "robot_height_m": 0.08560069751038706
+    },
+    {
+      "time_s": 6.26,
+      "robot_height_m": 0.08457217920511749
+    },
+    {
+      "time_s": 6.28,
+      "robot_height_m": 0.0817601327107878
+    },
+    {
+      "time_s": 6.3,
+      "robot_height_m": 0.07847908188253858
+    },
+    {
+      "time_s": 6.32,
+      "robot_height_m": 0.07543943685965936
+    },
+    {
+      "time_s": 6.34,
+      "robot_height_m": 0.0721838469847456
+    },
+    {
+      "time_s": 6.36,
+      "robot_height_m": 0.07306267989913932
+    },
+    {
+      "time_s": 6.38,
+      "robot_height_m": 0.07255722650785836
+    },
+    {
+      "time_s": 6.4,
+      "robot_height_m": 0.07129395865060717
+    },
+    {
+      "time_s": 6.42,
+      "robot_height_m": 0.07171570421012567
+    },
+    {
+      "time_s": 6.44,
+      "robot_height_m": 0.07136888650208846
+    },
+    {
+      "time_s": 6.46,
+      "robot_height_m": 0.0713923613067466
+    },
+    {
+      "time_s": 6.48,
+      "robot_height_m": 0.07146086426660252
+    }
+  ]
+}

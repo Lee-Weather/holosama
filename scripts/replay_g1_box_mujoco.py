@@ -147,10 +147,10 @@ class BoxPolicy:
         mujoco.mj_setConst(self.model, self.data)
         self.data.qpos[:7] = self.motion["joint_pos"][0, :7]
         self.data.qpos[self.qpos_ids] = self.motion["joint_pos"][0, 7:][self.motion_joint_ids]
-        self.data.qvel[:3] = self.motion["body_lin_vel_w"][0, self.motion_root_id]
-        self.data.qvel[3:6] = (
-            quaternion_matrix(self.data.qpos[3:7]).T @ self.motion["body_ang_vel_w"][0, self.motion_root_id]
-        )
+        # The NPZ stores native MuJoCo free-joint velocities: world-frame
+        # origin linear velocity, followed by local-frame angular velocity.
+        # body_lin_vel_w is measured at the COM and cannot be copied here.
+        self.data.qvel[:6] = self.motion["joint_vel"][0, :6]
         self.data.qvel[self.qvel_ids] = self.motion["joint_vel"][0, 6:][self.motion_joint_ids]
         if not without_box:
             self.data.qpos[self.box_pos_id : self.box_pos_id + 3] = self.motion["object_pos_w"][0]
@@ -162,6 +162,7 @@ class BoxPolicy:
         self.metrics = []
         self.box_mass = mass
         self.initial_alignment = {
+            "root_velocity_source": "motion.joint_vel[0,:6]: world origin linear / local angular",
             "root_position_difference_m": float(
                 np.linalg.norm(self.data.xpos[self.root_body] - self.motion["body_pos_w"][0, self.motion_root_id])
             ),

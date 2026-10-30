@@ -1,0 +1,9 @@
+{
+  "video": "czy/data/exp_2.1/play_box_velocity_fixed.mp4",
+  "sha256": "76a58bf8df29c729aabc31aad052903afe78938c90d84bf49a9601b33eafaeb1",
+  "decoded_frames": 325,
+  "fps": 50.0,
+  "duration_s": 6.5,
+  "full_ffmpeg_decode": "passed",
+  "visual_review": "reviewed: box fails to reach reference lift; robot fallen around 2 seconds"
+}

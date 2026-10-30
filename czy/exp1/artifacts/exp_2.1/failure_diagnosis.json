@@ -1,0 +1,121 @@
+{
+  "experiment": "exp_2.1",
+  "checkpoint_sha256": "e2d120660bbc199d0dc03d0bce17a4989ef6117877c2f97f9da72d2c4dbc2c97",
+  "confirmed_replay_bug": {
+    "field": "root qvel[:3]",
+    "previous_source": "motion.body_lin_vel_w[0,pelvis] (COM velocity)",
+    "correct_source": "motion.joint_vel[0,:3] (origin velocity)",
+    "previous_world_linear_velocity": [
+      0.1564016589471302,
+      0.6079643717633367,
+      -0.738281568013212
+    ],
+    "correct_world_linear_velocity": [
+      -0.03318488597869873,
+      0.6481379270553589,
+      -0.7213234901428223
+    ],
+    "bias_norm_m_per_s": 0.19453665322752234,
+    "COM_to_origin_conversion_residual_m_per_s": 1.015690269118773e-07,
+    "fix": "load all six native root velocities from joint_vel"
+  },
+  "training_windows": [
+    {
+      "first_step": 0,
+      "last_step": 999,
+      "Train/mean_reward": 1.60002669182932,
+      "Train/mean_episode_length": 30.853819991111756
+    },
+    {
+      "first_step": 3000,
+      "last_step": 3999,
+      "Train/mean_reward": 4.981160432100296,
+      "Train/mean_episode_length": 90.1524698829651
+    },
+    {
+      "first_step": 5000,
+      "last_step": 5999,
+      "Train/mean_reward": 5.890581808567047,
+      "Train/mean_episode_length": 108.90354992675782
+    },
+    {
+      "first_step": 6000,
+      "last_step": 6999,
+      "Train/mean_reward": 6.459955111026764,
+      "Train/mean_episode_length": 120.07812997436524
+    },
+    {
+      "first_step": 7000,
+      "last_step": 7999,
+      "Train/mean_reward": 6.767822322368622,
+      "Train/mean_episode_length": 127.31990001678467
+    }
+  ],
+  "limitations": [
+    "No native IsaacLab final policy rollout or termination-reason histogram has been evaluated.",
+    "Native default iteration count 30000 versus actual 8000 is a budget difference, not proof that extending training resolves failure.",
+    "Robot-only rollout changes the task contact conditions and cannot validate carrying ability."
+  ],
+  "after_root_velocity_fix": {
+    "with_box": {
+      "checkpoint": "E:\\G1\\holosoma\\czy\\data\\exp_2.1\\model_07999.pt",
+      "checkpoint_sha256": "e2d120660bbc199d0dc03d0bce17a4989ef6117877c2f97f9da72d2c4dbc2c97",
+      "iteration": 7999,
+      "mujoco": "3.15.0",
+      "box_removed": false,
+      "box_body_count": 1,
+      "box_mass_kg": 2.6,
+      "box_sliding_friction": 0.35,
+      "frames": 325,
+      "duration_s": 6.5,
+      "control_dt": 0.02,
+      "initial_alignment": {
+        "root_velocity_source": "motion.joint_vel[0,:6]: world origin linear / local angular",
+        "root_position_difference_m": 0.0,
+        "torso_position_difference_m": 0.01000028427639059,
+        "collision_geometries": 40,
+        "unit_motor_gears": true
+      },
+      "automatic_resets": 0,
+      "pose_corrections_after_initialization": 0,
+      "robot_min_height_m": 0.06208084103452618,
+      "video_bytes": 451554,
+      "video_sha256": "76a58bf8df29c729aabc31aad052903afe78938c90d84bf49a9601b33eafaeb1",
+      "replay_script_sha256": "1a818faaaeea973a1650ab664cd1a2449c5ad84e25fe80339f0661656d2a4a33",
+      "note": "Cross-simulator evaluation using training robot collision URDF. This is an independent physical rollout, not reference motion playback.",
+      "box_position_rmse_m": 1.228499082340072,
+      "box_position_max_error_m": 1.6546980022521836,
+      "box_orientation_max_error_rad": 1.819142587945893,
+      "first_box_tracking_violation_s": 1.12,
+      "box_max_height_m": 0.2621922119771453
+    },
+    "without_box": {
+      "checkpoint": "E:\\G1\\holosoma\\czy\\data\\exp_2.1\\model_07999.pt",
+      "checkpoint_sha256": "e2d120660bbc199d0dc03d0bce17a4989ef6117877c2f97f9da72d2c4dbc2c97",
+      "iteration": 7999,
+      "mujoco": "3.15.0",
+      "box_removed": true,
+      "box_body_count": 0,
+      "box_mass_kg": null,
+      "box_sliding_friction": null,
+      "frames": 325,
+      "duration_s": 6.5,
+      "control_dt": 0.02,
+      "initial_alignment": {
+        "root_velocity_source": "motion.joint_vel[0,:6]: world origin linear / local angular",
+        "root_position_difference_m": 0.0,
+        "torso_position_difference_m": 0.01000028427639059,
+        "collision_geometries": 39,
+        "unit_motor_gears": true
+      },
+      "automatic_resets": 0,
+      "pose_corrections_after_initialization": 0,
+      "robot_min_height_m": 0.07129395865060717,
+      "video_bytes": 577163,
+      "video_sha256": "7cf4dadcb11fdf29e7d5114094c0039b66bb419cb81fe42bb0e24e7d36d1c36c",
+      "replay_script_sha256": "1a818faaaeea973a1650ab664cd1a2449c5ad84e25fe80339f0661656d2a4a33",
+      "note": "Cross-simulator evaluation using training robot collision URDF. This is an independent physical rollout, not reference motion playback."
+    }
+  },
+  "conclusion": "Initial velocity adaptation bug is confirmed and corrected; both corrected physical rollouts still fall. Native policy quality versus other cross-simulator differences remains unresolved."
+}

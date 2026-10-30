@@ -1,0 +1,9 @@
+{
+  "video": "czy/data/exp_2.1/play_robot_only_velocity_fixed.mp4",
+  "sha256": "7cf4dadcb11fdf29e7d5114094c0039b66bb419cb81fe42bb0e24e7d36d1c36c",
+  "decoded_frames": 325,
+  "fps": 50.0,
+  "duration_s": 6.5,
+  "full_ffmpeg_decode": "passed",
+  "visual_review": "reviewed: no box, robot fallen by 2 seconds; initialization fix does not resolve failure"
+}
