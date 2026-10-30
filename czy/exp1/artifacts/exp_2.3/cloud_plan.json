@@ -1,0 +1,19 @@
+{
+  "commit": "446b1bfbcac4d6aa36095bf31c92d0e6c4011373",
+  "source_checkpoint": "/workspace/isaaclab/holosama/czy/data/exp_2.2/model_13999.pt",
+  "source_sha256": "7546092cda21371a8c37a6fac3eb92952a560b9e0bf2484c256bec3a92d05120",
+  "source_iteration": 13999,
+  "next_iteration": 14000,
+  "expected_final_iteration": 23999,
+  "num_envs": 4096,
+  "capacity_iterations": 0,
+  "experiment": "exp_2.3",
+  "checkpoint": "/workspace/isaaclab/holosama/czy/data/exp_2.2/model_13999.pt",
+  "checkpoint_sha256": "7546092cda21371a8c37a6fac3eb92952a560b9e0bf2484c256bec3a92d05120",
+  "additional_iterations": 10000,
+  "save_interval": 100,
+  "skip_capacity_test": true,
+  "install_timeout": 900,
+  "capacity_timeout": 900,
+  "training_timeout": 86400
+}

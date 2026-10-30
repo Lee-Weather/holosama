@@ -12,8 +12,7 @@
 | [exp_2](#实验-exp_2g1-带箱体的搬运跟踪训练) | 2026-10-29 | 安装阶段发现入口切换目录后的输出路径问题，主动停止，未开始 PPO | 失败 | `TASK_20261029_261` | `limxmts0elyormeym6@uberip.com` | 无 |
 | [exp_2.1](#实验-exp_21修正搬箱子入口的工作目录) | 2026-10-29 | 完成 8000 轮；原生评估完整片段通过 2/128（1.56%），主要为箱体/手脚跟踪失败 | 已测试 | 训练 `TASK_20261029_267`；评估 `TASK_20261030_051` | 训练 `limxmts0elyormeym6@uberip.com`；评估用户 4391，见 §7 | [model_07999.pt](../data/exp_2.1/model_07999.pt) |
 | [exp_2.2](#实验-exp_22原生规模下恢复完整状态续训) | 2026-10-30 | 完成新增6000轮；本地抬箱回放改善，原生片段通过25/128（19.53%），线上补录暂缓 | 已测试 | 训练 `TASK_20261030_073`；原生回放 `TASK_20261030_193`（早期停止尝试见 §7） | `limxmts0f9p800yu7g@uberip.com` / 4391 | 源 `model_07999.pt`；目标 `model_13999.pt` |
-
-| [exp_2.3](#实验-exp_23切换账号从13999继续训练10000轮) | 2026-10-30 | 使用新账号，从13999完整恢复，4096环境新增10000轮，每100轮保存；不录线上视频 | 待训练 | 待创建 | `limxeea82ul1yy1j@maxxspace.com` / 4648 | 源 `model_13999.pt`；目标 `model_23999.pt` |
+| [exp_2.3](#实验-exp_23切换账号从13999继续训练10000轮) | 2026-10-30 | 使用新账号，从13999完整恢复，4096环境新增10000轮，每100轮保存；不录线上视频 | 续训中 | `TASK_20261030_200` | `limxeea82ul1yy1j@maxxspace.com` / 4648 | 源 `model_13999.pt`；目标 `model_23999.pt` |
 
 ## 实验 exp0：Flux IsaacLab 上的 G1 PPO 流程验证
 
@@ -943,4 +942,4 @@ exp_2.2从旧7999模型新增6000轮至13999，4096环境，每100轮保存。�
 
 ### 7. 实验结果
 
-指定账号已经auth whoami核对为用户4648；兼容V000446和单GPU目录重新查询，专用训练项目已创建。真实源模型SHA、网络/优化器/归一化及与原生任务模块一致性核对通过；相关CPU测试共**10项通过**、Ruff通过。[平台预检查](artifacts/exp_2.3/platform_preflight.json)、[本地验证](artifacts/exp_2.3/local_validation.json)、[计划配置](artifacts/exp_2.3/planned_config.json)。尚未提交计费训练任务，任务ID与GPU正式启动结果待本次运行补充。
+指定账号已经auth whoami核对为用户4648；兼容V000446和单GPU目录重新查询，专用训练项目已创建。真实源模型SHA、网络/优化器/归一化及与原生任务模块一致性核对通过；相关CPU测试共**10项通过**、Ruff通过。[平台预检查](artifacts/exp_2.3/platform_preflight.json)、[本地验证](artifacts/exp_2.3/local_validation.json)、[计划配置](artifacts/exp_2.3/planned_config.json)。已提交唯一训练任务 **`TASK_20261030_200`**，归属用户4648、项目 `PRO_20261030_012`，2026-10-30 **18:14:26** 开始，平台状态3。worker实际commit **`446b1bfbcac4d6aa36095bf31c92d0e6c4011373`** 已核对；云端计划确认源13999、下一轮14000、目标23999、新增10000、4096环境、save100、capacity_iterations=0、skip_capacity_test=true。当前处于安装/初始化阶段，尚未捕获正式恢复标记，不把平台运行状态当作已完成学习；未重复首模型下载验收，未启动新的录像任务。[本次提交记录](artifacts/exp_2.3/launch_plan.json)、[云端实际计划](artifacts/exp_2.3/cloud_plan.json)、[当前状态](artifacts/exp_2.3/status.json)。
