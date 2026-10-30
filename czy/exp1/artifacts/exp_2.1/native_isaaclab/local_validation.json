@@ -1,0 +1,16 @@
+{
+  "checkpoint_sha256": "e2d120660bbc199d0dc03d0bce17a4989ef6117877c2f97f9da72d2c4dbc2c97",
+  "typed_checkpoint_config_validated": true,
+  "preserved": [
+    "robot",
+    "scene",
+    "command",
+    "randomization",
+    "termination",
+    "reward"
+  ],
+  "test_file": "tests/test_flux_box_evaluation.py",
+  "tests_passed": 3,
+  "ruff": "passed",
+  "gpu_evaluation": "not yet launched"
+}
