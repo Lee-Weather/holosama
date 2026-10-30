@@ -29,7 +29,7 @@ def quaternion_matrix(quaternion):
 
 
 class BoxPolicy:
-    def __init__(self, checkpoint: Path, mass: float):
+    def __init__(self, checkpoint: Path, mass: float, without_box: bool = False):
         torch.set_num_threads(1)
         saved = torch.load(checkpoint, map_location="cpu", weights_only=False)
         self.cfg = saved["experiment_config"]
@@ -97,18 +97,19 @@ class BoxPolicy:
             friction=[1, 0.005, 0.0001],
         )
         spec.worldbody.add_light(pos=[1, -2, 4], dir=[-0.2, 0.2, -1])
-        box_mesh = ROOT / "src/holosoma/holosoma/data/scene_objects/boxes/largebox.obj"
-        spec.add_mesh(name="carry_box_mesh", file=str(box_mesh))
-        box = spec.worldbody.add_body(name="carry_box")
-        box.add_freejoint(name="box_free")
-        box.add_geom(
-            name="carry_box_collision",
-            type=mujoco.mjtGeom.mjGEOM_MESH,
-            meshname="carry_box_mesh",
-            mass=mass,
-            rgba=[0.85, 0.55, 0.25, 1],
-            friction=[0.35, 0.005, 0.0001],
-        )
+        if not without_box:
+            box_mesh = ROOT / "src/holosoma/holosoma/data/scene_objects/boxes/largebox.obj"
+            spec.add_mesh(name="carry_box_mesh", file=str(box_mesh))
+            box = spec.worldbody.add_body(name="carry_box")
+            box.add_freejoint(name="box_free")
+            box.add_geom(
+                name="carry_box_collision",
+                type=mujoco.mjtGeom.mjGEOM_MESH,
+                meshname="carry_box_mesh",
+                mass=mass,
+                rgba=[0.85, 0.55, 0.25, 1],
+                friction=[0.35, 0.005, 0.0001],
+            )
         for name, limit in zip(self.names, self.limits, strict=True):
             spec.add_actuator(
                 name=name, target=name, trntype=mujoco.mjtTrn.mjTRN_JOINT, ctrllimited=True, ctrlrange=[-limit, limit]
@@ -131,13 +132,17 @@ class BoxPolicy:
         self.model.dof_frictionloss[self.qvel_ids] = robot["dof_joint_friction_list"]
         self.root_body = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "pelvis")
         self.ref_body = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, self.ref_name)
+        self.without_box = without_box
         self.box_body = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "carry_box")
-        box_joint = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, "box_free")
-        self.box_pos_id = self.model.jnt_qposadr[box_joint]
-        self.box_vel_id = self.model.jnt_dofadr[box_joint]
-        # Preserve the training URDF's inertia-to-mass ratio at nominal mass.
-        self.model.body_mass[self.box_body] = mass
-        self.model.body_inertia[self.box_body] = 0.002 * mass / 0.1
+        if without_box:
+            assert self.box_body == -1 and self.model.nq == 7 + len(self.names)
+        else:
+            box_joint = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, "box_free")
+            self.box_pos_id = self.model.jnt_qposadr[box_joint]
+            self.box_vel_id = self.model.jnt_dofadr[box_joint]
+            # Preserve the training URDF's inertia-to-mass ratio at nominal mass.
+            self.model.body_mass[self.box_body] = mass
+            self.model.body_inertia[self.box_body] = 0.002 * mass / 0.1
         self.data = mujoco.MjData(self.model)
         mujoco.mj_setConst(self.model, self.data)
         self.data.qpos[:7] = self.motion["joint_pos"][0, :7]
@@ -147,9 +152,10 @@ class BoxPolicy:
             quaternion_matrix(self.data.qpos[3:7]).T @ self.motion["body_ang_vel_w"][0, self.motion_root_id]
         )
         self.data.qvel[self.qvel_ids] = self.motion["joint_vel"][0, 6:][self.motion_joint_ids]
-        self.data.qpos[self.box_pos_id : self.box_pos_id + 3] = self.motion["object_pos_w"][0]
-        self.data.qpos[self.box_pos_id + 3 : self.box_pos_id + 7] = self.motion["object_quat_w"][0]
-        self.data.qvel[self.box_vel_id : self.box_vel_id + 3] = self.motion["object_lin_vel_w"][0]
+        if not without_box:
+            self.data.qpos[self.box_pos_id : self.box_pos_id + 3] = self.motion["object_pos_w"][0]
+            self.data.qpos[self.box_pos_id + 3 : self.box_pos_id + 7] = self.motion["object_quat_w"][0]
+            self.data.qvel[self.box_vel_id : self.box_vel_id + 3] = self.motion["object_lin_vel_w"][0]
         mujoco.mj_forward(self.model, self.data)
         self.action = np.zeros(len(self.names))
         self.index = 0
@@ -201,20 +207,26 @@ class BoxPolicy:
         return (observation - self.obs_mean) / (self.obs_std + 1e-2)
 
     def record_metrics(self):
+        metric = {
+            "time_s": self.index * self.dt,
+            "robot_height_m": float(self.data.qpos[2]),
+        }
+        if self.without_box:
+            self.metrics.append(metric)
+            return
         index = min(self.index, self.frames - 1)
         position = self.data.xpos[self.box_body].copy()
         actual_rotation = self.data.xmat[self.box_body].reshape(3, 3)
         reference_rotation = quaternion_matrix(self.motion["object_quat_w"][index])
         angle = np.arccos(np.clip((np.trace(actual_rotation.T @ reference_rotation) - 1) / 2, -1, 1))
-        self.metrics.append(
+        metric.update(
             {
-                "time_s": self.index * self.dt,
                 "box_position": position.tolist(),
                 "box_position_error_m": float(np.linalg.norm(position - self.motion["object_pos_w"][index])),
                 "box_orientation_error_rad": float(angle),
-                "robot_height_m": float(self.data.qpos[2]),
             }
         )
+        self.metrics.append(metric)
 
     def step(self):
         with torch.inference_mode():
@@ -240,16 +252,20 @@ class BoxPolicy:
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint", type=Path, default=ROOT / "czy/data/exp_2.1/model_07999.pt")
-    parser.add_argument("--output", type=Path, default=ROOT / "czy/data/exp_2.1/play_box_mujoco.mp4")
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--report", type=Path)
     parser.add_argument(
-        "--report", type=Path, default=ROOT / "czy/exp1/artifacts/exp_2.1/local_box_replay_validation.json"
+        "--no-box", action="store_true", help="Remove the box body, collision geometry and rendering; keep the actor."
     )
     parser.add_argument("--mass", type=float, default=2.6)
     args = parser.parse_args()
+    stem = "robot_only" if args.no_box else "box"
+    args.output = args.output or ROOT / f"czy/data/exp_2.1/play_{stem}_mujoco.mp4"
+    args.report = args.report or ROOT / f"czy/exp1/artifacts/exp_2.1/local_{stem}_replay_validation.json"
     if not 1.1 <= args.mass <= 4.1:
         parser.error("Box mass must stay within the training range 1.1..4.1 kg")
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    replay = BoxPolicy(args.checkpoint, args.mass)
+    replay = BoxPolicy(args.checkpoint, args.mass, without_box=args.no_box)
     raw = args.output.with_suffix(".raw.mp4")
     writer = cv2.VideoWriter(str(raw), cv2.VideoWriter_fourcc(*"mp4v"), 50, (1280, 720))
     if not writer.isOpened():
@@ -258,7 +274,7 @@ def main():
     camera.distance, camera.azimuth, camera.elevation = 3.0, 135, -18
     print(
         "BOX_REPLAY_START",
-        json.dumps({"iteration": replay.iteration, "frames": replay.frames, "mass_kg": args.mass}),
+        json.dumps({"iteration": replay.iteration, "frames": replay.frames, "box_removed": args.no_box}),
         flush=True,
     )
     try:
@@ -270,10 +286,11 @@ def main():
                 renderer.update_scene(replay.data, camera=camera)
                 rgb = renderer.render()
                 frame = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
+                scene_label = "NO BOX | learned policy" if args.no_box else f"dynamic box {args.mass:g} kg"
                 cv2.putText(
                     frame,
                     f"{args.checkpoint.parent.name} | model {replay.iteration:05d} | "
-                    f"dynamic box {args.mass:g} kg | t={replay.index * replay.dt:.2f}s",
+                    f"{scene_label} | t={replay.index * replay.dt:.2f}s",
                     (25, 35),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.65,
@@ -309,28 +326,22 @@ def main():
         capture_output=True,
     )
     raw.unlink()
-    position_errors = [v["box_position_error_m"] for v in replay.metrics]
-    orientation_errors = [v["box_orientation_error_rad"] for v in replay.metrics]
-    violations = [v for v in replay.metrics if v["box_position_error_m"] > 0.25 or v["box_orientation_error_rad"] > 0.8]
     result = {
         "checkpoint": str(args.checkpoint),
         "checkpoint_sha256": replay.checkpoint_hash,
         "iteration": replay.iteration,
         "mujoco": mujoco.__version__,
-        "box_mass_kg": args.mass,
-        "box_sliding_friction": 0.35,
+        "box_removed": args.no_box,
+        "box_body_count": int(replay.box_body >= 0),
+        "box_mass_kg": None if args.no_box else args.mass,
+        "box_sliding_friction": None if args.no_box else 0.35,
         "frames": replay.frames,
         "duration_s": replay.frames * replay.dt,
         "control_dt": replay.dt,
         "initial_alignment": replay.initial_alignment,
         "automatic_resets": 0,
         "pose_corrections_after_initialization": 0,
-        "box_position_rmse_m": float(np.sqrt(np.mean(np.square(position_errors)))),
-        "box_position_max_error_m": max(position_errors),
-        "box_orientation_max_error_rad": max(orientation_errors),
-        "first_box_tracking_violation_s": violations[0]["time_s"] if violations else None,
         "robot_min_height_m": min(v["robot_height_m"] for v in replay.metrics),
-        "box_max_height_m": max(v["box_position"][2] for v in replay.metrics),
         "video_bytes": args.output.stat().st_size,
         "video_sha256": hashlib.sha256(args.output.read_bytes()).hexdigest(),
         "replay_script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -339,6 +350,19 @@ def main():
             "This is an independent physical rollout, not reference motion playback."
         ),
     }
+    if not args.no_box:
+        position_errors = [v["box_position_error_m"] for v in replay.metrics]
+        orientation_errors = [v["box_orientation_error_rad"] for v in replay.metrics]
+        violations = [
+            v for v in replay.metrics if v["box_position_error_m"] > 0.25 or v["box_orientation_error_rad"] > 0.8
+        ]
+        result.update(
+            box_position_rmse_m=float(np.sqrt(np.mean(np.square(position_errors)))),
+            box_position_max_error_m=max(position_errors),
+            box_orientation_max_error_rad=max(orientation_errors),
+            first_box_tracking_violation_s=violations[0]["time_s"] if violations else None,
+            box_max_height_m=max(v["box_position"][2] for v in replay.metrics),
+        )
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps({"summary": result, "trajectory": replay.metrics}, indent=2), encoding="utf-8")
     print("BOX_REPLAY_RESULT", json.dumps(result), flush=True)

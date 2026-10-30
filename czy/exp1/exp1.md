@@ -625,3 +625,11 @@ exp_2 的带箱体 WBT 配置、CLI 和 motion 在本地验证通过，但任务
 [物理回放与逐帧轨迹](artifacts/exp_2.1/local_box_replay_validation.json)、[视频解码校验](artifacts/exp_2.1/local_box_video_validation.json)、[代表帧](artifacts/exp_2.1/local_box_replay_frames.jpg)。复现：`python scripts/replay_g1_box_mujoco.py`，默认读取本轮最终模型并保存上述视频和证据；脚本 Ruff 检查与实际物理运行通过。
 
 **分级结论：✅ 8000 轮训练、最终 checkpoint/云端 ONNX/上传下载通过；❌ 本次本机 MuJoCo 完整搬运未通过；⚠️ 原生 IsaacLab 的最终策略搬运质量尚无独立回放验收。** 没有自动续训、切换账号或创建新计费回放任务。后续应先在原生环境评估箱体/机器人跟踪与终止原因，再决定是否增加训练预算或修正跨仿真适配，不能只凭本次视频自动重训。
+
+#### 按用户要求去掉箱体，仅观察策略动作（2026-10-30）
+
+在同一最终模型 `model_07999.pt` 上增加 `--no-box` 回放选项：从 MuJoCo 场景中完整移除箱体刚体、碰撞与显示，实际箱体 body 数为 0，保留原来的参考片段、actor/观测归一化、机器人碰撞及 PD 力矩控制，不重新训练、不强制写入参考关节动作。无箱体版本单独保存，不覆盖前述带箱回放。
+
+复现命令：`python scripts/replay_g1_box_mujoco.py --no-box`。[无箱体视频](../data/exp_2.1/play_robot_only_mujoco.mp4) 为 1280×720、50 fps、325 帧、6.5 秒，499,320 bytes，SHA-256=`c216ce42d0480dfddd4e20ca24ebd0fb73346f19c404779dc6f854d85402e466`。OpenCV 和 FFmpeg 全片解码通过，0/0.5/1/2/4/6 秒代表帧已人工检查，画面确认没有箱子。机器人约 1 秒坐倒、2 秒侧倒，最低根高度 0.066108 m；移除箱体后仍未保持动作跟踪，不能据此认定之前的失败仅由箱体尺寸引起，也不能将无负载表现当成搬运能力验收。
+
+[无箱体运行证据](artifacts/exp_2.1/local_robot_only_replay_validation.json)、[视频校验](artifacts/exp_2.1/local_robot_only_video_validation.json)、[代表帧](artifacts/exp_2.1/local_robot_only_replay_frames.jpg)。本次仅补充同一实验 §7，不新增训练编号。

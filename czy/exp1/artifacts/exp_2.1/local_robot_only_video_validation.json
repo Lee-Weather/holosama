@@ -1,0 +1,21 @@
+{
+  "video": "czy/data/exp_2.1/play_robot_only_mujoco.mp4",
+  "sha256": "c216ce42d0480dfddd4e20ca24ebd0fb73346f19c404779dc6f854d85402e466",
+  "bytes": 499320,
+  "width": 1280,
+  "height": 720,
+  "fps": 50.0,
+  "decoded_frames": 325,
+  "duration_s": 6.5,
+  "full_ffmpeg_decode": "passed",
+  "frame_std_min": 22.169472392932832,
+  "sample_frames": [
+    0,
+    25,
+    50,
+    100,
+    200,
+    300
+  ],
+  "visual_review": "reviewed: box absent in all six representative frames; robot sitting/fallen around 1s and on its side at 2s"
+}
