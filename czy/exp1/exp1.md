@@ -12,7 +12,7 @@
 | [exp_2](#实验-exp_2g1-带箱体的搬运跟踪训练) | 2026-10-29 | 安装阶段发现入口切换目录后的输出路径问题，主动停止，未开始 PPO | 失败 | `TASK_20261029_261` | `limxmts0elyormeym6@uberip.com` | 无 |
 | [exp_2.1](#实验-exp_21修正搬箱子入口的工作目录) | 2026-10-29 | 完成 8000 轮；原生评估完整片段通过 2/128（1.56%），主要为箱体/手脚跟踪失败 | 已测试 | 训练 `TASK_20261029_267`；评估 `TASK_20261030_051` | 训练 `limxmts0elyormeym6@uberip.com`；评估用户 4391，见 §7 | [model_07999.pt](../data/exp_2.1/model_07999.pt) |
 | [exp_2.2](#实验-exp_22原生规模下恢复完整状态续训) | 2026-10-30 | 完成新增6000轮；本地抬箱回放改善，原生片段通过25/128（19.53%），线上补录暂缓 | 已测试 | 训练 `TASK_20261030_073`；原生回放 `TASK_20261030_193`（早期停止尝试见 §7） | `limxmts0f9p800yu7g@uberip.com` / 4391 | 源 `model_07999.pt`；目标 `model_13999.pt` |
-| [exp_2.3](#实验-exp_23切换账号从13999继续训练10000轮) | 2026-10-30 | 经费中止，最新21100有效；末段奖励13.84，本地单次箱体跟踪检查通过 | 失败 | `TASK_20261030_200` | `limxeea82ul1yy1j@maxxspace.com` / 4648 | [model_21100.pt](../data/exp_2.3/model_21100.pt)（中止时最新，未达23999） |
+| [exp_2.3](#实验-exp_23切换账号从13999继续训练10000轮) | 2026-10-30 | 最新21100模型已在新账号续训7000轮，当前运行中；原10000轮任务曾因预算中止 | 续训中 | `TASK_20261030_200`；续训 `TASK_20261031_099` | `limxeea82ul1yy1j@maxxspace.com` / 4648；`limxeeaa0fu0slgk@maxxspace.com` / 4649 | 源 [model_21100.pt](../data/exp_2.3/model_21100.pt)，目标 `model_28100.pt` |
 
 ## 实验 exp0：Flux IsaacLab 上的 G1 PPO 流程验证
 
@@ -985,3 +985,9 @@ exp_2.2从旧7999模型新增6000轮至13999，4096环境，每100轮保存。�
 视频已由FFmpeg完整解码，人工查看0.5、3、6、6.5、7、10、15、20、25、29.5秒画面。循环参考在6.5秒回到动作起点时，策略不能维持箱体跟踪；该时刻箱体位置误差1.557m，超出0.25m检查阈值，姿态误差0.952rad。约14.82秒机器人根高度降至0.28m以下，随后倒地，整段最低根高度0.064m。故本次延长回放没有通过连续循环压力观察；**此失败由人为循环6.5秒参考命令触发，不能改写原始单次6.5秒回放已完成抬箱、搬运和放下的结果，也不能据此推断原生随机化成功率。**
 
 视频：[play_box_mujoco_30s.mp4](../data/exp_2.3/play_box_mujoco_30s.mp4)；[轨迹及越阈值记录](artifacts/exp_2.3/local_box_replay_30s_validation.json)、[完整解码信息](artifacts/exp_2.3/local_video_decode_30s.json)、[代表帧](artifacts/exp_2.3/local_box_replay_30s_frames.jpg)、[画面人工检查](artifacts/exp_2.3/local_video_human_review_30s.json)。
+
+#### 从 model_21100 再续训7000轮（2026-10-31）
+
+用户指定切换至 `limxeeaa0fu0slgk@maxxspace.com` / **4649**。源模型为 [model_21100.pt](../data/exp_2.3/model_21100.pt)，SHA-256=`604b7e1c91f5334e7907a0994ad0dcf235a513ae276fc7f850c948ef98891138`。在新账号项目 `PRO_20261031_005` 创建并启动训练任务 **`TASK_20261031_099`**，2026-10-31 16:24:08（北京时间）开始，代码commit `b207c8ee14f03ced04795ddf6de32b4fc933cc99`。
+
+本次从checkpoint iter21100恢复，新增7000次PPO更新，目标最终iter **28100**（更新范围21101..28100）；使用4096环境、每100轮保存、单GPU，复用同规模容量验证并跳过重复首checkpoint下载验收，关闭视频。云端恢复标记已确认网络权重、actor/critic优化器和归一化状态均恢复，4096环境与save_interval=100匹配；最后一次状态查询为运行中（状态3），日志已推进至iter21102，尚未完成。[提交与恢复记录](artifacts/exp_2.3/continuation_21100_7000_launch.json)、[当前任务状态及恢复标记](artifacts/exp_2.3/continuation_21100_7000_status.json)。

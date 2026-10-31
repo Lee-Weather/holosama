@@ -1,0 +1,29 @@
+{
+  "taskId": "TASK_20261031_099",
+  "taskStatus": "3",
+  "userId": "4649",
+  "projectId": "PRO_20261031_005",
+  "startTime": "2026-10-31 16:24:08",
+  "endTime": null,
+  "runtime": "",
+  "restore_marker_seen": true,
+  "plan_marker_seen": false,
+  "success_marker_seen": false,
+  "capacity_test_skip_requested": true,
+  "capacity_test_skip_marker_seen": false,
+  "formal_stage_started": false,
+  "last_iteration": [
+    "21110",
+    "28101"
+  ],
+  "traceback_seen": false,
+  "restore": {
+    "source_iteration": 21100,
+    "next_iteration": 21101,
+    "additional_iterations": 7000,
+    "expected_final_iteration": 28100,
+    "weights_optimizers_normalizers_restored": true,
+    "num_envs": 4096,
+    "save_interval": 100
+  }
+}
