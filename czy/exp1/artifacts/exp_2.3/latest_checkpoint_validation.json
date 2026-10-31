@@ -1,0 +1,26 @@
+{
+  "taskId": "TASK_20261030_200",
+  "account": "limxeea82ul1yy1j@maxxspace.com",
+  "userId": 4648,
+  "iteration": 21100,
+  "fileName": "model_21100.pt",
+  "sha256": "604b7e1c91f5334e7907a0994ad0dcf235a513ae276fc7f850c948ef98891138",
+  "bytes": 6840071,
+  "num_envs": 4096,
+  "completed_since_source": 7101,
+  "planned_final_iteration": 23999,
+  "planned_final_reached": false,
+  "note": "Latest available checkpoint of interrupted training; not the planned final model.",
+  "actor": {
+    "optimizer_step": 422020.0,
+    "normalizer_count": 1484488704,
+    "learning_rate": 0.00011390625000000006,
+    "model_and_normalizer_finite": true
+  },
+  "critic": {
+    "optimizer_step": 422020.0,
+    "normalizer_count": 1484488704,
+    "learning_rate": 0.00011390625000000006,
+    "model_and_normalizer_finite": true
+  }
+}

@@ -1,11 +1,14 @@
 {
   "taskId": "TASK_20261030_200",
-  "taskStatus": "3",
+  "taskStatus": "6",
   "userId": "4648",
   "startTime": "2026-10-30 18:14:26",
-  "endTime": null,
-  "runtime": "",
-  "last_iteration": null,
+  "endTime": "2026-10-31 02:54:54",
+  "runtime": "31228",
+  "last_iteration": [
+    "21126",
+    "24000"
+  ],
   "formal_restore_captured": false,
   "traceback_in_excerpt": false
 }

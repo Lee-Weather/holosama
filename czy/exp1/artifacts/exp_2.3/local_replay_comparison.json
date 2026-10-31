@@ -1,0 +1,31 @@
+{
+  "same_mass_kg": 2.6,
+  "same_reference_frames": 325,
+  "automatic_resets": 0,
+  "comparison": {
+    "robot_min_height_m": {
+      "model_13999": 0.5467726500133532,
+      "model_21100": 0.5300039080261136
+    },
+    "box_position_rmse_m": {
+      "model_13999": 0.11048898010715309,
+      "model_21100": 0.12195639084646627
+    },
+    "box_position_max_error_m": {
+      "model_13999": 0.22109707754455654,
+      "model_21100": 0.19309017757939453
+    },
+    "box_orientation_max_error_rad": {
+      "model_13999": 1.2983460784803422,
+      "model_21100": 0.5781810338617422
+    },
+    "first_box_tracking_violation_s": {
+      "model_13999": 1.78,
+      "model_21100": null
+    },
+    "box_max_height_m": {
+      "model_13999": 0.8428880070975502,
+      "model_21100": 0.7951653949973062
+    }
+  }
+}

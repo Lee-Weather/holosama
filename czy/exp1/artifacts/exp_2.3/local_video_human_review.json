@@ -1,0 +1,14 @@
+{
+  "reviewed": true,
+  "frames_at_seconds": [
+    0.5,
+    2.0,
+    4.0,
+    6.0
+  ],
+  "findings": [
+    "Robot visibly lifts, carries and lowers the free box; no fall observed.",
+    "Box position and orientation thresholds are not exceeded in the complete 325-frame local rollout.",
+    "Single nominal 2.6kg MuJoCo rollout; no IsaacLab randomized success rate measured."
+  ]
+}
