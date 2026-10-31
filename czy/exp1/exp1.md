@@ -977,3 +977,11 @@ exp_2.2从旧7999模型新增6000轮至13999，4096环境，每100轮保存。�
 [本地完整轨迹](artifacts/exp_2.3/local_box_replay_validation.json)、[同条件对照](artifacts/exp_2.3/local_replay_comparison.json)、[视频解码](artifacts/exp_2.3/local_video_decode.json)、[代表帧](artifacts/exp_2.3/local_box_representative_frames.jpg)、[人工查看记录](artifacts/exp_2.3/local_video_human_review.json)。
 
 **结论：预算未完成，最新保存模型有效，训练指标和本地箱体姿态控制有实际提升；单次名义本地箱体跟踪检查通过，但位置RMSE未改善。** 本次没有启动新云端计费任务、切换账号、重训或录制线上视频，也未运行21100模型的原生128回合随机化评估。因此19.53%的历史原生成功率仍只属于13999模型，不能转写为最新模型的通过率。[本次评估摘要](artifacts/exp_2.3/assessment_summary.json)。
+
+#### 延长本地回放：连续循环压力观察（2026-10-31）
+
+为延长观看时间，`replay_g1_box_mujoco.py` 新增 `--seconds` 和 `--repeat-motion`。本次以21100模型生成30秒、1500帧、50Hz、1280×720视频。参考动作只有325帧/6.5秒，因此连续运行中循环参考指令五次，机器人与箱体的物理状态始终连续，不在循环边界复位或纠正位姿。该协议用于观察循环边界后的连续性，和单次完整参考动作回放不同。
+
+视频已由FFmpeg完整解码，人工查看0.5、3、6、6.5、7、10、15、20、25、29.5秒画面。循环参考在6.5秒回到动作起点时，策略不能维持箱体跟踪；该时刻箱体位置误差1.557m，超出0.25m检查阈值，姿态误差0.952rad。约14.82秒机器人根高度降至0.28m以下，随后倒地，整段最低根高度0.064m。故本次延长回放没有通过连续循环压力观察；**此失败由人为循环6.5秒参考命令触发，不能改写原始单次6.5秒回放已完成抬箱、搬运和放下的结果，也不能据此推断原生随机化成功率。**
+
+视频：[play_box_mujoco_30s.mp4](../data/exp_2.3/play_box_mujoco_30s.mp4)；[轨迹及越阈值记录](artifacts/exp_2.3/local_box_replay_30s_validation.json)、[完整解码信息](artifacts/exp_2.3/local_video_decode_30s.json)、[代表帧](artifacts/exp_2.3/local_box_replay_30s_frames.jpg)、[画面人工检查](artifacts/exp_2.3/local_video_human_review_30s.json)。

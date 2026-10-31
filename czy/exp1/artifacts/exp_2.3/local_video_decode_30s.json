@@ -1,0 +1,23 @@
+{
+  "file": "E:\\G1\\holosoma\\czy\\data\\exp_2.3\\play_box_mujoco_30s.mp4",
+  "bytes": 2656867,
+  "sha256": "3344533e83fe02a7af1a8d8eda89390cd5145f3af11d11cbd3366e55b0d51aeb",
+  "decode": "ffmpeg full decode successful",
+  "frame_count": 1500,
+  "fps": 50,
+  "resolution": "1280x720",
+  "sample_times_s": [
+    0.5,
+    3.0,
+    6.0,
+    6.5,
+    7.0,
+    10.0,
+    15.0,
+    20.0,
+    25.0,
+    29.5
+  ],
+  "sample_sheet": "E:\\G1\\holosoma\\czy\\exp1\\artifacts\\exp_2.3\\local_box_replay_30s_frames.jpg",
+  "ffmpeg_returncode": 0
+}

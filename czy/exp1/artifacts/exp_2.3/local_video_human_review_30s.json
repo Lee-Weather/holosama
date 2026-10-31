@@ -1,0 +1,22 @@
+{
+  "video": "czy/data/exp_2.3/play_box_mujoco_30s.mp4",
+  "checkpoint_iteration": 21100,
+  "reviewed_times_s": [
+    0.5,
+    3,
+    6,
+    6.5,
+    7,
+    10,
+    15,
+    20,
+    25,
+    29.5
+  ],
+  "observations": [
+    "First 6.5 seconds visually show the trained pick-up/carry/lower sequence.",
+    "At the 6.5-second reference wrap, the box is separated from the robot; subsequent attempts do not regain stable tracking.",
+    "By 15 seconds the robot is on the floor; it remains down in later sampled frames."
+  ],
+  "scope": "Visual spot-check of decoded frames; the 30-second command-loop protocol exceeds the trained single-reference clip and is a continuity stress observation."
+}

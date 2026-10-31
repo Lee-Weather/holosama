@@ -29,7 +29,7 @@ def quaternion_matrix(quaternion):
 
 
 class BoxPolicy:
-    def __init__(self, checkpoint: Path, mass: float, without_box: bool = False):
+    def __init__(self, checkpoint: Path, mass: float, without_box: bool = False, repeat_motion: bool = False):
         torch.set_num_threads(1)
         saved = torch.load(checkpoint, map_location="cpu", weights_only=False)
         self.cfg = saved["experiment_config"]
@@ -133,6 +133,7 @@ class BoxPolicy:
         self.root_body = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "pelvis")
         self.ref_body = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, self.ref_name)
         self.without_box = without_box
+        self.repeat_motion = repeat_motion
         self.box_body = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "carry_box")
         if without_box:
             assert self.box_body == -1 and self.model.nq == 7 + len(self.names)
@@ -173,8 +174,11 @@ class BoxPolicy:
             "unit_motor_gears": bool(np.all(self.model.actuator_gear[:, 0] == 1)),
         }
 
+    def reference_index(self):
+        return self.index % self.frames if self.repeat_motion else min(self.index, self.frames - 1)
+
     def observation(self):
-        index = min(self.index, self.frames - 1)
+        index = self.reference_index()
         velocity = np.zeros(6)
         mujoco.mj_objectVelocity(self.model, self.data, mujoco.mjtObj.mjOBJ_BODY, self.root_body, velocity, 1)
         rotation = self.data.xmat[self.ref_body].reshape(3, 3)
@@ -211,11 +215,13 @@ class BoxPolicy:
         metric = {
             "time_s": self.index * self.dt,
             "robot_height_m": float(self.data.qpos[2]),
+            "reference_frame": self.reference_index(),
+            "reference_cycle": self.index // self.frames if self.repeat_motion else 0,
         }
         if self.without_box:
             self.metrics.append(metric)
             return
-        index = min(self.index, self.frames - 1)
+        index = self.reference_index()
         position = self.data.xpos[self.box_body].copy()
         actual_rotation = self.data.xmat[self.box_body].reshape(3, 3)
         reference_rotation = quaternion_matrix(self.motion["object_quat_w"][index])
@@ -259,6 +265,16 @@ def main():
         "--no-box", action="store_true", help="Remove the box body, collision geometry and rendering; keep the actor."
     )
     parser.add_argument("--mass", type=float, default=2.6)
+    parser.add_argument(
+        "--seconds",
+        type=float,
+        help="Physical rollout duration. Defaults to the reference clip duration.",
+    )
+    parser.add_argument(
+        "--repeat-motion",
+        action="store_true",
+        help="Loop the reference command while keeping the simulated robot and box state continuous.",
+    )
     args = parser.parse_args()
     stem = "robot_only" if args.no_box else "box"
     args.output = args.output or ROOT / f"czy/data/exp_2.1/play_{stem}_mujoco.mp4"
@@ -266,7 +282,12 @@ def main():
     if not 1.1 <= args.mass <= 4.1:
         parser.error("Box mass must stay within the training range 1.1..4.1 kg")
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    replay = BoxPolicy(args.checkpoint, args.mass, without_box=args.no_box)
+    replay = BoxPolicy(args.checkpoint, args.mass, without_box=args.no_box, repeat_motion=args.repeat_motion)
+    if args.seconds is not None and args.seconds <= 0:
+        parser.error("Replay duration must be positive")
+    frames_to_record = replay.frames if args.seconds is None else max(1, round(args.seconds / replay.dt))
+    if args.seconds is not None and args.seconds > replay.frames * replay.dt and not args.repeat_motion:
+        parser.error("Durations longer than the reference clip require --repeat-motion")
     raw = args.output.with_suffix(".raw.mp4")
     writer = cv2.VideoWriter(str(raw), cv2.VideoWriter_fourcc(*"mp4v"), 50, (1280, 720))
     if not writer.isOpened():
@@ -275,12 +296,21 @@ def main():
     camera.distance, camera.azimuth, camera.elevation = 3.0, 135, -18
     print(
         "BOX_REPLAY_START",
-        json.dumps({"iteration": replay.iteration, "frames": replay.frames, "box_removed": args.no_box}),
+        json.dumps(
+            {
+                "iteration": replay.iteration,
+                "frames": frames_to_record,
+                "duration_s": frames_to_record * replay.dt,
+                "reference_frames": replay.frames,
+                "repeat_motion": replay.repeat_motion,
+                "box_removed": args.no_box,
+            }
+        ),
         flush=True,
     )
     try:
         with mujoco.Renderer(replay.model, height=720, width=1280) as renderer:
-            for _ in range(replay.frames):
+            for _ in range(frames_to_record):
                 replay.record_metrics()
                 camera.lookat[:] = replay.data.xpos[replay.root_body]
                 camera.lookat[2] = 0.6
@@ -291,7 +321,8 @@ def main():
                 cv2.putText(
                     frame,
                     f"{args.checkpoint.parent.name} | model {replay.iteration:05d} | "
-                    f"{scene_label} | t={replay.index * replay.dt:.2f}s",
+                    f"{scene_label} | t={replay.index * replay.dt:.2f}s | "
+                    f"ref cycle={replay.index // replay.frames + 1 if replay.repeat_motion else 1}",
                     (25, 35),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.65,
@@ -336,8 +367,12 @@ def main():
         "box_body_count": int(replay.box_body >= 0),
         "box_mass_kg": None if args.no_box else args.mass,
         "box_sliding_friction": None if args.no_box else 0.35,
-        "frames": replay.frames,
-        "duration_s": replay.frames * replay.dt,
+        "frames": frames_to_record,
+        "duration_s": frames_to_record * replay.dt,
+        "reference_frames": replay.frames,
+        "reference_duration_s": replay.frames * replay.dt,
+        "reference_motion_repeated": replay.repeat_motion,
+        "reference_cycles_started": (frames_to_record - 1) // replay.frames + 1 if replay.repeat_motion else 1,
         "control_dt": replay.dt,
         "initial_alignment": replay.initial_alignment,
         "automatic_resets": 0,
