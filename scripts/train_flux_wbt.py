@@ -40,13 +40,13 @@ def training_command(num_envs: int, iterations: int, save_interval: int, project
         f"--algo.config.num-learning-iterations={iterations}",
         f"--algo.config.save-interval={save_interval}",
         "--logger.video.enabled=False",
-        f'--command.setup_terms.motion_command.params.motion_config.motion_file="{MOTION}"',
+        f'--command.setup_terms.motion_command.params.motion_config.motion_file={MOTION}',
     ]
 
 
 def preflight() -> None:
     """Verify the motion file exists and has expected content."""
-    motion_path = bootstrap.REPO_ROOT / "src" / MOTION
+    motion_path = bootstrap.REPO_ROOT / "src/holosoma" / MOTION
     if not motion_path.is_file():
         raise FileNotFoundError(f"Motion file not found: {motion_path}")
     with open(motion_path, "rb") as f:
