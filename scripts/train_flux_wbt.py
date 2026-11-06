@@ -90,6 +90,17 @@ def preflight(motion: str, motion_dir: str) -> dict:
                     details[f"probe:{rel or 'repo'}"] = (
                         sorted(p.name for p in probe.iterdir())[:30] if probe.exists() else None
                     )
+                import os as _os
+                for rel in ("src/holosoma/holosoma/data",
+                            "src/holosoma/holosoma/data/motions",
+                            "src/holosoma/holosoma/data/motions/g1_29dof",
+                            "src/holosoma/holosoma/data/motions/g1_29dof/whole_body_tracking"):
+                    probe = bootstrap.REPO_ROOT / rel
+                    details[f"link:{rel}"] = {
+                        "exists": probe.exists(),
+                        "is_symlink": probe.is_symlink(),
+                        "readlink": _os.readlink(probe) if probe.is_symlink() else None,
+                    }
             except Exception as exc:  # diagnostics must not hide the original failure
                 details["scan_error"] = repr(exc)
             raise FileNotFoundError(f"No .npz files under {root}: {details}")
