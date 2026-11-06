@@ -70,7 +70,16 @@ def preflight(motion: str, motion_dir: str) -> dict:
     """Verify the reference file or directory and fingerprint its contents."""
     if motion_dir:
         root = _motion_root(motion_dir)
+        # The Flux workspace syncs the repo asynchronously after the task starts.
+        # Large data directories can appear several seconds after the Python entry
+        # point, so wait briefly instead of failing the whole run immediately.
+        import time as _time
+        _deadline = _time.time() + 180
         files = sorted(root.glob("*.npz"))
+        while not files and _time.time() < _deadline:
+            print(f"FLUX_WBT_PREFLIGHT waiting for motion_dir sync: {root}", flush=True)
+            _time.sleep(5)
+            files = sorted(root.glob("*.npz"))
         if not files:
             details: dict = {}
             try:
