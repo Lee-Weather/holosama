@@ -72,7 +72,20 @@ def preflight(motion: str, motion_dir: str) -> dict:
         root = _motion_root(motion_dir)
         files = sorted(root.glob("*.npz"))
         if not files:
-            raise FileNotFoundError(f"No .npz files under {root}")
+            details: dict = {}
+            try:
+                details["root_exists"] = root.exists()
+                details["parent_exists"] = root.parent.exists()
+                details["parent"] = str(root.parent)
+                details["parent_children"] = (
+                    sorted(p.name for p in root.parent.iterdir())[:50] if root.parent.exists() else None
+                )
+                details["root_children"] = (
+                    sorted(p.name for p in root.iterdir())[:20] if root.exists() else None
+                )
+            except Exception as exc:  # diagnostics must not hide the original failure
+                details["scan_error"] = repr(exc)
+            raise FileNotFoundError(f"No .npz files under {root}: {details}")
         digest = hashlib.sha256()
         total_bytes = 0
         for path in files:
