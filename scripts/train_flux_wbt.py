@@ -114,7 +114,7 @@ def main() -> None:
     parser.add_argument("--save-interval", type=int, default=200)
     parser.add_argument("--install-timeout", type=int, default=900)
     parser.add_argument("--training-timeout", type=int, default=86400)
-    parser.add_argument("--motion", default=MOTION, help="Package-relative single .npz")
+    parser.add_argument("--motion", default="", help="Package-relative single .npz (default: sub10 reference)")
     parser.add_argument("--motion-dir", default="", help="Package-relative directory or glob of .npz files")
     parser.add_argument("--name", default="g1_wbt", help="Training run name")
     args = parser.parse_args()
@@ -122,6 +122,8 @@ def main() -> None:
         parser.error("Invalid experiment name")
     if not 1 <= args.install_timeout <= 1800 or not 1 <= args.training_timeout <= 86400:
         parser.error("Install limit 1..1800s; training limit 1..86400s")
+    if not args.motion and not args.motion_dir:
+        args.motion = MOTION
     if bool(args.motion) == bool(args.motion_dir):
         parser.error("Pass exactly one of --motion (single file) or --motion-dir (multi file)")
 
