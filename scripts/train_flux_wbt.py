@@ -83,6 +83,13 @@ def preflight(motion: str, motion_dir: str) -> dict:
                 details["root_children"] = (
                     sorted(p.name for p in root.iterdir())[:20] if root.exists() else None
                 )
+                for rel in ("", "src", "src/holosoma", "src/holosoma/holosoma",
+                            "src/holosoma/holosoma/data", "src/holosoma/holosoma/data/motions",
+                            "src/holosoma/holosoma/data/motions/g1_29dof"):
+                    probe = bootstrap.REPO_ROOT / rel
+                    details[f"probe:{rel or 'repo'}"] = (
+                        sorted(p.name for p in probe.iterdir())[:30] if probe.exists() else None
+                    )
             except Exception as exc:  # diagnostics must not hide the original failure
                 details["scan_error"] = repr(exc)
             raise FileNotFoundError(f"No .npz files under {root}: {details}")
